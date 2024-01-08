@@ -2,11 +2,13 @@ package provider
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
+	cfconfig "github.com/cloudfoundry-community/go-cfclient/v3/config"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
@@ -25,24 +27,16 @@ type CloudFoundryProvider struct {
 }
 
 type CloudFoundryProviderModel struct {
-	Endpoint                  types.String `tfsdk:"api_url"`
-	User                      types.String `tfsdk:"user"`
-	Password                  types.String `tfsdk:"password"`
-	SSOPasscode               types.String `tfsdk:"sso_passcode"`
-	CFClientID                types.String `tfsdk:"cf_client_id"`
-	CFClientSecret            types.String `tfsdk:"cf_client_secret"`
-	UaaClientID               types.String `tfsdk:"uaa_client_id"`
-	UaaClientSecret           types.String `tfsdk:"uaa_client_secret"`
-	SkipSslValidation         types.Bool   `tfsdk:"skip_ssl_validation"`
-	AppLogsMax                types.Int64  `tfsdk:"app_logs_max"`
-	DefaultQuotaName          types.String `tfsdk:"default_quota_name"`
-	PurgeWhenDelete           types.Bool   `tfsdk:"purge_when_delete"`
-	StoreTokensPath           types.String `tfsdk:"store_tokens_path"`
-	ForceNotFailBrokerCatalog types.Bool   `tfsdk:"force_broker_not_fail_when_catalog_not_accessible"`
+	Endpoint          types.String `tfsdk:"api_url"`
+	User              types.String `tfsdk:"user"`
+	Password          types.String `tfsdk:"password"`
+	CFClientID        types.String `tfsdk:"cf_client_id"`
+	CFClientSecret    types.String `tfsdk:"cf_client_secret"`
+	SkipSslValidation types.Bool   `tfsdk:"skip_ssl_validation"`
 }
 
 func (p *CloudFoundryProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "cf"
+	resp.TypeName = "cloudfoundry"
 	resp.Version = p.version
 }
 
@@ -52,7 +46,7 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 		Attributes: map[string]schema.Attribute{
 			"api_url": schema.StringAttribute{
 				MarkdownDescription: "Specific URL representing the entry point for communication between the client and a Cloud Foundry instance.",
-				Optional:            false,
+				Optional:            true,
 			},
 			"user": schema.StringAttribute{
 				MarkdownDescription: "A unique identifier associated with an individual or entity for authentication & authorization purposes.",
@@ -64,11 +58,6 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 				Optional:            true,
 				Sensitive:           true,
 			},
-			"sso_passcode": schema.StringAttribute{
-				MarkdownDescription: "A temporary or one-time code used as part of the authentication process.",
-				Optional:            true,
-				Sensitive:           true,
-			},
 			"cf_client_id": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
@@ -77,36 +66,8 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 				Optional:  true,
 				Sensitive: true,
 			},
-			"uaa_client_id": schema.StringAttribute{
-				Optional:  true,
-				Sensitive: true,
-			},
-			"uaa_client_secret": schema.StringAttribute{
-				Optional:  true,
-				Sensitive: true,
-			},
 			"skip_ssl_validation": schema.BoolAttribute{
 				Optional: true,
-			},
-			"default_quota_name": schema.StringAttribute{
-				MarkdownDescription: "Name of the default quota",
-				Optional:            true,
-			},
-			"app_logs_max": schema.Int64Attribute{
-				MarkdownDescription: "Number of logs message which can be see when app creation is errored (-1 means all messages stored)",
-				Optional:            true,
-			},
-			"purge_when_delete": schema.BoolAttribute{
-				MarkdownDescription: "Set to true to purge when deleting a resource (e.g.: service instance, service broker)",
-				Optional:            true,
-			},
-			"store_tokens_path": schema.StringAttribute{
-				MarkdownDescription: "Path to a file to store tokens used for login. (this is useful for sso, this avoid requiring each time sso passcode)",
-				Optional:            true,
-			},
-			"force_broker_not_fail_when_catalog_not_accessible": schema.BoolAttribute{
-				MarkdownDescription: "Set to true to not trigger fail on catalog on service broker",
-				Optional:            true,
 			},
 		},
 	}
@@ -114,45 +75,54 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 func addGenericAttributeError(resp *provider.ConfigureResponse, status string, pathRoot string, commonName string, envName string) {
 	resp.Diagnostics.AddAttributeError(
 		path.Root(pathRoot),
-		`{{status}} field {{pathRoot}}`,
-		`The provider cannot create the Cloud Foundry API client as there is an unknown configuration value for the Cloud Foundry {{commonName}}.`+
-			`Either target apply the source of the value first, set the value statically in the configuration, or use the {{envName}} environment variable, ensure value is not empty.`,
+		fmt.Sprintf("%s field %s", status, pathRoot),
+		fmt.Sprintf("The provider cannot create the Cloud Foundry API client as there is an unknown configuration value for the Cloud Foundry %s. "+
+			"Either target apply the source of the value first, set the value statically in the configuration, or use the %s environment variable, ensure value is not empty. ", commonName, envName),
 	)
 }
 func addTypeCastAttributeError(resp *provider.ConfigureResponse, expectedType string, pathRoot string, commonName string, envName string) {
 	resp.Diagnostics.AddAttributeError(
 		path.Root(pathRoot),
-		`Expected {{expectedType}} in field {{pathRoot}}`,
-		`The provider cannot create the Cloud Foundry API client as there is an invalid configuration value for the Cloud Foundry {{commonName}}.`+
-			`Ensure {{envName}} is of type {{expectedType}}`,
+		fmt.Sprintf("Expected %s in field %s", expectedType, pathRoot),
+		fmt.Sprintf("The provider cannot create the Cloud Foundry API client as there is an invalid configuration value for the Cloud Foundry %s. "+
+			"Ensure %s is of type %s ", commonName, envName, expectedType),
 	)
 }
 func checkConfigUnknown(config *CloudFoundryProviderModel, resp *provider.ConfigureResponse) {
-	if config.Endpoint.IsUnknown() {
+	_, cfconfigerr := cfconfig.NewFromCFHome()
+
+	anyParamExists := !config.User.IsUnknown() || !config.Password.IsUnknown() || !config.CFClientID.IsUnknown() || !config.CFClientSecret.IsUnknown()
+
+	// If endpoint is unknown check if any of the auth param exists if yes throw error as api_url is manadatory if not
+	// check is cf home directory config exists
+	if config.Endpoint.IsUnknown() && (anyParamExists || cfconfigerr != nil) {
 		addGenericAttributeError(resp, "Unknown", "api_url", "API Endpoint", "CF_API_URL")
 	}
-	if config.User.IsUnknown() && !config.Password.IsUnknown() {
+	switch {
+	case config.User.IsUnknown() && !config.Password.IsUnknown():
 		addGenericAttributeError(resp, "Unknown", "user", "Username", "CF_USER")
-	} else if !config.User.IsUnknown() && config.Password.IsUnknown() {
+	case !config.User.IsUnknown() && config.Password.IsUnknown():
 		addGenericAttributeError(resp, "Unknown", "password", "Password", "CF_PASSWORD")
-	} else if config.CFClientID.IsUnknown() && !config.CFClientSecret.IsUnknown() {
+	case config.CFClientID.IsUnknown() && !config.CFClientSecret.IsUnknown():
 		addGenericAttributeError(resp, "Unknown", "cf_client_id", "CF Client ID", "CF_CF_CLIENT_ID")
-	} else if !config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown() {
+	case !config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown():
 		addGenericAttributeError(resp, "Unknown", "cf_client_secret", "CF Client Secret", "CF_CF_CLIENT_SECRET")
-	} else if config.UaaClientID.IsUnknown() && !config.UaaClientSecret.IsUnknown() {
-		addGenericAttributeError(resp, "Unknown", "uaa_client_id", "UAA Client ID", "CF_UAA_CLIENT_ID")
-	} else if !config.UaaClientID.IsUnknown() && config.UaaClientSecret.IsUnknown() {
-		addGenericAttributeError(resp, "Unknown", "uaa_client_secret", "UAA Client Secret", "CF_UAA_CLIENT_SECRET")
-	} else if config.User.IsUnknown() && config.Password.IsUnknown() && config.UaaClientID.IsUnknown() && config.UaaClientSecret.IsUnknown() {
-		resp.Diagnostics.AddError(
-			"Unable to create CF Client due to unknown values",
-			"Couple of user/password or uaa_client_id/uaa_client_secret must be set",
-		)
+	default:
+		if !anyParamExists && cfconfigerr != nil {
+			resp.Diagnostics.AddError(
+				"Unable to create CF Client due to unknown values",
+				"Either user/password or client_id/client_secret or store token path must be set or CF config must exist in path (default ~/.cf/config.json)",
+			)
+		}
 	}
 }
 
-func checkConfigNull(resp *provider.ConfigureResponse, endpoint string, user string, password string, cfclientid string, cfclientsecret string, uaaclientid string, uaaclientsecret string, storetokenpath string) {
-	if endpoint == "" {
+func checkConfig(resp *provider.ConfigureResponse, endpoint string, user string, password string, cfclientid string, cfclientsecret string) {
+	_, cfconfigerr := cfconfig.NewFromCFHome()
+
+	anyParamExists := user != "" || password != "" || cfclientid != "" || cfclientsecret != ""
+
+	if endpoint == "" && (anyParamExists || cfconfigerr != nil) {
 		addGenericAttributeError(resp, "Missing", "api_url", "API Endpoint", "CF_API_URL")
 	}
 	switch {
@@ -164,15 +134,13 @@ func checkConfigNull(resp *provider.ConfigureResponse, endpoint string, user str
 		addGenericAttributeError(resp, "Missing", "cf_client_id", "Client ID", "CF_CF_CLIENT_ID")
 	case cfclientid != "" && cfclientsecret == "":
 		addGenericAttributeError(resp, "Missing", "cf_client_secret", " Client Secret", "CF_CF_CLIENT_SECRET")
-	case uaaclientid == "" && uaaclientsecret != "":
-		addGenericAttributeError(resp, "Missing", "uaa_client_id", "UAA Client ID", "CF_UAA_CLIENT_ID")
-	case uaaclientid != "" && uaaclientsecret == "":
-		addGenericAttributeError(resp, "Missing", "uaa_client_secret", "UAA Client Secret", "CF_UAA_CLIENT_SECRET")
-	case user == "" && password == "" && uaaclientid == "" && uaaclientsecret == "" && storetokenpath == "":
-		resp.Diagnostics.AddError(
-			"Unable to create CF Client due to missing values",
-			"Couple of user/password or uaa_client_id/uaa_client_secret or store token path must be set",
-		)
+	default:
+		if !anyParamExists && cfconfigerr != nil {
+			resp.Diagnostics.AddError(
+				"Unable to create CF Client due to missing values",
+				"Either user/password or client_id/client_secret or store token path must be set or CF config must exist in path (default ~/.cf/config.json)",
+			)
+		}
 	}
 }
 
@@ -183,43 +151,16 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	endpoint := os.Getenv("CF_API_URL")
 	user := os.Getenv("CF_USER")
 	password := os.Getenv("CF_PASSWORD")
-	ssopasscode := os.Getenv("CF_SSO_PASSCODE")
+	// Attribute name is cf_client_id (for backward compatability) and convention is to add `CF_` prefix to all environment variables, hence `CF_CF_CLIENT_ID`
 	cfclientid := os.Getenv("CF_CF_CLIENT_ID")
 	cfclientsecret := os.Getenv("CF_CF_CLIENT_SECRET")
-	uaaclientid := os.Getenv("CF_UAA_CLIENT_ID")
-	uaaclientsecret := os.Getenv("CF_UAA_CLIENT_SECRET")
 
-	var skipsslvalidation, purgewhendelete, forcenotfailbrokercatalog bool
-	var defaultquotaname, storetokenpath string
-	var applogsmax int64
+	var skipsslvalidation bool
 	var err error
 	if os.Getenv("CF_SKIP_SSL_VALIDATION") != "" {
 		skipsslvalidation, err = strconv.ParseBool(os.Getenv("CF_SKIP_SSL_VALIDATION"))
 		if err != nil {
 			addTypeCastAttributeError(resp, "Boolean", "skip_ssl_validation", "Skip SSL Validation", "CF_SKIP_SSL_VALIDATION")
-			return nil
-		}
-	}
-	defaultquotaname = os.Getenv("CF_DEFAULT_QUOTA_NAME")
-	if os.Getenv("CF_APP_LOGS_MAX") != "" {
-		applogsmax, err = strconv.ParseInt(os.Getenv("CF_APP_LOGS_MAX"), 10, 64)
-		if err != nil {
-			addTypeCastAttributeError(resp, "Int64", "app_logs_max", "Maximum App Logs", "CF_APP_LOGS_MAX")
-			return nil
-		}
-	}
-	if os.Getenv("CF_PURGE_WHEN_DELETE") != "" {
-		purgewhendelete, err = strconv.ParseBool(os.Getenv("CF_PURGE_WHEN_DELETE"))
-		if err != nil {
-			addTypeCastAttributeError(resp, "Boolean", "purge_when_delete", "Purge On Deletion", "CF_PURGE_WHEN_DELETE")
-			return nil
-		}
-	}
-	storetokenpath = os.Getenv("CF_STORE_TOKEN_PATH")
-	if os.Getenv("CF_FORCE_BROKER_NOT_FAIL_WHEN_CATALOG_NOT_ACCESSIBLE") != "" {
-		forcenotfailbrokercatalog, err = strconv.ParseBool(os.Getenv("CF_FORCE_BROKER_NOT_FAIL_WHEN_CATALOG_NOT_ACCESSIBLE"))
-		if err != nil {
-			addTypeCastAttributeError(resp, "Boolean", "force_broker_not_fail_when_catalog_not_accessible", "Force Broker Not Fail When Catalog Not Accessible", "CF_FORCE_BROKER_NOT_FAIL_WHEN_CATALOG_NOT_ACCESSIBLE")
 			return nil
 		}
 	}
@@ -232,59 +173,21 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	if !config.Password.IsNull() {
 		password = config.Password.ValueString()
 	}
-	if !config.SSOPasscode.IsNull() {
-		ssopasscode = config.SSOPasscode.ValueString()
-	}
-	if !config.UaaClientID.IsNull() {
-		uaaclientid = config.UaaClientID.ValueString()
-	}
-	if !config.UaaClientSecret.IsNull() {
-		uaaclientsecret = config.UaaClientSecret.ValueString()
-	}
-	checkConfigNull(resp, endpoint, user, password, cfclientid, cfclientsecret, uaaclientid, uaaclientsecret, storetokenpath)
+	checkConfig(resp, endpoint, user, password, cfclientid, cfclientsecret)
 	if resp.Diagnostics.HasError() {
 		return nil
 	}
 	if !config.SkipSslValidation.IsNull() {
 		skipsslvalidation = config.SkipSslValidation.ValueBool()
 	}
-	if !config.DefaultQuotaName.IsNull() {
-		defaultquotaname = config.DefaultQuotaName.ValueString()
-	}
-	if !config.AppLogsMax.IsNull() {
-		applogsmax = config.AppLogsMax.ValueInt64()
-	}
-	if !config.PurgeWhenDelete.IsNull() {
-		purgewhendelete = config.PurgeWhenDelete.ValueBool()
-	}
-	if !config.StoreTokensPath.IsNull() {
-		storetokenpath = config.StoreTokensPath.ValueString()
-	}
-	if !config.ForceNotFailBrokerCatalog.IsNull() {
-		forcenotfailbrokercatalog = config.ForceNotFailBrokerCatalog.ValueBool()
-	}
 
-	if defaultquotaname == "" {
-		defaultquotaname = "default"
-	}
-	if applogsmax == 0 {
-		applogsmax = 30
-	}
 	c := managers.CloudFoundryProviderConfig{
-		Endpoint:                  strings.TrimSuffix(endpoint, "/"),
-		User:                      user,
-		Password:                  password,
-		SSOPasscode:               ssopasscode,
-		CFClientID:                cfclientid,
-		CFClientSecret:            cfclientsecret,
-		UaaClientID:               uaaclientid,
-		UaaClientSecret:           uaaclientsecret,
-		SkipSslValidation:         skipsslvalidation,
-		AppLogsMax:                applogsmax,
-		DefaultQuotaName:          defaultquotaname,
-		PurgeWhenDelete:           purgewhendelete,
-		StoreTokensPath:           storetokenpath,
-		ForceNotFailBrokerCatalog: forcenotfailbrokercatalog,
+		Endpoint:          strings.TrimSuffix(endpoint, "/"),
+		User:              user,
+		Password:          password,
+		CFClientID:        cfclientid,
+		CFClientSecret:    cfclientsecret,
+		SkipSslValidation: skipsslvalidation,
 	}
 	return &c
 }
@@ -302,24 +205,30 @@ func (p *CloudFoundryProvider) Configure(ctx context.Context, req provider.Confi
 	}
 
 	cloudFoundryProviderConfig := getAndSetProviderValues(&config, resp)
-	cloudFoundryProviderConfig.NewSession()
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	session, err := cloudFoundryProviderConfig.NewSession()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to create CF Client",
+			"Client creation failed with error "+err.Error(),
+		)
+	}
 
-	// // Make the Cloud Foundry client available during DataSource and Resource
-	// // type Configure methods.
-	// resp.DataSourceData = client
-	// resp.ResourceData = client
-
+	// Make the Cloud Foundry session available during DataSource and Resource
+	// type Configure methods.
+	resp.DataSourceData = session
+	resp.ResourceData = session
 }
 
 func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.Resource {
-	return []func() resource.Resource{
-		NewExampleResource,
-	}
+	return []func() resource.Resource{}
 }
 
 func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		NewExampleDataSource,
+		NewOrgDataSource,
 	}
 }
 

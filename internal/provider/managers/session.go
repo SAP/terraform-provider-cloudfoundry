@@ -6,24 +6,16 @@ import (
 )
 
 type CloudFoundryProviderConfig struct {
-	Endpoint                  string
-	User                      string
-	Password                  string
-	SSOPasscode               string
-	CFClientID                string
-	CFClientSecret            string
-	UaaClientID               string
-	UaaClientSecret           string
-	SkipSslValidation         bool
-	AppLogsMax                int64
-	DefaultQuotaName          string
-	PurgeWhenDelete           bool
-	StoreTokensPath           string
-	ForceNotFailBrokerCatalog bool
+	Endpoint          string
+	User              string
+	Password          string
+	CFClientID        string
+	CFClientSecret    string
+	SkipSslValidation bool
 }
 
 type Session struct {
-	cfclient *client.Client
+	CFClient *client.Client
 }
 
 func (c *CloudFoundryProviderConfig) NewSession() (*Session, error) {
@@ -32,16 +24,21 @@ func (c *CloudFoundryProviderConfig) NewSession() (*Session, error) {
 	switch {
 	case c.User != "" && c.Password != "":
 		cfg, err = config.NewUserPassword(c.Endpoint, c.User, c.Password)
-		if err != nil {
-			return nil, err
-		}
+	case c.CFClientID != "" && c.CFClientSecret != "":
+		cfg, err = config.NewClientSecret(c.Endpoint, c.CFClientID, c.CFClientSecret)
+	default:
+		cfg, err = config.NewFromCFHome()
 	}
+	if err != nil {
+		return nil, err
+	}
+	cfg.WithSkipTLSValidation(c.SkipSslValidation)
 	cf, err := client.New(cfg)
 	if err != nil {
 		return nil, err
 	}
 	s := Session{
-		cfclient: cf,
+		CFClient: cf,
 	}
 	return &s, nil
 }
