@@ -1,0 +1,25 @@
+---
+page_title: "{{.RenderedProviderName}} Provider"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+# Terraform Provider for {{.RenderedProviderName}}
+
+{{ .Description | trimspace }}
+
+{{ if .HasExample -}}
+## Example Usage
+
+{{tffile .ExampleFile}}
+{{- end }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+## Get Started
+
+If you're not familiar with Terraform yet, see the [Fundamentals](https://developer.hashicorp.com/terraform/tutorials/cli) section with a lot of helpful tutorials. 
+
+## Best Practices
+
+For the best experience using the {{.RenderedProviderName}} provider, we recommend applying the common best practices for Terraform adoption as described in the Hashicorp documentation. For example, see [Phases of Terraform Adoption](https://developer.hashicorp.com/well-architected-framework/operational-excellence/operational-excellence-terraform-maturity).
