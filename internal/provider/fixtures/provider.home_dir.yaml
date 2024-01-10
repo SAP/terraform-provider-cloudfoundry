@@ -1,0 +1,767 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1266
+        uncompressed: false
+        body: |-
+            {
+              "links": {
+                "self": {
+                  "href": "https://api.x.x.x.x.com"
+                },
+                "cloud_controller_v2": {
+                  "href": "https://api.x.x.x.x.com/v2",
+                  "meta": {
+                    "version": "2.218.0"
+                  }
+                },
+                "cloud_controller_v3": {
+                  "href": "https://api.x.x.x.x.com/v3",
+                  "meta": {
+                    "version": "3.153.0"
+                  }
+                },
+                "network_policy_v0": {
+                  "href": "https://api.x.x.x.x.com/networking/v0/external"
+                },
+                "network_policy_v1": {
+                  "href": "https://api.x.x.x.x.com/networking/v1/external"
+                },
+                "login": {
+                  "href": "https://login.x.x.x.x.com"
+                },
+                "uaa": {
+                  "href": "https://uaa.x.x.x.x.com"
+                },
+                "credhub": null,
+                "routing": null,
+                "logging": {
+                  "href": "wss://doppler.x.x.x.x.com:443"
+                },
+                "log_cache": {
+                  "href": "https://log-cache.x.x.x.x.com"
+                },
+                "log_stream": {
+                  "href": "https://log-stream.x.x.x.x.com"
+                },
+                "app_ssh": {
+                  "href": "ssh.x.x.x.x.com:2222",
+                  "meta": {
+                    "host_key_fingerprint": "SYWfpJUXGL2T+b8bkK15zppx/fZ08Wc9/iV8bxMLqWI",
+                    "oauth_client": "ssh-proxy"
+                  }
+                }
+              }
+            }
+        headers:
+            Content-Length:
+                - "1266"
+            Content-Type:
+                - application/json;charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:03 GMT
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7a9855f6470d32c9
+            X-B3-Traceid:
+                - cd86c9787add4e887a9855f6470d32c9
+            X-Content-Type-Options:
+                - nosniff
+            X-Vcap-Request-Id:
+                - cd86c978-7add-4e88-7a98-55f6470d32c9::0806688b-0fd7-4f29-bf22-0bab6606f203
+        status: 200 OK
+        code: 200
+        duration: 220.667ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=8542ae4f285e420f9e847d15ecfe3050-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 8542ae4f285e420f9e847d15ecfe3050-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"8542ae4f285e420f9e847d15ecfe3050-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"1e49474ef49d4096af0e045359c7c64a"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:02 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 5eb1bccd-e31d-4a0d-692c-b5e8546fcc0d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 251.422125ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/organizations?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":45,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"08d38300-bcfe-40c8-b89d-d6ecc1b84a6a","created_at":"2016-07-05T13:48:57Z","updated_at":"2024-01-11T13:11:35Z","name":"SAP","suspended":false,"relationships":{"quota":{"data":{"guid":"e917a250-720e-4c1e-b140-56e49cdc8e8f"}}},"metadata":{"labels":{"cloud.sap.com/UAMGroup":"SAP_CP_CF","cloud.sap.com/system-org":""},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e917a250-720e-4c1e-b140-56e49cdc8e8f"}}},{"guid":"fa55417a-5a13-4b15-a7a5-0a68437b4860","created_at":"2016-07-05T14:38:05Z","updated_at":"2024-01-11T14:13:59Z","name":"test","suspended":false,"relationships":{"quota":{"data":{"guid":"bc1c0999-52a1-495f-8727-84e6302b8868"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/bc1c0999-52a1-495f-8727-84e6302b8868"}}},{"guid":"b9bd6457-1b8e-421f-bcb1-3f5259ece518","created_at":"2016-07-07T12:25:39Z","updated_at":"2024-01-11T12:34:50Z","name":"SAP_cockpit","suspended":false,"relationships":{"quota":{"data":{"guid":"1914884e-2aa8-4492-8f23-6cd8a8bfa1ce"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/1914884e-2aa8-4492-8f23-6cd8a8bfa1ce"}}},{"guid":"f3a2c17d-b26e-4e52-85a7-6c09d0574acb","created_at":"2016-07-07T12:25:43Z","updated_at":"2024-01-11T12:25:32Z","name":"SAP_availability","suspended":false,"relationships":{"quota":{"data":{"guid":"82bcf0a8-b813-43a5-a851-188ba28cd75b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/82bcf0a8-b813-43a5-a851-188ba28cd75b"}}},{"guid":"1aafeb30-2c94-4862-802a-dd1e7c5c2fab","created_at":"2016-07-13T12:29:59Z","updated_at":"2024-01-11T12:38:51Z","name":"SAP_UAA","suspended":false,"relationships":{"quota":{"data":{"guid":"503550b6-6931-467f-8fcf-c6e853562385"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/503550b6-6931-467f-8fcf-c6e853562385"}}},{"guid":"34122e4c-b5ee-4b98-986b-f44f55b880fc","created_at":"2016-09-19T11:21:06Z","updated_at":"2024-01-11T12:26:55Z","name":"SAP_provisioning","suspended":false,"relationships":{"quota":{"data":{"guid":"d3c48acf-d98d-42af-b324-2415c1c2b4ae"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d3c48acf-d98d-42af-b324-2415c1c2b4ae"}}},{"guid":"6def95b0-385c-439c-9ebf-b5c3e6483d2f","created_at":"2016-11-11T14:41:46Z","updated_at":"2024-01-11T13:17:34Z","name":"SAP_ObjectStore","suspended":false,"relationships":{"quota":{"data":{"guid":"72540f7c-d76e-481d-9ea8-645d1348f72b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/72540f7c-d76e-481d-9ea8-645d1348f72b"}}},{"guid":"56379cc9-c832-48f5-920d-67a600aaca5b","created_at":"2016-11-23T10:20:50Z","updated_at":"2024-01-11T12:30:25Z","name":"SAP_xsa","suspended":false,"relationships":{"quota":{"data":{"guid":"35b0d3da-1be0-44af-b661-1b859b46efb4"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/35b0d3da-1be0-44af-b661-1b859b46efb4"}}},{"guid":"b82502f4-b13f-48fc-ad5a-58b941178218","created_at":"2017-01-30T09:47:44Z","updated_at":"2024-01-11T12:24:47Z","name":"SAPOps","suspended":false,"relationships":{"quota":{"data":{"guid":"d1f77f72-c33f-42b4-8281-0ada9475f103"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d1f77f72-c33f-42b4-8281-0ada9475f103"}}},{"guid":"53157ec0-4ff6-4ae5-a7fe-67190ebcac76","created_at":"2017-02-16T08:57:57Z","updated_at":"2024-01-11T12:27:49Z","name":"SAP_featureflags","suspended":false,"relationships":{"quota":{"data":{"guid":"35015ec0-ad96-4b45-96da-9e87ac6135bb"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/35015ec0-ad96-4b45-96da-9e87ac6135bb"}}},{"guid":"43d062ae-c313-413c-a8a0-5af09e3f5aeb","created_at":"2017-04-07T13:37:55Z","updated_at":"2024-01-11T12:36:49Z","name":"SAP_connectivity","suspended":false,"relationships":{"quota":{"data":{"guid":"3d799863-de8b-4604-93f2-ad40a6bd52d5"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/3d799863-de8b-4604-93f2-ad40a6bd52d5"}}},{"guid":"f7be9210-2f94-4569-b37e-b07d7cae728b","created_at":"2017-06-02T12:59:13Z","updated_at":"2024-01-11T12:26:06Z","name":"SAP_OSaS_Test","suspended":false,"relationships":{"quota":{"data":{"guid":"72540f7c-d76e-481d-9ea8-645d1348f72b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/72540f7c-d76e-481d-9ea8-645d1348f72b"}}},{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56","created_at":"2017-07-04T10:43:11Z","updated_at":"2024-01-08T15:08:31Z","name":"PerformanceTeamBLR","suspended":false,"relationships":{"quota":{"data":{"guid":"c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},{"guid":"e7dd0778-642c-42ff-ab62-0690f73d2479","created_at":"2017-08-02T14:56:39Z","updated_at":"2024-01-11T12:29:18Z","name":"SAP_destination-configuration","suspended":false,"relationships":{"quota":{"data":{"guid":"436c6370-008d-4b41-9a07-08012f4b250b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/436c6370-008d-4b41-9a07-08012f4b250b"}}},{"guid":"ead860f8-4edb-4342-8e3d-62c1bc4f088c","created_at":"2017-08-09T10:04:55Z","updated_at":"2024-01-11T13:03:49Z","name":"SAP_autoscaler","suspended":false,"relationships":{"quota":{"data":{"guid":"7b6b7c87-38a4-486c-97a0-21e13ba90e72"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/7b6b7c87-38a4-486c-97a0-21e13ba90e72"}}},{"guid":"980a1cce-b23c-4e31-b3e7-6f3c25d7b178","created_at":"2017-12-13T13:23:53Z","updated_at":"2024-01-11T13:19:55Z","name":"SAP_html5_apps_repo","suspended":false,"relationships":{"quota":{"data":{"guid":"75003a53-921e-443c-923b-152b839da8ff"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/75003a53-921e-443c-923b-152b839da8ff"}}},{"guid":"9bb2fb2f-8f95-47a2-b704-91c6301aee24","created_at":"2018-04-25T08:01:39Z","updated_at":"2024-01-11T12:25:30Z","name":"extension_service","suspended":false,"relationships":{"quota":{"data":{"guid":"e8d26d7c-db0a-4c31-93b4-6e42acba82f2"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e8d26d7c-db0a-4c31-93b4-6e42acba82f2"}}},{"guid":"39e4a2a9-2568-4dae-80f4-547b3cda791f","created_at":"2018-07-06T10:39:47Z","updated_at":"2024-01-11T12:26:21Z","name":"SAP_MalwareScanning","suspended":false,"relationships":{"quota":{"data":{"guid":"d4fed0d6-0d36-451b-852a-1da5fc67b8ad"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d4fed0d6-0d36-451b-852a-1da5fc67b8ad"}}},{"guid":"daf71371-987b-4b26-9fbd-d4b5f22aac9f","created_at":"2018-08-14T11:27:51Z","updated_at":"2024-01-11T12:27:34Z","name":"SAP_auditlog_viewer","suspended":false,"relationships":{"quota":{"data":{"guid":"30e39cb0-d586-4f43-a5ed-13bcca279416"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/30e39cb0-d586-4f43-a5ed-13bcca279416"}}},{"guid":"b270257d-a65d-4d4f-aa0e-644eacbf512b","created_at":"2018-09-04T06:23:07Z","updated_at":"2024-01-11T12:26:36Z","name":"SAP_servicemanager","suspended":false,"relationships":{"quota":{"data":{"guid":"c62b3d9a-1cd0-4b67-999a-8f5bb4ad5596"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c62b3d9a-1cd0-4b67-999a-8f5bb4ad5596"}}},{"guid":"b06f8097-3d3e-4396-b670-e2031c7dc650","created_at":"2018-11-28T10:35:56Z","updated_at":"2024-01-11T12:26:48Z","name":"SAP_metering","suspended":false,"relationships":{"quota":{"data":{"guid":"6279197c-72a2-4587-a7c2-93609e06196e"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/6279197c-72a2-4587-a7c2-93609e06196e"}}},{"guid":"7a77d48a-3928-4854-802c-6ae598fba2a2","created_at":"2018-12-11T16:59:35Z","updated_at":"2024-01-11T12:25:17Z","name":"SAP_service_owner_cockpit","suspended":false,"relationships":{"quota":{"data":{"guid":"f439bc03-92e7-434e-b88c-255984ef1ea9"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f439bc03-92e7-434e-b88c-255984ef1ea9"}}},{"guid":"75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab","created_at":"2019-02-20T12:44:04Z","updated_at":"2024-01-11T13:05:12Z","name":"SAP_filesystemservice","suspended":false,"relationships":{"quota":{"data":{"guid":"83690887-2e5d-4c66-b918-2a625832ea60"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/83690887-2e5d-4c66-b918-2a625832ea60"}}},{"guid":"fdd8e332-7913-47a8-8e72-74ce81a5f015","created_at":"2019-03-11T08:32:34Z","updated_at":"2024-01-11T12:53:36Z","name":"SAP_CDCerts","suspended":false,"relationships":{"quota":{"data":{"guid":"c69d5ca8-6921-43ee-8d1d-835246c3b645"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c69d5ca8-6921-43ee-8d1d-835246c3b645"}}},{"guid":"07d7b922-bf3c-4f2c-a3df-23aebc350a39","created_at":"2019-05-14T16:09:44Z","updated_at":"2024-01-11T12:19:10Z","name":"SAP_autoscaler_tests","suspended":false,"relationships":{"quota":{"data":{"guid":"aa45a8e8-0ffa-427f-9bf4-7256457c0114"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/aa45a8e8-0ffa-427f-9bf4-7256457c0114"}}},{"guid":"0639a7f1-ce06-4578-951f-3251a65be1f1","created_at":"2019-07-10T08:40:23Z","updated_at":"2022-06-01T03:37:52Z","name":"SAP_cloudnativeservices","suspended":false,"relationships":{"quota":{"data":{"guid":"ae0a58c1-ee35-495b-bf5f-1347d6cef8dc"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ae0a58c1-ee35-495b-bf5f-1347d6cef8dc"}}},{"guid":"cc7fe5b9-104e-4204-a431-6f9b326fdb3a","created_at":"2020-02-04T12:18:48Z","updated_at":"2020-06-29T20:27:22Z","name":"sap_metering_ci","suspended":false,"relationships":{"quota":{"data":{"guid":"6279197c-72a2-4587-a7c2-93609e06196e"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/6279197c-72a2-4587-a7c2-93609e06196e"}}},{"guid":"d8de98a6-8f24-4461-ab05-82ac6c0b2fa9","created_at":"2020-02-05T11:26:01Z","updated_at":"2024-01-11T12:25:29Z","name":"sap_uas","suspended":false,"relationships":{"quota":{"data":{"guid":"de9cd3c9-2cf1-4c19-bbf4-3a18d3618e50"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/de9cd3c9-2cf1-4c19-bbf4-3a18d3618e50"}}},{"guid":"09a2a46a-e5d5-470b-bed3-0d398ec06076","created_at":"2020-02-05T14:24:26Z","updated_at":"2024-01-11T13:17:03Z","name":"SAP_cpcli","suspended":false,"relationships":{"quota":{"data":{"guid":"65840343-b33d-4fd3-b497-daac2dc799d1"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/65840343-b33d-4fd3-b497-daac2dc799d1"}}},{"guid":"80f6ee8c-613c-433b-8ac6-7fb945949b0a","created_at":"2020-04-02T09:03:34Z","updated_at":"2024-01-11T13:33:51Z","name":"SAP_backingservices","suspended":false,"relationships":{"quota":{"data":{"guid":"4d6cb53c-8d4d-4382-ac65-08b6fdc12986"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/4d6cb53c-8d4d-4382-ac65-08b6fdc12986"}}},{"guid":"2977c3d7-939f-47d5-aa6a-54531e8d983f","created_at":"2020-06-29T07:08:44Z","updated_at":"2020-08-17T08:34:03Z","name":"SLIAchieve_SLIBlue","suspended":false,"relationships":{"quota":{"data":{"guid":"1595dd44-dcac-47da-96c1-402e16114d16"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/1595dd44-dcac-47da-96c1-402e16114d16"}}},{"guid":"d7f2dc04-6f2c-4754-82d2-f842b1417acb","created_at":"2020-08-19T11:44:37Z","updated_at":"2020-08-19T14:39:40Z","name":"aifdev","suspended":false,"relationships":{"quota":{"data":{"guid":"8022f725-2976-4e8c-981a-7cafc3d04bc4"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/8022f725-2976-4e8c-981a-7cafc3d04bc4"}}},{"guid":"8b8f580f-18be-4a47-bed0-ca23814b1dd2","created_at":"2020-08-27T15:41:38Z","updated_at":"2023-06-27T13:09:54Z","name":"MHBSITEST-old","suspended":false,"relationships":{"quota":{"data":{"guid":"2d08351b-8cc0-43d6-a803-9f4e1463c6e2"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/2d08351b-8cc0-43d6-a803-9f4e1463c6e2"}}},{"guid":"f946c4c4-87c8-4916-b98a-faa05d84708a","created_at":"2020-09-29T16:24:32Z","updated_at":"2020-09-29T16:24:36Z","name":"SAP-test-isolation-segments-HgtUIonf","suspended":false,"relationships":{"quota":{"data":{"guid":"f66f7337-10f4-4498-bb57-956bd12d6954"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f66f7337-10f4-4498-bb57-956bd12d6954"}}},{"guid":"35db586b-1aed-4b3a-88ca-91ced91dc75d","created_at":"2020-10-28T07:52:46Z","updated_at":"2024-01-11T12:25:27Z","name":"SAP_apm","suspended":false,"relationships":{"quota":{"data":{"guid":"2f5bc092-de30-4326-8c6d-f9d734faa1f8"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/2f5bc092-de30-4326-8c6d-f9d734faa1f8"}}},{"guid":"b027b61e-02e5-466f-871e-1e56eb9ac75c","created_at":"2020-11-09T14:21:49Z","updated_at":"2020-11-09T14:24:28Z","name":"aif-infra-val-aws-eu-central-1-aws","suspended":false,"relationships":{"quota":{"data":{"guid":"ef7d48ec-59a0-4d6f-87f6-35990741c88e"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ef7d48ec-59a0-4d6f-87f6-35990741c88e"}}},{"guid":"bea0b8a5-2426-455e-8cd6-52cb50aa9ba8","created_at":"2020-12-09T09:49:47Z","updated_at":"2024-01-11T12:55:31Z","name":"SAP_Certificate-Service","suspended":false,"relationships":{"quota":{"data":{"guid":"9ffb2e33-b398-42a3-ac2f-e4063e04dadc"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/9ffb2e33-b398-42a3-ac2f-e4063e04dadc"}}},{"guid":"fb9b1e83-165c-490f-adc8-14c6f80fc3b3","created_at":"2021-02-11T08:08:05Z","updated_at":"2024-01-11T13:05:49Z","name":"SAP_CDCerts_Test","suspended":false,"relationships":{"quota":{"data":{"guid":"4ecdc49f-5f66-4bbc-b1ca-db463f9431a6"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/4ecdc49f-5f66-4bbc-b1ca-db463f9431a6"}}},{"guid":"4f13cf64-353e-42e8-8d9a-122ab2ce9a69","created_at":"2021-03-17T10:21:17Z","updated_at":"2024-01-11T14:43:24Z","name":"SAP_chaosmonkey","suspended":false,"relationships":{"quota":{"data":{"guid":"0d8ef75c-56f5-4119-a031-3110dd310503"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/0d8ef75c-56f5-4119-a031-3110dd310503"}}},{"guid":"09b28553-5d79-4315-a703-fc440c6900ee","created_at":"2021-09-01T13:30:33Z","updated_at":"2024-01-02T22:25:27Z","name":"SAP_Dynatrace","suspended":false,"relationships":{"quota":{"data":{"guid":"5e9ab2da-e771-4c17-b044-c71538e4dfd1"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/5e9ab2da-e771-4c17-b044-c71538e4dfd1"}}},{"guid":"900e37ce-dbdb-46d8-ac60-da48c25125da","created_at":"2021-10-01T16:30:36Z","updated_at":"2024-01-11T13:00:59Z","name":"SAP_DC-Health","suspended":false,"relationships":{"quota":{"data":{"guid":"91b36218-adee-495b-aa78-ebc8e38583c7"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/91b36218-adee-495b-aa78-ebc8e38583c7"}}},{"guid":"e0df2568-8cfc-4758-a12b-a2dd7ce51137","created_at":"2022-05-25T15:06:20Z","updated_at":"2024-01-11T12:25:44Z","name":"SAP_Spark","suspended":false,"relationships":{"quota":{"data":{"guid":"99ac779a-fbea-46e2-9828-c4967d254bb3"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/99ac779a-fbea-46e2-9828-c4967d254bb3"}}},{"guid":"9e1bea47-49bb-40a6-84f5-2f6709d922c2","created_at":"2022-06-22T09:08:16Z","updated_at":"2024-01-11T12:27:18Z","name":"SAP_Cassandra","suspended":false,"relationships":{"quota":{"data":{"guid":"08be3788-4d66-497d-9c9f-e9296ef8e947"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/08be3788-4d66-497d-9c9f-e9296ef8e947"}}},{"guid":"0458a1b0-6385-475a-8a92-c677651b3ca1","created_at":"2022-06-22T09:10:40Z","updated_at":"2024-01-11T12:26:36Z","name":"SAP_Kafka","suspended":false,"relationships":{"quota":{"data":{"guid":"f280eecb-759c-4cb7-8376-233d9ded1399"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f280eecb-759c-4cb7-8376-233d9ded1399"}}},{"guid":"9bd28d61-024c-4979-a1a6-c5d1add05e72","created_at":"2022-10-28T11:48:48Z","updated_at":"2024-01-11T12:25:26Z","name":"SAP_cf-admin-proxy","suspended":false,"relationships":{"quota":{"data":{"guid":"ff7b95b2-a0e0-4a73-9cde-f58523fc38e0"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ff7b95b2-a0e0-4a73-9cde-f58523fc38e0"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:03 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6bbba18a23fcb2cb
+            X-B3-Traceid:
+                - ea3890ea73a14bce6bbba18a23fcb2cb
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1704989056"
+            X-Runtime:
+                - "0.025774"
+            X-Vcap-Request-Id:
+                - ea3890ea-73a1-4bce-6bbb-a18a23fcb2cb::f1386614-0a33-4851-afe1-7f6ad346fad5
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 253.282292ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1266
+        uncompressed: false
+        body: |-
+            {
+              "links": {
+                "self": {
+                  "href": "https://api.x.x.x.x.com"
+                },
+                "cloud_controller_v2": {
+                  "href": "https://api.x.x.x.x.com/v2",
+                  "meta": {
+                    "version": "2.218.0"
+                  }
+                },
+                "cloud_controller_v3": {
+                  "href": "https://api.x.x.x.x.com/v3",
+                  "meta": {
+                    "version": "3.153.0"
+                  }
+                },
+                "network_policy_v0": {
+                  "href": "https://api.x.x.x.x.com/networking/v0/external"
+                },
+                "network_policy_v1": {
+                  "href": "https://api.x.x.x.x.com/networking/v1/external"
+                },
+                "login": {
+                  "href": "https://login.x.x.x.x.com"
+                },
+                "uaa": {
+                  "href": "https://uaa.x.x.x.x.com"
+                },
+                "credhub": null,
+                "routing": null,
+                "logging": {
+                  "href": "wss://doppler.x.x.x.x.com:443"
+                },
+                "log_cache": {
+                  "href": "https://log-cache.x.x.x.x.com"
+                },
+                "log_stream": {
+                  "href": "https://log-stream.x.x.x.x.com"
+                },
+                "app_ssh": {
+                  "href": "ssh.x.x.x.x.com:2222",
+                  "meta": {
+                    "host_key_fingerprint": "SYWfpJUXGL2T+b8bkK15zppx/fZ08Wc9/iV8bxMLqWI",
+                    "oauth_client": "ssh-proxy"
+                  }
+                }
+              }
+            }
+        headers:
+            Content-Length:
+                - "1266"
+            Content-Type:
+                - application/json;charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:04 GMT
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 514009aea7d81daa
+            X-B3-Traceid:
+                - aa2dd32abe5b4bd8514009aea7d81daa
+            X-Content-Type-Options:
+                - nosniff
+            X-Vcap-Request-Id:
+                - aa2dd32a-be5b-4bd8-5140-09aea7d81daa::aeb05737-d2a7-43f3-b171-5278148f921f
+        status: 200 OK
+        code: 200
+        duration: 257.55825ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=8542ae4f285e420f9e847d15ecfe3050-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 8542ae4f285e420f9e847d15ecfe3050-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"8542ae4f285e420f9e847d15ecfe3050-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"5a9f22e1ba124218b27d9b73d90a61b5"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:04 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 75cd3123-e4a7-41f6-6843-4b5cf45c10cf
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 248.723959ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/organizations?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":45,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"08d38300-bcfe-40c8-b89d-d6ecc1b84a6a","created_at":"2016-07-05T13:48:57Z","updated_at":"2024-01-11T13:11:35Z","name":"SAP","suspended":false,"relationships":{"quota":{"data":{"guid":"e917a250-720e-4c1e-b140-56e49cdc8e8f"}}},"metadata":{"labels":{"cloud.sap.com/UAMGroup":"SAP_CP_CF","cloud.sap.com/system-org":""},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e917a250-720e-4c1e-b140-56e49cdc8e8f"}}},{"guid":"fa55417a-5a13-4b15-a7a5-0a68437b4860","created_at":"2016-07-05T14:38:05Z","updated_at":"2024-01-11T14:13:59Z","name":"test","suspended":false,"relationships":{"quota":{"data":{"guid":"bc1c0999-52a1-495f-8727-84e6302b8868"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/bc1c0999-52a1-495f-8727-84e6302b8868"}}},{"guid":"b9bd6457-1b8e-421f-bcb1-3f5259ece518","created_at":"2016-07-07T12:25:39Z","updated_at":"2024-01-11T12:34:50Z","name":"SAP_cockpit","suspended":false,"relationships":{"quota":{"data":{"guid":"1914884e-2aa8-4492-8f23-6cd8a8bfa1ce"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/1914884e-2aa8-4492-8f23-6cd8a8bfa1ce"}}},{"guid":"f3a2c17d-b26e-4e52-85a7-6c09d0574acb","created_at":"2016-07-07T12:25:43Z","updated_at":"2024-01-11T12:25:32Z","name":"SAP_availability","suspended":false,"relationships":{"quota":{"data":{"guid":"82bcf0a8-b813-43a5-a851-188ba28cd75b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/82bcf0a8-b813-43a5-a851-188ba28cd75b"}}},{"guid":"1aafeb30-2c94-4862-802a-dd1e7c5c2fab","created_at":"2016-07-13T12:29:59Z","updated_at":"2024-01-11T12:38:51Z","name":"SAP_UAA","suspended":false,"relationships":{"quota":{"data":{"guid":"503550b6-6931-467f-8fcf-c6e853562385"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/503550b6-6931-467f-8fcf-c6e853562385"}}},{"guid":"34122e4c-b5ee-4b98-986b-f44f55b880fc","created_at":"2016-09-19T11:21:06Z","updated_at":"2024-01-11T12:26:55Z","name":"SAP_provisioning","suspended":false,"relationships":{"quota":{"data":{"guid":"d3c48acf-d98d-42af-b324-2415c1c2b4ae"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d3c48acf-d98d-42af-b324-2415c1c2b4ae"}}},{"guid":"6def95b0-385c-439c-9ebf-b5c3e6483d2f","created_at":"2016-11-11T14:41:46Z","updated_at":"2024-01-11T13:17:34Z","name":"SAP_ObjectStore","suspended":false,"relationships":{"quota":{"data":{"guid":"72540f7c-d76e-481d-9ea8-645d1348f72b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/72540f7c-d76e-481d-9ea8-645d1348f72b"}}},{"guid":"56379cc9-c832-48f5-920d-67a600aaca5b","created_at":"2016-11-23T10:20:50Z","updated_at":"2024-01-11T12:30:25Z","name":"SAP_xsa","suspended":false,"relationships":{"quota":{"data":{"guid":"35b0d3da-1be0-44af-b661-1b859b46efb4"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/35b0d3da-1be0-44af-b661-1b859b46efb4"}}},{"guid":"b82502f4-b13f-48fc-ad5a-58b941178218","created_at":"2017-01-30T09:47:44Z","updated_at":"2024-01-11T12:24:47Z","name":"SAPOps","suspended":false,"relationships":{"quota":{"data":{"guid":"d1f77f72-c33f-42b4-8281-0ada9475f103"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d1f77f72-c33f-42b4-8281-0ada9475f103"}}},{"guid":"53157ec0-4ff6-4ae5-a7fe-67190ebcac76","created_at":"2017-02-16T08:57:57Z","updated_at":"2024-01-11T12:27:49Z","name":"SAP_featureflags","suspended":false,"relationships":{"quota":{"data":{"guid":"35015ec0-ad96-4b45-96da-9e87ac6135bb"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/35015ec0-ad96-4b45-96da-9e87ac6135bb"}}},{"guid":"43d062ae-c313-413c-a8a0-5af09e3f5aeb","created_at":"2017-04-07T13:37:55Z","updated_at":"2024-01-11T12:36:49Z","name":"SAP_connectivity","suspended":false,"relationships":{"quota":{"data":{"guid":"3d799863-de8b-4604-93f2-ad40a6bd52d5"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/3d799863-de8b-4604-93f2-ad40a6bd52d5"}}},{"guid":"f7be9210-2f94-4569-b37e-b07d7cae728b","created_at":"2017-06-02T12:59:13Z","updated_at":"2024-01-11T12:26:06Z","name":"SAP_OSaS_Test","suspended":false,"relationships":{"quota":{"data":{"guid":"72540f7c-d76e-481d-9ea8-645d1348f72b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/72540f7c-d76e-481d-9ea8-645d1348f72b"}}},{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56","created_at":"2017-07-04T10:43:11Z","updated_at":"2024-01-08T15:08:31Z","name":"PerformanceTeamBLR","suspended":false,"relationships":{"quota":{"data":{"guid":"c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},{"guid":"e7dd0778-642c-42ff-ab62-0690f73d2479","created_at":"2017-08-02T14:56:39Z","updated_at":"2024-01-11T12:29:18Z","name":"SAP_destination-configuration","suspended":false,"relationships":{"quota":{"data":{"guid":"436c6370-008d-4b41-9a07-08012f4b250b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/436c6370-008d-4b41-9a07-08012f4b250b"}}},{"guid":"ead860f8-4edb-4342-8e3d-62c1bc4f088c","created_at":"2017-08-09T10:04:55Z","updated_at":"2024-01-11T13:03:49Z","name":"SAP_autoscaler","suspended":false,"relationships":{"quota":{"data":{"guid":"7b6b7c87-38a4-486c-97a0-21e13ba90e72"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/7b6b7c87-38a4-486c-97a0-21e13ba90e72"}}},{"guid":"980a1cce-b23c-4e31-b3e7-6f3c25d7b178","created_at":"2017-12-13T13:23:53Z","updated_at":"2024-01-11T13:19:55Z","name":"SAP_html5_apps_repo","suspended":false,"relationships":{"quota":{"data":{"guid":"75003a53-921e-443c-923b-152b839da8ff"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/75003a53-921e-443c-923b-152b839da8ff"}}},{"guid":"9bb2fb2f-8f95-47a2-b704-91c6301aee24","created_at":"2018-04-25T08:01:39Z","updated_at":"2024-01-11T12:25:30Z","name":"extension_service","suspended":false,"relationships":{"quota":{"data":{"guid":"e8d26d7c-db0a-4c31-93b4-6e42acba82f2"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e8d26d7c-db0a-4c31-93b4-6e42acba82f2"}}},{"guid":"39e4a2a9-2568-4dae-80f4-547b3cda791f","created_at":"2018-07-06T10:39:47Z","updated_at":"2024-01-11T12:26:21Z","name":"SAP_MalwareScanning","suspended":false,"relationships":{"quota":{"data":{"guid":"d4fed0d6-0d36-451b-852a-1da5fc67b8ad"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d4fed0d6-0d36-451b-852a-1da5fc67b8ad"}}},{"guid":"daf71371-987b-4b26-9fbd-d4b5f22aac9f","created_at":"2018-08-14T11:27:51Z","updated_at":"2024-01-11T12:27:34Z","name":"SAP_auditlog_viewer","suspended":false,"relationships":{"quota":{"data":{"guid":"30e39cb0-d586-4f43-a5ed-13bcca279416"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/30e39cb0-d586-4f43-a5ed-13bcca279416"}}},{"guid":"b270257d-a65d-4d4f-aa0e-644eacbf512b","created_at":"2018-09-04T06:23:07Z","updated_at":"2024-01-11T12:26:36Z","name":"SAP_servicemanager","suspended":false,"relationships":{"quota":{"data":{"guid":"c62b3d9a-1cd0-4b67-999a-8f5bb4ad5596"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c62b3d9a-1cd0-4b67-999a-8f5bb4ad5596"}}},{"guid":"b06f8097-3d3e-4396-b670-e2031c7dc650","created_at":"2018-11-28T10:35:56Z","updated_at":"2024-01-11T12:26:48Z","name":"SAP_metering","suspended":false,"relationships":{"quota":{"data":{"guid":"6279197c-72a2-4587-a7c2-93609e06196e"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/6279197c-72a2-4587-a7c2-93609e06196e"}}},{"guid":"7a77d48a-3928-4854-802c-6ae598fba2a2","created_at":"2018-12-11T16:59:35Z","updated_at":"2024-01-11T12:25:17Z","name":"SAP_service_owner_cockpit","suspended":false,"relationships":{"quota":{"data":{"guid":"f439bc03-92e7-434e-b88c-255984ef1ea9"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f439bc03-92e7-434e-b88c-255984ef1ea9"}}},{"guid":"75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab","created_at":"2019-02-20T12:44:04Z","updated_at":"2024-01-11T13:05:12Z","name":"SAP_filesystemservice","suspended":false,"relationships":{"quota":{"data":{"guid":"83690887-2e5d-4c66-b918-2a625832ea60"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/83690887-2e5d-4c66-b918-2a625832ea60"}}},{"guid":"fdd8e332-7913-47a8-8e72-74ce81a5f015","created_at":"2019-03-11T08:32:34Z","updated_at":"2024-01-11T12:53:36Z","name":"SAP_CDCerts","suspended":false,"relationships":{"quota":{"data":{"guid":"c69d5ca8-6921-43ee-8d1d-835246c3b645"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c69d5ca8-6921-43ee-8d1d-835246c3b645"}}},{"guid":"07d7b922-bf3c-4f2c-a3df-23aebc350a39","created_at":"2019-05-14T16:09:44Z","updated_at":"2024-01-11T12:19:10Z","name":"SAP_autoscaler_tests","suspended":false,"relationships":{"quota":{"data":{"guid":"aa45a8e8-0ffa-427f-9bf4-7256457c0114"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/aa45a8e8-0ffa-427f-9bf4-7256457c0114"}}},{"guid":"0639a7f1-ce06-4578-951f-3251a65be1f1","created_at":"2019-07-10T08:40:23Z","updated_at":"2022-06-01T03:37:52Z","name":"SAP_cloudnativeservices","suspended":false,"relationships":{"quota":{"data":{"guid":"ae0a58c1-ee35-495b-bf5f-1347d6cef8dc"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ae0a58c1-ee35-495b-bf5f-1347d6cef8dc"}}},{"guid":"cc7fe5b9-104e-4204-a431-6f9b326fdb3a","created_at":"2020-02-04T12:18:48Z","updated_at":"2020-06-29T20:27:22Z","name":"sap_metering_ci","suspended":false,"relationships":{"quota":{"data":{"guid":"6279197c-72a2-4587-a7c2-93609e06196e"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/6279197c-72a2-4587-a7c2-93609e06196e"}}},{"guid":"d8de98a6-8f24-4461-ab05-82ac6c0b2fa9","created_at":"2020-02-05T11:26:01Z","updated_at":"2024-01-11T12:25:29Z","name":"sap_uas","suspended":false,"relationships":{"quota":{"data":{"guid":"de9cd3c9-2cf1-4c19-bbf4-3a18d3618e50"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/de9cd3c9-2cf1-4c19-bbf4-3a18d3618e50"}}},{"guid":"09a2a46a-e5d5-470b-bed3-0d398ec06076","created_at":"2020-02-05T14:24:26Z","updated_at":"2024-01-11T13:17:03Z","name":"SAP_cpcli","suspended":false,"relationships":{"quota":{"data":{"guid":"65840343-b33d-4fd3-b497-daac2dc799d1"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/65840343-b33d-4fd3-b497-daac2dc799d1"}}},{"guid":"80f6ee8c-613c-433b-8ac6-7fb945949b0a","created_at":"2020-04-02T09:03:34Z","updated_at":"2024-01-11T13:33:51Z","name":"SAP_backingservices","suspended":false,"relationships":{"quota":{"data":{"guid":"4d6cb53c-8d4d-4382-ac65-08b6fdc12986"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/4d6cb53c-8d4d-4382-ac65-08b6fdc12986"}}},{"guid":"2977c3d7-939f-47d5-aa6a-54531e8d983f","created_at":"2020-06-29T07:08:44Z","updated_at":"2020-08-17T08:34:03Z","name":"SLIAchieve_SLIBlue","suspended":false,"relationships":{"quota":{"data":{"guid":"1595dd44-dcac-47da-96c1-402e16114d16"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/1595dd44-dcac-47da-96c1-402e16114d16"}}},{"guid":"d7f2dc04-6f2c-4754-82d2-f842b1417acb","created_at":"2020-08-19T11:44:37Z","updated_at":"2020-08-19T14:39:40Z","name":"aifdev","suspended":false,"relationships":{"quota":{"data":{"guid":"8022f725-2976-4e8c-981a-7cafc3d04bc4"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/8022f725-2976-4e8c-981a-7cafc3d04bc4"}}},{"guid":"8b8f580f-18be-4a47-bed0-ca23814b1dd2","created_at":"2020-08-27T15:41:38Z","updated_at":"2023-06-27T13:09:54Z","name":"MHBSITEST-old","suspended":false,"relationships":{"quota":{"data":{"guid":"2d08351b-8cc0-43d6-a803-9f4e1463c6e2"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/2d08351b-8cc0-43d6-a803-9f4e1463c6e2"}}},{"guid":"f946c4c4-87c8-4916-b98a-faa05d84708a","created_at":"2020-09-29T16:24:32Z","updated_at":"2020-09-29T16:24:36Z","name":"SAP-test-isolation-segments-HgtUIonf","suspended":false,"relationships":{"quota":{"data":{"guid":"f66f7337-10f4-4498-bb57-956bd12d6954"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f66f7337-10f4-4498-bb57-956bd12d6954"}}},{"guid":"35db586b-1aed-4b3a-88ca-91ced91dc75d","created_at":"2020-10-28T07:52:46Z","updated_at":"2024-01-11T12:25:27Z","name":"SAP_apm","suspended":false,"relationships":{"quota":{"data":{"guid":"2f5bc092-de30-4326-8c6d-f9d734faa1f8"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/2f5bc092-de30-4326-8c6d-f9d734faa1f8"}}},{"guid":"b027b61e-02e5-466f-871e-1e56eb9ac75c","created_at":"2020-11-09T14:21:49Z","updated_at":"2020-11-09T14:24:28Z","name":"aif-infra-val-aws-eu-central-1-aws","suspended":false,"relationships":{"quota":{"data":{"guid":"ef7d48ec-59a0-4d6f-87f6-35990741c88e"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ef7d48ec-59a0-4d6f-87f6-35990741c88e"}}},{"guid":"bea0b8a5-2426-455e-8cd6-52cb50aa9ba8","created_at":"2020-12-09T09:49:47Z","updated_at":"2024-01-11T12:55:31Z","name":"SAP_Certificate-Service","suspended":false,"relationships":{"quota":{"data":{"guid":"9ffb2e33-b398-42a3-ac2f-e4063e04dadc"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/9ffb2e33-b398-42a3-ac2f-e4063e04dadc"}}},{"guid":"fb9b1e83-165c-490f-adc8-14c6f80fc3b3","created_at":"2021-02-11T08:08:05Z","updated_at":"2024-01-11T13:05:49Z","name":"SAP_CDCerts_Test","suspended":false,"relationships":{"quota":{"data":{"guid":"4ecdc49f-5f66-4bbc-b1ca-db463f9431a6"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/4ecdc49f-5f66-4bbc-b1ca-db463f9431a6"}}},{"guid":"4f13cf64-353e-42e8-8d9a-122ab2ce9a69","created_at":"2021-03-17T10:21:17Z","updated_at":"2024-01-11T14:43:24Z","name":"SAP_chaosmonkey","suspended":false,"relationships":{"quota":{"data":{"guid":"0d8ef75c-56f5-4119-a031-3110dd310503"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/0d8ef75c-56f5-4119-a031-3110dd310503"}}},{"guid":"09b28553-5d79-4315-a703-fc440c6900ee","created_at":"2021-09-01T13:30:33Z","updated_at":"2024-01-02T22:25:27Z","name":"SAP_Dynatrace","suspended":false,"relationships":{"quota":{"data":{"guid":"5e9ab2da-e771-4c17-b044-c71538e4dfd1"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/5e9ab2da-e771-4c17-b044-c71538e4dfd1"}}},{"guid":"900e37ce-dbdb-46d8-ac60-da48c25125da","created_at":"2021-10-01T16:30:36Z","updated_at":"2024-01-11T13:00:59Z","name":"SAP_DC-Health","suspended":false,"relationships":{"quota":{"data":{"guid":"91b36218-adee-495b-aa78-ebc8e38583c7"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/91b36218-adee-495b-aa78-ebc8e38583c7"}}},{"guid":"e0df2568-8cfc-4758-a12b-a2dd7ce51137","created_at":"2022-05-25T15:06:20Z","updated_at":"2024-01-11T12:25:44Z","name":"SAP_Spark","suspended":false,"relationships":{"quota":{"data":{"guid":"99ac779a-fbea-46e2-9828-c4967d254bb3"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/99ac779a-fbea-46e2-9828-c4967d254bb3"}}},{"guid":"9e1bea47-49bb-40a6-84f5-2f6709d922c2","created_at":"2022-06-22T09:08:16Z","updated_at":"2024-01-11T12:27:18Z","name":"SAP_Cassandra","suspended":false,"relationships":{"quota":{"data":{"guid":"08be3788-4d66-497d-9c9f-e9296ef8e947"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/08be3788-4d66-497d-9c9f-e9296ef8e947"}}},{"guid":"0458a1b0-6385-475a-8a92-c677651b3ca1","created_at":"2022-06-22T09:10:40Z","updated_at":"2024-01-11T12:26:36Z","name":"SAP_Kafka","suspended":false,"relationships":{"quota":{"data":{"guid":"f280eecb-759c-4cb7-8376-233d9ded1399"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f280eecb-759c-4cb7-8376-233d9ded1399"}}},{"guid":"9bd28d61-024c-4979-a1a6-c5d1add05e72","created_at":"2022-10-28T11:48:48Z","updated_at":"2024-01-11T12:25:26Z","name":"SAP_cf-admin-proxy","suspended":false,"relationships":{"quota":{"data":{"guid":"ff7b95b2-a0e0-4a73-9cde-f58523fc38e0"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ff7b95b2-a0e0-4a73-9cde-f58523fc38e0"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:05 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4b4d2b0c6c6bc0f6
+            X-B3-Traceid:
+                - 8556f924d97842324b4d2b0c6c6bc0f6
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1704989056"
+            X-Runtime:
+                - "0.031109"
+            X-Vcap-Request-Id:
+                - 8556f924-d978-4232-4b4d-2b0c6c6bc0f6::874b5e68-0ef2-402b-8086-a2889abf8c00
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 254.393292ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1266
+        uncompressed: false
+        body: |-
+            {
+              "links": {
+                "self": {
+                  "href": "https://api.x.x.x.x.com"
+                },
+                "cloud_controller_v2": {
+                  "href": "https://api.x.x.x.x.com/v2",
+                  "meta": {
+                    "version": "2.218.0"
+                  }
+                },
+                "cloud_controller_v3": {
+                  "href": "https://api.x.x.x.x.com/v3",
+                  "meta": {
+                    "version": "3.153.0"
+                  }
+                },
+                "network_policy_v0": {
+                  "href": "https://api.x.x.x.x.com/networking/v0/external"
+                },
+                "network_policy_v1": {
+                  "href": "https://api.x.x.x.x.com/networking/v1/external"
+                },
+                "login": {
+                  "href": "https://login.x.x.x.x.com"
+                },
+                "uaa": {
+                  "href": "https://uaa.x.x.x.x.com"
+                },
+                "credhub": null,
+                "routing": null,
+                "logging": {
+                  "href": "wss://doppler.x.x.x.x.com:443"
+                },
+                "log_cache": {
+                  "href": "https://log-cache.x.x.x.x.com"
+                },
+                "log_stream": {
+                  "href": "https://log-stream.x.x.x.x.com"
+                },
+                "app_ssh": {
+                  "href": "ssh.x.x.x.x.com:2222",
+                  "meta": {
+                    "host_key_fingerprint": "SYWfpJUXGL2T+b8bkK15zppx/fZ08Wc9/iV8bxMLqWI",
+                    "oauth_client": "ssh-proxy"
+                  }
+                }
+              }
+            }
+        headers:
+            Content-Length:
+                - "1266"
+            Content-Type:
+                - application/json;charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:05 GMT
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 631c94c80144eba5
+            X-B3-Traceid:
+                - 8c5e2f4f9fc94067631c94c80144eba5
+            X-Content-Type-Options:
+                - nosniff
+            X-Vcap-Request-Id:
+                - 8c5e2f4f-9fc9-4067-631c-94c80144eba5::ea63b4d9-2397-4917-baf7-2e9bff793952
+        status: 200 OK
+        code: 200
+        duration: 219.94425ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=8542ae4f285e420f9e847d15ecfe3050-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 8542ae4f285e420f9e847d15ecfe3050-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"8542ae4f285e420f9e847d15ecfe3050-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"9be304649f42454f865d6833f033dcfe"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:05 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 0cf6a002-c9d2-4c43-6beb-6cb674fefbb5
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 247.43025ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/organizations?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":45,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"08d38300-bcfe-40c8-b89d-d6ecc1b84a6a","created_at":"2016-07-05T13:48:57Z","updated_at":"2024-01-11T13:11:35Z","name":"SAP","suspended":false,"relationships":{"quota":{"data":{"guid":"e917a250-720e-4c1e-b140-56e49cdc8e8f"}}},"metadata":{"labels":{"cloud.sap.com/UAMGroup":"SAP_CP_CF","cloud.sap.com/system-org":""},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/08d38300-bcfe-40c8-b89d-d6ecc1b84a6a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e917a250-720e-4c1e-b140-56e49cdc8e8f"}}},{"guid":"fa55417a-5a13-4b15-a7a5-0a68437b4860","created_at":"2016-07-05T14:38:05Z","updated_at":"2024-01-11T14:13:59Z","name":"test","suspended":false,"relationships":{"quota":{"data":{"guid":"bc1c0999-52a1-495f-8727-84e6302b8868"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fa55417a-5a13-4b15-a7a5-0a68437b4860/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/bc1c0999-52a1-495f-8727-84e6302b8868"}}},{"guid":"b9bd6457-1b8e-421f-bcb1-3f5259ece518","created_at":"2016-07-07T12:25:39Z","updated_at":"2024-01-11T12:34:50Z","name":"SAP_cockpit","suspended":false,"relationships":{"quota":{"data":{"guid":"1914884e-2aa8-4492-8f23-6cd8a8bfa1ce"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b9bd6457-1b8e-421f-bcb1-3f5259ece518/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/1914884e-2aa8-4492-8f23-6cd8a8bfa1ce"}}},{"guid":"f3a2c17d-b26e-4e52-85a7-6c09d0574acb","created_at":"2016-07-07T12:25:43Z","updated_at":"2024-01-11T12:25:32Z","name":"SAP_availability","suspended":false,"relationships":{"quota":{"data":{"guid":"82bcf0a8-b813-43a5-a851-188ba28cd75b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f3a2c17d-b26e-4e52-85a7-6c09d0574acb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/82bcf0a8-b813-43a5-a851-188ba28cd75b"}}},{"guid":"1aafeb30-2c94-4862-802a-dd1e7c5c2fab","created_at":"2016-07-13T12:29:59Z","updated_at":"2024-01-11T12:38:51Z","name":"SAP_UAA","suspended":false,"relationships":{"quota":{"data":{"guid":"503550b6-6931-467f-8fcf-c6e853562385"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/1aafeb30-2c94-4862-802a-dd1e7c5c2fab/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/503550b6-6931-467f-8fcf-c6e853562385"}}},{"guid":"34122e4c-b5ee-4b98-986b-f44f55b880fc","created_at":"2016-09-19T11:21:06Z","updated_at":"2024-01-11T12:26:55Z","name":"SAP_provisioning","suspended":false,"relationships":{"quota":{"data":{"guid":"d3c48acf-d98d-42af-b324-2415c1c2b4ae"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/34122e4c-b5ee-4b98-986b-f44f55b880fc/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d3c48acf-d98d-42af-b324-2415c1c2b4ae"}}},{"guid":"6def95b0-385c-439c-9ebf-b5c3e6483d2f","created_at":"2016-11-11T14:41:46Z","updated_at":"2024-01-11T13:17:34Z","name":"SAP_ObjectStore","suspended":false,"relationships":{"quota":{"data":{"guid":"72540f7c-d76e-481d-9ea8-645d1348f72b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/6def95b0-385c-439c-9ebf-b5c3e6483d2f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/72540f7c-d76e-481d-9ea8-645d1348f72b"}}},{"guid":"56379cc9-c832-48f5-920d-67a600aaca5b","created_at":"2016-11-23T10:20:50Z","updated_at":"2024-01-11T12:30:25Z","name":"SAP_xsa","suspended":false,"relationships":{"quota":{"data":{"guid":"35b0d3da-1be0-44af-b661-1b859b46efb4"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/56379cc9-c832-48f5-920d-67a600aaca5b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/35b0d3da-1be0-44af-b661-1b859b46efb4"}}},{"guid":"b82502f4-b13f-48fc-ad5a-58b941178218","created_at":"2017-01-30T09:47:44Z","updated_at":"2024-01-11T12:24:47Z","name":"SAPOps","suspended":false,"relationships":{"quota":{"data":{"guid":"d1f77f72-c33f-42b4-8281-0ada9475f103"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b82502f4-b13f-48fc-ad5a-58b941178218/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d1f77f72-c33f-42b4-8281-0ada9475f103"}}},{"guid":"53157ec0-4ff6-4ae5-a7fe-67190ebcac76","created_at":"2017-02-16T08:57:57Z","updated_at":"2024-01-11T12:27:49Z","name":"SAP_featureflags","suspended":false,"relationships":{"quota":{"data":{"guid":"35015ec0-ad96-4b45-96da-9e87ac6135bb"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/53157ec0-4ff6-4ae5-a7fe-67190ebcac76/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/35015ec0-ad96-4b45-96da-9e87ac6135bb"}}},{"guid":"43d062ae-c313-413c-a8a0-5af09e3f5aeb","created_at":"2017-04-07T13:37:55Z","updated_at":"2024-01-11T12:36:49Z","name":"SAP_connectivity","suspended":false,"relationships":{"quota":{"data":{"guid":"3d799863-de8b-4604-93f2-ad40a6bd52d5"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/43d062ae-c313-413c-a8a0-5af09e3f5aeb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/3d799863-de8b-4604-93f2-ad40a6bd52d5"}}},{"guid":"f7be9210-2f94-4569-b37e-b07d7cae728b","created_at":"2017-06-02T12:59:13Z","updated_at":"2024-01-11T12:26:06Z","name":"SAP_OSaS_Test","suspended":false,"relationships":{"quota":{"data":{"guid":"72540f7c-d76e-481d-9ea8-645d1348f72b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f7be9210-2f94-4569-b37e-b07d7cae728b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/72540f7c-d76e-481d-9ea8-645d1348f72b"}}},{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56","created_at":"2017-07-04T10:43:11Z","updated_at":"2024-01-08T15:08:31Z","name":"PerformanceTeamBLR","suspended":false,"relationships":{"quota":{"data":{"guid":"c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},{"guid":"e7dd0778-642c-42ff-ab62-0690f73d2479","created_at":"2017-08-02T14:56:39Z","updated_at":"2024-01-11T12:29:18Z","name":"SAP_destination-configuration","suspended":false,"relationships":{"quota":{"data":{"guid":"436c6370-008d-4b41-9a07-08012f4b250b"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/e7dd0778-642c-42ff-ab62-0690f73d2479/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/436c6370-008d-4b41-9a07-08012f4b250b"}}},{"guid":"ead860f8-4edb-4342-8e3d-62c1bc4f088c","created_at":"2017-08-09T10:04:55Z","updated_at":"2024-01-11T13:03:49Z","name":"SAP_autoscaler","suspended":false,"relationships":{"quota":{"data":{"guid":"7b6b7c87-38a4-486c-97a0-21e13ba90e72"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ead860f8-4edb-4342-8e3d-62c1bc4f088c/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/7b6b7c87-38a4-486c-97a0-21e13ba90e72"}}},{"guid":"980a1cce-b23c-4e31-b3e7-6f3c25d7b178","created_at":"2017-12-13T13:23:53Z","updated_at":"2024-01-11T13:19:55Z","name":"SAP_html5_apps_repo","suspended":false,"relationships":{"quota":{"data":{"guid":"75003a53-921e-443c-923b-152b839da8ff"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/980a1cce-b23c-4e31-b3e7-6f3c25d7b178/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/75003a53-921e-443c-923b-152b839da8ff"}}},{"guid":"9bb2fb2f-8f95-47a2-b704-91c6301aee24","created_at":"2018-04-25T08:01:39Z","updated_at":"2024-01-11T12:25:30Z","name":"extension_service","suspended":false,"relationships":{"quota":{"data":{"guid":"e8d26d7c-db0a-4c31-93b4-6e42acba82f2"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9bb2fb2f-8f95-47a2-b704-91c6301aee24/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e8d26d7c-db0a-4c31-93b4-6e42acba82f2"}}},{"guid":"39e4a2a9-2568-4dae-80f4-547b3cda791f","created_at":"2018-07-06T10:39:47Z","updated_at":"2024-01-11T12:26:21Z","name":"SAP_MalwareScanning","suspended":false,"relationships":{"quota":{"data":{"guid":"d4fed0d6-0d36-451b-852a-1da5fc67b8ad"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/39e4a2a9-2568-4dae-80f4-547b3cda791f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/d4fed0d6-0d36-451b-852a-1da5fc67b8ad"}}},{"guid":"daf71371-987b-4b26-9fbd-d4b5f22aac9f","created_at":"2018-08-14T11:27:51Z","updated_at":"2024-01-11T12:27:34Z","name":"SAP_auditlog_viewer","suspended":false,"relationships":{"quota":{"data":{"guid":"30e39cb0-d586-4f43-a5ed-13bcca279416"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/daf71371-987b-4b26-9fbd-d4b5f22aac9f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/30e39cb0-d586-4f43-a5ed-13bcca279416"}}},{"guid":"b270257d-a65d-4d4f-aa0e-644eacbf512b","created_at":"2018-09-04T06:23:07Z","updated_at":"2024-01-11T12:26:36Z","name":"SAP_servicemanager","suspended":false,"relationships":{"quota":{"data":{"guid":"c62b3d9a-1cd0-4b67-999a-8f5bb4ad5596"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b270257d-a65d-4d4f-aa0e-644eacbf512b/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c62b3d9a-1cd0-4b67-999a-8f5bb4ad5596"}}},{"guid":"b06f8097-3d3e-4396-b670-e2031c7dc650","created_at":"2018-11-28T10:35:56Z","updated_at":"2024-01-11T12:26:48Z","name":"SAP_metering","suspended":false,"relationships":{"quota":{"data":{"guid":"6279197c-72a2-4587-a7c2-93609e06196e"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b06f8097-3d3e-4396-b670-e2031c7dc650/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/6279197c-72a2-4587-a7c2-93609e06196e"}}},{"guid":"7a77d48a-3928-4854-802c-6ae598fba2a2","created_at":"2018-12-11T16:59:35Z","updated_at":"2024-01-11T12:25:17Z","name":"SAP_service_owner_cockpit","suspended":false,"relationships":{"quota":{"data":{"guid":"f439bc03-92e7-434e-b88c-255984ef1ea9"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/7a77d48a-3928-4854-802c-6ae598fba2a2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f439bc03-92e7-434e-b88c-255984ef1ea9"}}},{"guid":"75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab","created_at":"2019-02-20T12:44:04Z","updated_at":"2024-01-11T13:05:12Z","name":"SAP_filesystemservice","suspended":false,"relationships":{"quota":{"data":{"guid":"83690887-2e5d-4c66-b918-2a625832ea60"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/75cdf05b-0d4a-4f68-bb2c-8c616f31a6ab/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/83690887-2e5d-4c66-b918-2a625832ea60"}}},{"guid":"fdd8e332-7913-47a8-8e72-74ce81a5f015","created_at":"2019-03-11T08:32:34Z","updated_at":"2024-01-11T12:53:36Z","name":"SAP_CDCerts","suspended":false,"relationships":{"quota":{"data":{"guid":"c69d5ca8-6921-43ee-8d1d-835246c3b645"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fdd8e332-7913-47a8-8e72-74ce81a5f015/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c69d5ca8-6921-43ee-8d1d-835246c3b645"}}},{"guid":"07d7b922-bf3c-4f2c-a3df-23aebc350a39","created_at":"2019-05-14T16:09:44Z","updated_at":"2024-01-11T12:19:10Z","name":"SAP_autoscaler_tests","suspended":false,"relationships":{"quota":{"data":{"guid":"aa45a8e8-0ffa-427f-9bf4-7256457c0114"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/07d7b922-bf3c-4f2c-a3df-23aebc350a39/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/aa45a8e8-0ffa-427f-9bf4-7256457c0114"}}},{"guid":"0639a7f1-ce06-4578-951f-3251a65be1f1","created_at":"2019-07-10T08:40:23Z","updated_at":"2022-06-01T03:37:52Z","name":"SAP_cloudnativeservices","suspended":false,"relationships":{"quota":{"data":{"guid":"ae0a58c1-ee35-495b-bf5f-1347d6cef8dc"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/0639a7f1-ce06-4578-951f-3251a65be1f1/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ae0a58c1-ee35-495b-bf5f-1347d6cef8dc"}}},{"guid":"cc7fe5b9-104e-4204-a431-6f9b326fdb3a","created_at":"2020-02-04T12:18:48Z","updated_at":"2020-06-29T20:27:22Z","name":"sap_metering_ci","suspended":false,"relationships":{"quota":{"data":{"guid":"6279197c-72a2-4587-a7c2-93609e06196e"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/cc7fe5b9-104e-4204-a431-6f9b326fdb3a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/6279197c-72a2-4587-a7c2-93609e06196e"}}},{"guid":"d8de98a6-8f24-4461-ab05-82ac6c0b2fa9","created_at":"2020-02-05T11:26:01Z","updated_at":"2024-01-11T12:25:29Z","name":"sap_uas","suspended":false,"relationships":{"quota":{"data":{"guid":"de9cd3c9-2cf1-4c19-bbf4-3a18d3618e50"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/d8de98a6-8f24-4461-ab05-82ac6c0b2fa9/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/de9cd3c9-2cf1-4c19-bbf4-3a18d3618e50"}}},{"guid":"09a2a46a-e5d5-470b-bed3-0d398ec06076","created_at":"2020-02-05T14:24:26Z","updated_at":"2024-01-11T13:17:03Z","name":"SAP_cpcli","suspended":false,"relationships":{"quota":{"data":{"guid":"65840343-b33d-4fd3-b497-daac2dc799d1"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/09a2a46a-e5d5-470b-bed3-0d398ec06076/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/65840343-b33d-4fd3-b497-daac2dc799d1"}}},{"guid":"80f6ee8c-613c-433b-8ac6-7fb945949b0a","created_at":"2020-04-02T09:03:34Z","updated_at":"2024-01-11T13:33:51Z","name":"SAP_backingservices","suspended":false,"relationships":{"quota":{"data":{"guid":"4d6cb53c-8d4d-4382-ac65-08b6fdc12986"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/80f6ee8c-613c-433b-8ac6-7fb945949b0a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/4d6cb53c-8d4d-4382-ac65-08b6fdc12986"}}},{"guid":"2977c3d7-939f-47d5-aa6a-54531e8d983f","created_at":"2020-06-29T07:08:44Z","updated_at":"2020-08-17T08:34:03Z","name":"SLIAchieve_SLIBlue","suspended":false,"relationships":{"quota":{"data":{"guid":"1595dd44-dcac-47da-96c1-402e16114d16"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/2977c3d7-939f-47d5-aa6a-54531e8d983f/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/1595dd44-dcac-47da-96c1-402e16114d16"}}},{"guid":"d7f2dc04-6f2c-4754-82d2-f842b1417acb","created_at":"2020-08-19T11:44:37Z","updated_at":"2020-08-19T14:39:40Z","name":"aifdev","suspended":false,"relationships":{"quota":{"data":{"guid":"8022f725-2976-4e8c-981a-7cafc3d04bc4"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/d7f2dc04-6f2c-4754-82d2-f842b1417acb/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/8022f725-2976-4e8c-981a-7cafc3d04bc4"}}},{"guid":"8b8f580f-18be-4a47-bed0-ca23814b1dd2","created_at":"2020-08-27T15:41:38Z","updated_at":"2023-06-27T13:09:54Z","name":"MHBSITEST-old","suspended":false,"relationships":{"quota":{"data":{"guid":"2d08351b-8cc0-43d6-a803-9f4e1463c6e2"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/8b8f580f-18be-4a47-bed0-ca23814b1dd2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/2d08351b-8cc0-43d6-a803-9f4e1463c6e2"}}},{"guid":"f946c4c4-87c8-4916-b98a-faa05d84708a","created_at":"2020-09-29T16:24:32Z","updated_at":"2020-09-29T16:24:36Z","name":"SAP-test-isolation-segments-HgtUIonf","suspended":false,"relationships":{"quota":{"data":{"guid":"f66f7337-10f4-4498-bb57-956bd12d6954"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/f946c4c4-87c8-4916-b98a-faa05d84708a/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f66f7337-10f4-4498-bb57-956bd12d6954"}}},{"guid":"35db586b-1aed-4b3a-88ca-91ced91dc75d","created_at":"2020-10-28T07:52:46Z","updated_at":"2024-01-11T12:25:27Z","name":"SAP_apm","suspended":false,"relationships":{"quota":{"data":{"guid":"2f5bc092-de30-4326-8c6d-f9d734faa1f8"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/35db586b-1aed-4b3a-88ca-91ced91dc75d/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/2f5bc092-de30-4326-8c6d-f9d734faa1f8"}}},{"guid":"b027b61e-02e5-466f-871e-1e56eb9ac75c","created_at":"2020-11-09T14:21:49Z","updated_at":"2020-11-09T14:24:28Z","name":"aif-infra-val-aws-eu-central-1-aws","suspended":false,"relationships":{"quota":{"data":{"guid":"ef7d48ec-59a0-4d6f-87f6-35990741c88e"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/b027b61e-02e5-466f-871e-1e56eb9ac75c/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ef7d48ec-59a0-4d6f-87f6-35990741c88e"}}},{"guid":"bea0b8a5-2426-455e-8cd6-52cb50aa9ba8","created_at":"2020-12-09T09:49:47Z","updated_at":"2024-01-11T12:55:31Z","name":"SAP_Certificate-Service","suspended":false,"relationships":{"quota":{"data":{"guid":"9ffb2e33-b398-42a3-ac2f-e4063e04dadc"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/bea0b8a5-2426-455e-8cd6-52cb50aa9ba8/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/9ffb2e33-b398-42a3-ac2f-e4063e04dadc"}}},{"guid":"fb9b1e83-165c-490f-adc8-14c6f80fc3b3","created_at":"2021-02-11T08:08:05Z","updated_at":"2024-01-11T13:05:49Z","name":"SAP_CDCerts_Test","suspended":false,"relationships":{"quota":{"data":{"guid":"4ecdc49f-5f66-4bbc-b1ca-db463f9431a6"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/fb9b1e83-165c-490f-adc8-14c6f80fc3b3/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/4ecdc49f-5f66-4bbc-b1ca-db463f9431a6"}}},{"guid":"4f13cf64-353e-42e8-8d9a-122ab2ce9a69","created_at":"2021-03-17T10:21:17Z","updated_at":"2024-01-11T14:43:24Z","name":"SAP_chaosmonkey","suspended":false,"relationships":{"quota":{"data":{"guid":"0d8ef75c-56f5-4119-a031-3110dd310503"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/4f13cf64-353e-42e8-8d9a-122ab2ce9a69/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/0d8ef75c-56f5-4119-a031-3110dd310503"}}},{"guid":"09b28553-5d79-4315-a703-fc440c6900ee","created_at":"2021-09-01T13:30:33Z","updated_at":"2024-01-02T22:25:27Z","name":"SAP_Dynatrace","suspended":false,"relationships":{"quota":{"data":{"guid":"5e9ab2da-e771-4c17-b044-c71538e4dfd1"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/09b28553-5d79-4315-a703-fc440c6900ee/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/5e9ab2da-e771-4c17-b044-c71538e4dfd1"}}},{"guid":"900e37ce-dbdb-46d8-ac60-da48c25125da","created_at":"2021-10-01T16:30:36Z","updated_at":"2024-01-11T13:00:59Z","name":"SAP_DC-Health","suspended":false,"relationships":{"quota":{"data":{"guid":"91b36218-adee-495b-aa78-ebc8e38583c7"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/900e37ce-dbdb-46d8-ac60-da48c25125da/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/91b36218-adee-495b-aa78-ebc8e38583c7"}}},{"guid":"e0df2568-8cfc-4758-a12b-a2dd7ce51137","created_at":"2022-05-25T15:06:20Z","updated_at":"2024-01-11T12:25:44Z","name":"SAP_Spark","suspended":false,"relationships":{"quota":{"data":{"guid":"99ac779a-fbea-46e2-9828-c4967d254bb3"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/e0df2568-8cfc-4758-a12b-a2dd7ce51137/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/99ac779a-fbea-46e2-9828-c4967d254bb3"}}},{"guid":"9e1bea47-49bb-40a6-84f5-2f6709d922c2","created_at":"2022-06-22T09:08:16Z","updated_at":"2024-01-11T12:27:18Z","name":"SAP_Cassandra","suspended":false,"relationships":{"quota":{"data":{"guid":"08be3788-4d66-497d-9c9f-e9296ef8e947"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9e1bea47-49bb-40a6-84f5-2f6709d922c2/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/08be3788-4d66-497d-9c9f-e9296ef8e947"}}},{"guid":"0458a1b0-6385-475a-8a92-c677651b3ca1","created_at":"2022-06-22T09:10:40Z","updated_at":"2024-01-11T12:26:36Z","name":"SAP_Kafka","suspended":false,"relationships":{"quota":{"data":{"guid":"f280eecb-759c-4cb7-8376-233d9ded1399"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/0458a1b0-6385-475a-8a92-c677651b3ca1/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/f280eecb-759c-4cb7-8376-233d9ded1399"}}},{"guid":"9bd28d61-024c-4979-a1a6-c5d1add05e72","created_at":"2022-10-28T11:48:48Z","updated_at":"2024-01-11T12:25:26Z","name":"SAP_cf-admin-proxy","suspended":false,"relationships":{"quota":{"data":{"guid":"ff7b95b2-a0e0-4a73-9cde-f58523fc38e0"}}},"metadata":{"labels":{"cloud.sap.com/system-org":"","cloud.sap.com/UAMGroup":"SAP_CP_CF"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/9bd28d61-024c-4979-a1a6-c5d1add05e72/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/ff7b95b2-a0e0-4a73-9cde-f58523fc38e0"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:06 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6af32ae6cf28134a
+            X-B3-Traceid:
+                - a04db407ecbd4e716af32ae6cf28134a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1704989056"
+            X-Runtime:
+                - "0.023502"
+            X-Vcap-Request-Id:
+                - a04db407-ecbd-4e71-6af3-2ae6cf28134a::4b6c317d-6c1d-45c1-9b30-77cea6133419
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 245.959334ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1266
+        uncompressed: false
+        body: |-
+            {
+              "links": {
+                "self": {
+                  "href": "https://api.x.x.x.x.com"
+                },
+                "cloud_controller_v2": {
+                  "href": "https://api.x.x.x.x.com/v2",
+                  "meta": {
+                    "version": "2.218.0"
+                  }
+                },
+                "cloud_controller_v3": {
+                  "href": "https://api.x.x.x.x.com/v3",
+                  "meta": {
+                    "version": "3.153.0"
+                  }
+                },
+                "network_policy_v0": {
+                  "href": "https://api.x.x.x.x.com/networking/v0/external"
+                },
+                "network_policy_v1": {
+                  "href": "https://api.x.x.x.x.com/networking/v1/external"
+                },
+                "login": {
+                  "href": "https://login.x.x.x.x.com"
+                },
+                "uaa": {
+                  "href": "https://uaa.x.x.x.x.com"
+                },
+                "credhub": null,
+                "routing": null,
+                "logging": {
+                  "href": "wss://doppler.x.x.x.x.com:443"
+                },
+                "log_cache": {
+                  "href": "https://log-cache.x.x.x.x.com"
+                },
+                "log_stream": {
+                  "href": "https://log-stream.x.x.x.x.com"
+                },
+                "app_ssh": {
+                  "href": "ssh.x.x.x.x.com:2222",
+                  "meta": {
+                    "host_key_fingerprint": "SYWfpJUXGL2T+b8bkK15zppx/fZ08Wc9/iV8bxMLqWI",
+                    "oauth_client": "ssh-proxy"
+                  }
+                }
+              }
+            }
+        headers:
+            Content-Length:
+                - "1266"
+            Content-Type:
+                - application/json;charset=utf-8
+            Date:
+                - Thu, 11 Jan 2024 15:37:06 GMT
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 75f3d9e1bf08128d
+            X-B3-Traceid:
+                - 81818398ed5e446475f3d9e1bf08128d
+            X-Content-Type-Options:
+                - nosniff
+            X-Vcap-Request-Id:
+                - 81818398-ed5e-4464-75f3-d9e1bf08128d::188483bc-bdde-4140-94f1-f3b383621894
+        status: 200 OK
+        code: 200
+        duration: 217.747042ms
