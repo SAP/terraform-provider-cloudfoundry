@@ -10,8 +10,13 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
+)
+
+var (
+	regexpValidUUID = validation.UuidRegexp
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {
@@ -84,6 +89,7 @@ func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction
 				interactionFinal = regPattern.ReplaceAllString(interactionFinal, reg.redactString)
 			}
 		}
+		// `[A-Z]+[A-Za-z0-9_]` part added to enforce some capital letter to prevent cases like 12.1.2
 		jwtTokenPattern := regexp.MustCompile(`([A-Za-z0-9_]*[A-Z]+[A-Za-z0-9_]*\.){2}[A-Za-z0-9-_]*`)
 		interactionFinal = jwtTokenPattern.ReplaceAllString(interactionFinal, "redacted")
 		err = json.Unmarshal([]byte(interactionFinal), &casInteraction)
@@ -137,6 +143,14 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 		rec.AddHook(cfg.GetHook(), cfg.GetHookKind())
 	} else {
 		t.Logf("\nReplaying '%s'", cassetteName)
+		pwd, err := os.Getwd()
+		if err != nil {
+			panic(err)
+		}
+		err = os.Setenv("CF_HOME", pwd+"/../../asset")
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	if err != nil {

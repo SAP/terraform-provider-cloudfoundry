@@ -18,7 +18,7 @@ func labelsSchema() *schema.MapAttribute {
 	return &schema.MapAttribute{
 		MarkdownDescription: "The labels associated with Cloud Foundry resources",
 		ElementType:         types.StringType,
-		Optional:            true,
+		Computed:            true,
 	}
 }
 
@@ -26,7 +26,7 @@ func annotationsSchema() *schema.MapAttribute {
 	return &schema.MapAttribute{
 		MarkdownDescription: "The annotations associated with Cloud Foundry resources",
 		ElementType:         types.StringType,
-		Optional:            true,
+		Computed:            true,
 	}
 }
 

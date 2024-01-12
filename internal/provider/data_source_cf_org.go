@@ -14,7 +14,6 @@ import (
 	"github.com/samber/lo"
 )
 
-// Ensure provider defined types fully satisfy framework interfaces.
 var _ datasource.DataSource = &OrgDataSource{}
 var _ datasource.DataSourceWithConfigure = &OrgDataSource{}
 
@@ -23,7 +22,7 @@ func NewOrgDataSource() datasource.DataSource {
 }
 
 type OrgDataSource struct {
-	cfclient *client.Client
+	cfClient *client.Client
 }
 
 type OrgDataSourceModel struct {
@@ -69,7 +68,7 @@ func (d *OrgDataSource) Configure(ctx context.Context, req datasource.ConfigureR
 		)
 		return
 	}
-	d.cfclient = session.CFClient
+	d.cfClient = session.CFClient
 }
 
 func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
@@ -79,7 +78,7 @@ func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgs, err := d.cfclient.Organizations.ListAll(ctx, nil)
+	orgs, err := d.cfClient.Organizations.ListAll(ctx, nil)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch org data.",
@@ -104,9 +103,8 @@ func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	//d.session.cfclient
+
 	tflog.Trace(ctx, "read a data source")
 
-	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
