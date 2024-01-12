@@ -229,6 +229,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewOrgDataSource,
+		NewSpaceDataSource,
 	}
 }
 
