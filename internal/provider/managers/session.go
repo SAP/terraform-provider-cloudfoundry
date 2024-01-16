@@ -1,6 +1,8 @@
 package managers
 
 import (
+	"net/http"
+
 	"github.com/cloudfoundry-community/go-cfclient/v3/client"
 	config "github.com/cloudfoundry-community/go-cfclient/v3/config"
 )
@@ -18,7 +20,7 @@ type Session struct {
 	CFClient *client.Client
 }
 
-func (c *CloudFoundryProviderConfig) NewSession() (*Session, error) {
+func (c *CloudFoundryProviderConfig) NewSession(httpClient *http.Client) (*Session, error) {
 	var cfg *config.Config
 	var err error
 	switch {
@@ -31,6 +33,9 @@ func (c *CloudFoundryProviderConfig) NewSession() (*Session, error) {
 	}
 	if err != nil {
 		return nil, err
+	}
+	if httpClient != nil {
+		cfg.WithHTTPClient(httpClient)
 	}
 	cfg.WithSkipTLSValidation(c.SkipSslValidation)
 	cf, err := client.New(cfg)

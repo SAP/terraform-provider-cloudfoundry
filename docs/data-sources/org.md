@@ -32,11 +32,8 @@ output "labels" {
 
 - `name` (String) The name of the organization to look up
 
-### Optional
-
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources
-- `labels` (Map of String) The labels associated with Cloud Foundry resources
-
 ### Read-Only
 
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources
 - `id` (String) The GUID of the organization
+- `labels` (Map of String) The labels associated with Cloud Foundry resources
