@@ -3,27 +3,28 @@ package provider
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfconfig "github.com/cloudfoundry-community/go-cfclient/v3/config"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 var _ provider.Provider = &CloudFoundryProvider{}
 
 type CloudFoundryProvider struct {
-	// version is set to the provider version on release, "dev" when the
-	// provider is built and ran locally, and "test" when running acceptance
-	// testing.
-	version string
+	version    string
+	httpClient *http.Client
 }
 
 type CloudFoundryProviderModel struct {
@@ -47,24 +48,39 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 			"api_url": schema.StringAttribute{
 				MarkdownDescription: "Specific URL representing the entry point for communication between the client and a Cloud Foundry instance.",
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 			"user": schema.StringAttribute{
 				MarkdownDescription: "A unique identifier associated with an individual or entity for authentication & authorization purposes.",
 				Optional:            true,
 				Sensitive:           true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 			"password": schema.StringAttribute{
 				MarkdownDescription: "A confidential alphanumeric code associated with a user account on the Cloud Foundry platform",
 				Optional:            true,
 				Sensitive:           true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 			"cf_client_id": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 			"cf_client_secret": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 			"skip_ssl_validation": schema.BoolAttribute{
 				Optional: true,
@@ -103,16 +119,19 @@ func checkConfigUnknown(config *CloudFoundryProviderModel, resp *provider.Config
 		addGenericAttributeError(resp, "Unknown", "user", "Username", "CF_USER")
 	case !config.User.IsUnknown() && config.Password.IsUnknown():
 		addGenericAttributeError(resp, "Unknown", "password", "Password", "CF_PASSWORD")
-	case config.CFClientID.IsUnknown() && !config.CFClientSecret.IsUnknown():
-		addGenericAttributeError(resp, "Unknown", "cf_client_id", "CF Client ID", "CF_CF_CLIENT_ID")
-	case !config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown():
-		addGenericAttributeError(resp, "Unknown", "cf_client_secret", "CF Client Secret", "CF_CF_CLIENT_SECRET")
-	default:
-		if !anyParamExists && cfconfigerr != nil {
-			resp.Diagnostics.AddError(
-				"Unable to create CF Client due to unknown values",
-				"Either user/password or client_id/client_secret or store token path must be set or CF config must exist in path (default ~/.cf/config.json)",
-			)
+	case config.User.IsUnknown() && config.Password.IsUnknown():
+		switch {
+		case config.CFClientID.IsUnknown() && !config.CFClientSecret.IsUnknown():
+			addGenericAttributeError(resp, "Unknown", "cf_client_id", "CF Client ID", "CF_CF_CLIENT_ID")
+		case !config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown():
+			addGenericAttributeError(resp, "Unknown", "cf_client_secret", "CF Client Secret", "CF_CF_CLIENT_SECRET")
+		case config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown():
+			if !config.Endpoint.IsUnknown() || cfconfigerr != nil {
+				resp.Diagnostics.AddError(
+					"Unable to create CF Client due to unknown values",
+					"Either user/password or client_id/client_secret must be set with api_url or CF config must exist in path (default ~/.cf/config.json)",
+				)
+			}
 		}
 	}
 }
@@ -130,16 +149,19 @@ func checkConfig(resp *provider.ConfigureResponse, endpoint string, user string,
 		addGenericAttributeError(resp, "Missing", "user", "Username", "CF_USER")
 	case user != "" && password == "":
 		addGenericAttributeError(resp, "Missing", "password", "Password", "CF_PASSWORD")
-	case cfclientid == "" && cfclientsecret != "":
-		addGenericAttributeError(resp, "Missing", "cf_client_id", "Client ID", "CF_CF_CLIENT_ID")
-	case cfclientid != "" && cfclientsecret == "":
-		addGenericAttributeError(resp, "Missing", "cf_client_secret", " Client Secret", "CF_CF_CLIENT_SECRET")
-	default:
-		if !anyParamExists && cfconfigerr != nil {
-			resp.Diagnostics.AddError(
-				"Unable to create CF Client due to missing values",
-				"Either user/password or client_id/client_secret or store token path must be set or CF config must exist in path (default ~/.cf/config.json)",
-			)
+	case user == "" && password == "":
+		switch {
+		case cfclientid == "" && cfclientsecret != "":
+			addGenericAttributeError(resp, "Missing", "cf_client_id", "Client ID", "CF_CF_CLIENT_ID")
+		case cfclientid != "" && cfclientsecret == "":
+			addGenericAttributeError(resp, "Missing", "cf_client_secret", " Client Secret", "CF_CF_CLIENT_SECRET")
+		case cfclientid == "" && cfclientsecret == "":
+			if endpoint != "" || cfconfigerr != nil {
+				resp.Diagnostics.AddError(
+					"Unable to create CF Client due to missing values",
+					"Either user/password or client_id/client_secret must be set with api_url or CF config must exist in path (default ~/.cf/config.json)",
+				)
+			}
 		}
 	}
 }
@@ -172,6 +194,12 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	}
 	if !config.Password.IsNull() {
 		password = config.Password.ValueString()
+	}
+	if !config.CFClientID.IsNull() {
+		cfclientid = config.CFClientID.ValueString()
+	}
+	if !config.CFClientSecret.IsNull() {
+		cfclientsecret = config.CFClientSecret.ValueString()
 	}
 	checkConfig(resp, endpoint, user, password, cfclientid, cfclientsecret)
 	if resp.Diagnostics.HasError() {
@@ -208,7 +236,7 @@ func (p *CloudFoundryProvider) Configure(ctx context.Context, req provider.Confi
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	session, err := cloudFoundryProviderConfig.NewSession()
+	session, err := cloudFoundryProviderConfig.NewSession(p.httpClient)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create CF Client",
@@ -233,10 +261,11 @@ func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasou
 	}
 }
 
-func New(version string) func() provider.Provider {
+func New(version string, httpClient *http.Client) func() provider.Provider {
 	return func() provider.Provider {
 		return &CloudFoundryProvider{
-			version: version,
+			version:    version,
+			httpClient: httpClient,
 		}
 	}
 }

@@ -1,0 +1,43 @@
+{
+  "AccessToken": "bearer eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vdWFhLngueC54LnguY29tL3Rva2VuX2tleXMiLCJraWQiOiJrZXktMSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YmYyMmRhYjNiYmU0NTg1OTUwM2Y0MWExZmRkZmFmOCIsImNsaWVudF9hdXRoX21ldGhvZCI6Im5vbmUiLCJzdWIiOiIxZjI2M2UwMC05YTA3LTQyZDgtYmU3MS1iMThiZTZkMTBiNDUiLCJzY29wZSI6WyJvcGVuaWQiLCJ1YWEudXNlciIsImNsb3VkX2NvbnRyb2xsZXIucmVhZCIsInBhc3N3b3JkLndyaXRlIiwiY2xvdWRfY29udHJvbGxlci53cml0ZSJdLCJjbGllbnRfaWQiOiJjZiIsImNpZCI6ImNmIiwiYXpwIjoiY2YiLCJncmFudF90eXBlIjoicGFzc3dvcmQiLCJ1c2VyX2lkIjoiMWYyNjNlMDAtOWEwNy00MmQ4LWJlNzEtYjE4YmU2ZDEwYjQ1Iiwib3JpZ2luIjoic2FwLmlkcyIsInVzZXJfbmFtZSI6InRlc3RfdXNlckB4LmNvbSIsImVtYWlsIjoidGVzdF91c2VyQHguY29tIiwiYXV0aF90aW1lIjoxNzA1MDYwOTM2LCJyZXZfc2lnIjoiZGUxMDU3ZDEiLCJpYXQiOjE3MDUwNjA5MzYsImV4cCI6MjcwNTA2MjEzNiwiaXNzIjoiaHR0cHM6Ly91YWEueC54LngueC5jb20vb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIiwiY2YiLCJ1YWEiLCJvcGVuaWQiXX0.DADNqcmHbP8R0Dp3pMZVE7OeD5eTmcwh5dyFKFpryGEl3QqXKd1Af3raTFnJe1SRi66qjkvpdLub31Fh3LDdkAPAoFYshvwxozCdEinGYEx-qlW1Ttt6qyk_0y3CjKDExv43F8CpHwqD41A57IOAbz14revnb6tbW9pA_dBxhF9sYdXJvhPOnGUDKgv5SIYNUyt0_ekEaHNMVHp__4dnaCw7qdMkJ7Y7Pn4ES3KJqc88Ed9PzRJw0WQzwvHlJbQyCtpBXFx_ZzIEFNjcXo9p-YbezEKVypKlREs59h-HzpbhLwjW9_MzuY3wFveYT4FLsF-U0s0KeQq83E8J_zWRhw",
+  "APIVersion": "3.153.0",
+  "AsyncTimeout": 0,
+  "AuthorizationEndpoint": "https://login.x.x.x.x.com",
+  "CFOnK8s": {
+    "Enabled": false,
+    "AuthInfo": ""
+  },
+  "ColorEnabled": "",
+  "ConfigVersion": 4,
+  "DopplerEndPoint": "wss://doppler.x.x.x.x.com:443",
+  "Locale": "",
+  "LogCacheEndPoint": "https://log-cache.x.x.x.x.com.com",
+  "MinCLIVersion": "",
+  "MinRecommendedCLIVersion": "",
+  "NetworkPolicyV1Endpoint": "https://api.x.x.x.x.com/networking/v1/external",
+  "OrganizationFields": {
+    "GUID": "",
+    "Name": ""
+  },
+  "PluginRepos": [
+    {
+      "Name": "CF-Community",
+      "URL": "https://plugins.cloudfoundry.org"
+    }
+  ],
+  "RefreshToken": "5202c62c7a4eddecfedde-r",
+  "RoutingAPIEndpoint": "",
+  "SpaceFields": {
+    "GUID": "",
+    "Name": "",
+    "AllowSSH": false
+  },
+  "SSHOAuthClient": "ssh-proxy",
+  "SSLDisabled": false,
+  "Target": "https://api.x.x.x.x.com",
+  "Trace": "",
+  "UaaEndpoint": "https://uaa.x.x.x.x.com",
+  "UAAGrantType": "",
+  "UAAOAuthClient": "cf",
+  "UAAOAuthClientSecret": ""
+}
