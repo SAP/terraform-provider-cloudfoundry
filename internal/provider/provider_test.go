@@ -223,6 +223,7 @@ func TestCloudFoundryProvider_HasResources(t *testing.T) {
 func TestProvider_HasDataSources(t *testing.T) {
 	expectedDataSources := []string{
 		"cloudfoundry_org",
+		"cloudfoundry_space",
 	}
 
 	ctx := context.Background()
