@@ -130,7 +130,7 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		if err != nil {
 			resp.Diagnostics.AddError(
 				"Unable to fetch org data.",
-				fmt.Sprintf("Request failed with %T.", err),
+				fmt.Sprintf("Request failed with %s.", err.Error()),
 			)
 			return
 		}
@@ -161,7 +161,7 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 			default:
 				resp.Diagnostics.AddError(
 					"Unable to fetch org data.",
-					fmt.Sprintf("Request failed with %T.", err),
+					fmt.Sprintf("Request failed with %s.", err.Error()),
 				)
 			}
 
@@ -183,7 +183,7 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch space data.",
-			fmt.Sprintf("Request failed with %T.", err),
+			fmt.Sprintf("Request failed with %s.", err.Error()),
 		)
 		return
 	}
