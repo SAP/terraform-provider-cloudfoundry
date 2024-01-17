@@ -82,7 +82,7 @@ func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch org data.",
-			fmt.Sprintf("Request failed with %T.", err),
+			fmt.Sprintf("Request failed with %s.", err.Error()),
 		)
 		return
 	}
