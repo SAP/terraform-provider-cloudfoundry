@@ -26,10 +26,10 @@ func hclDataSourceOrg(odsmp *OrgDataSourceModelPtr) string {
 			{{if .Id}}
 				id = "{{.Id}}"
 			{{- end -}}
-			{{if .Id}}
+			{{if .Labels}}
 				labels = "{{.Labels}}"
 			{{- end -}}
-			{{if .Id}}
+			{{if .Annotations}}
 				annotations = "{{.Annotations}}"
 			{{- end }}
 			}`
