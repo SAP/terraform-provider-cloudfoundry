@@ -9,7 +9,6 @@ import (
 	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/samber/lo"
 )
@@ -23,13 +22,6 @@ func NewOrgDataSource() datasource.DataSource {
 
 type OrgDataSource struct {
 	cfClient *client.Client
-}
-
-type OrgDataSourceModel struct {
-	Name        types.String `tfsdk:"name"`
-	Id          types.String `tfsdk:"id"`
-	Labels      types.Map    `tfsdk:"labels"`
-	Annotations types.Map    `tfsdk:"annotations"`
 }
 
 func (d *OrgDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -49,8 +41,24 @@ func (d *OrgDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "The GUID of the organization",
 				Computed:            true,
 			},
+			"quota": schema.StringAttribute{
+				MarkdownDescription: "The ID of quota to be applied to this Org. By default, no quota is assigned to the org.",
+				Computed:            true,
+			},
 			labelsKey:      labelsSchema(),
 			annotationsKey: annotationsSchema(),
+			"created_at": schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
+				Computed:            true,
+			},
+			"updated_at": schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
+				Computed:            true,
+			},
+			"suspended": schema.BoolAttribute{
+				MarkdownDescription: "Whether an organization is suspended or not",
+				Computed:            true,
+			},
 		},
 	}
 }
@@ -72,9 +80,10 @@ func (d *OrgDataSource) Configure(ctx context.Context, req datasource.ConfigureR
 }
 
 func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data OrgDataSourceModel
+	var data orgType
 
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	diags := req.Config.Get(ctx, &data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -96,13 +105,8 @@ func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		)
 		return
 	}
-	data.Id = types.StringValue(org.GUID)
-	data.Labels = *setMapToBaseMap(ctx, resp, org.Metadata.Labels)
-	data.Annotations = *setMapToBaseMap(ctx, resp, org.Metadata.Annotations)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data, diags = mapOrgValuesToType(ctx, org)
+	resp.Diagnostics.Append(diags...)
 
 	tflog.Trace(ctx, "read a data source")
 
