@@ -37,10 +37,7 @@ func (d *OrgDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "The name of the organization to look up",
 				Required:            true,
 			},
-			"id": schema.StringAttribute{
-				MarkdownDescription: "The GUID of the organization",
-				Computed:            true,
-			},
+			idKey: guidSchema(),
 			"quota": schema.StringAttribute{
 				MarkdownDescription: "The ID of quota to be applied to this Org. Default quota is assigned to the org by default.",
 				Computed:            true,
