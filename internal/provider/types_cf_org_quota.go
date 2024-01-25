@@ -68,6 +68,17 @@ func mapOrgQuotaValuesToType(value *cfv3resource.OrganizationQuota) OrgQuotaType
 		CreatedAt:             types.StringValue(value.CreatedAt.Format(time.RFC3339)),
 		UpdatedAt:             types.StringValue(value.UpdatedAt.Format(time.RFC3339)),
 	}
+	// orgQuotaType.TotalServices = types.Int64Null()
+	// orgQuotaType.TotalServiceKeys = types.Int64Null()
+	// orgQuotaType.TotalRoutes = types.Int64Null()
+	// orgQuotaType.TotalRoutePorts = types.Int64Null()
+	// orgQuotaType.TotalPrivateDomains = types.Int64Null()
+	// orgQuotaType.TotalMemory = types.Int64Null()
+	// orgQuotaType.InstanceMemory = types.Int64Null()
+	// orgQuotaType.TotalAppInstances = types.Int64Null()
+	// orgQuotaType.TotalAppTasks = types.Int64Null()
+	// orgQuotaType.TotalAppLogRateLimit = types.Int64Null()
+
 	if value.Services.TotalServiceInstances != nil {
 		orgQuotaType.TotalServices = types.Int64Value(int64(*value.Services.TotalServiceInstances))
 	}

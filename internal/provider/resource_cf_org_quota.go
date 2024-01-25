@@ -3,11 +3,14 @@ package provider
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/samber/lo"
 )
 
 var (
@@ -132,7 +135,7 @@ func (r *orgQuotaResource) Read(ctx context.Context, req resource.ReadRequest, r
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgsQuota, err := r.cfClient.OrganizationQuotas.ListAll(ctx, &cfv3client.OrganizationQuotaListOptions{
+	orgsQuotas, err := r.cfClient.OrganizationQuotas.ListAll(ctx, &cfv3client.OrganizationQuotaListOptions{
 		Names: cfv3client.Filter{
 			Values: []string{orgQuotaType.Name.ValueString()},
 		},
@@ -144,14 +147,17 @@ func (r *orgQuotaResource) Read(ctx context.Context, req resource.ReadRequest, r
 		)
 		return
 	}
-	if len(orgsQuota) != 1 {
+	orgsQuota, found := lo.Find(orgsQuotas, func(orgQuota *cfv3resource.OrganizationQuota) bool {
+		return orgQuota.Name == orgQuotaType.Name.ValueString()
+	})
+	if !found {
 		resp.Diagnostics.AddError(
 			"Unable to find org quota.",
 			"Org quota does not exist.",
 		)
 		return
 	}
-	orgsQuotaType := mapOrgQuotaValuesToType(orgsQuota[0])
+	orgsQuotaType := mapOrgQuotaValuesToType(orgsQuota)
 	diags = resp.State.Set(ctx, orgsQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -196,6 +202,25 @@ func (r *orgQuotaResource) Delete(ctx context.Context, req resource.DeleteReques
 		resp.Diagnostics.AddError(
 			"Unable to list spaces for Org Deletion",
 			"Could not list spaces to delete them before deleting organization",
+		)
+		return
+	}
+	_, _, err = lo.AttemptWithDelay(10, 3*time.Second, func(i int, duration time.Duration) error {
+		_, err := r.cfClient.OrganizationQuotas.Get(ctx, orgQuotaType.Id.ValueString())
+		if err != nil {
+			if cfv3resource.IsResourceNotFoundError(err) {
+				return nil
+			} else {
+				return err
+			}
+		} else {
+			return fmt.Errorf("resource still exists")
+		}
+	})
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to verify Org Quota Deletion",
+			"Org quota deletion verification failed with %s."+err.Error(),
 		)
 		return
 	}

@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    cloudfoundry = {
+      source = "sap/cloudfoundry"
+    }
+  }
+}
+provider "cloudfoundry" {}
+
 resource "cloudfoundry_org_quota" "org_quota" {
   name = "tf-test-org-quota"
   allow_paid_service_plans = true
