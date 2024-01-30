@@ -28,6 +28,7 @@ type spaceType struct {
 	UpdatedAt             types.String `tfsdk:"updated_at"`
 }
 
+// Sets the terraform struct values from the space resource returned by the cf-client
 func (data *spaceType) setTypeValuesFromSpace(ctx context.Context, space *resource.Space) diag.Diagnostics {
 
 	data.Name = types.StringValue(space.Name)
@@ -52,16 +53,20 @@ func (data *spaceType) setTypeValuesFromSpace(ctx context.Context, space *resour
 	return diagnostics
 }
 
+// Sets the terraform struct allow_ssh value from a bool
 func (data *spaceType) setTypeValueFromBool(sshEnabled bool) {
 	data.AllowSSH = types.BoolValue(sshEnabled)
 }
 
+// Sets the terraform struct isolation_segment value from a string
 func (data *spaceType) setTypeValueFromString(isolationSegment string) {
 	data.IsolationSegment = types.StringValue(isolationSegment)
 }
 
+// Sets the terraform struct asgs or staging_asgs value from the security group resource returned by the cf-client depending on the "running" or "staging" passed as SecurityGroupType
 func (data *spaceType) setTypeValueFromSecurityGroups(ctx context.Context, groups []*resource.SecurityGroup, SecurityGroupType string) diag.Diagnostics {
 
+	//Not sure of security group logics
 	var spaceSecurityGroups []string
 	var diags, diagnostics diag.Diagnostics
 
@@ -88,6 +93,7 @@ func (data *spaceType) setTypeValueFromSecurityGroups(ctx context.Context, group
 	return diagnostics
 }
 
+// Sets the space resource values for creation with cf-client from the terraform struct values
 func (data *spaceType) setCreateSpaceValuesFromPlan(ctx context.Context) (resource.SpaceCreate, diag.Diagnostics) {
 
 	createSpace := resource.NewSpaceCreate(data.Name.ValueString(), data.OrgId.ValueString())
@@ -104,29 +110,18 @@ func (data *spaceType) setCreateSpaceValuesFromPlan(ctx context.Context) (resour
 	return *createSpace, diagnostics
 }
 
-func (data *spaceType) mapSpaceValuesToType(ctx context.Context, space *resource.Space) (spaceType) {
+// Sets the computed terraform struct values from the created space resource obtained from cf-client
+func (data *spaceType) setComputedTypeValuesFromSpace(ctx context.Context, space *resource.Space) {
 
-	spaceType := spaceType{
-		Name:                  data.Name,
-		Id:                    types.StringValue(space.GUID),
-		OrgId:                 data.OrgId,
-		OrgName:               data.OrgName,
-		AllowSSH:              data.AllowSSH,
-		Quota:                 data.Quota,
-		IsolationSegment:      data.IsolationSegment,
-		RunningSecurityGroups: data.RunningSecurityGroups,
-		StagingSecurityGroups: data.StagingSecurityGroups,
-		Labels:                data.Labels,
-		Annotations:           data.Annotations,
-		CreatedAt:             types.StringValue(space.CreatedAt.Format(time.RFC3339)),
-		UpdatedAt:             types.StringValue(space.UpdatedAt.Format(time.RFC3339)),
-	}
+	data.Id = types.StringValue(space.GUID)
+	data.CreatedAt = types.StringValue(space.CreatedAt.Format(time.RFC3339))
+	data.UpdatedAt = types.StringValue(space.UpdatedAt.Format(time.RFC3339))
 
-	return spaceType
 }
 
+// Sets org name and org guid details in terraform struct if values missing
 func (data *spaceType) populateOrgValues(ctx context.Context, cfClient *client.Client) diag.Diagnostics {
-	// Ensure org details is present in state file else populate org name or guid accordingly
+
 	var Diagnostics diag.Diagnostics
 
 	if data.OrgId.IsUnknown() && data.OrgName.IsUnknown() || data.OrgId.IsNull() && data.OrgName.IsNull() {
@@ -166,25 +161,53 @@ func (data *spaceType) populateOrgValues(ctx context.Context, cfClient *client.C
 		data.OrgId = types.StringValue(org.GUID)
 	} else {
 		//Fetching organization with GUID
-		org, err := cfClient.Organizations.Get(ctx, data.OrgId.ValueString())
-		if err != nil {
-			switch err.(type) {
-			case resource.CloudFoundryError:
-				Diagnostics.AddError(
-					"Unable to find org data in list.",
-					fmt.Sprintf("Given org %s not in the list of orgs.", data.OrgId.ValueString()),
-				)
-			default:
-				Diagnostics.AddError(
-					"Unable to fetch org data.",
-					fmt.Sprintf("Request failed with %s.", err.Error()),
-				)
-			}
+		orgs, err := cfClient.Organizations.ListAll(ctx, &client.OrganizationListOptions{
+			GUIDs: client.Filter{
+				Values: []string{
+					data.OrgId.ValueString(),
+				},
+			},
+		})
 
+		if err != nil {
+			Diagnostics.AddError(
+				"Unable to fetch org data.",
+				fmt.Sprintf("Request failed with %s.", err.Error()),
+			)
+			return Diagnostics
+		}
+
+		org, found := lo.Find(orgs, func(org *resource.Organization) bool {
+			return org.GUID == data.OrgId.ValueString()
+		})
+
+		if !found {
+			Diagnostics.AddError(
+				"Unable to find org data in list",
+				fmt.Sprintf("Given org %s not in the list of orgs.", data.OrgId.ValueString()),
+			)
 			return Diagnostics
 		}
 		data.OrgName = types.StringValue(org.Name)
 	}
 
 	return Diagnostics
+}
+
+// Sets the space resource values for updating with cf-client from the terraform struct values
+func (data *spaceType) setUpdateSpaceValuesFromPlan(ctx context.Context) (resource.SpaceUpdate, diag.Diagnostics) {
+
+	updateSpace := &resource.SpaceUpdate{
+		Name: data.Name.ValueString(),
+	}
+	var diagnostics diag.Diagnostics
+	updateSpace.Metadata = resource.NewMetadata()
+
+	labelsDiags := data.Labels.ElementsAs(ctx, &updateSpace.Metadata.Labels, false)
+	diagnostics.Append(labelsDiags...)
+
+	annotationsDiags := data.Annotations.ElementsAs(ctx, &updateSpace.Metadata.Annotations, false)
+	diagnostics.Append(annotationsDiags...)
+
+	return *updateSpace, diagnostics
 }

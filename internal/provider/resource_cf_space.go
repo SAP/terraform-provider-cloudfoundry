@@ -3,10 +3,12 @@ package provider
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -51,7 +53,7 @@ func (r *SpaceResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				Computed:            true,
 				Optional:            true,
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Validators: []validator.String{
 					validation.ValidUUID(),
@@ -64,6 +66,9 @@ func (r *SpaceResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				MarkdownDescription: "The ID of the Org within which to create the space",
 				Computed:            true,
 				Optional:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
 				Validators: []validator.String{
 					stringvalidator.ConflictsWith(path.Expressions{
 						path.MatchRoot("org"),
@@ -145,13 +150,13 @@ func (r *SpaceResource) Configure(ctx context.Context, req resource.ConfigureReq
 
 // Create creates the resource and sets the initial Terraform state.
 func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+
 	var plan spaceType
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
 	diags = plan.populateOrgValues(ctx, r.cfClient)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -174,12 +179,20 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 	}
 
 	if !plan.Quota.IsNull() {
+		_, err := r.cfClient.SpaceQuotas.Get(ctx, plan.Quota.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Getting Space Quota",
+				"Could not get the Quota with ID "+plan.Quota.ValueString()+": "+err.Error(),
+			)
+			return
+		}
 		_, err = r.cfClient.SpaceQuotas.Apply(ctx, plan.Quota.ValueString(), []string{
 			space.GUID,
 		})
 		if err != nil {
 			resp.Diagnostics.AddError(
-				"API Error Applying Org Quota",
+				"API Error Applying Space Quota",
 				"Could not apply the Quota with ID "+plan.Quota.ValueString()+" to the space "+plan.Name.ValueString()+": "+err.Error(),
 			)
 			return
@@ -208,6 +221,14 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 	}
 
 	if !plan.IsolationSegment.IsNull() {
+		_, err := r.cfClient.IsolationSegments.Get(ctx, plan.IsolationSegment.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Getting Isolation Segment",
+				"Could not get the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+": "+err.Error(),
+			)
+			return
+		}
 		err = r.cfClient.Spaces.AssignIsolationSegment(ctx, space.GUID, plan.IsolationSegment.ValueString())
 		if err != nil {
 			resp.Diagnostics.AddError(
@@ -218,12 +239,19 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 		}
 	}
 
-	//Not sure of security group logics
 	if !plan.RunningSecurityGroups.IsNull() {
 		var runningGroupsInput []string
 		runningSecurityGroupsDiagnostics := plan.RunningSecurityGroups.ElementsAs(ctx, &runningGroupsInput, false)
 		resp.Diagnostics.Append(runningSecurityGroupsDiagnostics...)
 		for _, securityGroup := range runningGroupsInput {
+			_, err := r.cfClient.SecurityGroups.Get(ctx, securityGroup)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"API Error Getting Security Group",
+					"Could not get the Security Group with ID "+securityGroup+": "+err.Error(),
+				)
+				return
+			}
 			_, err = r.cfClient.SecurityGroups.BindRunningSecurityGroup(ctx, securityGroup, []string{space.GUID})
 			if err != nil {
 				resp.Diagnostics.AddError(
@@ -240,6 +268,14 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 		stagingSecurityGroupsDiagnostics := plan.StagingSecurityGroups.ElementsAs(ctx, &stagingGroupsInput, false)
 		resp.Diagnostics.Append(stagingSecurityGroupsDiagnostics...)
 		for _, securityGroup := range stagingGroupsInput {
+			_, err := r.cfClient.SecurityGroups.Get(ctx, securityGroup)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"API Error Getting Security Group",
+					"Could not get the Security Group with ID "+securityGroup+": "+err.Error(),
+				)
+				return
+			}
 			_, err = r.cfClient.SecurityGroups.BindStagingSecurityGroup(ctx, securityGroup, []string{space.GUID})
 			if err != nil {
 				resp.Diagnostics.AddError(
@@ -251,7 +287,7 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 		}
 	}
 
-	plan = plan.mapSpaceValuesToType(ctx, space)
+	plan.setComputedTypeValuesFromSpace(ctx, space)
 
 	diags = resp.State.Set(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
@@ -269,10 +305,16 @@ func (rs *SpaceResource) Read(ctx context.Context, req resource.ReadRequest, res
 		return
 	}
 
-	//Filtering for spaces under the org with GUID
 	space, err := rs.cfClient.Spaces.Get(ctx, data.Id.ValueString())
-
 	if err != nil {
+		cfError, isCfError := err.(cfv3resource.IsResourceNotFound)
+		if isCfError {
+			if cfError.Code == 10010 {
+				resp.State.RemoveResource(ctx)
+				return
+			}
+		}
+		cfv3resource.IsResourceNotFoundError()
 		resp.Diagnostics.AddError(
 			"Unable to fetch space data.",
 			fmt.Sprintf("Request failed with %s.", err.Error()),
@@ -350,9 +392,116 @@ func (rs *SpaceResource) Read(ctx context.Context, req resource.ReadRequest, res
 }
 
 func (rs *SpaceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, previousState spaceType
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if !previousState.Name.Equal(plan.Name) || !previousState.Labels.Equal(plan.Labels) || !previousState.Annotations.Equal(plan.Annotations) {
+
+		updateSpace, diags := plan.setUpdateSpaceValuesFromPlan(ctx)
+		resp.Diagnostics.Append(diags...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+
+		_, err := rs.cfClient.Spaces.Update(ctx, plan.Id.ValueString(), &updateSpace)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Space",
+				"Could not update Space with ID "+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	if !previousState.Quota.Equal(plan.Quota) {
+		if plan.Quota.IsNull() {
+			_, err := rs.cfClient.SpaceQuotas.(ctx, plan.Quota.ValueString(), []string{
+				plan.Id.ValueString(),
+			})
+		}
+		_, err := rs.cfClient.SpaceQuotas.Apply(ctx, plan.Quota.ValueString(), []string{
+			plan.Id.ValueString(),
+		})
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Org Quota",
+				"Could not apply the Quota with ID "+plan.Quota.ValueString()+" to the space with ID"+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	if !previousState.AllowSSH.Equal(plan.AllowSSH) {
+		err := rs.cfClient.SpaceFeatures.EnableSSH(ctx, plan.Id.ValueString(), plan.AllowSSH.ValueBool())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Space SSH",
+				"Could not set the SSH feature value on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	if !previousState.IsolationSegment.Equal(plan.IsolationSegment) {
+		err := rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Isolation Segment",
+				"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID"+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	if !previousState.RunningSecurityGroups.Equal(plan.RunningSecurityGroups) {
+		err := rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Isolation Segment",
+				"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID"+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
 }
 
 func (rs *SpaceResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state spaceType
+
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	jobID, err := rs.cfClient.Spaces.Delete(ctx, state.Id.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Deleting Space",
+			"Could not delete the space with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+": "+err.Error(),
+		)
+		return
+	}
+
+	err = rs.cfClient.Jobs.PollComplete(ctx, jobID, &cfv3client.PollingOptions{
+		FailedState:   "FAILED",
+		Timeout:       time.Second * 30,
+		CheckInterval: time.Second,
+	})
+
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Deleting Space",
+			"Could not delete the space with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+": "+err.Error(),
+		)
+		return
+	}
+
 }
 
 func (rs *SpaceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
