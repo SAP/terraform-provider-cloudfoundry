@@ -6,22 +6,22 @@ import (
 	"maps"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
-	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/samber/lo"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ resource.Resource = &orgResource{}
+	_ resource.Resource                = &orgResource{}
+	_ resource.ResourceWithConfigure   = &orgResource{}
+	_ resource.ResourceWithImportState = &orgResource{}
 )
 
 // NeworgResource is a helper function to simplify the provider implementation.
@@ -57,7 +57,7 @@ func (r *orgResource) Configure(_ context.Context, req resource.ConfigureRequest
 }
 
 // Schema defines the schema for the resource.
-func (r *orgResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *orgResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: `Creates a Cloud Foundry Organization 
 		
@@ -74,27 +74,10 @@ func (r *orgResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
+				Computed: true,
 			},
-			"labels": schema.MapAttribute{
-				MarkdownDescription: `The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).`,
-				ElementType:         types.StringType,
-				Optional:            true,
-			},
-			"annotations": schema.MapAttribute{
-				MarkdownDescription: "The annotations associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).",
-				ElementType:         types.StringType,
-				Optional:            true,
-			},
-			"quota": schema.StringAttribute{
-				MarkdownDescription: "The ID of quota to be applied to this Org. By default, no quota is assigned to the org.",
-				Optional:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-				Validators: []validator.String{
-					validation.ValidUUID(),
-				},
-			},
+			"labels":      resourceLabelsSchema(),
+			"annotations": resourceAnnotationsSchema(),
 			"created_at": schema.StringAttribute{
 				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
 				Computed:            true,
@@ -104,7 +87,7 @@ func (r *orgResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				Computed:            true,
 			},
 			"suspended": schema.BoolAttribute{
-				MarkdownDescription: "Whether an organization is suspended or not",
+				MarkdownDescription: "Whether an organization is suspended or not.",
 				Optional:            true,
 				Computed:            true,
 				PlanModifiers: []planmodifier.Bool{
@@ -125,25 +108,28 @@ func (r *orgResource) Create(ctx context.Context, req resource.CreateRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	var createOrg cfv3resource.OrganizationCreate
+	//TODO @k7 check if initialize is needed
+	createOrg := cfv3resource.OrganizationCreate{
+		Name:     plan.Name.ValueString(),
+		Metadata: cfv3resource.NewMetadata(),
+	}
 
 	if !plan.Suspended.IsUnknown() {
-		suspend := plan.Suspended.ValueBool()
-		createOrg.Suspended = &suspend
-		//TODO @k7 check if below works
-		//createOrg.Suspended = plan.Suspended.ValueBoolPointer()
+		createOrg.Suspended = plan.Suspended.ValueBoolPointer()
 	}
 	labels := make(map[string]*string)
 	labelsDiags := plan.Labels.ElementsAs(ctx, &labels, false)
 	resp.Diagnostics.Append(labelsDiags...)
+	createOrg.Metadata.Labels = map[string]*string{}
 	maps.Copy(createOrg.Metadata.Labels, labels)
 
 	annotations := make(map[string]*string)
 	annotationsDiags := plan.Annotations.ElementsAs(ctx, &annotations, false)
 	resp.Diagnostics.Append(annotationsDiags...)
+	createOrg.Metadata.Annotations = map[string]*string{}
 	maps.Copy(createOrg.Metadata.Annotations, annotations)
 
-	org, err := r.cfClient.Organizations.Create(ctx, &cfv3resource.OrganizationCreate{})
+	org, err := r.cfClient.Organizations.Create(ctx, &createOrg)
 
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -153,36 +139,10 @@ func (r *orgResource) Create(ctx context.Context, req resource.CreateRequest, re
 		return
 	}
 
-	// Assign Quota to the organization
-	if !plan.Quota.IsUnknown() {
-		quota, err := r.cfClient.OrganizationQuotas.Get(ctx, plan.Quota.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Getting Org Quota",
-				"Could not get the Quota with ID "+plan.Quota.ValueString()+"and name "+quota.Name+": "+err.Error(),
-			)
-			return
-		}
-		_, err = r.cfClient.OrganizationQuotas.Apply(ctx, plan.Quota.ValueString(), []string{
-			org.GUID,
-		})
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Applying Org Quota",
-				"Could not apply the Quota with ID "+plan.Quota.ValueString()+"and name "+quota.Name+" to the org "+plan.Name.ValueString()+": "+err.Error(),
-			)
-			return
-		}
-
-	}
-
 	plan, diags = mapOrgValuesToType(ctx, org)
 	resp.Diagnostics.Append(diags...)
-	diags = resp.State.Set(ctx, plan)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 }
 
 // Read refreshes the Terraform state with the latest data.
@@ -194,21 +154,25 @@ func (r *orgResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgs, err := r.cfClient.Organizations.ListAll(ctx, nil)
+	orgs, err := r.cfClient.Organizations.ListAll(ctx, &cfv3client.OrganizationListOptions{
+		// will filter by ID as it already exists in state
+		GUIDs: cfv3client.Filter{
+			Values: []string{
+				data.ID.ValueString(),
+			},
+		},
+	})
 	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to fetch org data.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
-		)
+		handleReadErrors(ctx, resp, err, "org", data.ID.ValueString())
 		return
 	}
 	org, found := lo.Find(orgs, func(org *cfv3resource.Organization) bool {
-		return org.Name == data.Name.ValueString()
+		return org.GUID == data.ID.ValueString()
 	})
 	if !found {
 		resp.Diagnostics.AddError(
 			"Unable to find org data in list",
-			fmt.Sprintf("Given name %s not in the list of orgs.", data.Name.ValueString()),
+			fmt.Sprintf("Given ID %s not in the list of orgs.", data.Name.ValueString()),
 		)
 		return
 	}
@@ -228,25 +192,49 @@ func (r *orgResource) Update(ctx context.Context, req resource.UpdateRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	_, err := r.cfClient.Organizations.Get(ctx, plan.ID.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to fetch org Data",
+			"Could not get Org with ID "+plan.ID.ValueString()+": "+err.Error(),
+		)
+		return
+	}
 
 	updateOrg := cfv3resource.OrganizationUpdate{
-		Name:      "",
-		Suspended: new(bool),
-		Metadata:  &cfv3resource.Metadata{},
+		Name:      plan.Name.ValueString(),
+		Suspended: plan.Suspended.ValueBoolPointer(),
+		Metadata:  cfv3resource.NewMetadata(),
 	}
+
+	labels := make(map[string]*string)
+	labelsDiags := plan.Labels.ElementsAs(ctx, &labels, false)
+	resp.Diagnostics.Append(labelsDiags...)
+	updateOrg.Metadata.Labels = map[string]*string{}
+	maps.Copy(updateOrg.Metadata.Labels, labels)
+
+	annotations := make(map[string]*string)
+	annotationsDiags := plan.Annotations.ElementsAs(ctx, &annotations, false)
+	resp.Diagnostics.Append(annotationsDiags...)
+	updateOrg.Metadata.Annotations = map[string]*string{}
+	maps.Copy(updateOrg.Metadata.Annotations, annotations)
+
 	org, err := r.cfClient.Organizations.Update(ctx, plan.ID.ValueString(), &updateOrg)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to update Org",
-			"Could not update org "+plan.Name.ValueString()+": "+err.Error(),
+			"Could not update org with ID "+plan.ID.ValueString()+" and name "+plan.Name.ValueString()+": "+err.Error(),
 		)
 	}
+
 	plan, diags = mapOrgValuesToType(ctx, org)
 	resp.Diagnostics.Append(diags...)
 
+	resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+
 }
 
-// Delete deletes the resource and removes the Terraform state on success.
+// Delete the resource and removes the Terraform state on success.
 func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 	var state orgType
 
@@ -255,7 +243,9 @@ func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
+	deleteTimeout := DefaultTimeout
+	// deleteTimeout, diags := state.Timeouts.Delete(ctx, DefaultTimeout)
+	// resp.Diagnostics.Append(diags...)
 	spaces, err := r.cfClient.Spaces.ListAll(ctx, &cfv3client.SpaceListOptions{
 		OrganizationGUIDs: cfv3client.Filter{
 			Values: []string{
@@ -271,14 +261,44 @@ func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		return
 	}
 	for _, space := range spaces {
-		_, err := r.cfClient.Spaces.Delete(ctx, space.GUID)
+		jobID, err := r.cfClient.Spaces.Delete(ctx, space.GUID)
 		if err != nil {
 			resp.Diagnostics.AddError(
-				"Unable to list spaces for Org Deletion",
-				"Could not list spaces to delete them before deleting organization"+state.ID.ValueString()+": "+err.Error(),
+				"Unable to delete space",
+				"API Error in deleting space "+space.Name+" before deleting organization"+state.ID.ValueString()+": "+err.Error(),
 			)
 			return
 		}
+		// wait till job is complete
+		if pollJob(ctx, *r.cfClient, jobID, deleteTimeout) != nil {
+			resp.Diagnostics.AddError(
+				"Delete space failed",
+				"Deleting space "+space.Name+" failed before deleting organization"+state.ID.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+
+	}
+	jobID, err := r.cfClient.Organizations.Delete(ctx, state.ID.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to delete org",
+			"API Error in deleting organization"+state.ID.ValueString()+": "+err.Error(),
+		)
+		return
 	}
 
+	if pollJob(ctx, *r.cfClient, jobID, deleteTimeout) != nil {
+		resp.Diagnostics.AddError(
+			"Delete org failed",
+			"Failed in Deleting organization "+state.ID.ValueString()+": "+err.Error(),
+		)
+		return
+	}
+
+}
+
+func (r *orgResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	// Retrieve import ID and save to id attribute
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }

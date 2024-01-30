@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
-	"github.com/cloudfoundry-community/go-cfclient/v3/client"
-	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -21,7 +21,7 @@ func NewOrgDataSource() datasource.DataSource {
 }
 
 type OrgDataSource struct {
-	cfClient *client.Client
+	cfClient *cfv3client.Client
 }
 
 func (d *OrgDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -45,8 +45,8 @@ func (d *OrgDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "The ID of quota to be applied to this Org. By default, no quota is assigned to the org.",
 				Computed:            true,
 			},
-			labelsKey:      labelsSchema(),
-			annotationsKey: annotationsSchema(),
+			labelsKey:      datasourceLabelsSchema(),
+			annotationsKey: datasourceAnnotationsSchema(),
 			"created_at": schema.StringAttribute{
 				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
 				Computed:            true,
@@ -87,7 +87,13 @@ func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgs, err := d.cfClient.Organizations.ListAll(ctx, nil)
+	orgs, err := d.cfClient.Organizations.ListAll(ctx, &cfv3client.OrganizationListOptions{
+		Names: cfv3client.Filter{
+			Values: []string{
+				data.Name.ValueString(),
+			},
+		},
+	})
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch org data.",
@@ -95,7 +101,7 @@ func (d *OrgDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		)
 		return
 	}
-	org, found := lo.Find(orgs, func(org *resource.Organization) bool {
+	org, found := lo.Find(orgs, func(org *cfv3resource.Organization) bool {
 		return org.Name == data.Name.ValueString()
 	})
 	if !found {

@@ -81,8 +81,8 @@ func (d *SpaceDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "The space quota applied to the space",
 				Computed:            true,
 			},
-			labelsKey:      labelsSchema(),
-			annotationsKey: annotationsSchema(),
+			labelsKey:      datasourceLabelsSchema(),
+			annotationsKey: datasourceAnnotationsSchema(),
 		},
 	}
 }
@@ -206,6 +206,10 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 
 	//Checking if quota exists, then taking the guid value
 	if space.Relationships.Quota.Data != nil {
+		resp.Diagnostics.AddWarning(
+			"Quota Exists",
+			"Quota exists "+space.Relationships.Quota.Data.GUID,
+		)
 		data.Quota = types.StringValue(space.Relationships.Quota.Data.GUID)
 	} else {
 		data.Quota = types.StringValue("")
