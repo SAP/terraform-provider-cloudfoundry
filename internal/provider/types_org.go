@@ -30,17 +30,10 @@ func mapOrgValuesToType(ctx context.Context, value *resource.Organization) (orgT
 		Quota:     types.StringValue(value.Relationships.Quota.Data.GUID),
 	}
 	var diags, diagnostics diag.Diagnostics
-	if len(value.Metadata.Labels) == 0 {
-		orgType.Labels = types.MapNull(types.StringType)
-	} else {
-		orgType.Labels, diags = types.MapValueFrom(ctx, types.StringType, value.Metadata.Labels)
-		diagnostics.Append(diags...)
-	}
-	if len(value.Metadata.Annotations) == 0 {
-		orgType.Annotations = types.MapNull(types.StringType)
-	} else {
-		orgType.Annotations, diags = types.MapValueFrom(ctx, types.StringType, value.Metadata.Annotations)
-		diagnostics.Append(diags...)
-	}
+	orgType.Labels, diags = mapMetadataValueToType(ctx, value.Metadata.Labels)
+	diagnostics.Append(diags...)
+	orgType.Annotations, diags = mapMetadataValueToType(ctx, value.Metadata.Annotations)
+	diagnostics.Append(diags...)
+
 	return orgType, diagnostics
 }

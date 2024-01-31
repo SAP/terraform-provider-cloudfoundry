@@ -121,17 +121,11 @@ func (r *orgResource) Create(ctx context.Context, req resource.CreateRequest, re
 	if !plan.Suspended.IsUnknown() {
 		createOrg.Suspended = plan.Suspended.ValueBoolPointer()
 	}
-	labels := make(map[string]*string)
-	labelsDiags := plan.Labels.ElementsAs(ctx, &labels, false)
+	labelsDiags := plan.Labels.ElementsAs(ctx, &createOrg.Metadata.Labels, false)
 	resp.Diagnostics.Append(labelsDiags...)
-	createOrg.Metadata.Labels = map[string]*string{}
-	maps.Copy(createOrg.Metadata.Labels, labels)
 
-	annotations := make(map[string]*string)
-	annotationsDiags := plan.Annotations.ElementsAs(ctx, &annotations, false)
+	annotationsDiags := plan.Annotations.ElementsAs(ctx, &createOrg.Metadata.Annotations, false)
 	resp.Diagnostics.Append(annotationsDiags...)
-	createOrg.Metadata.Annotations = map[string]*string{}
-	maps.Copy(createOrg.Metadata.Annotations, annotations)
 
 	org, err := r.cfClient.Organizations.Create(ctx, &createOrg)
 

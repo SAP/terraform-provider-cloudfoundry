@@ -9,6 +9,7 @@ import (
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -78,4 +79,17 @@ func pollJob(ctx context.Context, client cfv3client.Client, jobID string, timeou
 		CheckInterval: time.Second * 10,
 		FailedState:   string(cfv3resource.JobStateFailed),
 	})
+}
+
+func mapMetadataValueToType(ctx context.Context, generic map[string]*string) (basetypes.MapValue, diag.Diagnostics) {
+
+	var out basetypes.MapValue
+	var diagnostics diag.Diagnostics
+	if len(generic) == 0 {
+		out = types.MapNull(types.StringType)
+	} else {
+		out, diagnostics = types.MapValueFrom(ctx, types.StringType, generic)
+	}
+
+	return out, diagnostics
 }
