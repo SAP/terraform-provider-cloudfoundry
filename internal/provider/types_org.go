@@ -17,6 +17,7 @@ type orgType struct {
 	CreatedAt   types.String `tfsdk:"created_at"`
 	UpdatedAt   types.String `tfsdk:"updated_at"`
 	Suspended   types.Bool   `tfsdk:"suspended"`
+	Quota       types.String `tfsdk:"quota"`
 }
 
 func mapOrgValuesToType(ctx context.Context, value *resource.Organization) (orgType, diag.Diagnostics) {
@@ -26,6 +27,7 @@ func mapOrgValuesToType(ctx context.Context, value *resource.Organization) (orgT
 		CreatedAt: types.StringValue(value.CreatedAt.Format(time.RFC3339)),
 		UpdatedAt: types.StringValue(value.UpdatedAt.Format(time.RFC3339)),
 		Suspended: types.BoolValue(*value.Suspended),
+		Quota:     types.StringValue(value.Relationships.Quota.Data.GUID),
 	}
 	var diags, diagnostics diag.Diagnostics
 	if len(value.Metadata.Labels) == 0 {

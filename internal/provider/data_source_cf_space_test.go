@@ -72,12 +72,12 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name: strtostrptr("PerformanceTeamBLR"),
-						Org:  strtostrptr("784b4cd0-4771-4e4d-9052-a07e178bae56"),
+						Name: strtostrptr(testSpace),
+						Org:  strtostrptr(testOrgGUID),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr("data.cloudfoundry_space.ds", "id", regexpValidUUID),
-						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "org_name", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "org_name", testOrg),
 						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "quota", ""),
 					),
 				},
@@ -95,12 +95,12 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name:    strtostrptr("PerformanceTeamBLR"),
-						OrgName: strtostrptr("PerformanceTeamBLR"),
+						Name:    strtostrptr(testSpace),
+						OrgName: strtostrptr(testOrg),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr("data.cloudfoundry_space.ds", "id", regexpValidUUID),
-						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "org", "784b4cd0-4771-4e4d-9052-a07e178bae56"),
+						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "org", testOrgGUID),
 						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "quota", ""),
 					),
 				},
@@ -118,8 +118,8 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name: strtostrptr("PerformanceTeamBLR12"),
-						Org:  strtostrptr("784b4cd0-4771-4e4d-9052-a07e178bae56"),
+						Name: strtostrptr(testSpace + "x"),
+						Org:  strtostrptr(testOrgGUID),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Unable to find space data in list`),
 				},
@@ -137,8 +137,8 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name:    strtostrptr("PerformanceTeamBLR"),
-						OrgName: strtostrptr("PerformanceTeamBLR12"),
+						Name:    strtostrptr(testSpace),
+						OrgName: strtostrptr(testOrg + "x"),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Unable to find org data in list`),
 				},
@@ -156,7 +156,7 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name: strtostrptr("PerformanceTeamBLR"),
+						Name: strtostrptr(testSpace),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Neither Org GUID nor Org Name is present`),
 				},
@@ -174,9 +174,9 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name:    strtostrptr("PerformanceTeamBLR"),
-						Org:     strtostrptr("784b4cd0-4771-4e4d-9052-a07e178bae56"),
-						OrgName: strtostrptr("PerformanceTeamBLR"),
+						Name:    strtostrptr(testSpace),
+						Org:     strtostrptr(testOrgGUID),
+						OrgName: strtostrptr(testOrg),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Invalid Attribute Combination`),
 				},

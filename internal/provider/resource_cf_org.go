@@ -94,6 +94,10 @@ func (r *orgResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp
 					boolplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"quota": schema.StringAttribute{
+				MarkdownDescription: "The ID of quota to be applied to this Org. By default, no quota is assigned to the org.",
+				Computed:            true,
+			},
 		},
 	}
 
