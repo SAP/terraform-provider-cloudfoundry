@@ -241,42 +241,8 @@ func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	// TODO @KesavanKing introduce timeout
 	deleteTimeout := DefaultTimeout
-	// deleteTimeout, diags := state.Timeouts.Delete(ctx, DefaultTimeout)
-	// resp.Diagnostics.Append(diags...)
-	spaces, err := r.cfClient.Spaces.ListAll(ctx, &cfv3client.SpaceListOptions{
-		OrganizationGUIDs: cfv3client.Filter{
-			Values: []string{
-				state.ID.ValueString(),
-			},
-		},
-	})
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to list spaces for Org Deletion",
-			"Could not list spaces to delete them before deleting organization"+state.ID.ValueString()+": "+err.Error(),
-		)
-		return
-	}
-	for _, space := range spaces {
-		jobID, err := r.cfClient.Spaces.Delete(ctx, space.GUID)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Unable to delete space",
-				"API Error in deleting space "+space.Name+" before deleting organization"+state.ID.ValueString()+": "+err.Error(),
-			)
-			return
-		}
-		// wait till job is complete
-		if pollJob(ctx, *r.cfClient, jobID, deleteTimeout) != nil {
-			resp.Diagnostics.AddError(
-				"Delete space failed",
-				"Deleting space "+space.Name+" failed before deleting organization"+state.ID.ValueString()+": "+err.Error(),
-			)
-			return
-		}
-
-	}
 	jobID, err := r.cfClient.Organizations.Delete(ctx, state.ID.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
