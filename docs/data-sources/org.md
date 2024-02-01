@@ -12,15 +12,6 @@ Gets information on a Cloud Foundry organization.
 ## Example Usage
 
 ```terraform
-terraform {
-  required_providers {
-    cloudfoundry = {
-      source = "sap/cloudfoundry"
-    }
-  }
-}
-provider "cloudfoundry" {}
-
 data "cloudfoundry_org" "org" {
   name = "PerformanceTeamBLR"
 }
@@ -47,6 +38,6 @@ output "labels" {
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `id` (String) The GUID of the organization
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
-- `quota` (String) The ID of quota to be applied to this Org. By default, no quota is assigned to the org.
+- `quota` (String) The ID of quota to be applied to this Org. Default quota is assigned to the org by default.
 - `suspended` (Boolean) Whether an organization is suspended or not
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.

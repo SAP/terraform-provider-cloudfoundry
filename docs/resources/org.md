@@ -18,7 +18,7 @@ Creates a Cloud Foundry Organization
 
 ```terraform
 resource "cloudfoundry_org" "org" {
-  name = "tf-test"
+  name      = "tf-test"
   suspended = false
   labels = {
     env = "test"
@@ -46,5 +46,6 @@ resource "cloudfoundry_org" "org" {
 
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `id` (String) The ID of the Organization
+- `quota` (String) The ID of quota to be applied to this Org. Default quota is assigned to the org by default.
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 

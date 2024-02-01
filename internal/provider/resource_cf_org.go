@@ -95,7 +95,7 @@ func (r *orgResource) Schema(ctx context.Context, _ resource.SchemaRequest, resp
 				},
 			},
 			"quota": schema.StringAttribute{
-				MarkdownDescription: "The ID of quota to be applied to this Org. By default, no quota is assigned to the org.",
+				MarkdownDescription: "The ID of quota to be applied to this Org. Default quota is assigned to the org by default.",
 				Computed:            true,
 			},
 		},

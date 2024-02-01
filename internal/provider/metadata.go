@@ -20,7 +20,7 @@ const (
 	annotationsKey = "annotations"
 )
 
-const DefaultTimeout = 10 * time.Minute
+const DefaultTimeout = 20 * time.Minute
 
 func datasourceLabelsSchema() *schema.MapAttribute {
 	return &schema.MapAttribute{

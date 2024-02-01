@@ -42,7 +42,7 @@ func (d *OrgDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				Computed:            true,
 			},
 			"quota": schema.StringAttribute{
-				MarkdownDescription: "The ID of quota to be applied to this Org. By default, no quota is assigned to the org.",
+				MarkdownDescription: "The ID of quota to be applied to this Org. Default quota is assigned to the org by default.",
 				Computed:            true,
 			},
 			labelsKey:      datasourceLabelsSchema(),
