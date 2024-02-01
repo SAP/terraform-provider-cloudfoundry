@@ -15,104 +15,6 @@ interactions:
         body: ""
         form: {}
         headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:32:00 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 764c57eb6040175f
-            X-B3-Traceid:
-                - 29961e8335134e9a764c57eb6040175f
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - 29961e83-3513-4e9a-764c-57eb6040175f::2e59b135-3c2e-43a3-a472-630d682f8d75
-        status: 200 OK
-        code: 200
-        duration: 152.395527ms
-    - id: 1
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
             Authorization:
                 - Bearer redacted
             User-Agent:
@@ -132,7 +34,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:32:01 GMT
+                - Thu, 01 Feb 2024 11:12:28 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -140,9 +42,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 5cc1be0329773f72
+                - 5071cd6de5f9bc4c
             X-B3-Traceid:
-                - 384d225a936747b05cc1be0329773f72
+                - 765aa4c3a38247b95071cd6de5f9bc4c
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -152,11 +54,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.003972"
+                - "0.003252"
             X-Vcap-Request-Id:
-                - 384d225a-9367-47b0-5cc1-be0329773f72::ac929062-6fa1-4e4f-88cf-f735241c0ec0
+                - 765aa4c3-a382-47b9-5071-cd6de5f9bc4c::e8681139-7627-421e-a2c4-81813353049f
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 165.862351ms
+        duration: 163.9825ms

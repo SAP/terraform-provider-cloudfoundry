@@ -3,13 +3,14 @@ package provider
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/samber/lo"
 )
 
@@ -43,43 +44,48 @@ func (r *orgQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 				Required:            true,
 			},
 			"total_services": schema.Int64Attribute{
-				MarkdownDescription: "Maximum services allowed",
+				MarkdownDescription: "Maximum services allowed.",
 				Optional:            true,
 			},
 			"total_service_keys": schema.Int64Attribute{
-				MarkdownDescription: "Maximum service keys allowed",
+				MarkdownDescription: "Maximum service keys allowed.",
 				Optional:            true,
 			},
 			"total_routes": schema.Int64Attribute{
-				MarkdownDescription: "Maximum routes allowed",
+				MarkdownDescription: "Maximum routes allowed.",
 				Optional:            true,
 			},
 			"total_route_ports": schema.Int64Attribute{
-				MarkdownDescription: "Maximum routes with reserved ports",
+				MarkdownDescription: "Maximum routes with reserved ports.",
 				Optional:            true,
 			},
 			"total_private_domains": schema.Int64Attribute{
-				MarkdownDescription: "Maximum number of private domains allowed to be created within the Org",
+				MarkdownDescription: "Maximum number of private domains allowed to be created within the Org.",
 				Optional:            true,
 			},
 			"total_memory": schema.Int64Attribute{
-				MarkdownDescription: "Maximum memory usage allowed",
+				MarkdownDescription: "Maximum memory usage allowed.",
 				Optional:            true,
 			},
 			"instance_memory": schema.Int64Attribute{
-				MarkdownDescription: "Maximum memory per application instance",
+				MarkdownDescription: "Maximum memory per application instance.",
 				Optional:            true,
 			},
 			"total_app_instances": schema.Int64Attribute{
-				MarkdownDescription: "Maximum app instances allowed",
+				MarkdownDescription: "Maximum app instances allowed.",
 				Optional:            true,
 			},
 			"total_app_tasks": schema.Int64Attribute{
-				MarkdownDescription: "Maximum tasks allowed per app",
+				MarkdownDescription: "Maximum tasks allowed per app.",
 				Optional:            true,
 			},
 			"total_app_log_rate_limit": schema.Int64Attribute{
 				MarkdownDescription: "Maximum log rate allowed for all the started processes and running tasks in bytes/second.",
+				Optional:            true,
+			},
+			"organizations": schema.SetAttribute{
+				MarkdownDescription: "Set of Org GUIDs to which this org quota would be assigned.",
+				ElementType:         types.StringType,
 				Optional:            true,
 			},
 			idKey:        guidSchema(),
@@ -96,7 +102,7 @@ func (r *orgQuotaResource) Configure(ctx context.Context, req resource.Configure
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *managers.Session, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *managers.Session, got: %T. Please report this issue to the provider developers", req.ProviderData),
 		)
 		return
 	}
@@ -111,16 +117,24 @@ func (r *orgQuotaResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
-	orgsQuotaValues := orgQuotaType.mapOrgQuotaTypeToValues()
+	orgsQuotaValues, diags := orgQuotaType.mapOrgQuotaTypeToValues(ctx)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	orgsQuotaResp, err := r.cfClient.OrganizationQuotas.Create(ctx, orgsQuotaValues)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to create org quota.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"Unable to create org quota",
+			fmt.Sprintf("Request failed with %s ", err.Error()),
 		)
 		return
 	}
-	orgsQuotaType := mapOrgQuotaValuesToType(orgsQuotaResp)
+	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuotaResp)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	diags = resp.State.Set(ctx, orgsQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -129,35 +143,36 @@ func (r *orgQuotaResource) Create(ctx context.Context, req resource.CreateReques
 }
 
 func (r *orgQuotaResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var orgQuotaType OrgQuotaType
-	diags := req.State.Get(ctx, &orgQuotaType)
+	var orgQuotaTypeState OrgQuotaType
+	diags := req.State.Get(ctx, &orgQuotaTypeState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	orgsQuotas, err := r.cfClient.OrganizationQuotas.ListAll(ctx, &cfv3client.OrganizationQuotaListOptions{
-		Names: cfv3client.Filter{
-			Values: []string{orgQuotaType.Name.ValueString()},
+		GUIDs: cfv3client.Filter{
+			Values: []string{orgQuotaTypeState.ID.ValueString()},
 		},
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch org quota data.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"Unable to fetch org quota data",
+			fmt.Sprintf("Request failed with %s", err.Error()),
 		)
 		return
 	}
 	orgsQuota, found := lo.Find(orgsQuotas, func(orgQuota *cfv3resource.OrganizationQuota) bool {
-		return orgQuota.Name == orgQuotaType.Name.ValueString()
+		return orgQuota.GUID == orgQuotaTypeState.ID.ValueString()
 	})
 	if !found {
-		resp.Diagnostics.AddError(
-			"Unable to find org quota.",
-			"Org quota does not exist.",
-		)
+		resp.State.RemoveResource(ctx)
 		return
 	}
-	orgsQuotaType := mapOrgQuotaValuesToType(orgsQuota)
+	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuota)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	diags = resp.State.Set(ctx, orgsQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -166,23 +181,54 @@ func (r *orgQuotaResource) Read(ctx context.Context, req resource.ReadRequest, r
 }
 
 func (r *orgQuotaResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var orgQuotaType OrgQuotaType
-	diags := req.Plan.Get(ctx, &orgQuotaType)
+	var orgQuotaTypePlan OrgQuotaType
+	var orgQuotaTypeState OrgQuotaType
+	diags := req.Plan.Get(ctx, &orgQuotaTypePlan)
+	resp.Diagnostics.Append(diags...)
+	diags = resp.State.Get(ctx, &orgQuotaTypeState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	orgsQuotaValues := orgQuotaType.mapOrgQuotaTypeToValues()
-	orgsQuotaResp, err := r.cfClient.OrganizationQuotas.Update(ctx, orgQuotaType.Id.ValueString(), orgsQuotaValues)
-	if err != nil {
+	removed, added, diags := findChangedRelationsFromTFState(ctx, orgQuotaTypePlan.Organizations, orgQuotaTypeState.Organizations)
+	resp.Diagnostics.Append(diags...)
+	orgsQuotaValues, diags := orgQuotaTypePlan.mapOrgQuotaTypeToValues(ctx)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	if len(removed) != 0 {
 		resp.Diagnostics.AddError(
-			"Unable to update org quota.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"Unable to update org quota",
+			fmt.Sprintf("Cannot unassign org quota from org %v", removed),
 		)
 		return
 	}
-	orgsQuotaType := mapOrgQuotaValuesToType(orgsQuotaResp)
+	if len(added) != 0 {
+		_, err := r.cfClient.OrganizationQuotas.Apply(ctx, orgQuotaTypePlan.ID.ValueString(), added)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Unable to update org quota",
+				fmt.Sprintf("Request failed with %s", err.Error()),
+			)
+			return
+		}
+	}
+	orgsQuotaValues.Relationships = nil
+	orgsQuotaResp, err := r.cfClient.OrganizationQuotas.Update(ctx, orgQuotaTypePlan.ID.ValueString(), orgsQuotaValues)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to update org quota",
+			fmt.Sprintf("Request failed with %s", err.Error()),
+		)
+		return
+	}
+	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuotaResp)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	diags = resp.State.Set(ctx, orgsQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -197,31 +243,23 @@ func (r *orgQuotaResource) Delete(ctx context.Context, req resource.DeleteReques
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	err := r.cfClient.OrganizationQuotas.Delete(ctx, orgQuotaType.Id.ValueString())
+	jobID, err := r.cfClient.OrganizationQuotas.Delete(ctx, orgQuotaType.ID.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to list spaces for Org Deletion",
-			"Could not list spaces to delete them before deleting organization",
+			"Unable to delete organization quota",
+			fmt.Sprintf("Org quota deletion verification failed %s with %s", orgQuotaType.Name.ValueString(), err.Error()),
 		)
 		return
 	}
-	_, _, err = lo.AttemptWithDelay(10, 3*time.Second, func(i int, duration time.Duration) error {
-		_, err := r.cfClient.OrganizationQuotas.Get(ctx, orgQuotaType.Id.ValueString())
-		if err != nil {
-			if cfv3resource.IsResourceNotFoundError(err) {
-				return nil
-			} else {
-				return err
-			}
-		} else {
-			return fmt.Errorf("resource still exists")
-		}
-	})
-	if err != nil {
+	if pollJob(ctx, *r.cfClient, jobID) != nil {
 		resp.Diagnostics.AddError(
 			"Unable to verify Org Quota Deletion",
-			"Org quota deletion verification failed with %s."+err.Error(),
+			"Org quota deletion verification failed for "+orgQuotaType.ID.ValueString()+": "+err.Error(),
 		)
 		return
 	}
+}
+
+func (r *orgQuotaResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }

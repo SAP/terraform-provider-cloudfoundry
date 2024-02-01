@@ -9,6 +9,7 @@ import (
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/samber/lo"
 )
@@ -81,6 +82,11 @@ func (d *OrgQuotaDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 				MarkdownDescription: "Maximum log rate allowed for all the started processes and running tasks in bytes/second.",
 				Computed:            true,
 			},
+			"organizations": schema.SetAttribute{
+				MarkdownDescription: "Set of Org GUIDs to which this org quota would be assigned.",
+				ElementType:         types.StringType,
+				Computed:            true,
+			},
 			idKey:        guidSchema(),
 			createdAtKey: createdAtSchema(),
 			updatedAtKey: updatedAtSchema(),
@@ -127,13 +133,13 @@ func (d *OrgQuotaDataSource) Read(ctx context.Context, req datasource.ReadReques
 	})
 	if !found {
 		resp.Diagnostics.AddError(
-			"Unable to find org data in list",
-			fmt.Sprintf("Given name %s not in the list of orgs.", orgQuotaType.Name.ValueString()),
+			"Unable to find org quota data in list",
+			fmt.Sprintf("Given name %s not in the list of org quotas.", orgQuotaType.Name.ValueString()),
 		)
 		return
 	}
-	orgQuotaType = mapOrgQuotaValuesToType(orgsQuota)
-
+	orgQuotaType, diags := mapOrgQuotaValuesToType(orgsQuota)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

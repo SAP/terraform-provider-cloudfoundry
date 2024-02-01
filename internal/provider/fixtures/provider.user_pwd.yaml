@@ -14,9 +14,7 @@ interactions:
         request_uri: ""
         body: ""
         form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
+        headers: {}
         url: https://api.x.x.x.x.com/
         method: GET
       response:
@@ -83,41 +81,39 @@ interactions:
             Content-Type:
                 - application/json;charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:56 GMT
+                - Thu, 01 Feb 2024 11:12:26 GMT
             Server:
                 - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 77f06f1bd0736229
+                - 756b4a9c12f6fbb4
             X-B3-Traceid:
-                - 46dd6c333df54ca577f06f1bd0736229
+                - ebb9b94724e449f9756b4a9c12f6fbb4
             X-Content-Type-Options:
                 - nosniff
             X-Vcap-Request-Id:
-                - 46dd6c33-3df5-4ca5-77f0-6f1bd0736229::d04579ba-e1ff-4549-95cc-4dc6ba9a5f52
+                - ebb9b947-24e4-49f9-756b-4a9c12f6fbb4::3a41fe8b-ded4-46c6-bcae-8c7dc2e29e87
         status: 200 OK
         code: 200
-        duration: 878.84337ms
+        duration: 2.049938125s
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 68
+        content_length: 61
         transfer_encoding: []
         trailer: {}
         host: uaa.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
-        body: grant_type=password&password=xxxx&scope=&username=xx
+        body: grant_type=password&password=xxxx&username=xx
         form:
             grant_type:
                 - password
             password:
                 - xxxx
-            scope:
-                - ""
             username:
                 - xx
         headers:
@@ -135,7 +131,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"95ca93b3748e4c688544f43659f8dd57-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"c34672e543054a90bd5d8f3f78cdf0cf"}'
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"38b50b2be59e4205b4b3cc4d8f63997b-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"80b3bf10de074ee19cd595537f3cf1f8"}'
         headers:
             Cache-Control:
                 - no-store
@@ -144,12 +140,12 @@ interactions:
             Content-Type:
                 - application/json;charset=UTF-8
             Date:
-                - Wed, 31 Jan 2024 12:31:56 GMT
+                - Thu, 01 Feb 2024 11:12:27 GMT
             Pragma:
                 - no-cache
             Set-Cookie:
-                - JSESSIONID=NGIwZWUyNGUtMDM2Mi00ODI1LTg2ZGQtMjJmY2U5Zjc3NGRk; Path=/; Secure; HttpOnly; SameSite=None
-                - __VCAP_ID__=d3f90708-66fa-46bb-4482-48561cd4e6ff; Path=/; HttpOnly; Secure; SameSite=None
+                - JSESSIONID=NGU2NmY5MWMtZDIzNy00ZDJjLWJkYWQtYjRkY2I3NTVjMjc4; Path=/; Secure; HttpOnly; SameSite=None
+                - __VCAP_ID__=f88f229f-4624-4720-64a5-17a3fd90af5c; Path=/; HttpOnly; Secure; SameSite=None
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-Content-Type-Options:
@@ -157,12 +153,12 @@ interactions:
             X-Frame-Options:
                 - DENY
             X-Vcap-Request-Id:
-                - a1f28955-e3e0-4b31-6aec-1e813be93054
+                - 83ff0d58-33ff-4ca5-48e9-3b32a2f0a703
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 1.017078942s
+        duration: 958.14675ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -196,7 +192,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:57 GMT
+                - Thu, 01 Feb 2024 11:12:27 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -204,9 +200,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4264e73e1065af91
+                - 6825f26c753c5229
             X-B3-Traceid:
-                - 3ce501a89c134c934264e73e1065af91
+                - add35333813f48236825f26c753c5229
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -220,16 +216,16 @@ interactions:
             X-Ratelimit-Remaining:
                 - "18000"
             X-Ratelimit-Reset:
-                - "1706705099"
+                - "1706786099"
             X-Runtime:
-                - "0.010811"
+                - "0.011410"
             X-Vcap-Request-Id:
-                - 3ce501a8-9c13-4c93-4264-e73e1065af91::f5c30c2c-fc16-476d-97fa-6e10cad2379a
+                - add35333-813f-4823-6825-f26c753c5229::ab11539f-e236-475f-a2f8-00af8705d286
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 251.632351ms
+        duration: 260.082833ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -243,9 +239,7 @@ interactions:
         request_uri: ""
         body: ""
         form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
+        headers: {}
         url: https://api.x.x.x.x.com/
         method: GET
       response:
@@ -312,41 +306,39 @@ interactions:
             Content-Type:
                 - application/json;charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:57 GMT
+                - Thu, 01 Feb 2024 11:12:28 GMT
             Server:
                 - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4f3cfe549cad8af2
+                - 77997965ef3f1ba4
             X-B3-Traceid:
-                - 3e81d6fe2a2746584f3cfe549cad8af2
+                - fb1e782aba6242e577997965ef3f1ba4
             X-Content-Type-Options:
                 - nosniff
             X-Vcap-Request-Id:
-                - 3e81d6fe-2a27-4658-4f3c-fe549cad8af2::b57107a0-4364-4edb-bf01-fee1499b7cd3
+                - fb1e782a-ba62-42e5-7799-7965ef3f1ba4::b172fbb3-1801-4cf3-9129-49af29814b0e
         status: 200 OK
         code: 200
-        duration: 237.308364ms
+        duration: 246.773ms
     - id: 4
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 68
+        content_length: 61
         transfer_encoding: []
         trailer: {}
         host: uaa.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
-        body: grant_type=password&password=xxxx&scope=&username=xx
+        body: grant_type=password&password=xxxx&username=xx
         form:
             grant_type:
                 - password
             password:
                 - xxxx
-            scope:
-                - ""
             username:
                 - xx
         headers:
@@ -364,7 +356,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"3db7835f7f9d4bf6b08406d2f001693a-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"8ee841da77cc45288daa7488798fb920"}'
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"4bf6bef95d0f415dacef4fb47d2ff264-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"354d3921ba434e8385eb1772548af028"}'
         headers:
             Cache-Control:
                 - no-store
@@ -373,12 +365,12 @@ interactions:
             Content-Type:
                 - application/json;charset=UTF-8
             Date:
-                - Wed, 31 Jan 2024 12:31:58 GMT
+                - Thu, 01 Feb 2024 11:12:27 GMT
             Pragma:
                 - no-cache
             Set-Cookie:
-                - JSESSIONID=MDY1OGFmZmEtZTg1MC00NDU2LWI0MTUtMmE1ODA0ZTg0YzAy; Path=/; Secure; HttpOnly; SameSite=None
-                - __VCAP_ID__=383fd94f-ec0e-480d-6e4b-84393d3e9d8b; Path=/; HttpOnly; Secure; SameSite=None
+                - JSESSIONID=MWQ3YTVmNjgtN2QyMC00ZTMwLTk4MmQtMDc2YTI3YWU2MmEy; Path=/; Secure; HttpOnly; SameSite=None
+                - __VCAP_ID__=644ea19d-2230-4125-4b43-802de1d67dbc; Path=/; HttpOnly; Secure; SameSite=None
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-Content-Type-Options:
@@ -386,12 +378,12 @@ interactions:
             X-Frame-Options:
                 - DENY
             X-Vcap-Request-Id:
-                - d2f9a762-39d9-46d1-79c3-4cd8128a1cd2
+                - 4cdb5507-3ba4-4040-4aa0-edf9f4224d5b
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 446.141323ms
+        duration: 380.567875ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -425,7 +417,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:58 GMT
+                - Thu, 01 Feb 2024 11:12:28 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -433,9 +425,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 604607acecc26984
+                - 51ed2a237b9930bd
             X-B3-Traceid:
-                - ad2fe28827ab4980604607acecc26984
+                - 8eb09c5a582041c751ed2a237b9930bd
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -449,16 +441,16 @@ interactions:
             X-Ratelimit-Remaining:
                 - "18000"
             X-Ratelimit-Reset:
-                - "1706705099"
+                - "1706786099"
             X-Runtime:
-                - "0.025745"
+                - "0.012578"
             X-Vcap-Request-Id:
-                - ad2fe288-27ab-4980-6046-07acecc26984::a7feea4d-8b17-4fbe-9327-d15ba63c9c58
+                - 8eb09c5a-5820-41c7-51ed-2a237b9930bd::0fb15fef-9487-4a67-9d78-5cc286c2d3df
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 266.47829ms
+        duration: 262.423625ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -472,9 +464,7 @@ interactions:
         request_uri: ""
         body: ""
         form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
+        headers: {}
         url: https://api.x.x.x.x.com/
         method: GET
       response:
@@ -541,41 +531,39 @@ interactions:
             Content-Type:
                 - application/json;charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:58 GMT
+                - Thu, 01 Feb 2024 11:12:29 GMT
             Server:
                 - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 7cbaeda8ed600df0
+                - 4a8599c66d272f98
             X-B3-Traceid:
-                - 5999576405d348697cbaeda8ed600df0
+                - c53b823430f941734a8599c66d272f98
             X-Content-Type-Options:
                 - nosniff
             X-Vcap-Request-Id:
-                - 59995764-05d3-4869-7cba-eda8ed600df0::4e79668e-7c28-4a6b-ad20-d69979b7b6b8
+                - c53b8234-30f9-4173-4a85-99c66d272f98::62e79ce4-5890-411b-b8c3-484fdf6ea597
         status: 200 OK
         code: 200
-        duration: 239.232654ms
+        duration: 247.289584ms
     - id: 7
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 68
+        content_length: 61
         transfer_encoding: []
         trailer: {}
         host: uaa.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
-        body: grant_type=password&password=xxxx&scope=&username=xx
+        body: grant_type=password&password=xxxx&username=xx
         form:
             grant_type:
                 - password
             password:
                 - xxxx
-            scope:
-                - ""
             username:
                 - xx
         headers:
@@ -593,7 +581,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"e8ba1ef52a4b4d0eb0617f8b36837db5-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"068615fc1a4440b6a806b8dc41ba40d9"}'
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"04c5350e6db04a34b4907d12e55c4de7-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"acc2aa4ff275481ca92ee145d67f8614"}'
         headers:
             Cache-Control:
                 - no-store
@@ -602,12 +590,12 @@ interactions:
             Content-Type:
                 - application/json;charset=UTF-8
             Date:
-                - Wed, 31 Jan 2024 12:31:58 GMT
+                - Thu, 01 Feb 2024 11:12:29 GMT
             Pragma:
                 - no-cache
             Set-Cookie:
-                - JSESSIONID=NjQzYjRlNWUtMTJlZC00ZGViLTk2MDgtYTkzZWZjOTZhNTY5; Path=/; Secure; HttpOnly; SameSite=None
-                - __VCAP_ID__=26f7b11b-2041-4382-759a-892c20cb6112; Path=/; HttpOnly; Secure; SameSite=None
+                - JSESSIONID=YjE4MDZhMTAtODcxZC00MDQxLTg0MzAtMWNkM2U0MGJmYWNk; Path=/; Secure; HttpOnly; SameSite=None
+                - __VCAP_ID__=dae1cde9-40e3-43a3-6652-f26ae008674b; Path=/; HttpOnly; Secure; SameSite=None
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-Content-Type-Options:
@@ -615,12 +603,12 @@ interactions:
             X-Frame-Options:
                 - DENY
             X-Vcap-Request-Id:
-                - b9cf07d2-34c6-4e47-60d4-071834889147
+                - b7f4df72-9214-4edf-792b-c99662061120
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 407.14296ms
+        duration: 379.865292ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -654,7 +642,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:59 GMT
+                - Thu, 01 Feb 2024 11:12:29 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -662,9 +650,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 627184e5686be934
+                - 709b0d9a3593d41b
             X-B3-Traceid:
-                - 6b8856e4658d443b627184e5686be934
+                - 3b32f52dd19a41b2709b0d9a3593d41b
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -678,16 +666,16 @@ interactions:
             X-Ratelimit-Remaining:
                 - "18000"
             X-Ratelimit-Reset:
-                - "1706705099"
+                - "1706786099"
             X-Runtime:
-                - "0.011418"
+                - "0.020449"
             X-Vcap-Request-Id:
-                - 6b8856e4-658d-443b-6271-84e5686be934::261b0eed-e9ce-42f4-b504-bfd08444c3dd
+                - 3b32f52d-d19a-41b2-709b-0d9a3593d41b::424821bb-e34d-4178-b8e3-7510d2733699
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 255.767543ms
+        duration: 304.689167ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -701,9 +689,7 @@ interactions:
         request_uri: ""
         body: ""
         form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
+        headers: {}
         url: https://api.x.x.x.x.com/
         method: GET
       response:
@@ -770,19 +756,81 @@ interactions:
             Content-Type:
                 - application/json;charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:32:00 GMT
+                - Thu, 01 Feb 2024 11:12:30 GMT
             Server:
                 - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4f95e368b666da22
+                - 4fc60e573669f4c4
             X-B3-Traceid:
-                - 26258327b83d48e14f95e368b666da22
+                - 666ed14da3d5492e4fc60e573669f4c4
             X-Content-Type-Options:
                 - nosniff
             X-Vcap-Request-Id:
-                - 26258327-b83d-48e1-4f95-e368b666da22::5afa87bc-25cf-491e-95a5-10c6ecea6806
+                - 666ed14d-a3d5-492e-4fc6-0e573669f4c4::2a2378f3-ceed-4d3c-887d-583d470e219f
         status: 200 OK
         code: 200
-        duration: 238.793042ms
+        duration: 291.928083ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 61
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=password&password=xxxx&username=xx
+        form:
+            grant_type:
+                - password
+            password:
+                - xxxx
+            username:
+                - xx
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"75da3071d5ba423b91bd9ed3421e4620-r","expires_in":1199,"scope":"openid uaa.user cloud_controller.read password.write cloud_controller.write","jti":"4d2fb848b5014edcb7d19706d670c6c3"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 01 Feb 2024 11:12:30 GMT
+            Pragma:
+                - no-cache
+            Set-Cookie:
+                - JSESSIONID=NDNiMDM5NmQtZjQ1Ni00ODJmLTkyMWItMjM1YWFkZWU2Yjli; Path=/; Secure; HttpOnly; SameSite=None
+                - __VCAP_ID__=bb0a7bf7-c123-46cc-5084-f6bb44bb04fc; Path=/; HttpOnly; Secure; SameSite=None
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - c75021af-94f6-4b37-7f9c-04a8b46223c6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 382.742167ms

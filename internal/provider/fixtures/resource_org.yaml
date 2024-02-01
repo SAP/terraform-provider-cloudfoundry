@@ -6,210 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:55 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 4eee0ba21aa8e8fd
-            X-B3-Traceid:
-                - c8bb089def4e4a2c4eee0ba21aa8e8fd
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - c8bb089d-ef4e-4a2c-4eee-0ba21aa8e8fd::70e96bf1-a7a0-4d12-9a49-a1fa9295335c
-        status: 200 OK
-        code: 200
-        duration: 479.993393ms
-    - id: 1
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:55 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 559d9624387b891c
-            X-B3-Traceid:
-                - 9d77477147f2491e559d9624387b891c
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - 9d774771-47f2-491e-559d-9624387b891c::ded23c0f-b0ae-4986-8359-9dd250d7f880
-        status: 200 OK
-        code: 200
-        duration: 154.060144ms
-    - id: 2
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 66
+        content_length: 70
         transfer_encoding: []
         trailer: {}
         host: api.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"tf-unit-test","metadata":{"labels":{},"annotations":{}}}
+            {"name":"tf-unit-test","metadata":{"labels":null,"annotations":null}}
         form: {}
         headers:
             Authorization:
@@ -228,12 +32,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"a5ad6224-5a51-40a3-93d6-8763fccb8f55","created_at":"2024-01-31T12:31:55Z","updated_at":"2024-01-31T12:31:55Z","name":"tf-unit-test","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}'
+        body: '{"guid":"1a160617-2ad2-4123-8f9d-cb7aa58eb77e","created_at":"2024-02-01T11:12:24Z","updated_at":"2024-02-01T11:12:24Z","name":"tf-unit-test","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:55 GMT
+                - Thu, 01 Feb 2024 11:12:24 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -241,9 +45,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 521923a3222e92fa
+                - 74ec53126c88dd78
             X-B3-Traceid:
-                - 4ba00e2211f04bcc521923a3222e92fa
+                - 35bb69e7fa5546dc74ec53126c88dd78
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -253,211 +57,15 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.046780"
+                - "0.032277"
             X-Vcap-Request-Id:
-                - 4ba00e22-11f0-4bcc-5219-23a3222e92fa::67285eb1-f130-4928-99c2-5ea2be897725
+                - 35bb69e7-fa55-46dc-74ec-53126c88dd78::7d39ee3c-3412-4dc1-8869-143d1a0911c2
             X-Xss-Protection:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 213.207243ms
-    - id: 3
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:56 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 67a644f83a0d3b91
-            X-B3-Traceid:
-                - 6b96c232dccc439d67a644f83a0d3b91
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - 6b96c232-dccc-439d-67a6-44f83a0d3b91::de3cd921-c8b3-4fcb-8f55-530253c32e2f
-        status: 200 OK
-        code: 200
-        duration: 152.910194ms
-    - id: 4
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:56 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 7a74c8c139323f2b
-            X-B3-Traceid:
-                - 67fcc1a4b1df4c487a74c8c139323f2b
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - 67fcc1a4-b1df-4c48-7a74-c8c139323f2b::12cb3201-1476-4747-9f10-d270270d26b3
-        status: 200 OK
-        code: 200
-        duration: 155.616532ms
-    - id: 5
+        duration: 417.284125ms
+    - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -475,7 +83,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?guids=a5ad6224-5a51-40a3-93d6-8763fccb8f55
+        url: https://api.x.x.x.x.com/v3/organizations?guids=1a160617-2ad2-4123-8f9d-cb7aa58eb77e
         method: GET
       response:
         proto: HTTP/2.0
@@ -485,12 +93,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?guids=a5ad6224-5a51-40a3-93d6-8763fccb8f55\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?guids=a5ad6224-5a51-40a3-93d6-8763fccb8f55\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"a5ad6224-5a51-40a3-93d6-8763fccb8f55","created_at":"2024-01-31T12:31:55Z","updated_at":"2024-01-31T12:31:55Z","name":"tf-unit-test","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?guids=1a160617-2ad2-4123-8f9d-cb7aa58eb77e\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?guids=1a160617-2ad2-4123-8f9d-cb7aa58eb77e\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"1a160617-2ad2-4123-8f9d-cb7aa58eb77e","created_at":"2024-02-01T11:12:24Z","updated_at":"2024-02-01T11:12:24Z","name":"tf-unit-test","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:31:56 GMT
+                - Thu, 01 Feb 2024 11:12:25 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -498,9 +106,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 7140e824399e73b9
+                - 7b54e304afb6eefd
             X-B3-Traceid:
-                - 1c32d0bbff854fd07140e824399e73b9
+                - 8a36e138930b46c47b54e304afb6eefd
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -510,211 +118,15 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.012814"
+                - "0.015802"
             X-Vcap-Request-Id:
-                - 1c32d0bb-ff85-4fd0-7140-e824399e73b9::2def18bd-39a5-469b-a2b6-7670dae639ab
+                - 8a36e138-930b-46c4-7b54-e304afb6eefd::512b8724-fcd8-4dde-a15b-9f16c0985316
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 175.020916ms
-    - id: 6
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:56 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 65af68a1871d9c02
-            X-B3-Traceid:
-                - f2dcfe5e7eaa41eb65af68a1871d9c02
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - f2dcfe5e-7eaa-41eb-65af-68a1871d9c02::b9c5cb74-9ea6-4e39-af20-f7c23ad9febe
-        status: 200 OK
-        code: 200
-        duration: 154.111853ms
-    - id: 7
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:57 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 54cb69dff5d8e53d
-            X-B3-Traceid:
-                - 3582a7b2ff8a4f6854cb69dff5d8e53d
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - 3582a7b2-ff8a-4f68-54cb-69dff5d8e53d::0c9ea91d-fdf7-4851-987b-42503c7c4fe2
-        status: 200 OK
-        code: 200
-        duration: 155.021115ms
-    - id: 8
+        duration: 750.343708ms
+    - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -732,68 +144,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/spaces?organization_guids=a5ad6224-5a51-40a3-93d6-8763fccb8f55
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: false
-        body: '{"pagination":{"total_results":0,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/spaces?organization_guids=a5ad6224-5a51-40a3-93d6-8763fccb8f55\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/spaces?organization_guids=a5ad6224-5a51-40a3-93d6-8763fccb8f55\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[]}'
-        headers:
-            Content-Type:
-                - application/json; charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:31:57 GMT
-            Referrer-Policy:
-                - strict-origin-when-cross-origin
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 54000e0c62742b0c
-            X-B3-Traceid:
-                - 228b96f95749463b54000e0c62742b0c
-            X-Content-Type-Options:
-                - nosniff
-            X-Download-Options:
-                - noopen
-            X-Frame-Options:
-                - SAMEORIGIN
-            X-Permitted-Cross-Domain-Policies:
-                - none
-            X-Runtime:
-                - "0.008548"
-            X-Vcap-Request-Id:
-                - 228b96f9-5749-463b-5400-0e0c62742b0c::177430de-5d54-445c-9463-a181959c397c
-            X-Xss-Protection:
-                - 1; mode=block
-        status: 200 OK
-        code: 200
-        duration: 174.275276ms
-    - id: 9
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            Authorization:
-                - Bearer redacted
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations/a5ad6224-5a51-40a3-93d6-8763fccb8f55
+        url: https://api.x.x.x.x.com/v3/organizations/1a160617-2ad2-4123-8f9d-cb7aa58eb77e
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -808,9 +159,9 @@ interactions:
             Content-Type:
                 - text/html
             Date:
-                - Wed, 31 Jan 2024 12:31:57 GMT
+                - Thu, 01 Feb 2024 11:12:25 GMT
             Location:
-                - https://api.x.x.x.x.com/v3/jobs/8002bec5-7e5d-4809-9801-183995eba5b2
+                - https://api.x.x.x.x.com/v3/jobs/de1e7786-5698-47ad-b31f-585e5dae2eec
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -818,9 +169,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 480b635fe511be42
+                - 51c2a0fafcfdf08a
             X-B3-Traceid:
-                - 0d50e64f6758428c480b635fe511be42
+                - d88e050f48e9449b51c2a0fafcfdf08a
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -830,15 +181,15 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.028995"
+                - "0.019525"
             X-Vcap-Request-Id:
-                - 0d50e64f-6758-428c-480b-635fe511be42::74679d6e-a16a-4832-8fac-59c7d00a9459
+                - d88e050f-48e9-449b-51c2-a0fafcfdf08a::b6bf3da9-d0b6-48ba-b83f-f4b0cbc9600b
             X-Xss-Protection:
                 - 1; mode=block
         status: 202 Accepted
         code: 202
-        duration: 187.616671ms
-    - id: 10
+        duration: 176.665334ms
+    - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -856,7 +207,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/jobs/8002bec5-7e5d-4809-9801-183995eba5b2
+        url: https://api.x.x.x.x.com/v3/jobs/de1e7786-5698-47ad-b31f-585e5dae2eec
         method: GET
       response:
         proto: HTTP/2.0
@@ -866,12 +217,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"8002bec5-7e5d-4809-9801-183995eba5b2","created_at":"2024-01-31T12:31:57Z","updated_at":"2024-01-31T12:31:57Z","operation":"organization.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/8002bec5-7e5d-4809-9801-183995eba5b2"}}}'
+        body: '{"guid":"de1e7786-5698-47ad-b31f-585e5dae2eec","created_at":"2024-02-01T11:12:25Z","updated_at":"2024-02-01T11:12:26Z","operation":"organization.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/de1e7786-5698-47ad-b31f-585e5dae2eec"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:32:07 GMT
+                - Thu, 01 Feb 2024 11:12:36 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -879,9 +230,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 44fc1e4ba5834c6f
+                - 54e6055219d96e59
             X-B3-Traceid:
-                - ad2acf00ea81481d44fc1e4ba5834c6f
+                - 83cd4b1d1c744a1054e6055219d96e59
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -891,11 +242,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.012301"
+                - "0.009025"
             X-Vcap-Request-Id:
-                - ad2acf00-ea81-481d-44fc-1e4ba5834c6f::33256133-851e-48d3-815b-bb75abc745df
+                - 83cd4b1d-1c74-4a10-54e6-055219d96e59::7265dd33-839a-4834-b741-cc64eb0fd30e
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 182.602581ms
+        duration: 175.610125ms

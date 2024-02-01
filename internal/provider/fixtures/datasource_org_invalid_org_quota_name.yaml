@@ -19,7 +19,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=testunavailableorg
+        url: https://api.x.x.x.x.com/v3/organization_quotas?names=testunavailableorgquota
         method: GET
       response:
         proto: HTTP/2.0
@@ -29,7 +29,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":0,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=testunavailableorg\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=testunavailableorg\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[]}'
+        body: '{"pagination":{"total_results":0,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=testunavailableorgquota\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=testunavailableorgquota\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
@@ -42,9 +42,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 63b78f4f59a9cb72
+                - 73e6eea9abd6d4e9
             X-B3-Traceid:
-                - 2e15ca16c4d746de63b78f4f59a9cb72
+                - dff123201c4940cf73e6eea9abd6d4e9
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -54,11 +54,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.003118"
+                - "0.007522"
             X-Vcap-Request-Id:
-                - 2e15ca16-c4d7-46de-63b7-8f4f59a9cb72::251672b0-3fa7-4986-9503-8ea46c50bf7a
+                - dff12320-1c49-40cf-73e6-eea9abd6d4e9::30ab1e09-918e-4d19-889b-1a6cfcb246a3
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 476.183125ms
+        duration: 484.167167ms

@@ -19,7 +19,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete
+        url: https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete
         method: GET
       response:
         proto: HTTP/2.0
@@ -29,7 +29,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38","created_at":"2024-01-31T11:16:05Z","updated_at":"2024-01-31T12:29:38Z","name":"tf-test-do-not-delete","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"e3cef997-9ba5-4cb4-b25b-c79faa81a33f","created_at":"2024-02-01T05:45:49Z","updated_at":"2024-02-01T05:45:49Z","name":"tf-test-do-not-delete","apps":{"total_memory_in_mb":0,"per_process_memory_in_mb":null,"total_instances":null,"per_app_tasks":null,"log_rate_limit_in_bytes_per_second":null},"services":{"paid_services_allowed":false,"total_service_instances":0,"total_service_keys":null},"routes":{"total_routes":0,"total_reserved_ports":0},"domains":{"total_domains":null},"relationships":{"organizations":{"data":[]}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e3cef997-9ba5-4cb4-b25b-c79faa81a33f"}}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
@@ -42,9 +42,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 5374f088e7ca61f0
+                - 58574612b885069f
             X-B3-Traceid:
-                - ff42ee80704441ea5374f088e7ca61f0
+                - 4171fc6bf67a457a58574612b885069f
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -54,14 +54,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.014415"
+                - "0.006394"
             X-Vcap-Request-Id:
-                - ff42ee80-7044-41ea-5374-f088e7ca61f0::565a3771-eac3-4acb-85fc-568d08ed707f
+                - 4171fc6b-f67a-457a-5857-4612b885069f::919f268c-248c-44ae-b94e-77e9272d76cd
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 174.584916ms
+        duration: 166.377542ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -80,7 +80,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete
+        url: https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete
         method: GET
       response:
         proto: HTTP/2.0
@@ -90,7 +90,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38","created_at":"2024-01-31T11:16:05Z","updated_at":"2024-01-31T12:29:38Z","name":"tf-test-do-not-delete","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"e3cef997-9ba5-4cb4-b25b-c79faa81a33f","created_at":"2024-02-01T05:45:49Z","updated_at":"2024-02-01T05:45:49Z","name":"tf-test-do-not-delete","apps":{"total_memory_in_mb":0,"per_process_memory_in_mb":null,"total_instances":null,"per_app_tasks":null,"log_rate_limit_in_bytes_per_second":null},"services":{"paid_services_allowed":false,"total_service_instances":0,"total_service_keys":null},"routes":{"total_routes":0,"total_reserved_ports":0},"domains":{"total_domains":null},"relationships":{"organizations":{"data":[]}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e3cef997-9ba5-4cb4-b25b-c79faa81a33f"}}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
@@ -103,9 +103,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 56a395bdde4407ec
+                - 4a2c31466bd5bc31
             X-B3-Traceid:
-                - 14fbfbeebd5242b756a395bdde4407ec
+                - 84adf9d818e1418b4a2c31466bd5bc31
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -115,14 +115,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.014299"
+                - "0.006144"
             X-Vcap-Request-Id:
-                - 14fbfbee-bd52-42b7-56a3-95bdde4407ec::4b8001a8-700c-489d-af1e-27744d2ec7be
+                - 84adf9d8-18e1-418b-4a2c-31466bd5bc31::e7924225-ea00-47c2-bb53-e6caa615df9f
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 175.139833ms
+        duration: 162.817541ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -141,7 +141,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete
+        url: https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete
         method: GET
       response:
         proto: HTTP/2.0
@@ -151,7 +151,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38","created_at":"2024-01-31T11:16:05Z","updated_at":"2024-01-31T12:29:38Z","name":"tf-test-do-not-delete","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"e3cef997-9ba5-4cb4-b25b-c79faa81a33f","created_at":"2024-02-01T05:45:49Z","updated_at":"2024-02-01T05:45:49Z","name":"tf-test-do-not-delete","apps":{"total_memory_in_mb":0,"per_process_memory_in_mb":null,"total_instances":null,"per_app_tasks":null,"log_rate_limit_in_bytes_per_second":null},"services":{"paid_services_allowed":false,"total_service_instances":0,"total_service_keys":null},"routes":{"total_routes":0,"total_reserved_ports":0},"domains":{"total_domains":null},"relationships":{"organizations":{"data":[]}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/e3cef997-9ba5-4cb4-b25b-c79faa81a33f"}}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
@@ -164,9 +164,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 7b6d002b93cea652
+                - 4dee9b9879326119
             X-B3-Traceid:
-                - d2bc8993abd944ce7b6d002b93cea652
+                - c3c9c612500d4a894dee9b9879326119
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -176,11 +176,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.008116"
+                - "0.007381"
             X-Vcap-Request-Id:
-                - d2bc8993-abd9-44ce-7b6d-002b93cea652::e326f04a-ae07-440d-b9aa-b106519948ef
+                - c3c9c612-500d-4a89-4dee-9b9879326119::41d859a5-42ff-4552-91cb-0e9ec1456e18
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 164.860333ms
+        duration: 168.431917ms

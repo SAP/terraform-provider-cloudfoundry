@@ -1,15 +1,17 @@
 package provider
 
 import (
+	"context"
 	"time"
 
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type OrgQuotaType struct {
 	Name                  types.String `tfsdk:"name"`
-	Id                    types.String `tfsdk:"id"`
+	ID                    types.String `tfsdk:"id"`
 	AllowPaidServicePlans types.Bool   `tfsdk:"allow_paid_service_plans"`
 	TotalServices         types.Int64  `tfsdk:"total_services"`
 	TotalServiceKeys      types.Int64  `tfsdk:"total_service_keys"`
@@ -21,11 +23,13 @@ type OrgQuotaType struct {
 	TotalAppInstances     types.Int64  `tfsdk:"total_app_instances"`
 	TotalAppTasks         types.Int64  `tfsdk:"total_app_tasks"`
 	TotalAppLogRateLimit  types.Int64  `tfsdk:"total_app_log_rate_limit"`
+	Organizations         types.Set    `tfsdk:"organizations"`
 	CreatedAt             types.String `tfsdk:"created_at"`
 	UpdatedAt             types.String `tfsdk:"updated_at"`
 }
 
-func (orgQuotaType *OrgQuotaType) mapOrgQuotaTypeToValues() *cfv3resource.OrganizationQuotaCreateOrUpdate {
+func (orgQuotaType *OrgQuotaType) mapOrgQuotaTypeToValues(ctx context.Context) (*cfv3resource.OrganizationQuotaCreateOrUpdate, diag.Diagnostics) {
+	var diags diag.Diagnostics
 	orgQuota := cfv3resource.NewOrganizationQuotaCreate(orgQuotaType.Name.ValueString())
 	orgQuota.WithPaidServicesAllowed(orgQuotaType.AllowPaidServicePlans.ValueBool())
 	if !orgQuotaType.TotalServices.IsNull() {
@@ -58,26 +62,22 @@ func (orgQuotaType *OrgQuotaType) mapOrgQuotaTypeToValues() *cfv3resource.Organi
 	if !orgQuotaType.TotalAppLogRateLimit.IsNull() {
 		orgQuota.WithLogRateLimitInBytesPerSecond(int(orgQuotaType.TotalAppLogRateLimit.ValueInt64()))
 	}
-	return orgQuota
+	if !orgQuotaType.Organizations.IsNull() {
+		var orgQuotaRelOrgVal []string
+		diags = orgQuotaType.Organizations.ElementsAs(ctx, &orgQuotaRelOrgVal, false)
+		orgQuota.WithOrganizations(orgQuotaRelOrgVal...)
+	}
+	return orgQuota, diags
 }
-func mapOrgQuotaValuesToType(value *cfv3resource.OrganizationQuota) OrgQuotaType {
+func mapOrgQuotaValuesToType(value *cfv3resource.OrganizationQuota) (OrgQuotaType, diag.Diagnostics) {
+	var diags diag.Diagnostics
 	orgQuotaType := OrgQuotaType{
 		Name:                  types.StringValue(value.Name),
-		Id:                    types.StringValue(value.GUID),
+		ID:                    types.StringValue(value.GUID),
 		AllowPaidServicePlans: types.BoolValue(*value.Services.PaidServicesAllowed),
 		CreatedAt:             types.StringValue(value.CreatedAt.Format(time.RFC3339)),
 		UpdatedAt:             types.StringValue(value.UpdatedAt.Format(time.RFC3339)),
 	}
-	// orgQuotaType.TotalServices = types.Int64Null()
-	// orgQuotaType.TotalServiceKeys = types.Int64Null()
-	// orgQuotaType.TotalRoutes = types.Int64Null()
-	// orgQuotaType.TotalRoutePorts = types.Int64Null()
-	// orgQuotaType.TotalPrivateDomains = types.Int64Null()
-	// orgQuotaType.TotalMemory = types.Int64Null()
-	// orgQuotaType.InstanceMemory = types.Int64Null()
-	// orgQuotaType.TotalAppInstances = types.Int64Null()
-	// orgQuotaType.TotalAppTasks = types.Int64Null()
-	// orgQuotaType.TotalAppLogRateLimit = types.Int64Null()
 
 	if value.Services.TotalServiceInstances != nil {
 		orgQuotaType.TotalServices = types.Int64Value(int64(*value.Services.TotalServiceInstances))
@@ -109,5 +109,6 @@ func mapOrgQuotaValuesToType(value *cfv3resource.OrganizationQuota) OrgQuotaType
 	if value.Apps.LogRateLimitInBytesPerSecond != nil {
 		orgQuotaType.TotalAppLogRateLimit = types.Int64Value(int64(*value.Apps.LogRateLimitInBytesPerSecond))
 	}
-	return orgQuotaType
+	orgQuotaType.Organizations, diags = setRelationshipToTFSet(value.Relationships.Organizations.Data)
+	return orgQuotaType, diags
 }

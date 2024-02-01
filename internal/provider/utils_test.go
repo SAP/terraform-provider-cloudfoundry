@@ -22,6 +22,7 @@ var (
 	testOrgGUID              = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
 	testSpace                = "tf-test-do-not-delete"
 	testSpaceGUID            = "3bc20dc4-1870-4835-8308-dda2d766e61e"
+	testOrgQuota             = "tf-test-do-not-delete"
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {
