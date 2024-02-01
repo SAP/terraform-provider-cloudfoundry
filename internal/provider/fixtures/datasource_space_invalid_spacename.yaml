@@ -15,104 +15,6 @@ interactions:
         body: ""
         form: {}
         headers:
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/
-        method: GET
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: 1409
-        uncompressed: false
-        body: |-
-            {
-              "links": {
-                "self": {
-                  "href": "https://api.x.x.x.x.com"
-                },
-                "cloud_controller_v2": {
-                  "href": "https://api.x.x.x.x.com/v2",
-                  "meta": {
-                    "version": "2.220.0"
-                  }
-                },
-                "cloud_controller_v3": {
-                  "href": "https://api.x.x.x.x.com/v3",
-                  "meta": {
-                    "version": "3.155.0"
-                  }
-                },
-                "network_policy_v0": {
-                  "href": "https://api.x.x.x.x.com/networking/v0/external"
-                },
-                "network_policy_v1": {
-                  "href": "https://api.x.x.x.x.com/networking/v1/external"
-                },
-                "login": {
-                  "href": "https://login.x.x.x.x.com"
-                },
-                "uaa": {
-                  "href": "https://uaa.x.x.x.x.com"
-                },
-                "credhub": null,
-                "routing": null,
-                "logging": {
-                  "href": "wss://doppler.x.x.x.x.com:443"
-                },
-                "log_cache": {
-                  "href": "https://log-cache.x.x.x.x.com"
-                },
-                "log_stream": {
-                  "href": "https://log-stream.x.x.x.x.com"
-                },
-                "app_ssh": {
-                  "href": "ssh.x.x.x.x.com:2222",
-                  "meta": {
-                    "host_key_fingerprint": "S1f0N1qdni4o+z5Q67oj3jxvS2WqgDycOSOpCH4ZhFA",
-                    "oauth_client": "ssh-proxy"
-                  }
-                }
-              }
-            }
-        headers:
-            Content-Length:
-                - "1409"
-            Content-Type:
-                - application/json;charset=utf-8
-            Date:
-                - Wed, 31 Jan 2024 12:32:00 GMT
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 6d3c5b016d7fa9f9
-            X-B3-Traceid:
-                - d405eb43d67b40616d3c5b016d7fa9f9
-            X-Content-Type-Options:
-                - nosniff
-            X-Vcap-Request-Id:
-                - d405eb43-d67b-4061-6d3c-5b016d7fa9f9::2e7335c5-821c-4751-a446-0db5e5981d13
-        status: 200 OK
-        code: 200
-        duration: 152.301707ms
-    - id: 1
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
             Authorization:
                 - Bearer redacted
             User-Agent:
@@ -132,7 +34,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:32:00 GMT
+                - Thu, 01 Feb 2024 11:12:27 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -140,9 +42,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 6a63490c18e0af13
+                - 54498c1cedbd9ce2
             X-B3-Traceid:
-                - 0e084021348043f16a63490c18e0af13
+                - ca0e244ebdad4adb54498c1cedbd9ce2
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -152,15 +54,15 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.020192"
+                - "0.007642"
             X-Vcap-Request-Id:
-                - 0e084021-3480-43f1-6a63-490c18e0af13::9e3cd554-fafe-4613-bb50-23b0c91d7b7c
+                - ca0e244e-bdad-4adb-5449-8c1cedbd9ce2::549e0395-a177-4675-b5eb-6168ded2a4a2
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 182.500448ms
-    - id: 2
+        duration: 162.7935ms
+    - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -188,12 +90,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/spaces?organization_guids=ca721b24-e24d-4171-83e1-1ef6bd836b38\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/spaces?organization_guids=ca721b24-e24d-4171-83e1-1ef6bd836b38\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e","created_at":"2024-01-31T11:23:20Z","updated_at":"2024-01-31T11:23:20Z","name":"tf-test-do-not-delete","relationships":{"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"quota":{"data":null}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"features":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e/features"},"apply_manifest":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e/actions/apply_manifest","method":"POST"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/spaces?organization_guids=ca721b24-e24d-4171-83e1-1ef6bd836b38\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/spaces?organization_guids=ca721b24-e24d-4171-83e1-1ef6bd836b38\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e","created_at":"2024-01-31T11:23:20Z","updated_at":"2024-02-01T06:53:19Z","name":"tf-test-do-not-delete","relationships":{"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"quota":{"data":null}},"metadata":{"labels":{"purpose":"prod","test":"pass"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"features":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e/features"},"apply_manifest":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e/actions/apply_manifest","method":"POST"}}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 31 Jan 2024 12:32:00 GMT
+                - Thu, 01 Feb 2024 11:12:28 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -201,9 +103,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4554c412ebd65e4f
+                - 4d29871d06b358bc
             X-B3-Traceid:
-                - 81d29aeb537d45164554c412ebd65e4f
+                - 778615d517bf41d14d29871d06b358bc
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -213,11 +115,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.014590"
+                - "0.021059"
             X-Vcap-Request-Id:
-                - 81d29aeb-537d-4516-4554-c412ebd65e4f::c0ca959f-3114-4b11-be99-f93c0bd7aa46
+                - 778615d5-17bf-41d1-4d29-871d06b358bc::041afd43-0358-44c1-b98e-4c0cb579bddc
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 180.146949ms
+        duration: 183.624125ms

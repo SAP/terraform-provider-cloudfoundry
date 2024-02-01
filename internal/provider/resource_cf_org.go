@@ -170,7 +170,7 @@ func (r *orgResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 	if !found {
 		resp.Diagnostics.AddError(
 			"Unable to find org data in list",
-			fmt.Sprintf("Given ID %s not in the list of orgs.", data.Name.ValueString()),
+			fmt.Sprintf("Given ID %s not in the list of orgs.", data.ID.ValueString()),
 		)
 		return
 	}
@@ -241,8 +241,6 @@ func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	// TODO @KesavanKing introduce timeout
-	deleteTimeout := DefaultTimeout
 	jobID, err := r.cfClient.Organizations.Delete(ctx, state.ID.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -252,7 +250,7 @@ func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		return
 	}
 
-	if pollJob(ctx, *r.cfClient, jobID, deleteTimeout) != nil {
+	if pollJob(ctx, *r.cfClient, jobID) != nil {
 		resp.Diagnostics.AddError(
 			"Delete org failed",
 			"Failed in Deleting organization "+state.ID.ValueString()+": "+err.Error(),

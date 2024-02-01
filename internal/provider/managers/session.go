@@ -23,21 +23,27 @@ type Session struct {
 func (c *CloudFoundryProviderConfig) NewSession(httpClient *http.Client) (*Session, error) {
 	var cfg *config.Config
 	var err error
+	var opts []config.Option
+
+	if httpClient != nil {
+		opts = append(opts, config.HttpClient(httpClient))
+	}
+	if c.SkipSslValidation {
+		opts = append(opts, config.SkipTLSValidation())
+	}
 	switch {
 	case c.User != "" && c.Password != "":
-		cfg, err = config.NewUserPassword(c.Endpoint, c.User, c.Password)
+		opts = append(opts, config.UserPassword(c.User, c.Password))
+		cfg, err = config.New(c.Endpoint, opts...)
 	case c.CFClientID != "" && c.CFClientSecret != "":
-		cfg, err = config.NewClientSecret(c.Endpoint, c.CFClientID, c.CFClientSecret)
+		opts = append(opts, config.ClientCredentials(c.CFClientID, c.CFClientSecret))
+		cfg, err = config.New(c.Endpoint, opts...)
 	default:
-		cfg, err = config.NewFromCFHome()
+		cfg, err = config.NewFromCFHome(opts...)
 	}
 	if err != nil {
 		return nil, err
 	}
-	if httpClient != nil {
-		cfg.WithHTTPClient(httpClient)
-	}
-	cfg.WithSkipTLSValidation(c.SkipSslValidation)
 	cf, err := client.New(cfg)
 	if err != nil {
 		return nil, err

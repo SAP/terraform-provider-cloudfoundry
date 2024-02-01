@@ -253,12 +253,14 @@ func (p *CloudFoundryProvider) Configure(ctx context.Context, req provider.Confi
 func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NeworgResource,
+		NewOrgQuotaResource,
 	}
 }
 
 func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewOrgDataSource,
+		NewOrgQuotaDataSource,
 		NewSpaceDataSource,
 	}
 }

@@ -193,8 +193,9 @@ func getCFHomeConf() *CloudFoundryProviderConfigPtr {
 	if err != nil {
 		panic(err)
 	}
+	apiEndpointURL := cfConf.ApiURL("")
 	cfg := CloudFoundryProviderConfigPtr{
-		Endpoint: &cfConf.APIEndpointURL,
+		Endpoint: &apiEndpointURL,
 	}
 	return &cfg
 }
@@ -206,6 +207,7 @@ func stopQuietly(rec *recorder.Recorder) {
 func TestCloudFoundryProvider_HasResources(t *testing.T) {
 	expectedResources := []string{
 		"cloudfoundry_org",
+		"cloudfoundry_org_quota",
 	}
 
 	ctx := context.Background()
@@ -226,6 +228,7 @@ func TestProvider_HasDataSources(t *testing.T) {
 	expectedDataSources := []string{
 		"cloudfoundry_org",
 		"cloudfoundry_space",
+		"cloudfoundry_org_quota",
 	}
 
 	ctx := context.Background()
