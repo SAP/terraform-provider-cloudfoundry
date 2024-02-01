@@ -76,12 +76,9 @@ func hclProvider(cfConfig *CloudFoundryProviderConfigPtr) string {
 func hclProviderWithDataSource(cfConfig *CloudFoundryProviderConfigPtr) string {
 	s := `
 	data "cloudfoundry_org" "org" {
-		name = "PerformanceTeamBLR"
+		name = "tf-test-do-not-delete"
 	}`
 	return hclProvider(cfConfig) + s
-}
-func strtostrptr(s string) *string {
-	return &s
 }
 
 func TestCloudFoundryProvider_Configure(t *testing.T) {
@@ -161,7 +158,10 @@ func TestCloudFoundryProvider_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(recUserPass.GetDefaultClient()),
 			Steps: []testingResource.TestStep{
 				{
-					Config: hclProviderWithDataSource(&cfg),
+					Config: hclProvider(&cfg) + `
+					data "cloudfoundry_org" "org" {
+						name = "PerformanceTeamBLR"
+					}`,
 				},
 			},
 		})
@@ -204,7 +204,9 @@ func stopQuietly(rec *recorder.Recorder) {
 	}
 }
 func TestCloudFoundryProvider_HasResources(t *testing.T) {
-	expectedResources := []string{}
+	expectedResources := []string{
+		"cloudfoundry_org",
+	}
 
 	ctx := context.Background()
 	registeredResources := []string{}

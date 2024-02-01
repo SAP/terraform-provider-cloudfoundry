@@ -50,7 +50,7 @@ func TestOrgDataSource_Configure(t *testing.T) {
 	t.Parallel()
 	t.Run("error path - get unavailable datasource org", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_org_invalid_orgname.yaml")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_org_invalid_orgname")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -68,7 +68,7 @@ func TestOrgDataSource_Configure(t *testing.T) {
 	})
 	t.Run("get available datasource org", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_org.yaml")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_org")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -77,7 +77,7 @@ func TestOrgDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclDataSourceOrg(&OrgDataSourceModelPtr{
-						Name: strtostrptr("PerformanceTeamBLR"),
+						Name: strtostrptr(testOrg),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr("data.cloudfoundry_org.ds", "id", regexpValidUUID),

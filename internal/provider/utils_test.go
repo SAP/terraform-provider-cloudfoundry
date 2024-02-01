@@ -16,7 +16,12 @@ import (
 )
 
 var (
-	regexpValidUUID = validation.UuidRegexp
+	regexpValidUUID          = validation.UuidRegexp
+	regexpValidRFC3999Format = regexp.MustCompile(`\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z`)
+	testOrg                  = "tf-test-do-not-delete"
+	testOrgGUID              = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+	testSpace                = "tf-test-do-not-delete"
+	testSpaceGUID            = "3bc20dc4-1870-4835-8308-dda2d766e61e"
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {
@@ -158,4 +163,8 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 	}
 	rec.SetMatcher(cfg.GetMatcher(t, rec))
 	return rec
+}
+
+func strtostrptr(s string) *string {
+	return &s
 }

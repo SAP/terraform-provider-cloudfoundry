@@ -14,7 +14,7 @@ Gets information on a Cloud Foundry space.
 ```terraform
 data "cloudfoundry_space" "space" {
   name = "PerformanceTeamBLR"
-  org = "784b4cd0-4771-4e4d-9052-a07e178bae56"
+  org  = "784b4cd0-4771-4e4d-9052-a07e178bae56"
 }
 
 output "id" {
@@ -36,7 +36,7 @@ output "id" {
 
 ### Read-Only
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `id` (String) The GUID of the space
-- `labels` (Map of String) The labels associated with Cloud Foundry resources
+- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `quota` (String) The space quota applied to the space

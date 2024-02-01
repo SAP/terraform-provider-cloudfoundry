@@ -81,8 +81,8 @@ func (d *SpaceDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "The space quota applied to the space",
 				Computed:            true,
 			},
-			labelsKey:      labelsSchema(),
-			annotationsKey: annotationsSchema(),
+			labelsKey:      datasourceLabelsSchema(),
+			annotationsKey: datasourceAnnotationsSchema(),
 		},
 	}
 }
