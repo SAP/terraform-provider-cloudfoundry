@@ -13,8 +13,8 @@ Gets information on a Cloud Foundry space.
 
 ```terraform
 data "cloudfoundry_space" "space" {
-  name = "PerformanceTeamBLR"
-  org  = "784b4cd0-4771-4e4d-9052-a07e178bae56"
+  name = "test"
+  org  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
 }
 
 output "id" {
@@ -28,15 +28,15 @@ output "id" {
 ### Required
 
 - `name` (String) The name of the space to look up
-
-### Optional
-
 - `org` (String) The GUID of the organization under which the space exists
-- `org_name` (String) The name of the organization under which the space exists
 
 ### Read-Only
 
+- `allow_ssh` (Boolean) Allows SSH to application containers via the CF CLI.
 - `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `id` (String) The GUID of the space
+- `isolation_segment` (String) The ID of the isolation segment assigned to the space.
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `quota` (String) The space quota applied to the space
+- `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.

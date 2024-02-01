@@ -1,0 +1,330 @@
+package provider
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
+	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
+)
+
+var (
+	_ resource.Resource                = &SpaceResource{}
+	_ resource.ResourceWithConfigure   = &SpaceResource{}
+	_ resource.ResourceWithImportState = &SpaceResource{}
+)
+
+// Instantiates a space resource
+func NewSpaceResource() resource.Resource {
+	return &SpaceResource{}
+}
+
+// Contains reference to the v3 client to be used for making the API calls
+type SpaceResource struct {
+	cfClient *cfv3client.Client
+}
+
+func (r *SpaceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_space"
+}
+
+func (r *SpaceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = schema.Schema{
+		MarkdownDescription: "Provides a Cloud Foundry resource for managing Cloud Foundry spaces within organizations.",
+
+		Attributes: map[string]schema.Attribute{
+			"name": schema.StringAttribute{
+				MarkdownDescription: "The name of the Space in Cloud Foundry",
+				Required:            true,
+			},
+			"org": schema.StringAttribute{
+				MarkdownDescription: "The ID of the Org within which to create the space",
+				Required:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Validators: []validator.String{
+					validation.ValidUUID(),
+				},
+			},
+			"id": schema.StringAttribute{
+				MarkdownDescription: "The GUID of the space",
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"quota": schema.StringAttribute{
+				MarkdownDescription: "The space quota applied to the space. To assign a space quota, use the space quota resource instead.",
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"allow_ssh": schema.BoolAttribute{
+				MarkdownDescription: "Allows SSH to application containers via the CF CLI.",
+				Computed:            true,
+				Optional:            true,
+				PlanModifiers: []planmodifier.Bool{
+					boolplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"isolation_segment": schema.StringAttribute{
+				MarkdownDescription: "The ID of the isolation segment to assign to the space. The isolation segment must be entitled to the space's parent organization",
+				Optional:            true,
+				Validators: []validator.String{
+					validation.ValidUUID(),
+				},
+			},
+			"created_at": schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
+				Computed:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
+			},
+			"updated_at": schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
+				Computed:            true,
+			},
+			labelsKey:      resourceLabelsSchema(),
+			annotationsKey: resourceAnnotationsSchema(),
+		},
+	}
+}
+
+func (r *SpaceResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+	// Prevent panic if the provider has not been configured.
+	if req.ProviderData == nil {
+		return
+	}
+	session, ok := req.ProviderData.(*managers.Session)
+	if !ok {
+		resp.Diagnostics.AddError(
+			"Unexpected Data Source Configure Type",
+			fmt.Sprintf("Expected *managers.Session, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+		)
+		return
+	}
+	r.cfClient = session.CFClient
+}
+
+func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+
+	var plan spaceType
+	diags := req.Plan.Get(ctx, &plan)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	createSpace, diags := plan.mapCreateSpaceTypeToValues(ctx)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	space, err := r.cfClient.Spaces.Create(ctx, &createSpace)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Creating Space",
+			"Could not create Space "+plan.Name.ValueString()+": "+err.Error(),
+		)
+		return
+	}
+
+	allowSSH, err := r.cfClient.SpaceFeatures.IsSSHEnabled(ctx, space.GUID)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Fetching Space SSH",
+			"Could not get the SSH feature value on space with ID "+space.GUID+" to the space "+space.Name+": "+err.Error(),
+		)
+		return
+	}
+
+	if !plan.AllowSSH.IsUnknown() {
+		if allowSSH != plan.AllowSSH.ValueBool() {
+			err = r.cfClient.SpaceFeatures.EnableSSH(ctx, space.GUID, plan.AllowSSH.ValueBool())
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"API Error Setting Space SSH",
+					"Could not set the SSH feature value on space with ID "+space.GUID+" to the space "+space.Name+": "+err.Error(),
+				)
+				return
+			}
+			allowSSH = plan.AllowSSH.ValueBool()
+		}
+	}
+
+	if !plan.IsolationSegment.IsNull() {
+		err = r.cfClient.Spaces.AssignIsolationSegment(ctx, space.GUID, plan.IsolationSegment.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Assigning Isolation Segment",
+				"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space "+space.Name+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	plan, diags = mapSpaceValuesToType(ctx, space, allowSSH, plan.IsolationSegment.ValueString())
+	resp.Diagnostics.Append(diags...)
+
+	tflog.Trace(ctx, "created a space resource")
+	resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+}
+
+func (rs *SpaceResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data spaceType
+
+	diags := req.State.Get(ctx, &data)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	space, err := rs.cfClient.Spaces.Get(ctx, data.Id.ValueString())
+	if err != nil {
+		handleReadErrors(ctx, resp, err, "space", data.Id.ValueString())
+		return
+	}
+
+	sshEnabled, err := rs.cfClient.SpaceFeatures.IsSSHEnabled(ctx, data.Id.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to fetch space features.",
+			fmt.Sprintf("Request failed with %s.", err.Error()),
+		)
+		return
+	}
+
+	isolationSegment, err := rs.cfClient.Spaces.GetAssignedIsolationSegment(ctx, data.Id.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to fetch assigned isolation segment.",
+			fmt.Sprintf("Request failed with %s.", err.Error()),
+		)
+		return
+	}
+
+	data, diags = mapSpaceValuesToType(ctx, space, sshEnabled, isolationSegment)
+	resp.Diagnostics.Append(diags...)
+
+	tflog.Trace(ctx, "read a space resource")
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+}
+
+func (rs *SpaceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var plan, previousState spaceType
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	var (
+		space *cfv3resource.Space
+		err   error
+	)
+	if !previousState.Name.Equal(plan.Name) || !previousState.Labels.Equal(plan.Labels) || !previousState.Annotations.Equal(plan.Annotations) {
+
+		updateSpace, diags := plan.mapUpdateSpaceTypeToValues(ctx, previousState)
+		resp.Diagnostics.Append(diags...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+
+		space, err = rs.cfClient.Spaces.Update(ctx, plan.Id.ValueString(), &updateSpace)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Space",
+				"Could not update Space with ID "+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	} else {
+		space, err = rs.cfClient.Spaces.Get(ctx, plan.Id.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Unable to fetch space data.",
+				fmt.Sprintf("Request failed with %s.", err.Error()),
+			)
+			return
+		}
+	}
+
+	if !previousState.AllowSSH.Equal(plan.AllowSSH) {
+		err := rs.cfClient.SpaceFeatures.EnableSSH(ctx, plan.Id.ValueString(), plan.AllowSSH.ValueBool())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Space SSH",
+				"Could not set the SSH feature value on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	if !previousState.IsolationSegment.Equal(plan.IsolationSegment) {
+		err := rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Isolation Segment",
+				"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	data, diags := mapSpaceValuesToType(ctx, space, plan.AllowSSH.ValueBool(), plan.IsolationSegment.ValueString())
+	resp.Diagnostics.Append(diags...)
+
+	tflog.Trace(ctx, "updated a space resource")
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+
+}
+
+func (rs *SpaceResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+
+	var state spaceType
+
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	jobID, err := rs.cfClient.Spaces.Delete(ctx, state.Id.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Deleting Space",
+			"Could not delete the space with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+": "+err.Error(),
+		)
+		return
+	}
+
+	if pollJob(ctx, *rs.cfClient, jobID) != nil {
+		resp.Diagnostics.AddError(
+			"API Error Deleting Space",
+			"Failed in deleting the space with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+": "+err.Error(),
+		)
+		return
+	}
+
+	tflog.Trace(ctx, "deleted a space resource")
+
+}
+
+func (rs *SpaceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+}

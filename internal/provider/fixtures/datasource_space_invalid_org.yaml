@@ -19,7 +19,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-deletex
+        url: https://api.x.x.x.x.com/v3/organizations/40b73419-5e01-4be0-baea-932d46cea45b
         method: GET
       response:
         proto: HTTP/2.0
@@ -29,12 +29,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":0,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-deletex\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-deletex\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[]}'
+        body: '{"errors":[{"detail":"Organization not found","title":"CF-ResourceNotFound","code":10010}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Thu, 01 Feb 2024 11:12:28 GMT
+                - Thu, 01 Feb 2024 14:10:34 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -42,9 +42,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 5071cd6de5f9bc4c
+                - 7987c23bc93f0ff2
             X-B3-Traceid:
-                - 765aa4c3a38247b95071cd6de5f9bc4c
+                - 58b4a069bcd94d9a7987c23bc93f0ff2
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -54,11 +54,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.003252"
+                - "0.005408"
             X-Vcap-Request-Id:
-                - 765aa4c3-a382-47b9-5071-cd6de5f9bc4c::e8681139-7627-421e-a2c4-81813353049f
+                - 58b4a069-bcd9-4d9a-7987-c23bc93f0ff2::7a729dbc-0052-4245-8737-dba67839ca5e
             X-Xss-Protection:
                 - 1; mode=block
-        status: 200 OK
-        code: 200
-        duration: 163.9825ms
+        status: 404 Not Found
+        code: 404
+        duration: 191.03022ms

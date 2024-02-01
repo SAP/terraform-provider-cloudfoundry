@@ -16,13 +16,18 @@ import (
 )
 
 var (
-	regexpValidUUID          = validation.UuidRegexp
-	regexpValidRFC3999Format = regexp.MustCompile(`\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z`)
-	testOrg                  = "tf-test-do-not-delete"
-	testOrgGUID              = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
-	testSpace                = "tf-test-do-not-delete"
-	testSpaceGUID            = "3bc20dc4-1870-4835-8308-dda2d766e61e"
-	testOrgQuota             = "tf-test-do-not-delete"
+	regexpValidUUID              = validation.UuidRegexp
+	regexpValidRFC3999Format     = regexp.MustCompile(`\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z`)
+	testOrg                      = "tf-test-do-not-delete"
+	testOrgGUID                  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+	testSpace                    = "tf-test-do-not-delete"
+	testSpaceGUID                = "3bc20dc4-1870-4835-8308-dda2d766e61e"
+	testOrgQuota                 = "tf-test-do-not-delete"
+	invalidOrgGUID               = "40b73419-5e01-4be0-baea-932d46cea45b"
+	testSpaceResourceName        = "test123"
+	testIsolationSegmentGUID     = "5215e4df-79a4-4ce8-a933-837d6aa7a77b"
+	testSpaceResourceCreateLabel = "{purpose: \"testing\", landscape: \"test\"}"
+	testSpaceResourceUpdateLabel = "{purpose: \"production\", status: \"fine\"}"
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {
@@ -167,5 +172,15 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 }
 
 func strtostrptr(s string) *string {
+	return &s
+}
+
+// Returns a pointer to a bool
+func booltoboolptr(s bool) *bool {
+	return &s
+}
+
+// Returns a pointer to a map
+func maptomapptr(s map[string]string) *map[string]string {
 	return &s
 }

@@ -9,18 +9,21 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-type SpaceDataSourceModelPtr struct {
-	Name        *string
-	Id          *string
-	OrgName     *string
-	Org         *string
-	Quota       *string
-	Labels      *map[string]string
-	Annotations *map[string]string
+type SpaceModelPtr struct {
+	Name             *string
+	Id               *string
+	OrgId            *string
+	Quota            *string
+	AllowSSH         *bool
+	IsolationSegment *string
+	Labels           *string
+	Annotations      *string
+	CreatedAt        *string
+	UpdatedAt        *string
 }
 
-func hclDataSourceSpace(sdsmp *SpaceDataSourceModelPtr) string {
-	if sdsmp != nil {
+func hclDataSourceSpace(smp *SpaceModelPtr) string {
+	if smp != nil {
 		s := `
 			data "cloudfoundry_space" "ds" {
 			{{- if .Name}}
@@ -29,20 +32,29 @@ func hclDataSourceSpace(sdsmp *SpaceDataSourceModelPtr) string {
 			{{if .Id}}
 				id = "{{.Id}}"
 			{{- end -}}
-			{{if .OrgName}}
-				org_name = "{{.OrgName}}"
-			{{- end -}}
-			{{if .Org}}
-				org = "{{.Org}}"
+			{{if .OrgId}}
+				org = "{{.OrgId}}"
 			{{- end -}}
 			{{if .Quota}}
 				quota = "{{.Quota}}"
 			{{- end -}}
+			{{if .AllowSSH}}
+				allow_ssh = "{{.AllowSSH}}"
+			{{- end -}}
+			{{if .IsolationSegment}}
+				isolation_segment = "{{.IsolationSegment}}"
+			{{- end -}}
+			{{if .CreatedAt}}
+				created_at = "{{.CreatedAt}}"
+			{{- end -}}
+			{{if .UpdatedAt}}
+				updated_at = "{{.UpdatedAt}}"
+			{{- end -}}
 			{{if .Labels}}
-				labels = "{{.Labels}}"
+				labels = {{.Labels}}
 			{{- end -}}
 			{{if .Annotations}}
-				annotations = "{{.Annotations}}"
+				annotations = {{.Annotations}}
 			{{- end }}
 			}`
 		tmpl, err := template.New("datasource_space").Parse(s)
@@ -50,7 +62,7 @@ func hclDataSourceSpace(sdsmp *SpaceDataSourceModelPtr) string {
 			panic(err)
 		}
 		buf := new(bytes.Buffer)
-		err = tmpl.Execute(buf, sdsmp)
+		err = tmpl.Execute(buf, smp)
 		if err != nil {
 			panic(err)
 		}
@@ -61,9 +73,10 @@ func hclDataSourceSpace(sdsmp *SpaceDataSourceModelPtr) string {
 
 func TestSpaceDataSource_Configure(t *testing.T) {
 	t.Parallel()
-	t.Run("get available datasource space by orgID", func(t *testing.T) {
+	dataSourceName := "data.cloudfoundry_space.ds"
+	t.Run("happy path - read space", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_orgid")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_space")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -71,64 +84,25 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name: strtostrptr(testSpace),
-						Org:  strtostrptr(testOrgGUID),
+					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceModelPtr{
+						Name:  strtostrptr(testSpace),
+						OrgId: strtostrptr(testOrgGUID),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
-						resource.TestMatchResourceAttr("data.cloudfoundry_space.ds", "id", regexpValidUUID),
-						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "org_name", testOrg),
-						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "quota", ""),
+						resource.TestCheckResourceAttr(dataSourceName, "id", testSpaceGUID),
+						resource.TestCheckNoResourceAttr(dataSourceName, "quota"),
+						resource.TestMatchResourceAttr(dataSourceName, "created_at", regexpValidRFC3999Format),
+						resource.TestMatchResourceAttr(dataSourceName, "updated_at", regexpValidRFC3999Format),
+						resource.TestCheckResourceAttr(dataSourceName, "allow_ssh", "true"),
+						resource.TestCheckResourceAttr(dataSourceName, "labels.purpose", "prod"),
 					),
-				},
-			},
-		})
-	})
-	t.Run("get available datasource space by org_name", func(t *testing.T) {
-		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_orgname")
-		defer stopQuietly(rec)
-
-		resource.Test(t, resource.TestCase{
-			IsUnitTest:               true,
-			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
-			Steps: []resource.TestStep{
-				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name:    strtostrptr(testSpace),
-						OrgName: strtostrptr(testOrg),
-					}),
-					Check: resource.ComposeAggregateTestCheckFunc(
-						resource.TestMatchResourceAttr("data.cloudfoundry_space.ds", "id", regexpValidUUID),
-						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "org", testOrgGUID),
-						resource.TestCheckResourceAttr("data.cloudfoundry_space.ds", "quota", ""),
-					),
-				},
-			},
-		})
-	})
-	t.Run("error path - get unavailable datasource space", func(t *testing.T) {
-		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_spacename")
-		defer stopQuietly(rec)
-
-		resource.Test(t, resource.TestCase{
-			IsUnitTest:               true,
-			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
-			Steps: []resource.TestStep{
-				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name: strtostrptr(testSpace + "x"),
-						Org:  strtostrptr(testOrgGUID),
-					}),
-					ExpectError: regexp.MustCompile(`Error: Unable to find space data in list`),
 				},
 			},
 		})
 	})
 	t.Run("error path - org does not exist", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_orgname")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_org")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -136,18 +110,18 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name:    strtostrptr(testSpace),
-						OrgName: strtostrptr(testOrg + "x"),
+					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceModelPtr{
+						Name:  strtostrptr(testSpace),
+						OrgId: strtostrptr(invalidOrgGUID),
 					}),
-					ExpectError: regexp.MustCompile(`Error: Unable to find org data in list`),
+					ExpectError: regexp.MustCompile(`Unable to fetch org data.`),
 				},
 			},
 		})
 	})
-	t.Run("error path - missing org attributes", func(t *testing.T) {
+	t.Run("error path - space does not exist", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_attributes")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_space")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -155,32 +129,14 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name: strtostrptr(testSpace),
+					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceModelPtr{
+						Name:  strtostrptr(testSpace + "x"),
+						OrgId: strtostrptr(testOrgGUID),
 					}),
-					ExpectError: regexp.MustCompile(`Error: Neither Org GUID nor Org Name is present`),
+					ExpectError: regexp.MustCompile(`Unable to find space data in list`),
 				},
 			},
 		})
 	})
-	t.Run("error path - both org attributes provided", func(t *testing.T) {
-		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_attributes")
-		defer stopQuietly(rec)
 
-		resource.Test(t, resource.TestCase{
-			IsUnitTest:               true,
-			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
-			Steps: []resource.TestStep{
-				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceDataSourceModelPtr{
-						Name:    strtostrptr(testSpace),
-						Org:     strtostrptr(testOrgGUID),
-						OrgName: strtostrptr(testOrg),
-					}),
-					ExpectError: regexp.MustCompile(`Error: Invalid Attribute Combination`),
-				},
-			},
-		})
-	})
 }

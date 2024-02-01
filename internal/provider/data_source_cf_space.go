@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/samber/lo"
 
@@ -13,31 +13,24 @@ import (
 	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ datasource.DataSource = &SpaceDataSource{}
-var _ datasource.DataSourceWithConfigure = &SpaceDataSource{}
 
+var (
+	_ datasource.DataSource              = &SpaceDataSource{}
+	_ datasource.DataSourceWithConfigure = &SpaceDataSource{}
+)
+
+// Instantiates a space data source
 func NewSpaceDataSource() datasource.DataSource {
 	return &SpaceDataSource{}
 }
 
+// Contains reference to the v3 client to be used for making the API calls
 type SpaceDataSource struct {
 	cfClient *client.Client
-}
-
-type SpaceDataSourceModel struct {
-	Name        types.String `tfsdk:"name"`
-	Id          types.String `tfsdk:"id"`
-	OrgName     types.String `tfsdk:"org_name"`
-	Org         types.String `tfsdk:"org"`
-	Quota       types.String `tfsdk:"quota"`
-	Labels      types.Map    `tfsdk:"labels"`
-	Annotations types.Map    `tfsdk:"annotations"`
 }
 
 func (d *SpaceDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -57,28 +50,31 @@ func (d *SpaceDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "The GUID of the space",
 				Computed:            true,
 			},
-			"org_name": schema.StringAttribute{
-				MarkdownDescription: "The name of the organization under which the space exists",
-				Optional:            true,
-				Computed:            true,
-				Validators: []validator.String{
-					stringvalidator.ConflictsWith(path.Expressions{
-						path.MatchRoot("org"),
-					}...),
-				},
-			},
 			"org": schema.StringAttribute{
 				MarkdownDescription: "The GUID of the organization under which the space exists",
-				Optional:            true,
-				Computed:            true,
+				Required:            true,
 				Validators: []validator.String{
-					stringvalidator.ConflictsWith(path.Expressions{
-						path.MatchRoot("org_name"),
-					}...),
+					validation.ValidUUID(),
 				},
 			},
 			"quota": schema.StringAttribute{
 				MarkdownDescription: "The space quota applied to the space",
+				Computed:            true,
+			},
+			"allow_ssh": schema.BoolAttribute{
+				MarkdownDescription: "Allows SSH to application containers via the CF CLI.",
+				Computed:            true,
+			},
+			"isolation_segment": schema.StringAttribute{
+				MarkdownDescription: "The ID of the isolation segment assigned to the space.",
+				Computed:            true,
+			},
+			"created_at": schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
+				Computed:            true,
+			},
+			"updated_at": schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
 				Computed:            true,
 			},
 			labelsKey:      datasourceLabelsSchema(),
@@ -104,78 +100,33 @@ func (d *SpaceDataSource) Configure(ctx context.Context, req datasource.Configur
 }
 
 func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data SpaceDataSourceModel
+	var data spaceType
 
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	diags := req.Config.Get(ctx, &data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// Ensure org details is present in state file else populate org name or guid accordingly
-	if data.Org.IsNull() && data.OrgName.IsNull() {
+	_, err := d.cfClient.Organizations.Get(ctx, data.OrgId.ValueString())
+	if err != nil {
 		resp.Diagnostics.AddError(
-			"Neither Org GUID nor Org Name is present.",
-			"Expected either 'org' or 'org_name' attribute.",
+			"Unable to fetch org data.",
+			fmt.Sprintf("Request failed with %s.", err.Error()),
 		)
 		return
-
-	} else if data.Org.IsNull() {
-		orgs, err := d.cfClient.Organizations.ListAll(ctx, &client.OrganizationListOptions{
-			Names: client.Filter{
-				Values: []string{
-					data.OrgName.ValueString(),
-				},
-			},
-		})
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Unable to fetch org data.",
-				fmt.Sprintf("Request failed with %s.", err.Error()),
-			)
-			return
-		}
-
-		org, found := lo.Find(orgs, func(org *resource.Organization) bool {
-			return org.Name == data.OrgName.ValueString()
-		})
-
-		if !found {
-			resp.Diagnostics.AddError(
-				"Unable to find org data in list",
-				fmt.Sprintf("Given name %s not in the list of orgs.", data.OrgName.ValueString()),
-			)
-			return
-		}
-		data.Org = types.StringValue(org.GUID)
-	} else {
-
-		//Fetching organization with GUID
-		org, err := d.cfClient.Organizations.Get(ctx, data.Org.ValueString())
-		if err != nil {
-			switch err.(type) {
-			case resource.CloudFoundryError:
-				resp.Diagnostics.AddError(
-					"Unable to find org data in list.",
-					fmt.Sprintf("Given org %s not in the list of orgs.", data.Org.ValueString()),
-				)
-			default:
-				resp.Diagnostics.AddError(
-					"Unable to fetch org data.",
-					fmt.Sprintf("Request failed with %s.", err.Error()),
-				)
-			}
-
-			return
-		}
-
-		data.OrgName = types.StringValue(org.Name)
 	}
 
 	//Filtering for spaces under the org with GUID
 	spaces, err := d.cfClient.Spaces.ListAll(ctx, &client.SpaceListOptions{
 		OrganizationGUIDs: client.Filter{
 			Values: []string{
-				data.Org.ValueString(),
+				data.OrgId.ValueString(),
+			},
+		},
+		Names: client.Filter{
+			Values: []string{
+				data.Name.ValueString(),
 			},
 		},
 	})
@@ -188,32 +139,38 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 
-	//No spaces with name might be present under org
 	space, found := lo.Find(spaces, func(space *resource.Space) bool {
 		return space.Name == data.Name.ValueString()
 	})
+
 	if !found {
 		resp.Diagnostics.AddError(
 			"Unable to find space data in list",
-			fmt.Sprintf("Given name %s not in the list of spaces under %s.", data.Name.ValueString(), data.OrgName.ValueString()),
+			fmt.Sprintf("Given name %s not in the list of spaces under Org with ID %s.", data.Name.ValueString(), data.OrgId.ValueString()),
 		)
 		return
 	}
 
-	data.Id = types.StringValue(space.GUID)
-	data.Labels = *setMapToBaseMap(ctx, resp, space.Metadata.Labels)
-	data.Annotations = *setMapToBaseMap(ctx, resp, space.Metadata.Annotations)
-
-	//Checking if quota exists, then taking the guid value
-	if space.Relationships.Quota.Data != nil {
-		data.Quota = types.StringValue(space.Relationships.Quota.Data.GUID)
-	} else {
-		data.Quota = types.StringValue("")
-	}
-
-	if resp.Diagnostics.HasError() {
+	sshEnabled, err := d.cfClient.SpaceFeatures.IsSSHEnabled(ctx, space.GUID)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to fetch space features.",
+			fmt.Sprintf("Request failed with %s.", err.Error()),
+		)
 		return
 	}
+
+	isolationSegment, err := d.cfClient.Spaces.GetAssignedIsolationSegment(ctx, space.GUID)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to fetch assigned isolation segment.",
+			fmt.Sprintf("Request failed with %s.", err.Error()),
+		)
+		return
+	}
+
+	data, diags = mapSpaceValuesToType(ctx, space, sshEnabled, isolationSegment)
+	resp.Diagnostics.Append(diags...)
 
 	tflog.Trace(ctx, "read a space data source")
 
