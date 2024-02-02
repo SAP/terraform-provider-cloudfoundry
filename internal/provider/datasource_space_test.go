@@ -10,6 +10,7 @@ import (
 )
 
 type SpaceModelPtr struct {
+	ObjectName       string
 	Name             *string
 	Id               *string
 	OrgId            *string
