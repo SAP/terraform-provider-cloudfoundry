@@ -150,3 +150,41 @@ func mapMetadataValueToType(ctx context.Context, generic map[string]*string) (ba
 
 	return out, diagnostics
 }
+
+// Prepares the labels and annotations for cfclient updation from existing and planned tfstate labels and annotations
+func setClientMetadataForUpdate(ctx context.Context, StateLabels basetypes.MapValue, StateAnnotations basetypes.MapValue, plannedStateLabels basetypes.MapValue, plannedStateAnnotations basetypes.MapValue) (*cfv3resource.Metadata, diag.Diagnostics) {
+
+	var (
+		diagnostics                                                diag.Diagnostics
+		planLabels, planAnnotations, stateLabels, stateAnnotations map[string]*string
+	)
+
+	metadata := cfv3resource.NewMetadata()
+
+	diagnostics.Append(plannedStateLabels.ElementsAs(ctx, &planLabels, false)...)
+	diagnostics.Append(plannedStateAnnotations.ElementsAs(ctx, &planAnnotations, false)...)
+	diagnostics.Append(StateLabels.ElementsAs(ctx, &stateLabels, false)...)
+	diagnostics.Append(StateAnnotations.ElementsAs(ctx, &stateAnnotations, false)...)
+
+	if diagnostics.HasError() {
+		return metadata, diagnostics
+	}
+
+	for key := range stateLabels {
+		metadata.RemoveLabel("", key)
+	}
+
+	for key := range stateAnnotations {
+		metadata.RemoveAnnotation("", key)
+	}
+
+	for key, value := range planLabels {
+		metadata.SetLabel("", key, *value)
+	}
+
+	for key, value := range planAnnotations {
+		metadata.SetAnnotation("", key, *value)
+	}
+
+	return metadata, diagnostics
+}

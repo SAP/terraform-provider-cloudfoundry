@@ -6,21 +6,24 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 0
+        content_length: 196
         transfer_encoding: []
         trailer: {}
         host: api.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
-        body: ""
+        body: |
+            {"name":"tf-unit-test","relationships":{"organization":{"data":{"guid":"40b73419-5e01-4be0-baea-932d46cea45b"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
         form: {}
         headers:
             Authorization:
                 - Bearer redacted
+            Content-Type:
+                - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organization_quotas?names=testunavailableorgquota
-        method: GET
+        url: https://api.x.x.x.x.com/v3/spaces
+        method: POST
       response:
         proto: HTTP/2.0
         proto_major: 2
@@ -29,12 +32,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":0,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=testunavailableorgquota\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organization_quotas?names=testunavailableorgquota\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[]}'
+        body: '{"errors":[{"detail":"Invalid organization. Ensure the organization exists and you have access to it.","title":"CF-UnprocessableEntity","code":10008}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 02 Feb 2024 12:28:51 GMT
+                - Fri, 02 Feb 2024 12:29:33 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -42,9 +45,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4bdddd038053cb80
+                - 675798bcaceb6214
             X-B3-Traceid:
-                - e94972b654114ee84bdddd038053cb80
+                - 8b375a448b434e4c675798bcaceb6214
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -54,11 +57,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.004878"
+                - "0.007154"
             X-Vcap-Request-Id:
-                - e94972b6-5411-4ee8-4bdd-dd038053cb80::471c0d27-0a3d-4193-bdfc-acba9402cf7d
+                - 8b375a44-8b43-4e4c-6757-98bcaceb6214::552c341e-6c2b-4a62-918d-9691585b7e43
             X-Xss-Protection:
                 - 1; mode=block
-        status: 200 OK
-        code: 200
-        duration: 781.248446ms
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 209.379896ms
