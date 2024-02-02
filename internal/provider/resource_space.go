@@ -7,11 +7,9 @@ import (
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
-	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -57,13 +55,6 @@ func (r *SpaceResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 					validation.ValidUUID(),
 				},
 			},
-			"id": schema.StringAttribute{
-				MarkdownDescription: "The GUID of the space",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
 			"quota": schema.StringAttribute{
 				MarkdownDescription: "The space quota applied to the space. To assign a space quota, use the space quota resource instead.",
 				Computed:            true,
@@ -75,9 +66,6 @@ func (r *SpaceResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				MarkdownDescription: "Allows SSH to application containers via the CF CLI.",
 				Computed:            true,
 				Optional:            true,
-				PlanModifiers: []planmodifier.Bool{
-					boolplanmodifier.UseStateForUnknown(),
-				},
 			},
 			"isolation_segment": schema.StringAttribute{
 				MarkdownDescription: "The ID of the isolation segment to assign to the space. The isolation segment must be entitled to the space's parent organization",
@@ -86,19 +74,11 @@ func (r *SpaceResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 					validation.ValidUUID(),
 				},
 			},
-			"created_at": schema.StringAttribute{
-				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
-			"updated_at": schema.StringAttribute{
-				MarkdownDescription: "The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
-				Computed:            true,
-			},
+			idKey:          guidSchema(),
 			labelsKey:      resourceLabelsSchema(),
 			annotationsKey: resourceAnnotationsSchema(),
+			createdAtKey:   createdAtSchema(),
+			updatedAtKey:   updatedAtSchema(),
 		},
 	}
 }
@@ -138,31 +118,29 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Creating Space",
-			"Could not create Space "+plan.Name.ValueString()+": "+err.Error(),
+			"Could not create Space "+plan.Name.ValueString()+" : "+err.Error(),
 		)
 		return
 	}
 
-	allowSSH, err := r.cfClient.SpaceFeatures.IsSSHEnabled(ctx, space.GUID)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"API Error Fetching Space SSH",
-			"Could not get the SSH feature value on space with ID "+space.GUID+" to the space "+space.Name+": "+err.Error(),
-		)
-		return
-	}
-
+	var allowSSH bool
 	if !plan.AllowSSH.IsUnknown() {
-		if allowSSH != plan.AllowSSH.ValueBool() {
-			err = r.cfClient.SpaceFeatures.EnableSSH(ctx, space.GUID, plan.AllowSSH.ValueBool())
-			if err != nil {
-				resp.Diagnostics.AddError(
-					"API Error Setting Space SSH",
-					"Could not set the SSH feature value on space with ID "+space.GUID+" to the space "+space.Name+": "+err.Error(),
-				)
-				return
-			}
-			allowSSH = plan.AllowSSH.ValueBool()
+		err = r.cfClient.SpaceFeatures.EnableSSH(ctx, space.GUID, plan.AllowSSH.ValueBool())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Setting Space SSH",
+				"Could not set the SSH feature value on space "+space.Name+" : "+err.Error(),
+			)
+		}
+		allowSSH = plan.AllowSSH.ValueBool()
+	} else {
+		allowSSH, err = r.cfClient.SpaceFeatures.IsSSHEnabled(ctx, space.GUID)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Fetching Space SSH",
+				"Could not get the SSH feature value of space "+space.Name+" : "+err.Error(),
+			)
+			return
 		}
 	}
 
@@ -173,7 +151,6 @@ func (r *SpaceResource) Create(ctx context.Context, req resource.CreateRequest, 
 				"API Error Assigning Isolation Segment",
 				"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space "+space.Name+": "+err.Error(),
 			)
-			return
 		}
 	}
 
@@ -202,8 +179,8 @@ func (rs *SpaceResource) Read(ctx context.Context, req resource.ReadRequest, res
 	sshEnabled, err := rs.cfClient.SpaceFeatures.IsSSHEnabled(ctx, data.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch space features.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"API Error Fetching SSH Feature",
+			"Could not get the SSH feature value of space "+space.Name+" : "+err.Error(),
 		)
 		return
 	}
@@ -211,8 +188,8 @@ func (rs *SpaceResource) Read(ctx context.Context, req resource.ReadRequest, res
 	isolationSegment, err := rs.cfClient.Spaces.GetAssignedIsolationSegment(ctx, data.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch assigned isolation segment.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"API Error Fetching Isolation Segment",
+			"Could not get the Isolation Segment of space "+space.Name+": "+err.Error(),
 		)
 		return
 	}
@@ -233,57 +210,35 @@ func (rs *SpaceResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
-	var (
-		space *cfv3resource.Space
-		err   error
-	)
-	if !previousState.Name.Equal(plan.Name) || !previousState.Labels.Equal(plan.Labels) || !previousState.Annotations.Equal(plan.Annotations) {
-
-		updateSpace, diags := plan.mapUpdateSpaceTypeToValues(ctx, previousState)
-		resp.Diagnostics.Append(diags...)
-		if resp.Diagnostics.HasError() {
-			return
-		}
-
-		space, err = rs.cfClient.Spaces.Update(ctx, plan.Id.ValueString(), &updateSpace)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Updating Space",
-				"Could not update Space with ID "+plan.Id.ValueString()+": "+err.Error(),
-			)
-			return
-		}
-	} else {
-		space, err = rs.cfClient.Spaces.Get(ctx, plan.Id.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Unable to fetch space data.",
-				fmt.Sprintf("Request failed with %s.", err.Error()),
-			)
-			return
-		}
+	updateSpace, diags := plan.mapUpdateSpaceTypeToValues(ctx, previousState)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
-	if !previousState.AllowSSH.Equal(plan.AllowSSH) {
-		err := rs.cfClient.SpaceFeatures.EnableSSH(ctx, plan.Id.ValueString(), plan.AllowSSH.ValueBool())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Updating Space SSH",
-				"Could not set the SSH feature value on space with ID "+plan.Id.ValueString()+": "+err.Error(),
-			)
-			return
-		}
+	space, err := rs.cfClient.Spaces.Update(ctx, plan.Id.ValueString(), &updateSpace)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Updating Space",
+			"Could not update Space with ID "+plan.Id.ValueString()+": "+err.Error(),
+		)
+		return
 	}
 
-	if !previousState.IsolationSegment.Equal(plan.IsolationSegment) {
-		err := rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Updating Isolation Segment",
-				"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID "+plan.Id.ValueString()+": "+err.Error(),
-			)
-			return
-		}
+	err = rs.cfClient.SpaceFeatures.EnableSSH(ctx, plan.Id.ValueString(), plan.AllowSSH.ValueBool())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Updating Space SSH",
+			"Could not set the SSH feature value on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+		)
+	}
+
+	err = rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Updating Isolation Segment",
+			"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+		)
 	}
 
 	data, diags := mapSpaceValuesToType(ctx, space, plan.AllowSSH.ValueBool(), plan.IsolationSegment.ValueString())

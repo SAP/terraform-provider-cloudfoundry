@@ -46,10 +46,6 @@ func (d *SpaceDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "The name of the space to look up",
 				Required:            true,
 			},
-			"id": schema.StringAttribute{
-				MarkdownDescription: "The GUID of the space",
-				Computed:            true,
-			},
 			"org": schema.StringAttribute{
 				MarkdownDescription: "The GUID of the organization under which the space exists",
 				Required:            true,
@@ -69,16 +65,11 @@ func (d *SpaceDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 				MarkdownDescription: "The ID of the isolation segment assigned to the space.",
 				Computed:            true,
 			},
-			"created_at": schema.StringAttribute{
-				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
-				Computed:            true,
-			},
-			"updated_at": schema.StringAttribute{
-				MarkdownDescription: "The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
-				Computed:            true,
-			},
+			idKey:          guidSchema(),
 			labelsKey:      datasourceLabelsSchema(),
 			annotationsKey: datasourceAnnotationsSchema(),
+			createdAtKey:   createdAtSchema(),
+			updatedAtKey:   updatedAtSchema(),
 		},
 	}
 }
@@ -111,8 +102,8 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	_, err := d.cfClient.Organizations.Get(ctx, data.OrgId.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch org data.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"API Error Fetching Organization",
+			"Could not get details of the Organization with ID "+data.OrgId.ValueString()+" : "+err.Error(),
 		)
 		return
 	}
@@ -133,8 +124,8 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch space data.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"API Error Fetching Spaces",
+			"Could not get spaces under Organization with ID "+data.OrgId.ValueString()+" : "+err.Error(),
 		)
 		return
 	}
@@ -154,8 +145,8 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	sshEnabled, err := d.cfClient.SpaceFeatures.IsSSHEnabled(ctx, space.GUID)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch space features.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"API Error Fetching Space Features",
+			"Could not get space features for space "+data.Name.ValueString()+" : "+err.Error(),
 		)
 		return
 	}
@@ -163,8 +154,8 @@ func (d *SpaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	isolationSegment, err := d.cfClient.Spaces.GetAssignedIsolationSegment(ctx, space.GUID)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch assigned isolation segment.",
-			fmt.Sprintf("Request failed with %s.", err.Error()),
+			"API Error Fetching Isolation Segment",
+			"Could not get isolation segment details for space "+data.Name.ValueString()+" : "+err.Error(),
 		)
 		return
 	}

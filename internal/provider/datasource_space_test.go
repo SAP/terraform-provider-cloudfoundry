@@ -39,7 +39,7 @@ func hclDataSourceSpace(smp *SpaceModelPtr) string {
 				quota = "{{.Quota}}"
 			{{- end -}}
 			{{if .AllowSSH}}
-				allow_ssh = "{{.AllowSSH}}"
+				allow_ssh = {{.AllowSSH}}
 			{{- end -}}
 			{{if .IsolationSegment}}
 				isolation_segment = "{{.IsolationSegment}}"
@@ -114,7 +114,7 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 						Name:  strtostrptr(testSpace),
 						OrgId: strtostrptr(invalidOrgGUID),
 					}),
-					ExpectError: regexp.MustCompile(`Unable to fetch org data.`),
+					ExpectError: regexp.MustCompile(`API Error Fetching Organization`),
 				},
 			},
 		})

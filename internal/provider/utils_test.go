@@ -2,6 +2,7 @@ package provider
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 	"os"
@@ -11,6 +12,8 @@ import (
 	"testing"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
+	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+	"github.com/hashicorp/terraform-plugin-testing/terraform"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
@@ -24,7 +27,6 @@ var (
 	testSpaceGUID                = "3bc20dc4-1870-4835-8308-dda2d766e61e"
 	testOrgQuota                 = "tf-test-do-not-delete"
 	invalidOrgGUID               = "40b73419-5e01-4be0-baea-932d46cea45b"
-	testSpaceResourceName        = "test123"
 	testIsolationSegmentGUID     = "5215e4df-79a4-4ce8-a933-837d6aa7a77b"
 	testSpaceResourceCreateLabel = "{purpose: \"testing\", landscape: \"test\"}"
 	testSpaceResourceUpdateLabel = "{purpose: \"production\", status: \"fine\"}"
@@ -183,4 +185,14 @@ func booltoboolptr(s bool) *bool {
 // Returns a pointer to a map
 func maptomapptr(s map[string]string) *map[string]string {
 	return &s
+}
+
+func getIdForImport(resourceName string) resource.ImportStateIdFunc {
+	return func(state *terraform.State) (string, error) {
+		rs, ok := state.RootModule().Resources[resourceName]
+		if !ok {
+			return "", fmt.Errorf("not found: %s", resourceName)
+		}
+		return rs.Primary.ID, nil
+	}
 }

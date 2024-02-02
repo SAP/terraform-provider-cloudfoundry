@@ -2,6 +2,7 @@ package provider
 
 import (
 	"bytes"
+	"regexp"
 	"testing"
 	"text/template"
 
@@ -25,7 +26,7 @@ func hclResourceSpace(smp *SpaceModelPtr) string {
 				quota = "{{.Quota}}"
 			{{- end -}}
 			{{if .AllowSSH}}
-				allow_ssh = "{{.AllowSSH}}"
+				allow_ssh = {{.AllowSSH}}
 			{{- end -}}
 			{{if .IsolationSegment}}
 				isolation_segment = "{{.IsolationSegment}}"
@@ -58,7 +59,7 @@ func hclResourceSpace(smp *SpaceModelPtr) string {
 }
 
 func TestSpaceResource_Configure(t *testing.T) {
-	t.Parallel()
+	// t.Parallel()
 	resourceName := "cloudfoundry_space.ds"
 	t.Run("happy path - create/read/update/delete/import space", func(t *testing.T) {
 		cfg := getCFHomeConf()
@@ -71,7 +72,7 @@ func TestSpaceResource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						Name:             strtostrptr(testSpaceResourceName),
+						Name:             strtostrptr("tf-unit-test"),
 						OrgId:            strtostrptr(testOrgGUID),
 						AllowSSH:         booltoboolptr(true),
 						Labels:           strtostrptr(testSpaceResourceCreateLabel),
@@ -87,7 +88,7 @@ func TestSpaceResource_Configure(t *testing.T) {
 				},
 				{
 					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						Name:     strtostrptr(testSpaceResourceName),
+						Name:     strtostrptr("tf-unit-test"),
 						OrgId:    strtostrptr(testOrgGUID),
 						AllowSSH: booltoboolptr(false),
 						Labels:   strtostrptr(testSpaceResourceUpdateLabel),
@@ -101,8 +102,75 @@ func TestSpaceResource_Configure(t *testing.T) {
 				},
 				{
 					ResourceName:      resourceName,
+					ImportStateIdFunc: getIdForImport(resourceName),
 					ImportState:       true,
 					ImportStateVerify: true,
+				},
+			},
+		})
+	})
+
+	t.Run("error path - invalid isolation segment when creating space", func(t *testing.T) {
+		cfg := getCFHomeConf()
+		rec := cfg.SetupVCR(t, "fixtures/resource_space_invalid_isolation")
+		defer stopQuietly(rec)
+
+		resource.Test(t, resource.TestCase{
+			IsUnitTest:               true,
+			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
+			Steps: []resource.TestStep{
+				{
+					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
+						Name:             strtostrptr("tf-unit-test123"),
+						OrgId:            strtostrptr(testOrgGUID),
+						AllowSSH:         booltoboolptr(true),
+						Labels:           strtostrptr(testSpaceResourceCreateLabel),
+						IsolationSegment: strtostrptr(invalidOrgGUID),
+					}),
+					ExpectError: regexp.MustCompile(`API Error Assigning Isolation Segment`),
+				},
+			},
+		})
+	})
+	t.Run("error path - invalid organization when creating space", func(t *testing.T) {
+		cfg := getCFHomeConf()
+		rec := cfg.SetupVCR(t, "fixtures/resource_space_invalid_org")
+		defer stopQuietly(rec)
+
+		resource.Test(t, resource.TestCase{
+			IsUnitTest:               true,
+			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
+			Steps: []resource.TestStep{
+				{
+					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
+						Name:     strtostrptr("tf-unit-test"),
+						OrgId:    strtostrptr(invalidOrgGUID),
+						AllowSSH: booltoboolptr(true),
+						Labels:   strtostrptr(testSpaceResourceCreateLabel),
+					}),
+					ExpectError: regexp.MustCompile(`API Error Creating Space`),
+				},
+			},
+		})
+	})
+	t.Run("error path - invalid quota attribute", func(t *testing.T) {
+		cfg := getCFHomeConf()
+		rec := cfg.SetupVCR(t, "fixtures/resource_space_invalid_quota")
+		defer stopQuietly(rec)
+
+		resource.Test(t, resource.TestCase{
+			IsUnitTest:               true,
+			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
+			Steps: []resource.TestStep{
+				{
+					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
+						Name:     strtostrptr("tf-unit-test"),
+						OrgId:    strtostrptr(testOrgGUID),
+						AllowSSH: booltoboolptr(true),
+						Labels:   strtostrptr(testSpaceResourceCreateLabel),
+						Quota:    strtostrptr(invalidOrgGUID),
+					}),
+					ExpectError: regexp.MustCompile(`Error: Invalid Configuration for Read-Only Attribute`),
 				},
 			},
 		})
