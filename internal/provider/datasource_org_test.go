@@ -9,31 +9,37 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-type OrgDataSourceModelPtr struct {
-	Name        *string
-	Id          *string
-	Labels      *map[string]string
-	Annotations *map[string]string
+type OrgModelPtr struct {
+	HclType       string
+	HclObjectName string
+	Name          *string
+	Id            *string
+	Labels        *string
+	Annotations   *string
+	Suspended     *bool
 }
 
-func hclDataSourceOrg(odsmp *OrgDataSourceModelPtr) string {
+func hclOrg(odsmp *OrgModelPtr) string {
 	if odsmp != nil {
 		s := `
-			data "cloudfoundry_org" "ds" {
+		{{.HclType}} "cloudfoundry_org" {{.HclObjectName}} {
 			{{- if .Name}}
 				name  = "{{.Name}}"
 			{{- end -}}
 			{{if .Id}}
 				id = "{{.Id}}"
 			{{- end -}}
+			{{if .Suspended}}
+				suspended = "{{.Suspended}}"
+			{{- end -}}
 			{{if .Labels}}
-				labels = "{{.Labels}}"
+				labels = {{.Labels}}
 			{{- end -}}
 			{{if .Annotations}}
-				annotations = "{{.Annotations}}"
+				annotations = {{.Annotations}}
 			{{- end }}
 			}`
-		tmpl, err := template.New("datasource_org").Parse(s)
+		tmpl, err := template.New("org").Parse(s)
 		if err != nil {
 			panic(err)
 		}
@@ -44,7 +50,7 @@ func hclDataSourceOrg(odsmp *OrgDataSourceModelPtr) string {
 		}
 		return buf.String()
 	}
-	return `data "cloudfoundry_org" "ds" {}`
+	return odsmp.HclType + ` "cloudfoundry_org  "` + odsmp.HclObjectName + ` {}`
 }
 func TestOrgDataSource_Configure(t *testing.T) {
 	t.Parallel()
@@ -58,8 +64,10 @@ func TestOrgDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceOrg(&OrgDataSourceModelPtr{
-						Name: strtostrptr("testunavailableorg"),
+					Config: hclProvider(nil) + hclOrg(&OrgModelPtr{
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr("testunavailableorg"),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Unable to find org data in list`),
 				},
@@ -76,8 +84,10 @@ func TestOrgDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceOrg(&OrgDataSourceModelPtr{
-						Name: strtostrptr(testOrg),
+					Config: hclProvider(nil) + hclOrg(&OrgModelPtr{
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr(testOrg),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr("data.cloudfoundry_org.ds", "id", regexpValidUUID),

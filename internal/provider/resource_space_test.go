@@ -1,62 +1,11 @@
 package provider
 
 import (
-	"bytes"
 	"regexp"
 	"testing"
-	"text/template"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
-
-func hclResourceSpace(smp *SpaceModelPtr) string {
-	if smp != nil {
-		s := `
-			resource "cloudfoundry_space" "{{.ObjectName}}" {
-			{{- if .Name}}
-				name = "{{.Name}}"
-			{{- end -}}
-			{{if .Id}}
-				id = "{{.Id}}"
-			{{- end -}}
-			{{if .OrgId}}
-				org = "{{.OrgId}}"
-			{{- end -}}
-			{{if .Quota}}
-				quota = "{{.Quota}}"
-			{{- end -}}
-			{{if .AllowSSH}}
-				allow_ssh = {{.AllowSSH}}
-			{{- end -}}
-			{{if .IsolationSegment}}
-				isolation_segment = "{{.IsolationSegment}}"
-			{{- end -}}
-			{{if .CreatedAt}}
-				created_at = "{{.CreatedAt}}"
-			{{- end -}}
-			{{if .UpdatedAt}}
-				updated_at = "{{.UpdatedAt}}"
-			{{- end -}}
-			{{if .Labels}}
-				labels = {{.Labels}}
-			{{- end -}}
-			{{if .Annotations}}
-				annotations = {{.Annotations}}
-			{{- end }}
-			}`
-		tmpl, err := template.New("resource_space").Parse(s)
-		if err != nil {
-			panic(err)
-		}
-		buf := new(bytes.Buffer)
-		err = tmpl.Execute(buf, smp)
-		if err != nil {
-			panic(err)
-		}
-		return buf.String()
-	}
-	return `resource "cloudfoundry_space" "ds" {}`
-}
 
 func TestSpaceResource_Configure(t *testing.T) {
 	t.Parallel()
@@ -71,12 +20,13 @@ func TestSpaceResource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						ObjectName:       "ds",
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:          hclObjectResource,
+						HclObjectName:    "ds",
 						Name:             strtostrptr("tf-unit-test"),
 						OrgId:            strtostrptr(testOrgGUID),
 						AllowSSH:         booltoboolptr(true),
-						Labels:           strtostrptr(testSpaceResourceCreateLabel),
+						Labels:           strtostrptr(testCreateLabel),
 						IsolationSegment: strtostrptr(testIsolationSegmentGUID),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
@@ -88,12 +38,13 @@ func TestSpaceResource_Configure(t *testing.T) {
 					),
 				},
 				{
-					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						ObjectName: "ds",
-						Name:       strtostrptr("tf-unit-test"),
-						OrgId:      strtostrptr(testOrgGUID),
-						AllowSSH:   booltoboolptr(false),
-						Labels:     strtostrptr(testSpaceResourceUpdateLabel),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "ds",
+						Name:          strtostrptr("tf-unit-test"),
+						OrgId:         strtostrptr(testOrgGUID),
+						AllowSSH:      booltoboolptr(false),
+						Labels:        strtostrptr(testUpdateLabel),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestCheckResourceAttr(resourceName, "allow_ssh", "false"),
@@ -116,11 +67,12 @@ func TestSpaceResource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						ObjectName: "ds_import",
-						Name:       strtostrptr("tf-unit-test-import"),
-						OrgId:      strtostrptr(testOrgGUID),
-						Labels:     strtostrptr(testSpaceResourceCreateLabel),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "ds_import",
+						Name:          strtostrptr("tf-unit-test-import"),
+						OrgId:         strtostrptr(testOrgGUID),
+						Labels:        strtostrptr(testCreateLabel),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
@@ -146,12 +98,13 @@ func TestSpaceResource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						ObjectName:       "ds_isol",
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:          hclObjectResource,
+						HclObjectName:    "ds_isol",
 						Name:             strtostrptr("tf-unit-test123"),
 						OrgId:            strtostrptr(testOrgGUID),
 						AllowSSH:         booltoboolptr(true),
-						Labels:           strtostrptr(testSpaceResourceCreateLabel),
+						Labels:           strtostrptr(testCreateLabel),
 						IsolationSegment: strtostrptr(invalidOrgGUID),
 					}),
 					ExpectError: regexp.MustCompile(`API Error Assigning Isolation Segment`),
@@ -169,12 +122,13 @@ func TestSpaceResource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						ObjectName: "ds_invalid_org",
-						Name:       strtostrptr("tf-unit-test"),
-						OrgId:      strtostrptr(invalidOrgGUID),
-						AllowSSH:   booltoboolptr(true),
-						Labels:     strtostrptr(testSpaceResourceCreateLabel),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "ds_invalid_org",
+						Name:          strtostrptr("tf-unit-test"),
+						OrgId:         strtostrptr(invalidOrgGUID),
+						AllowSSH:      booltoboolptr(true),
+						Labels:        strtostrptr(testCreateLabel),
 					}),
 					ExpectError: regexp.MustCompile(`API Error Creating Space`),
 				},
@@ -191,13 +145,14 @@ func TestSpaceResource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclResourceSpace(&SpaceModelPtr{
-						ObjectName: "ds_invalid_attribute",
-						Name:       strtostrptr("tf-unit-test"),
-						OrgId:      strtostrptr(testOrgGUID),
-						AllowSSH:   booltoboolptr(true),
-						Labels:     strtostrptr(testSpaceResourceCreateLabel),
-						Quota:      strtostrptr(invalidOrgGUID),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "ds_invalid_attribute",
+						Name:          strtostrptr("tf-unit-test"),
+						OrgId:         strtostrptr(testOrgGUID),
+						AllowSSH:      booltoboolptr(true),
+						Labels:        strtostrptr(testCreateLabel),
+						Quota:         strtostrptr(invalidOrgGUID),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Invalid Configuration for Read-Only Attribute`),
 				},
