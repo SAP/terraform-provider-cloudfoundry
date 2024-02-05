@@ -13,10 +13,10 @@ Provides a Cloud Foundry resource for managing Cloud Foundry spaces within organ
 
 ```terraform
 resource "cloudfoundry_space" "space" {
-  name = "space"
-  org  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+  name      = "space"
+  org       = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
   allow_ssh = "true"
-  labels = {test:"pass",purpose : "prod"}
+  labels    = { test : "pass", purpose : "prod" }
 }
 ```
 
@@ -38,7 +38,7 @@ resource "cloudfoundry_space" "space" {
 ### Read-Only
 
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
-- `id` (String) The GUID of the space
+- `id` (String) The GUID of the object.
 - `quota` (String) The space quota applied to the space. To assign a space quota, use the space quota resource instead.
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 
@@ -49,5 +49,5 @@ Import is supported using the following syntax:
 ```terraform
 # terraform import cloudfoundry_space.<resource_name> <space_guid>
 
-terraform import cloudfoundry_space.space 283f59d2-d660-45fb-9d96-b3e1aa92cfc7
+terraform import cloudfoundry_space.my_space 283f59d2-d660-45fb-9d96-b3e1aa92cfc7
 ```

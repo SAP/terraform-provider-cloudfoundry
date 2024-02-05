@@ -25,7 +25,7 @@ type OrgQuotaModelPtr struct {
 	TotalAppInstances     *int
 	TotalAppTasks         *int
 	TotalAppLogRateLimit  *int
-	Organizations         *[]string
+	Organizations         *string
 	CreatedAt             *string
 	UpdatedAt             *string
 }
@@ -33,7 +33,7 @@ type OrgQuotaModelPtr struct {
 func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 	if oqdsmp != nil {
 		s := `
-			{{.HclType}} "cloudfoundry_org_quota" {{.HclObjectName}} {
+			{{.HclType}} "cloudfoundry_org_quota" "{{.HclObjectName}}" {
 			{{- if .Name}}
 				name  = "{{.Name}}"
 			{{- end -}}
@@ -120,6 +120,7 @@ func TestOrgQuotaDataSource_Configure(t *testing.T) {
 	})
 	t.Run("get available datasource org quota", func(t *testing.T) {
 		cfg := getCFHomeConf()
+		resourceName := "data.cloudfoundry_org_quota.ds"
 		rec := cfg.SetupVCR(t, "fixtures/datasource_org_quota")
 		defer stopQuietly(rec)
 
@@ -134,7 +135,17 @@ func TestOrgQuotaDataSource_Configure(t *testing.T) {
 						Name:          strtostrptr(testOrgQuota),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
-						resource.TestMatchResourceAttr("data.cloudfoundry_org_quota.ds", "id", regexpValidUUID),
+						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
+						resource.TestCheckResourceAttr(resourceName, "instance_memory", "2048"),
+						resource.TestCheckResourceAttr(resourceName, "name", testOrgQuota),
+						resource.TestCheckResourceAttr(resourceName, "total_app_instances", "100"),
+						resource.TestCheckResourceAttr(resourceName, "total_app_log_rate_limit", "1000"),
+						resource.TestCheckResourceAttr(resourceName, "total_app_tasks", "10"),
+						resource.TestCheckResourceAttr(resourceName, "total_memory", "51200"),
+						resource.TestCheckResourceAttr(resourceName, "instance_memory", "2048"),
+						resource.TestMatchResourceAttr(resourceName, "created_at", regexpValidRFC3999Format),
+						resource.TestMatchResourceAttr(resourceName, "updated_at", regexpValidRFC3999Format),
+						resource.TestMatchResourceAttr(resourceName, "organizations.0", regexpValidUUID),
 					),
 				},
 			},

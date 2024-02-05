@@ -13,18 +13,20 @@ Provides a Cloud Foundry resource to manage org quotas definitions.
 
 ```terraform
 resource "cloudfoundry_org_quota" "org_quota" {
-  name = "tf-test-org-quota"
+  name                     = "tf-test-do-not-delete"
   allow_paid_service_plans = true
-  instance_memory = 2048
-  total_memory = 51200
-  total_app_instances = 100
-  total_routes = 50
-  total_services = 200
-  total_route_ports = 5
+  instance_memory          = 2048
+  total_memory             = 51200
+  total_app_instances      = 100
+  total_routes             = 50
+  total_services           = 200
+  total_service_keys       = 120
+  total_private_domains    = 40
+  total_app_tasks          = 10
+  total_route_ports        = 5
   total_app_log_rate_limit = 1000
   organizations = [
-    "ff4ab280-90b7-46ab-9877-12e3820d992e",
-    "21cdfd82-b828-4802-bb77-55df34aea6da",
+    "30edf44a-2d4c-432c-9680-9a61123edcf1",
   ]
 }
 
@@ -61,3 +63,12 @@ output "guid" {
 - `id` (String) The GUID of the object.
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 
+## Import
+
+Import is supported using the following syntax:
+
+```terraform
+# terraform import cloudfoundry_org_quota.<resource_name> <space_guid>
+
+terraform import cloudfoundry_org_quota.my_org_quota e3cef997-9ba5-4cb4-b25b-c79faa81a33f
+```

@@ -49,3 +49,12 @@ resource "cloudfoundry_org" "org" {
 - `quota` (String) The ID of quota to be applied to this Org. Default quota is assigned to the org by default.
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 
+## Import
+
+Import is supported using the following syntax:
+
+```terraform
+# terraform import cloudfoundry_org.<resource_name> <space_guid>
+
+terraform import cloudfoundry_org.my_org e3cef997-9ba5-4cb4-b25b-c79faa81a33f
+```
