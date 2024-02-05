@@ -3,11 +3,11 @@ package provider
 import (
 	"context"
 	"fmt"
-	"maps"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -182,10 +182,10 @@ func (r *orgResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 
 // Update updates the resource and sets the updated Terraform state on success.
 func (r *orgResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var plan orgType
-
-	diags := req.Plan.Get(ctx, &plan)
-	resp.Diagnostics.Append(diags...)
+	var plan, previousState orgType
+	var diags diag.Diagnostics
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
 
 	if resp.Diagnostics.HasError() {
 		return
@@ -205,17 +205,11 @@ func (r *orgResource) Update(ctx context.Context, req resource.UpdateRequest, re
 		Metadata:  cfv3resource.NewMetadata(),
 	}
 
-	labels := make(map[string]*string)
-	labelsDiags := plan.Labels.ElementsAs(ctx, &labels, false)
-	resp.Diagnostics.Append(labelsDiags...)
-	updateOrg.Metadata.Labels = map[string]*string{}
-	maps.Copy(updateOrg.Metadata.Labels, labels)
-
-	annotations := make(map[string]*string)
-	annotationsDiags := plan.Annotations.ElementsAs(ctx, &annotations, false)
-	resp.Diagnostics.Append(annotationsDiags...)
-	updateOrg.Metadata.Annotations = map[string]*string{}
-	maps.Copy(updateOrg.Metadata.Annotations, annotations)
+	updateOrg.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	org, err := r.cfClient.Organizations.Update(ctx, plan.ID.ValueString(), &updateOrg)
 	if err != nil {

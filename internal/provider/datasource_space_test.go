@@ -10,6 +10,8 @@ import (
 )
 
 type SpaceModelPtr struct {
+	HclType          string
+	HclObjectName    string
 	ObjectName       string
 	Name             *string
 	Id               *string
@@ -23,10 +25,10 @@ type SpaceModelPtr struct {
 	UpdatedAt        *string
 }
 
-func hclDataSourceSpace(smp *SpaceModelPtr) string {
+func hclSpace(smp *SpaceModelPtr) string {
 	if smp != nil {
 		s := `
-			data "cloudfoundry_space" "ds" {
+		{{.HclType}} "cloudfoundry_space" {{.HclObjectName}} {
 			{{- if .Name}}
 				name = "{{.Name}}"
 			{{- end -}}
@@ -69,7 +71,7 @@ func hclDataSourceSpace(smp *SpaceModelPtr) string {
 		}
 		return buf.String()
 	}
-	return `data "cloudfoundry_space" "ds" {}`
+	return smp.HclType + ` "cloudfoundry_space "` + smp.HclObjectName + ` {}`
 }
 
 func TestSpaceDataSource_Configure(t *testing.T) {
@@ -85,9 +87,11 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceModelPtr{
-						Name:  strtostrptr(testSpace),
-						OrgId: strtostrptr(testOrgGUID),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr(testSpace),
+						OrgId:         strtostrptr(testOrgGUID),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestCheckResourceAttr(dataSourceName, "id", testSpaceGUID),
@@ -111,9 +115,11 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceModelPtr{
-						Name:  strtostrptr(testSpace),
-						OrgId: strtostrptr(invalidOrgGUID),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr(testSpace),
+						OrgId:         strtostrptr(invalidOrgGUID),
 					}),
 					ExpectError: regexp.MustCompile(`API Error Fetching Organization`),
 				},
@@ -130,9 +136,11 @@ func TestSpaceDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclDataSourceSpace(&SpaceModelPtr{
-						Name:  strtostrptr(testSpace + "x"),
-						OrgId: strtostrptr(testOrgGUID),
+					Config: hclProvider(nil) + hclSpace(&SpaceModelPtr{
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr(testSpace + "x"),
+						OrgId:         strtostrptr(testOrgGUID),
 					}),
 					ExpectError: regexp.MustCompile(`Unable to find space data in list`),
 				},

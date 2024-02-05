@@ -10,7 +10,8 @@ import (
 )
 
 type OrgQuotaModelPtr struct {
-	Type                  string
+	HclType               string
+	HclObjectName         string
 	Name                  *string
 	Id                    *string
 	AllowPaidServicePlans *bool
@@ -32,7 +33,7 @@ type OrgQuotaModelPtr struct {
 func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 	if oqdsmp != nil {
 		s := `
-			{{.Type}} "cloudfoundry_org_quota" "ds" {
+			{{.HclType}} "cloudfoundry_org_quota" {{.HclObjectName}} {
 			{{- if .Name}}
 				name  = "{{.Name}}"
 			{{- end -}}
@@ -82,7 +83,7 @@ func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 				updated_at = {{.UpdatedAt}}
 			{{- end }}
 			}`
-		tmpl, err := template.New("datasource_org_quota").Parse(s)
+		tmpl, err := template.New("org_quota").Parse(s)
 		if err != nil {
 			panic(err)
 		}
@@ -93,7 +94,7 @@ func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 		}
 		return buf.String()
 	}
-	return oqdsmp.Type + ` cloudfoundry_org_quota" "ds" {}`
+	return oqdsmp.HclType + ` cloudfoundry_org_quota  "` + oqdsmp.HclObjectName + `  {}`
 }
 func TestOrgQuotaDataSource_Configure(t *testing.T) {
 	t.Parallel()
@@ -108,8 +109,9 @@ func TestOrgQuotaDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclOrgQuota(&OrgQuotaModelPtr{
-						Type: "data",
-						Name: strtostrptr("testunavailableorgquota"),
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr("testunavailableorgquota"),
 					}),
 					ExpectError: regexp.MustCompile(`Error: Unable to find org quota data in list`),
 				},
@@ -127,8 +129,9 @@ func TestOrgQuotaDataSource_Configure(t *testing.T) {
 			Steps: []resource.TestStep{
 				{
 					Config: hclProvider(nil) + hclOrgQuota(&OrgQuotaModelPtr{
-						Type: "data",
-						Name: strtostrptr(testOrgQuota),
+						HclType:       hclObjectDataSource,
+						HclObjectName: "ds",
+						Name:          strtostrptr(testOrgQuota),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr("data.cloudfoundry_org_quota.ds", "id", regexpValidUUID),
