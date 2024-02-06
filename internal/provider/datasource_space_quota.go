@@ -5,37 +5,39 @@ import (
 	"fmt"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/samber/lo"
 )
 
-var _ datasource.DataSource = &OrgQuotaDataSource{}
-var _ datasource.DataSourceWithConfigure = &OrgQuotaDataSource{}
+var _ datasource.DataSource = &SpaceQuotaDataSource{}
+var _ datasource.DataSourceWithConfigure = &SpaceQuotaDataSource{}
 
-func NewOrgQuotaDataSource() datasource.DataSource {
-	return &OrgQuotaDataSource{}
+func NewSpaceQuotaDataSource() datasource.DataSource {
+	return &SpaceQuotaDataSource{}
 }
 
-type OrgQuotaDataSource struct {
+type SpaceQuotaDataSource struct {
 	cfClient *cfv3client.Client
 }
 
-func (d *OrgQuotaDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_org_quota"
+func (d *SpaceQuotaDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_space_quota"
 }
 
-func (d *OrgQuotaDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *SpaceQuotaDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Gets information on a Cloud Foundry organization quota.",
+		MarkdownDescription: "Gets information on a Cloud Foundry space quota.",
 
 		Attributes: map[string]schema.Attribute{
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The name of the organization quota to look up",
+				MarkdownDescription: "The name of the space quota to look up",
 				Required:            true,
 			},
 			"allow_paid_service_plans": schema.BoolAttribute{
@@ -58,10 +60,6 @@ func (d *OrgQuotaDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 				MarkdownDescription: "Maximum routes with reserved ports",
 				Computed:            true,
 			},
-			"total_private_domains": schema.Int64Attribute{
-				MarkdownDescription: "Maximum number of private domains allowed to be created within the Org",
-				Computed:            true,
-			},
 			"total_memory": schema.Int64Attribute{
 				MarkdownDescription: "Maximum memory usage allowed",
 				Computed:            true,
@@ -82,8 +80,16 @@ func (d *OrgQuotaDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 				MarkdownDescription: "Maximum log rate allowed for all the started processes and running tasks in bytes/second.",
 				Computed:            true,
 			},
-			"orgs": schema.SetAttribute{
-				MarkdownDescription: "Set of Org GUIDs to which this org quota would be assigned.",
+			"org": schema.StringAttribute{
+				MarkdownDescription: "The ID of the Org within which to find the space quota",
+				Optional:            true,
+				Computed:            true,
+				Validators: []validator.String{
+					validation.ValidUUID(),
+				},
+			},
+			"spaces": schema.SetAttribute{
+				MarkdownDescription: "Set of Space GUIDs to which this space quota would be assigned.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
@@ -94,7 +100,7 @@ func (d *OrgQuotaDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 	}
 }
 
-func (d *OrgQuotaDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
+func (d *SpaceQuotaDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -109,36 +115,42 @@ func (d *OrgQuotaDataSource) Configure(ctx context.Context, req datasource.Confi
 	d.cfClient = session.CFClient
 }
 
-func (d *OrgQuotaDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var orgQuotaType OrgQuotaType
+func (d *SpaceQuotaDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var spaceQuotaType spaceQuotaType
 
-	resp.Diagnostics.Append(req.Config.Get(ctx, &orgQuotaType)...)
+	resp.Diagnostics.Append(req.Config.Get(ctx, &spaceQuotaType)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgsQuotas, err := d.cfClient.OrganizationQuotas.ListAll(ctx, &cfv3client.OrganizationQuotaListOptions{
+	sqlo := &cfv3client.SpaceQuotaListOptions{
 		Names: cfv3client.Filter{
-			Values: []string{orgQuotaType.Name.ValueString()},
+			Values: []string{spaceQuotaType.Name.ValueString()},
 		},
-	})
+	}
+	if !spaceQuotaType.Org.IsNull() {
+		sqlo.OrganizationGUIDs = cfv3client.Filter{
+			Values: []string{spaceQuotaType.Org.ValueString()},
+		}
+	}
+	spacesQuotas, err := d.cfClient.SpaceQuotas.ListAll(ctx, sqlo)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch org quota data.",
+			"Unable to fetch space quota data.",
 			fmt.Sprintf("Request failed with %s.", err.Error()),
 		)
 		return
 	}
-	orgsQuota, found := lo.Find(orgsQuotas, func(orgQuota *cfv3resource.OrganizationQuota) bool {
-		return orgQuota.Name == orgQuotaType.Name.ValueString()
+	spacesQuota, found := lo.Find(spacesQuotas, func(spaceQuota *cfv3resource.SpaceQuota) bool {
+		return spaceQuota.Name == spaceQuotaType.Name.ValueString()
 	})
 	if !found {
 		resp.Diagnostics.AddError(
-			"Unable to find org quota data in list",
-			fmt.Sprintf("Given name %s not in the list of org quotas.", orgQuotaType.Name.ValueString()),
+			"Unable to find space quota data in list",
+			fmt.Sprintf("Given name %s not in the list of space quotas.", spaceQuotaType.Name.ValueString()),
 		)
 		return
 	}
-	orgQuotaType, diags := mapOrgQuotaValuesToType(orgsQuota)
+	spaceQuotaType, diags := mapSpaceQuotaValuesToType(spacesQuota)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -146,5 +158,5 @@ func (d *OrgQuotaDataSource) Read(ctx context.Context, req datasource.ReadReques
 
 	tflog.Trace(ctx, "read a data source")
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &orgQuotaType)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &spaceQuotaType)...)
 }

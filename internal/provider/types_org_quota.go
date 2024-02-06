@@ -23,7 +23,7 @@ type OrgQuotaType struct {
 	TotalAppInstances     types.Int64  `tfsdk:"total_app_instances"`
 	TotalAppTasks         types.Int64  `tfsdk:"total_app_tasks"`
 	TotalAppLogRateLimit  types.Int64  `tfsdk:"total_app_log_rate_limit"`
-	Organizations         types.Set    `tfsdk:"organizations"`
+	Organizations         types.Set    `tfsdk:"orgs"`
 	CreatedAt             types.String `tfsdk:"created_at"`
 	UpdatedAt             types.String `tfsdk:"updated_at"`
 }

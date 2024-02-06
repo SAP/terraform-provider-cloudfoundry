@@ -5,35 +5,39 @@ import (
 	"fmt"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/samber/lo"
 )
 
 var (
-	_ resource.Resource              = &orgQuotaResource{}
-	_ resource.ResourceWithConfigure = &orgQuotaResource{}
+	_ resource.Resource              = &spaceQuotaResource{}
+	_ resource.ResourceWithConfigure = &spaceQuotaResource{}
 )
 
-func NewOrgQuotaResource() resource.Resource {
-	return &orgQuotaResource{}
+func NewSpaceQuotaResource() resource.Resource {
+	return &spaceQuotaResource{}
 }
 
-type orgQuotaResource struct {
+type spaceQuotaResource struct {
 	cfClient *cfv3client.Client
 }
 
-func (r *orgQuotaResource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_org_quota"
+func (r *spaceQuotaResource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_space_quota"
 }
 
-func (r *orgQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *spaceQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Provides a Cloud Foundry resource to manage org quota definitions.",
+		MarkdownDescription: "Provides a Cloud Foundry resource to manage space quota definitions.",
 		Attributes: map[string]schema.Attribute{
 			"name": schema.StringAttribute{
 				MarkdownDescription: "The name you use to identify the quota or plan in Cloud Foundry",
@@ -59,10 +63,6 @@ func (r *orgQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 				MarkdownDescription: "Maximum routes with reserved ports.",
 				Optional:            true,
 			},
-			"total_private_domains": schema.Int64Attribute{
-				MarkdownDescription: "Maximum number of private domains allowed to be created within the Org.",
-				Optional:            true,
-			},
 			"total_memory": schema.Int64Attribute{
 				MarkdownDescription: "Maximum memory usage allowed.",
 				Optional:            true,
@@ -83,10 +83,20 @@ func (r *orgQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 				MarkdownDescription: "Maximum log rate allowed for all the started processes and running tasks in bytes/second.",
 				Optional:            true,
 			},
-			"orgs": schema.SetAttribute{
-				MarkdownDescription: "Set of Org GUIDs to which this org quota would be assigned.",
+			"spaces": schema.SetAttribute{
+				MarkdownDescription: "Set of space GUIDs to which this space quota would be assigned.",
 				ElementType:         types.StringType,
 				Optional:            true,
+			},
+			"org": schema.StringAttribute{
+				MarkdownDescription: "The ID of the Org within which to create the space quota",
+				Required:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Validators: []validator.String{
+					validation.ValidUUID(),
+				},
 			},
 			idKey:        guidSchema(),
 			createdAtKey: createdAtSchema(),
@@ -94,7 +104,7 @@ func (r *orgQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 		},
 	}
 }
-func (r *orgQuotaResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *spaceQuotaResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -109,156 +119,161 @@ func (r *orgQuotaResource) Configure(ctx context.Context, req resource.Configure
 	r.cfClient = session.CFClient
 }
 
-func (r *orgQuotaResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var orgQuotaType OrgQuotaType
-	diags := req.Plan.Get(ctx, &orgQuotaType)
+func (r *spaceQuotaResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var spaceQuotaType spaceQuotaType
+	diags := req.Plan.Get(ctx, &spaceQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	orgsQuotaValues, diags := orgQuotaType.mapOrgQuotaTypeToValues(ctx)
+	spacesQuotaValues, diags := spaceQuotaType.mapSpaceQuotaTypeToValues(ctx)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgsQuotaResp, err := r.cfClient.OrganizationQuotas.Create(ctx, orgsQuotaValues)
+	spacesQuotaResp, err := r.cfClient.SpaceQuotas.Create(ctx, spacesQuotaValues)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to create org quota",
+			"Unable to create space quota",
 			fmt.Sprintf("Request failed with %s ", err.Error()),
 		)
 		return
 	}
-	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuotaResp)
+	spacesQuotaType, diags := mapSpaceQuotaValuesToType(spacesQuotaResp)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	diags = resp.State.Set(ctx, orgsQuotaType)
+	diags = resp.State.Set(ctx, spacesQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 }
 
-func (r *orgQuotaResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var orgQuotaTypeState OrgQuotaType
-	diags := req.State.Get(ctx, &orgQuotaTypeState)
+func (r *spaceQuotaResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var spaceQuotaTypeState spaceQuotaType
+	diags := req.State.Get(ctx, &spaceQuotaTypeState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	orgsQuotas, err := r.cfClient.OrganizationQuotas.ListAll(ctx, &cfv3client.OrganizationQuotaListOptions{
+	spacesQuotas, err := r.cfClient.SpaceQuotas.ListAll(ctx, &cfv3client.SpaceQuotaListOptions{
 		GUIDs: cfv3client.Filter{
-			Values: []string{orgQuotaTypeState.ID.ValueString()},
+			Values: []string{spaceQuotaTypeState.ID.ValueString()},
 		},
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch org quota data",
+			"Unable to fetch space quota data",
 			fmt.Sprintf("Request failed with %s", err.Error()),
 		)
 		return
 	}
-	orgsQuota, found := lo.Find(orgsQuotas, func(orgQuota *cfv3resource.OrganizationQuota) bool {
-		return orgQuota.GUID == orgQuotaTypeState.ID.ValueString()
+	spacesQuota, found := lo.Find(spacesQuotas, func(spaceQuota *cfv3resource.SpaceQuota) bool {
+		return spaceQuota.GUID == spaceQuotaTypeState.ID.ValueString()
 	})
 	if !found {
 		resp.State.RemoveResource(ctx)
 		return
 	}
-	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuota)
+	spacesQuotaType, diags := mapSpaceQuotaValuesToType(spacesQuota)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	diags = resp.State.Set(ctx, orgsQuotaType)
+	diags = resp.State.Set(ctx, spacesQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 }
 
-func (r *orgQuotaResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var orgQuotaTypePlan OrgQuotaType
-	var orgQuotaTypeState OrgQuotaType
-	diags := req.Plan.Get(ctx, &orgQuotaTypePlan)
+func (r *spaceQuotaResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var spaceQuotaTypePlan spaceQuotaType
+	var spaceQuotaTypeState spaceQuotaType
+	diags := req.Plan.Get(ctx, &spaceQuotaTypePlan)
 	resp.Diagnostics.Append(diags...)
-	diags = resp.State.Get(ctx, &orgQuotaTypeState)
+	diags = resp.State.Get(ctx, &spaceQuotaTypeState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	removed, added, diags := findChangedRelationsFromTFState(ctx, orgQuotaTypePlan.Organizations, orgQuotaTypeState.Organizations)
+	removed, added, diags := findChangedRelationsFromTFState(ctx, spaceQuotaTypePlan.Spaces, spaceQuotaTypeState.Spaces)
 	resp.Diagnostics.Append(diags...)
-	orgsQuotaValues, diags := orgQuotaTypePlan.mapOrgQuotaTypeToValues(ctx)
+	spacesQuotaValues, diags := spaceQuotaTypePlan.mapSpaceQuotaTypeToValues(ctx)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	if len(removed) != 0 {
-		resp.Diagnostics.AddError(
-			"Unable to update org quota",
-			fmt.Sprintf("Cannot unassign org quota from org %v", removed),
-		)
-		return
+		for _, spaceId := range removed {
+			err := r.cfClient.SpaceQuotas.Remove(ctx, spaceQuotaTypePlan.ID.ValueString(), spaceId)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Unable to update space quota",
+					fmt.Sprintf("Request failed with %s", err.Error()),
+				)
+				return
+			}
+		}
 	}
 	if len(added) != 0 {
-		_, err := r.cfClient.OrganizationQuotas.Apply(ctx, orgQuotaTypePlan.ID.ValueString(), added)
+		_, err := r.cfClient.SpaceQuotas.Apply(ctx, spaceQuotaTypePlan.ID.ValueString(), added)
 		if err != nil {
 			resp.Diagnostics.AddError(
-				"Unable to update org quota",
+				"Unable to update space quota",
 				fmt.Sprintf("Request failed with %s", err.Error()),
 			)
 			return
 		}
 	}
-	orgsQuotaValues.Relationships = nil
-	orgsQuotaResp, err := r.cfClient.OrganizationQuotas.Update(ctx, orgQuotaTypePlan.ID.ValueString(), orgsQuotaValues)
+	spacesQuotaValues.Relationships = nil
+	spacesQuotaResp, err := r.cfClient.SpaceQuotas.Update(ctx, spaceQuotaTypePlan.ID.ValueString(), spacesQuotaValues)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to update org quota",
+			"Unable to update space quota",
 			fmt.Sprintf("Request failed with %s", err.Error()),
 		)
 	}
-	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuotaResp)
+	spacesQuotaType, diags := mapSpaceQuotaValuesToType(spacesQuotaResp)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	diags = resp.State.Set(ctx, orgsQuotaType)
+	diags = resp.State.Set(ctx, spacesQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 }
 
-func (r *orgQuotaResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var orgQuotaType OrgQuotaType
-	diags := req.State.Get(ctx, &orgQuotaType)
+func (r *spaceQuotaResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var spaceQuotaType spaceQuotaType
+	diags := req.State.Get(ctx, &spaceQuotaType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	jobID, err := r.cfClient.OrganizationQuotas.Delete(ctx, orgQuotaType.ID.ValueString())
+	jobID, err := r.cfClient.SpaceQuotas.Delete(ctx, spaceQuotaType.ID.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to delete organization quota",
-			fmt.Sprintf("Org quota deletion verification failed %s with %s", orgQuotaType.Name.ValueString(), err.Error()),
+			"Unable to delete space quota",
+			fmt.Sprintf("space quota deletion verification failed %s with %s", spaceQuotaType.Name.ValueString(), err.Error()),
 		)
 		return
 	}
 	if pollJob(ctx, *r.cfClient, jobID) != nil {
 		resp.Diagnostics.AddError(
-			"Unable to verify org quota deletion",
-			"Org quota deletion verification failed for "+orgQuotaType.ID.ValueString()+": "+err.Error(),
+			"Unable to verify space quota deletion",
+			"space quota deletion verification failed for "+spaceQuotaType.ID.ValueString()+": "+err.Error(),
 		)
 		return
 	}
 }
 
-func (r *orgQuotaResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *spaceQuotaResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
