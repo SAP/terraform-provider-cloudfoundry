@@ -24,8 +24,8 @@ var (
 	_ resource.ResourceWithImportState = &orgResource{}
 )
 
-// NeworgResource is a helper function to simplify the provider implementation.
-func NeworgResource() resource.Resource {
+// NewOrgResource is a helper function to simplify the provider implementation.
+func NewOrgResource() resource.Resource {
 	return &orgResource{}
 }
 

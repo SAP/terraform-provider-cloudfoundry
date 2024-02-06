@@ -1,26 +1,24 @@
 ---
-page_title: "cloudfoundry_org_quota Data Source - terraform-provider-cloudfoundry"
+page_title: "cloudfoundry_space_quota Data Source - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Gets information on a Cloud Foundry organization quota.
+  Gets information on a Cloud Foundry space quota.
 ---
 
-# cloudfoundry_org_quota (Data Source)
+# cloudfoundry_space_quota (Data Source)
 
-Gets information on a Cloud Foundry organization quota.
+Gets information on a Cloud Foundry space quota.
 
 ## Example Usage
 
 ```terraform
-data "cloudfoundry_org_quota" "org_quota" {
-  name = "tf-test-org-quota"
+data "cloudfoundry_space_quota" "my_space_quota" {
+  name = "tf-test-do-not-delete"
+  org  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
 }
 
-output "guid" {
-  value = data.cloudfoundry_org_quota.org_quota.id
-}
-output "instance_memory" {
-  value = data.cloudfoundry_org_quota.org_quota.instance_memory
+output "id" {
+  value = data.cloudfoundry_space_quota.my_space_quota.id
 }
 ```
 
@@ -29,7 +27,11 @@ output "instance_memory" {
 
 ### Required
 
-- `name` (String) The name of the organization quota to look up
+- `name` (String) The name of the space quota to look up
+
+### Optional
+
+- `org` (String) The ID of the Org within which to find the space quota
 
 ### Read-Only
 
@@ -37,12 +39,11 @@ output "instance_memory" {
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `id` (String) The GUID of the object.
 - `instance_memory` (Number) Maximum memory per application instance
-- `orgs` (Set of String) Set of Org GUIDs to which this org quota would be assigned.
+- `spaces` (Set of String) Set of Space GUIDs to which this space quota would be assigned.
 - `total_app_instances` (Number) Maximum app instances allowed
 - `total_app_log_rate_limit` (Number) Maximum log rate allowed for all the started processes and running tasks in bytes/second.
 - `total_app_tasks` (Number) Maximum tasks allowed per app
 - `total_memory` (Number) Maximum memory usage allowed
-- `total_private_domains` (Number) Maximum number of private domains allowed to be created within the Org
 - `total_route_ports` (Number) Maximum routes with reserved ports
 - `total_routes` (Number) Maximum routes allowed
 - `total_service_keys` (Number) Maximum service keys allowed

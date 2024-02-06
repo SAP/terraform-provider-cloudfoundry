@@ -30,6 +30,7 @@ var (
 	testOrgQuota             = "tf-test-do-not-delete"
 	invalidOrgGUID           = "40b73419-5e01-4be0-baea-932d46cea45b"
 	testIsolationSegmentGUID = "5215e4df-79a4-4ce8-a933-837d6aa7a77b"
+	testSpaceQuota           = "tf-test-do-not-delete"
 	testCreateLabel          = "{purpose: \"testing\", landscape: \"test\"}"
 	testUpdateLabel          = "{purpose: \"production\", status: \"fine\"}"
 	testOrgQuotaGUID         = "e3cef997-9ba5-4cb4-b25b-c79faa81a33f"
