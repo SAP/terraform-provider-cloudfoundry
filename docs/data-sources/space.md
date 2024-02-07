@@ -35,7 +35,7 @@ output "id" {
 - `allow_ssh` (Boolean) Allows SSH to application containers via the CF CLI.
 - `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
-- `id` (String) The GUID of the space
+- `id` (String) The GUID of the object.
 - `isolation_segment` (String) The ID of the isolation segment assigned to the space.
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `quota` (String) The space quota applied to the space

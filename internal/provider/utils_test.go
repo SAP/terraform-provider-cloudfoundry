@@ -32,6 +32,8 @@ var (
 	testIsolationSegmentGUID = "5215e4df-79a4-4ce8-a933-837d6aa7a77b"
 	testCreateLabel          = "{purpose: \"testing\", landscape: \"test\"}"
 	testUpdateLabel          = "{purpose: \"production\", status: \"fine\"}"
+	testUser                 = "debaditya.ray@sap.com"
+	testUserGUID             = "2334cf47-fead-4e5f-bd2a-6e7153e7f144"
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {

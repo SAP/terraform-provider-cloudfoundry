@@ -133,7 +133,7 @@ func pollJob(ctx context.Context, client cfv3client.Client, jobID string) error 
 
 	return client.Jobs.PollComplete(ctx, jobID, &cfv3client.PollingOptions{
 		Timeout:       defaultTimeout,
-		CheckInterval: time.Second * 10,
+		CheckInterval: time.Second * 2,
 		FailedState:   string(cfv3resource.JobStateFailed),
 	})
 }

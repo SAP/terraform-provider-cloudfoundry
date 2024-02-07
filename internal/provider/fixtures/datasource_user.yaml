@@ -1,0 +1,186 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/users?usernames=debaditya.ray%40sap.com
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/users?page=1\u0026per_page=50\u0026usernames=debaditya.ray%40sap.com"},"last":{"href":"https://api.x.x.x.x.com/v3/users?page=1\u0026per_page=50\u0026usernames=debaditya.ray%40sap.com"},"next":null,"previous":null},"resources":[{"guid":"2334cf47-fead-4e5f-bd2a-6e7153e7f144","created_at":"2023-02-01T11:41:32Z","updated_at":"2023-05-15T11:36:22Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{"enviroment":"staging"},"annotations":{"note":"detailed information"}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2334cf47-fead-4e5f-bd2a-6e7153e7f144"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 07 Feb 2024 06:31:35 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 738ac09b0ee9443b
+            X-B3-Traceid:
+                - f01e67998e2b4c7e738ac09b0ee9443b
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.085407"
+            X-Vcap-Request-Id:
+                - f01e6799-8e2b-4c7e-738a-c09b0ee9443b::1c526a97-51c2-4c59-872c-27fbd5c2145c
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 687.476317ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/users?usernames=debaditya.ray%40sap.com
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/users?page=1\u0026per_page=50\u0026usernames=debaditya.ray%40sap.com"},"last":{"href":"https://api.x.x.x.x.com/v3/users?page=1\u0026per_page=50\u0026usernames=debaditya.ray%40sap.com"},"next":null,"previous":null},"resources":[{"guid":"2334cf47-fead-4e5f-bd2a-6e7153e7f144","created_at":"2023-02-01T11:41:32Z","updated_at":"2023-05-15T11:36:22Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{"enviroment":"staging"},"annotations":{"note":"detailed information"}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2334cf47-fead-4e5f-bd2a-6e7153e7f144"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 07 Feb 2024 06:31:35 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 49b56df686693822
+            X-B3-Traceid:
+                - dbf7cb2b02af4f3c49b56df686693822
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.079333"
+            X-Vcap-Request-Id:
+                - dbf7cb2b-02af-4f3c-49b5-6df686693822::ffa85929-297d-4030-bf29-f8bcf8f0eca0
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 260.200894ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/users?usernames=debaditya.ray%40sap.com
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/users?page=1\u0026per_page=50\u0026usernames=debaditya.ray%40sap.com"},"last":{"href":"https://api.x.x.x.x.com/v3/users?page=1\u0026per_page=50\u0026usernames=debaditya.ray%40sap.com"},"next":null,"previous":null},"resources":[{"guid":"2334cf47-fead-4e5f-bd2a-6e7153e7f144","created_at":"2023-02-01T11:41:32Z","updated_at":"2023-05-15T11:36:22Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{"enviroment":"staging"},"annotations":{"note":"detailed information"}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2334cf47-fead-4e5f-bd2a-6e7153e7f144"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 07 Feb 2024 06:31:36 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 61b06d57f29fafa2
+            X-B3-Traceid:
+                - 74fac74b220e4f1561b06d57f29fafa2
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.069713"
+            X-Vcap-Request-Id:
+                - 74fac74b-220e-4f15-61b0-6d57f29fafa2::00ed6056-836a-4e49-afed-369f11bd131d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 250.086404ms
