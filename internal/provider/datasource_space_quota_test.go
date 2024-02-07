@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-type OrgQuotaModelPtr struct {
+type SpaceQuotaModelPtr struct {
 	HclType               string
 	HclObjectName         string
 	Name                  *string
@@ -19,21 +19,21 @@ type OrgQuotaModelPtr struct {
 	TotalServiceKeys      *int
 	TotalRoutes           *int
 	TotalRoutePorts       *int
-	TotalPrivateDomains   *int
 	TotalMemory           *int
 	InstanceMemory        *int
 	TotalAppInstances     *int
 	TotalAppTasks         *int
 	TotalAppLogRateLimit  *int
-	Organizations         *string
+	Spaces                *string
+	Org                   *string
 	CreatedAt             *string
 	UpdatedAt             *string
 }
 
-func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
-	if oqdsmp != nil {
+func hclSpaceQuota(sqdsmp *SpaceQuotaModelPtr) string {
+	if sqdsmp != nil {
 		s := `
-			{{.HclType}} "cloudfoundry_org_quota" "{{.HclObjectName}}" {
+			{{.HclType}} "cloudfoundry_space_quota" "{{.HclObjectName}}" {
 			{{- if .Name}}
 				name  = "{{.Name}}"
 			{{- end -}}
@@ -55,9 +55,6 @@ func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 			{{if .TotalRoutePorts}}
 				total_routes_ports = {{.TotalRoutePorts}}
 			{{- end }}
-			{{if .TotalPrivateDomains}}
-				total_private_domains = {{.TotalPrivateDomains}}
-			{{- end }}
 			{{if .TotalMemory}}
 				total_memory = {{.TotalMemory}}
 			{{- end }}
@@ -73,8 +70,11 @@ func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 			{{if .TotalAppLogRateLimit}}
 				total_app_log_rate_limit = {{.TotalAppLogRateLimit}}
 			{{- end }}
-			{{if .Organizations}}
-				orgs = {{.Organizations}}
+			{{if .Org}}
+				org = "{{.Org}}"
+			{{- end }}
+			{{if .Spaces}}
+				spaces = {{.Spaces}}
 			{{- end }}
 			{{if .CreatedAt}}
 				created_at = {{.CreatedAt}}
@@ -83,24 +83,24 @@ func hclOrgQuota(oqdsmp *OrgQuotaModelPtr) string {
 				updated_at = {{.UpdatedAt}}
 			{{- end }}
 			}`
-		tmpl, err := template.New("org_quota").Parse(s)
+		tmpl, err := template.New("space_quota").Parse(s)
 		if err != nil {
 			panic(err)
 		}
 		buf := new(bytes.Buffer)
-		err = tmpl.Execute(buf, oqdsmp)
+		err = tmpl.Execute(buf, sqdsmp)
 		if err != nil {
 			panic(err)
 		}
 		return buf.String()
 	}
-	return oqdsmp.HclType + ` cloudfoundry_org_quota  "` + oqdsmp.HclObjectName + `  {}`
+	return sqdsmp.HclType + ` cloudfoundry_space_quota  "` + sqdsmp.HclObjectName + `  {}`
 }
-func TestOrgQuotaDataSource_Configure(t *testing.T) {
+func TestSpaceQuotaDataSource_Configure(t *testing.T) {
 	t.Parallel()
-	t.Run("error path - get unavailable datasource org quota", func(t *testing.T) {
+	t.Run("error path - get unavailable datasource space quota", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_org_invalid_org_quota_name")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_space_quota_name")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -108,20 +108,20 @@ func TestOrgQuotaDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclOrgQuota(&OrgQuotaModelPtr{
+					Config: hclProvider(nil) + hclSpaceQuota(&SpaceQuotaModelPtr{
 						HclType:       hclObjectDataSource,
 						HclObjectName: "ds",
-						Name:          strtostrptr("testunavailableorgquota"),
+						Name:          strtostrptr("testunavailablespacequota"),
 					}),
-					ExpectError: regexp.MustCompile(`Error: Unable to find org quota data in list`),
+					ExpectError: regexp.MustCompile(`Error: Unable to find space quota data in list`),
 				},
 			},
 		})
 	})
-	t.Run("get available datasource org quota", func(t *testing.T) {
+	t.Run("get available datasource space quota", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		resourceName := "data.cloudfoundry_org_quota.ds"
-		rec := cfg.SetupVCR(t, "fixtures/datasource_org_quota")
+		resourceName := "data.cloudfoundry_space_quota.ds"
+		rec := cfg.SetupVCR(t, "fixtures/datasource_space_quota")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{
@@ -129,23 +129,23 @@ func TestOrgQuotaDataSource_Configure(t *testing.T) {
 			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
 			Steps: []resource.TestStep{
 				{
-					Config: hclProvider(nil) + hclOrgQuota(&OrgQuotaModelPtr{
+					Config: hclProvider(nil) + hclSpaceQuota(&SpaceQuotaModelPtr{
 						HclType:       hclObjectDataSource,
 						HclObjectName: "ds",
-						Name:          strtostrptr(testOrgQuota),
+						Name:          strtostrptr(testSpaceQuota),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
 						resource.TestCheckResourceAttr(resourceName, "instance_memory", "2048"),
-						resource.TestCheckResourceAttr(resourceName, "name", testOrgQuota),
-						resource.TestCheckResourceAttr(resourceName, "total_app_instances", "100"),
+						resource.TestCheckResourceAttr(resourceName, "name", testSpaceQuota),
+						resource.TestCheckResourceAttr(resourceName, "total_app_instances", "110"),
 						resource.TestCheckResourceAttr(resourceName, "total_app_log_rate_limit", "1000"),
 						resource.TestCheckResourceAttr(resourceName, "total_app_tasks", "10"),
 						resource.TestCheckResourceAttr(resourceName, "total_memory", "51200"),
 						resource.TestCheckResourceAttr(resourceName, "instance_memory", "2048"),
 						resource.TestMatchResourceAttr(resourceName, "created_at", regexpValidRFC3999Format),
 						resource.TestMatchResourceAttr(resourceName, "updated_at", regexpValidRFC3999Format),
-						resource.TestMatchResourceAttr(resourceName, "orgs.0", regexpValidUUID),
+						resource.TestMatchResourceAttr(resourceName, "spaces.0", regexpValidUUID),
 					),
 				},
 			},

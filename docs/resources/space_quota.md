@@ -1,37 +1,35 @@
 ---
-page_title: "cloudfoundry_org_quota Resource - terraform-provider-cloudfoundry"
+page_title: "cloudfoundry_space_quota Resource - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Provides a Cloud Foundry resource to manage org quota definitions.
+  Provides a Cloud Foundry resource to manage space quota definitions.
 ---
 
-# cloudfoundry_org_quota (Resource)
+# cloudfoundry_space_quota (Resource)
 
-Provides a Cloud Foundry resource to manage org quota definitions.
+Provides a Cloud Foundry resource to manage space quota definitions.
 
 ## Example Usage
 
 ```terraform
-resource "cloudfoundry_org_quota" "org_quota" {
+resource "cloudfoundry_space_quota" "my_space_quota" {
   name                     = "tf-test-do-not-delete"
   allow_paid_service_plans = true
   instance_memory          = 2048
   total_memory             = 51200
-  total_app_instances      = 100
+  total_app_instances      = 110
   total_routes             = 50
   total_services           = 200
   total_service_keys       = 120
-  total_private_domains    = 40
   total_app_tasks          = 10
   total_route_ports        = 5
   total_app_log_rate_limit = 1000
-  orgs = [
-    "ca721b24-e24d-4171-83e1-1ef6bd836b38",
-  ]
+  org                      = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+  spaces                   = ["3bc20dc4-1870-4835-8308-dda2d766e61e"]
 }
 
 output "guid" {
-  value = resource.cloudfoundry_org_quota.org_quota.id
+  value = resource.cloudfoundry_space_quota.my_space_quota.id
 }
 ```
 
@@ -42,16 +40,16 @@ output "guid" {
 
 - `allow_paid_service_plans` (Boolean) Determines whether users can provision instances of non-free service plans. Does not control plan visibility. When false, non-free service plans may be visible in the marketplace but instances can not be provisioned.
 - `name` (String) The name you use to identify the quota or plan in Cloud Foundry
+- `org` (String) The ID of the Org within which to create the space quota
 
 ### Optional
 
 - `instance_memory` (Number) Maximum memory per application instance.
-- `orgs` (Set of String) Set of Org GUIDs to which this org quota would be assigned.
+- `spaces` (Set of String) Set of space GUIDs to which this space quota would be assigned.
 - `total_app_instances` (Number) Maximum app instances allowed.
 - `total_app_log_rate_limit` (Number) Maximum log rate allowed for all the started processes and running tasks in bytes/second.
 - `total_app_tasks` (Number) Maximum tasks allowed per app.
 - `total_memory` (Number) Maximum memory usage allowed.
-- `total_private_domains` (Number) Maximum number of private domains allowed to be created within the Org.
 - `total_route_ports` (Number) Maximum routes with reserved ports.
 - `total_routes` (Number) Maximum routes allowed.
 - `total_service_keys` (Number) Maximum service keys allowed.
@@ -68,7 +66,7 @@ output "guid" {
 Import is supported using the following syntax:
 
 ```terraform
-# terraform import cloudfoundry_org_quota.<resource_name> <space_guid>
+# terraform import cloudfoundry_space_quota.<resource_name> <space_guid>
 
-terraform import cloudfoundry_org_quota.my_org_quota e3cef997-9ba5-4cb4-b25b-c79faa81a33f
+terraform import cloudfoundry_space_quota.my_space_quota e3cef997-9ba5-4cb4-b25b-c79faa81a33f
 ```
