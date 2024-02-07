@@ -33,6 +33,8 @@ var (
 	testSpaceQuota           = "tf-test-do-not-delete"
 	testCreateLabel          = "{purpose: \"testing\", landscape: \"test\"}"
 	testUpdateLabel          = "{purpose: \"production\", status: \"fine\"}"
+	testUser                 = "debaditya.ray@sap.com"
+	testUserGUID             = "2334cf47-fead-4e5f-bd2a-6e7153e7f144"
 	testOrgQuotaGUID         = "e3cef997-9ba5-4cb4-b25b-c79faa81a33f"
 )
 
