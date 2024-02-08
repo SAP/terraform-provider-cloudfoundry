@@ -35,6 +35,8 @@ var (
 	testUpdateLabel          = "{purpose: \"production\", status: \"fine\"}"
 	testUser                 = "debaditya.ray@sap.com"
 	testUserGUID             = "2334cf47-fead-4e5f-bd2a-6e7153e7f144"
+	testUser2ID              = "space"
+	testRoleGUID             = "e17839d9-cd4f-4e4b-baf0-18786f12fede"
 	testOrgQuotaGUID         = "e3cef997-9ba5-4cb4-b25b-c79faa81a33f"
 )
 

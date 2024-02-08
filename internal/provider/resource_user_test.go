@@ -68,7 +68,7 @@ func hclResourceUser(urmp *UserResourceModelPtr) string {
 
 func TestUserResource_Configure(t *testing.T) {
 	t.Parallel()
-	t.Run("happy path - create/update/import/delete space", func(t *testing.T) {
+	t.Run("happy path - create/update/import/delete user", func(t *testing.T) {
 		resourceName := "cloudfoundry_user.us"
 		cfg := getCFHomeConf()
 		rec := cfg.SetupVCR(t, "fixtures/resource_user_crud")
