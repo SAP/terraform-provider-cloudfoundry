@@ -1,0 +1,747 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=07d04db73f3042988d5b458c04d70467-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 07d04db73f3042988d5b458c04d70467-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"07d04db73f3042988d5b458c04d70467-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"dfe477e4112241b096a8edef7f3c7892"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:24 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - fe620386-1176-4c9b-6550-3e210bf301be
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 2.04127768s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":28,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"c703d2b2-b32c-4add-9d82-f1089dd84875","created_at":"2016-07-12T07:38:47Z","updated_at":"2019-06-19T05:43:01Z","username":"stephen.cherian@sap.com","presentation_name":"stephen.cherian@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/c703d2b2-b32c-4add-9d82-f1089dd84875"}}},{"guid":"0174d50d-d72c-4d24-a050-57a11893b7d9","created_at":"2016-07-20T11:09:18Z","updated_at":"2019-06-04T01:27:58Z","username":"ajaysimha.durbhakula@sap.com","presentation_name":"ajaysimha.durbhakula@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0174d50d-d72c-4d24-a050-57a11893b7d9"}}},{"guid":"f6f12789-7f75-4cfd-a7be-3d24c4d83f3c","created_at":"2016-07-22T12:43:26Z","updated_at":"2019-05-30T05:43:36Z","username":"navin.krishnan.manohar@sap.com","presentation_name":"navin.krishnan.manohar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/f6f12789-7f75-4cfd-a7be-3d24c4d83f3c"}}},{"guid":"e86d3ebe-8ed0-406e-b7a8-2293b262f9e1","created_at":"2016-08-30T07:28:13Z","updated_at":"2019-06-03T11:30:44Z","username":"yogesh.purantharan@sap.com","presentation_name":"yogesh.purantharan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/e86d3ebe-8ed0-406e-b7a8-2293b262f9e1"}}},{"guid":"5a4a8f42-5eee-4f9d-afed-e9fc2fe12574","created_at":"2016-09-07T08:03:20Z","updated_at":"2019-06-24T10:48:13Z","username":"vipin.vijaykumar@sap.com","presentation_name":"vipin.vijaykumar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5a4a8f42-5eee-4f9d-afed-e9fc2fe12574"}}},{"guid":"5fa219dc-76cf-4c48-94ad-4c75e6e653a7","created_at":"2016-12-06T08:34:07Z","updated_at":"2019-10-18T06:45:08Z","username":"pooja.gidaveer@sap.com","presentation_name":"pooja.gidaveer@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5fa219dc-76cf-4c48-94ad-4c75e6e653a7"}}},{"guid":"9d9eaba3-d21b-4578-8382-5b6d152d0b18","created_at":"2017-02-06T09:42:58Z","updated_at":"2019-06-06T05:38:22Z","username":"shankari.g.r@sap.com","presentation_name":"shankari.g.r@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/9d9eaba3-d21b-4578-8382-5b6d152d0b18"}}},{"guid":"86f93b23-000a-4d44-9fa8-4371da2181b0","created_at":"2017-02-15T06:39:35Z","updated_at":"2019-06-03T08:34:04Z","username":"indhumathi.thiyagarajan@sap.com","presentation_name":"indhumathi.thiyagarajan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/86f93b23-000a-4d44-9fa8-4371da2181b0"}}},{"guid":"efed91b4-d808-40fb-b4b8-7a9449ff1e15","created_at":"2017-06-16T10:49:21Z","updated_at":"2019-07-17T05:28:16Z","username":"kesavan.s@sap.com","presentation_name":"kesavan.s@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/efed91b4-d808-40fb-b4b8-7a9449ff1e15"}}},{"guid":"53a43e3e-4894-406e-bd4b-5ad9fabb11fb","created_at":"2020-02-10T05:42:44Z","updated_at":"2020-02-13T09:56:24Z","username":"syed.ejazuddin@sap.com","presentation_name":"syed.ejazuddin@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/53a43e3e-4894-406e-bd4b-5ad9fabb11fb"}}},{"guid":"4595acb0-8a59-4461-83fc-989f0e0c42d7","created_at":"2020-10-14T09:34:51Z","updated_at":"2020-10-14T11:30:00Z","username":"gourab.mukherjee@sap.com","presentation_name":"gourab.mukherjee@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4595acb0-8a59-4461-83fc-989f0e0c42d7"}}},{"guid":"1192c21e-4c77-4dcd-8fe0-52cc9a6882b9","created_at":"2021-01-22T07:25:58Z","updated_at":"2021-01-22T07:28:40Z","username":"abhinav.singh07@sap.com","presentation_name":"abhinav.singh07@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1192c21e-4c77-4dcd-8fe0-52cc9a6882b9"}}},{"guid":"1f263e00-9a07-42d8-be71-b18be6d10b45","created_at":"2021-03-16T06:11:00Z","updated_at":"2021-03-16T06:11:00Z","username":"dl_604f126b654d33027ecbd9b4@global.corp.sap","presentation_name":"dl_604f126b654d33027ecbd9b4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1f263e00-9a07-42d8-be71-b18be6d10b45"}}},{"guid":"5022bdb9-d2fa-494b-820c-2764dfdf91be","created_at":"2021-03-17T07:29:54Z","updated_at":"2021-03-17T07:30:38Z","username":"amit.sahu01@sap.com","presentation_name":"amit.sahu01@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5022bdb9-d2fa-494b-820c-2764dfdf91be"}}},{"guid":"1df19756-0062-405f-90dc-ad25baea56f3","created_at":"2021-06-24T17:12:38Z","updated_at":"2021-07-07T06:19:03Z","username":"rahul.keluskar@sap.com","presentation_name":"rahul.keluskar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1df19756-0062-405f-90dc-ad25baea56f3"}}},{"guid":"29e23730-7da5-4935-bd86-70e9e97519f9","created_at":"2021-12-02T11:27:08Z","updated_at":"2021-12-03T11:21:31Z","username":"mahima.mishra@sap.com","presentation_name":"mahima.mishra@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/29e23730-7da5-4935-bd86-70e9e97519f9"}}},{"guid":"dc990101-35cd-4bcf-b7c3-ecaf2fedb787","created_at":"2022-01-10T07:24:30Z","updated_at":"2022-01-27T06:22:54Z","username":"s.kancherla@sap.com","presentation_name":"s.kancherla@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/dc990101-35cd-4bcf-b7c3-ecaf2fedb787"}}},{"guid":"1ec43a2c-fb61-4db5-9f7c-6192712dd8c9","created_at":"2022-03-21T06:58:00Z","updated_at":"2022-03-21T06:58:00Z","username":"dl_623323d86a0d2d029907abc0@global.corp.sap","presentation_name":"dl_623323d86a0d2d029907abc0@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1ec43a2c-fb61-4db5-9f7c-6192712dd8c9"}}},{"guid":"2f18a18a-19ff-4bc9-9ce6-ba01f43869e0","created_at":"2022-03-21T07:28:21Z","updated_at":"2022-03-21T07:39:19Z","username":"dl_623323ab6a0d2d029907abb8@global.corp.sap","presentation_name":"dl_623323ab6a0d2d029907abb8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f18a18a-19ff-4bc9-9ce6-ba01f43869e0"}}},{"guid":"2f502f84-d8cc-4eb9-a6f5-854a6cf5045f","created_at":"2022-07-19T09:09:59Z","updated_at":"2022-08-18T05:43:38Z","username":"pashva.mehta@sap.com","presentation_name":"pashva.mehta@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f502f84-d8cc-4eb9-a6f5-854a6cf5045f"}}},{"guid":"fc90d693-e23a-4f31-8db4-156a5533a813","created_at":"2022-08-24T10:34:37Z","updated_at":"2022-08-25T09:07:00Z","username":"saumya.suman@sap.com","presentation_name":"saumya.suman@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/fc90d693-e23a-4f31-8db4-156a5533a813"}}},{"guid":"538ab14a-5904-40a2-bb78-e4c38f0a60e0","created_at":"2022-09-22T10:36:33Z","updated_at":"2022-09-22T10:36:33Z","username":"DL_61408BEBAF10730280F0265A@global.corp.sap","presentation_name":"DL_61408BEBAF10730280F0265A@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/538ab14a-5904-40a2-bb78-e4c38f0a60e0"}}},{"guid":"98c69cca-7997-4436-8df3-b1e406bda242","created_at":"2022-11-09T05:27:42Z","updated_at":"2022-11-09T05:27:42Z","username":"dl_623323c16a0d2d029907abbc@global.corp.sap","presentation_name":"dl_623323c16a0d2d029907abbc@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/98c69cca-7997-4436-8df3-b1e406bda242"}}},{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2","created_at":"2023-01-11T09:39:29Z","updated_at":"2023-01-23T06:35:47Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}},{"guid":"cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","presentation_name":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e"}}},{"guid":"0bbb408e-bad8-4880-8be4-e25d584682e3","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623324036A0D2D029907ABC8@global.corp.sap","presentation_name":"DL_623324036A0D2D029907ABC8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0bbb408e-bad8-4880-8be4-e25d584682e3"}}},{"guid":"2695a931-cb48-4cc3-9760-3c90882b05f3","created_at":"2023-07-03T09:09:37Z","updated_at":"2023-07-03T09:19:18Z","username":"dhruv.menon@sap.com","presentation_name":"dhruv.menon@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2695a931-cb48-4cc3-9760-3c90882b05f3"}}},{"guid":"03466e0c-4f6d-466c-8798-a4a5fba01f16","created_at":"2024-02-05T06:37:21Z","updated_at":"2024-02-05T06:37:21Z","username":"sapeventuser+108@gmail.com","presentation_name":"sapeventuser+108@gmail.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/03466e0c-4f6d-466c-8798-a4a5fba01f16"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:25 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4ffbbf91611666b6
+            X-B3-Traceid:
+                - 8d4c38fa54d7459f4ffbbf91611666b6
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1707469388"
+            X-Runtime:
+                - "0.110112"
+            X-Vcap-Request-Id:
+                - 8d4c38fa-54d7-459f-4ffb-bf91611666b6::e8692abb-47fc-47dd-b3df-b98911be32a6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 728.955168ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=07d04db73f3042988d5b458c04d70467-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 07d04db73f3042988d5b458c04d70467-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"07d04db73f3042988d5b458c04d70467-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"7331ca1be9874126bdaef2a4aa6e7cc2"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:25 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 3ccfd7cc-b1dd-4fae-52da-78e8fb177131
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 202.950476ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":28,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"c703d2b2-b32c-4add-9d82-f1089dd84875","created_at":"2016-07-12T07:38:47Z","updated_at":"2019-06-19T05:43:01Z","username":"stephen.cherian@sap.com","presentation_name":"stephen.cherian@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/c703d2b2-b32c-4add-9d82-f1089dd84875"}}},{"guid":"0174d50d-d72c-4d24-a050-57a11893b7d9","created_at":"2016-07-20T11:09:18Z","updated_at":"2019-06-04T01:27:58Z","username":"ajaysimha.durbhakula@sap.com","presentation_name":"ajaysimha.durbhakula@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0174d50d-d72c-4d24-a050-57a11893b7d9"}}},{"guid":"f6f12789-7f75-4cfd-a7be-3d24c4d83f3c","created_at":"2016-07-22T12:43:26Z","updated_at":"2019-05-30T05:43:36Z","username":"navin.krishnan.manohar@sap.com","presentation_name":"navin.krishnan.manohar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/f6f12789-7f75-4cfd-a7be-3d24c4d83f3c"}}},{"guid":"e86d3ebe-8ed0-406e-b7a8-2293b262f9e1","created_at":"2016-08-30T07:28:13Z","updated_at":"2019-06-03T11:30:44Z","username":"yogesh.purantharan@sap.com","presentation_name":"yogesh.purantharan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/e86d3ebe-8ed0-406e-b7a8-2293b262f9e1"}}},{"guid":"5a4a8f42-5eee-4f9d-afed-e9fc2fe12574","created_at":"2016-09-07T08:03:20Z","updated_at":"2019-06-24T10:48:13Z","username":"vipin.vijaykumar@sap.com","presentation_name":"vipin.vijaykumar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5a4a8f42-5eee-4f9d-afed-e9fc2fe12574"}}},{"guid":"5fa219dc-76cf-4c48-94ad-4c75e6e653a7","created_at":"2016-12-06T08:34:07Z","updated_at":"2019-10-18T06:45:08Z","username":"pooja.gidaveer@sap.com","presentation_name":"pooja.gidaveer@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5fa219dc-76cf-4c48-94ad-4c75e6e653a7"}}},{"guid":"9d9eaba3-d21b-4578-8382-5b6d152d0b18","created_at":"2017-02-06T09:42:58Z","updated_at":"2019-06-06T05:38:22Z","username":"shankari.g.r@sap.com","presentation_name":"shankari.g.r@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/9d9eaba3-d21b-4578-8382-5b6d152d0b18"}}},{"guid":"86f93b23-000a-4d44-9fa8-4371da2181b0","created_at":"2017-02-15T06:39:35Z","updated_at":"2019-06-03T08:34:04Z","username":"indhumathi.thiyagarajan@sap.com","presentation_name":"indhumathi.thiyagarajan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/86f93b23-000a-4d44-9fa8-4371da2181b0"}}},{"guid":"efed91b4-d808-40fb-b4b8-7a9449ff1e15","created_at":"2017-06-16T10:49:21Z","updated_at":"2019-07-17T05:28:16Z","username":"kesavan.s@sap.com","presentation_name":"kesavan.s@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/efed91b4-d808-40fb-b4b8-7a9449ff1e15"}}},{"guid":"53a43e3e-4894-406e-bd4b-5ad9fabb11fb","created_at":"2020-02-10T05:42:44Z","updated_at":"2020-02-13T09:56:24Z","username":"syed.ejazuddin@sap.com","presentation_name":"syed.ejazuddin@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/53a43e3e-4894-406e-bd4b-5ad9fabb11fb"}}},{"guid":"4595acb0-8a59-4461-83fc-989f0e0c42d7","created_at":"2020-10-14T09:34:51Z","updated_at":"2020-10-14T11:30:00Z","username":"gourab.mukherjee@sap.com","presentation_name":"gourab.mukherjee@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4595acb0-8a59-4461-83fc-989f0e0c42d7"}}},{"guid":"1192c21e-4c77-4dcd-8fe0-52cc9a6882b9","created_at":"2021-01-22T07:25:58Z","updated_at":"2021-01-22T07:28:40Z","username":"abhinav.singh07@sap.com","presentation_name":"abhinav.singh07@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1192c21e-4c77-4dcd-8fe0-52cc9a6882b9"}}},{"guid":"1f263e00-9a07-42d8-be71-b18be6d10b45","created_at":"2021-03-16T06:11:00Z","updated_at":"2021-03-16T06:11:00Z","username":"dl_604f126b654d33027ecbd9b4@global.corp.sap","presentation_name":"dl_604f126b654d33027ecbd9b4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1f263e00-9a07-42d8-be71-b18be6d10b45"}}},{"guid":"5022bdb9-d2fa-494b-820c-2764dfdf91be","created_at":"2021-03-17T07:29:54Z","updated_at":"2021-03-17T07:30:38Z","username":"amit.sahu01@sap.com","presentation_name":"amit.sahu01@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5022bdb9-d2fa-494b-820c-2764dfdf91be"}}},{"guid":"1df19756-0062-405f-90dc-ad25baea56f3","created_at":"2021-06-24T17:12:38Z","updated_at":"2021-07-07T06:19:03Z","username":"rahul.keluskar@sap.com","presentation_name":"rahul.keluskar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1df19756-0062-405f-90dc-ad25baea56f3"}}},{"guid":"29e23730-7da5-4935-bd86-70e9e97519f9","created_at":"2021-12-02T11:27:08Z","updated_at":"2021-12-03T11:21:31Z","username":"mahima.mishra@sap.com","presentation_name":"mahima.mishra@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/29e23730-7da5-4935-bd86-70e9e97519f9"}}},{"guid":"dc990101-35cd-4bcf-b7c3-ecaf2fedb787","created_at":"2022-01-10T07:24:30Z","updated_at":"2022-01-27T06:22:54Z","username":"s.kancherla@sap.com","presentation_name":"s.kancherla@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/dc990101-35cd-4bcf-b7c3-ecaf2fedb787"}}},{"guid":"1ec43a2c-fb61-4db5-9f7c-6192712dd8c9","created_at":"2022-03-21T06:58:00Z","updated_at":"2022-03-21T06:58:00Z","username":"dl_623323d86a0d2d029907abc0@global.corp.sap","presentation_name":"dl_623323d86a0d2d029907abc0@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1ec43a2c-fb61-4db5-9f7c-6192712dd8c9"}}},{"guid":"2f18a18a-19ff-4bc9-9ce6-ba01f43869e0","created_at":"2022-03-21T07:28:21Z","updated_at":"2022-03-21T07:39:19Z","username":"dl_623323ab6a0d2d029907abb8@global.corp.sap","presentation_name":"dl_623323ab6a0d2d029907abb8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f18a18a-19ff-4bc9-9ce6-ba01f43869e0"}}},{"guid":"2f502f84-d8cc-4eb9-a6f5-854a6cf5045f","created_at":"2022-07-19T09:09:59Z","updated_at":"2022-08-18T05:43:38Z","username":"pashva.mehta@sap.com","presentation_name":"pashva.mehta@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f502f84-d8cc-4eb9-a6f5-854a6cf5045f"}}},{"guid":"fc90d693-e23a-4f31-8db4-156a5533a813","created_at":"2022-08-24T10:34:37Z","updated_at":"2022-08-25T09:07:00Z","username":"saumya.suman@sap.com","presentation_name":"saumya.suman@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/fc90d693-e23a-4f31-8db4-156a5533a813"}}},{"guid":"538ab14a-5904-40a2-bb78-e4c38f0a60e0","created_at":"2022-09-22T10:36:33Z","updated_at":"2022-09-22T10:36:33Z","username":"DL_61408BEBAF10730280F0265A@global.corp.sap","presentation_name":"DL_61408BEBAF10730280F0265A@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/538ab14a-5904-40a2-bb78-e4c38f0a60e0"}}},{"guid":"98c69cca-7997-4436-8df3-b1e406bda242","created_at":"2022-11-09T05:27:42Z","updated_at":"2022-11-09T05:27:42Z","username":"dl_623323c16a0d2d029907abbc@global.corp.sap","presentation_name":"dl_623323c16a0d2d029907abbc@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/98c69cca-7997-4436-8df3-b1e406bda242"}}},{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2","created_at":"2023-01-11T09:39:29Z","updated_at":"2023-01-23T06:35:47Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}},{"guid":"cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","presentation_name":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e"}}},{"guid":"0bbb408e-bad8-4880-8be4-e25d584682e3","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623324036A0D2D029907ABC8@global.corp.sap","presentation_name":"DL_623324036A0D2D029907ABC8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0bbb408e-bad8-4880-8be4-e25d584682e3"}}},{"guid":"2695a931-cb48-4cc3-9760-3c90882b05f3","created_at":"2023-07-03T09:09:37Z","updated_at":"2023-07-03T09:19:18Z","username":"dhruv.menon@sap.com","presentation_name":"dhruv.menon@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2695a931-cb48-4cc3-9760-3c90882b05f3"}}},{"guid":"03466e0c-4f6d-466c-8798-a4a5fba01f16","created_at":"2024-02-05T06:37:21Z","updated_at":"2024-02-05T06:37:21Z","username":"sapeventuser+108@gmail.com","presentation_name":"sapeventuser+108@gmail.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/03466e0c-4f6d-466c-8798-a4a5fba01f16"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:26 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 410d11e1458f54d0
+            X-B3-Traceid:
+                - ee6984f51da04876410d11e1458f54d0
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1707469388"
+            X-Runtime:
+                - "0.119598"
+            X-Vcap-Request-Id:
+                - ee6984f5-1da0-4876-410d-11e1458f54d0::c87d737d-7472-46c3-ab09-526b95a0e337
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 301.683369ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=07d04db73f3042988d5b458c04d70467-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 07d04db73f3042988d5b458c04d70467-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"07d04db73f3042988d5b458c04d70467-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"0c825a5aa9c9411da0435c17d084cc9a"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:27 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 22e5e9ed-fe82-4676-49cf-af6ccb1c26dd
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 684.227908ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":28,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/users?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"c703d2b2-b32c-4add-9d82-f1089dd84875","created_at":"2016-07-12T07:38:47Z","updated_at":"2019-06-19T05:43:01Z","username":"stephen.cherian@sap.com","presentation_name":"stephen.cherian@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/c703d2b2-b32c-4add-9d82-f1089dd84875"}}},{"guid":"0174d50d-d72c-4d24-a050-57a11893b7d9","created_at":"2016-07-20T11:09:18Z","updated_at":"2019-06-04T01:27:58Z","username":"ajaysimha.durbhakula@sap.com","presentation_name":"ajaysimha.durbhakula@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0174d50d-d72c-4d24-a050-57a11893b7d9"}}},{"guid":"f6f12789-7f75-4cfd-a7be-3d24c4d83f3c","created_at":"2016-07-22T12:43:26Z","updated_at":"2019-05-30T05:43:36Z","username":"navin.krishnan.manohar@sap.com","presentation_name":"navin.krishnan.manohar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/f6f12789-7f75-4cfd-a7be-3d24c4d83f3c"}}},{"guid":"e86d3ebe-8ed0-406e-b7a8-2293b262f9e1","created_at":"2016-08-30T07:28:13Z","updated_at":"2019-06-03T11:30:44Z","username":"yogesh.purantharan@sap.com","presentation_name":"yogesh.purantharan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/e86d3ebe-8ed0-406e-b7a8-2293b262f9e1"}}},{"guid":"5a4a8f42-5eee-4f9d-afed-e9fc2fe12574","created_at":"2016-09-07T08:03:20Z","updated_at":"2019-06-24T10:48:13Z","username":"vipin.vijaykumar@sap.com","presentation_name":"vipin.vijaykumar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5a4a8f42-5eee-4f9d-afed-e9fc2fe12574"}}},{"guid":"5fa219dc-76cf-4c48-94ad-4c75e6e653a7","created_at":"2016-12-06T08:34:07Z","updated_at":"2019-10-18T06:45:08Z","username":"pooja.gidaveer@sap.com","presentation_name":"pooja.gidaveer@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5fa219dc-76cf-4c48-94ad-4c75e6e653a7"}}},{"guid":"9d9eaba3-d21b-4578-8382-5b6d152d0b18","created_at":"2017-02-06T09:42:58Z","updated_at":"2019-06-06T05:38:22Z","username":"shankari.g.r@sap.com","presentation_name":"shankari.g.r@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/9d9eaba3-d21b-4578-8382-5b6d152d0b18"}}},{"guid":"86f93b23-000a-4d44-9fa8-4371da2181b0","created_at":"2017-02-15T06:39:35Z","updated_at":"2019-06-03T08:34:04Z","username":"indhumathi.thiyagarajan@sap.com","presentation_name":"indhumathi.thiyagarajan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/86f93b23-000a-4d44-9fa8-4371da2181b0"}}},{"guid":"efed91b4-d808-40fb-b4b8-7a9449ff1e15","created_at":"2017-06-16T10:49:21Z","updated_at":"2019-07-17T05:28:16Z","username":"kesavan.s@sap.com","presentation_name":"kesavan.s@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/efed91b4-d808-40fb-b4b8-7a9449ff1e15"}}},{"guid":"53a43e3e-4894-406e-bd4b-5ad9fabb11fb","created_at":"2020-02-10T05:42:44Z","updated_at":"2020-02-13T09:56:24Z","username":"syed.ejazuddin@sap.com","presentation_name":"syed.ejazuddin@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/53a43e3e-4894-406e-bd4b-5ad9fabb11fb"}}},{"guid":"4595acb0-8a59-4461-83fc-989f0e0c42d7","created_at":"2020-10-14T09:34:51Z","updated_at":"2020-10-14T11:30:00Z","username":"gourab.mukherjee@sap.com","presentation_name":"gourab.mukherjee@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4595acb0-8a59-4461-83fc-989f0e0c42d7"}}},{"guid":"1192c21e-4c77-4dcd-8fe0-52cc9a6882b9","created_at":"2021-01-22T07:25:58Z","updated_at":"2021-01-22T07:28:40Z","username":"abhinav.singh07@sap.com","presentation_name":"abhinav.singh07@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1192c21e-4c77-4dcd-8fe0-52cc9a6882b9"}}},{"guid":"1f263e00-9a07-42d8-be71-b18be6d10b45","created_at":"2021-03-16T06:11:00Z","updated_at":"2021-03-16T06:11:00Z","username":"dl_604f126b654d33027ecbd9b4@global.corp.sap","presentation_name":"dl_604f126b654d33027ecbd9b4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1f263e00-9a07-42d8-be71-b18be6d10b45"}}},{"guid":"5022bdb9-d2fa-494b-820c-2764dfdf91be","created_at":"2021-03-17T07:29:54Z","updated_at":"2021-03-17T07:30:38Z","username":"amit.sahu01@sap.com","presentation_name":"amit.sahu01@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5022bdb9-d2fa-494b-820c-2764dfdf91be"}}},{"guid":"1df19756-0062-405f-90dc-ad25baea56f3","created_at":"2021-06-24T17:12:38Z","updated_at":"2021-07-07T06:19:03Z","username":"rahul.keluskar@sap.com","presentation_name":"rahul.keluskar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1df19756-0062-405f-90dc-ad25baea56f3"}}},{"guid":"29e23730-7da5-4935-bd86-70e9e97519f9","created_at":"2021-12-02T11:27:08Z","updated_at":"2021-12-03T11:21:31Z","username":"mahima.mishra@sap.com","presentation_name":"mahima.mishra@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/29e23730-7da5-4935-bd86-70e9e97519f9"}}},{"guid":"dc990101-35cd-4bcf-b7c3-ecaf2fedb787","created_at":"2022-01-10T07:24:30Z","updated_at":"2022-01-27T06:22:54Z","username":"s.kancherla@sap.com","presentation_name":"s.kancherla@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/dc990101-35cd-4bcf-b7c3-ecaf2fedb787"}}},{"guid":"1ec43a2c-fb61-4db5-9f7c-6192712dd8c9","created_at":"2022-03-21T06:58:00Z","updated_at":"2022-03-21T06:58:00Z","username":"dl_623323d86a0d2d029907abc0@global.corp.sap","presentation_name":"dl_623323d86a0d2d029907abc0@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1ec43a2c-fb61-4db5-9f7c-6192712dd8c9"}}},{"guid":"2f18a18a-19ff-4bc9-9ce6-ba01f43869e0","created_at":"2022-03-21T07:28:21Z","updated_at":"2022-03-21T07:39:19Z","username":"dl_623323ab6a0d2d029907abb8@global.corp.sap","presentation_name":"dl_623323ab6a0d2d029907abb8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f18a18a-19ff-4bc9-9ce6-ba01f43869e0"}}},{"guid":"2f502f84-d8cc-4eb9-a6f5-854a6cf5045f","created_at":"2022-07-19T09:09:59Z","updated_at":"2022-08-18T05:43:38Z","username":"pashva.mehta@sap.com","presentation_name":"pashva.mehta@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f502f84-d8cc-4eb9-a6f5-854a6cf5045f"}}},{"guid":"fc90d693-e23a-4f31-8db4-156a5533a813","created_at":"2022-08-24T10:34:37Z","updated_at":"2022-08-25T09:07:00Z","username":"saumya.suman@sap.com","presentation_name":"saumya.suman@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/fc90d693-e23a-4f31-8db4-156a5533a813"}}},{"guid":"538ab14a-5904-40a2-bb78-e4c38f0a60e0","created_at":"2022-09-22T10:36:33Z","updated_at":"2022-09-22T10:36:33Z","username":"DL_61408BEBAF10730280F0265A@global.corp.sap","presentation_name":"DL_61408BEBAF10730280F0265A@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/538ab14a-5904-40a2-bb78-e4c38f0a60e0"}}},{"guid":"98c69cca-7997-4436-8df3-b1e406bda242","created_at":"2022-11-09T05:27:42Z","updated_at":"2022-11-09T05:27:42Z","username":"dl_623323c16a0d2d029907abbc@global.corp.sap","presentation_name":"dl_623323c16a0d2d029907abbc@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/98c69cca-7997-4436-8df3-b1e406bda242"}}},{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2","created_at":"2023-01-11T09:39:29Z","updated_at":"2023-01-23T06:35:47Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}},{"guid":"cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","presentation_name":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e"}}},{"guid":"0bbb408e-bad8-4880-8be4-e25d584682e3","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623324036A0D2D029907ABC8@global.corp.sap","presentation_name":"DL_623324036A0D2D029907ABC8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0bbb408e-bad8-4880-8be4-e25d584682e3"}}},{"guid":"2695a931-cb48-4cc3-9760-3c90882b05f3","created_at":"2023-07-03T09:09:37Z","updated_at":"2023-07-03T09:19:18Z","username":"dhruv.menon@sap.com","presentation_name":"dhruv.menon@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2695a931-cb48-4cc3-9760-3c90882b05f3"}}},{"guid":"03466e0c-4f6d-466c-8798-a4a5fba01f16","created_at":"2024-02-05T06:37:21Z","updated_at":"2024-02-05T06:37:21Z","username":"sapeventuser+108@gmail.com","presentation_name":"sapeventuser+108@gmail.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/03466e0c-4f6d-466c-8798-a4a5fba01f16"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:28 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6619de910b60078c
+            X-B3-Traceid:
+                - b7d1990186c84fe86619de910b60078c
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1707469388"
+            X-Runtime:
+                - "0.101964"
+            X-Vcap-Request-Id:
+                - b7d19901-86c8-4fe8-6619-de910b60078c::550acdbf-6b3a-49f4-833d-eb38c0d35ace
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 1.293004587s
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=07d04db73f3042988d5b458c04d70467-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 07d04db73f3042988d5b458c04d70467-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"07d04db73f3042988d5b458c04d70467-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"415a865b0ed54aa39ec8224c6c05dfc6"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:28 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 5c09b519-b577-46a8-6f09-5407e9bfee20
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 208.220563ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":22,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"0174d50d-d72c-4d24-a050-57a11893b7d9","created_at":"2016-07-20T11:09:18Z","updated_at":"2019-06-04T01:27:58Z","username":"ajaysimha.durbhakula@sap.com","presentation_name":"ajaysimha.durbhakula@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0174d50d-d72c-4d24-a050-57a11893b7d9"}}},{"guid":"e86d3ebe-8ed0-406e-b7a8-2293b262f9e1","created_at":"2016-08-30T07:28:13Z","updated_at":"2019-06-03T11:30:44Z","username":"yogesh.purantharan@sap.com","presentation_name":"yogesh.purantharan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/e86d3ebe-8ed0-406e-b7a8-2293b262f9e1"}}},{"guid":"5a4a8f42-5eee-4f9d-afed-e9fc2fe12574","created_at":"2016-09-07T08:03:20Z","updated_at":"2019-06-24T10:48:13Z","username":"vipin.vijaykumar@sap.com","presentation_name":"vipin.vijaykumar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5a4a8f42-5eee-4f9d-afed-e9fc2fe12574"}}},{"guid":"5fa219dc-76cf-4c48-94ad-4c75e6e653a7","created_at":"2016-12-06T08:34:07Z","updated_at":"2019-10-18T06:45:08Z","username":"pooja.gidaveer@sap.com","presentation_name":"pooja.gidaveer@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5fa219dc-76cf-4c48-94ad-4c75e6e653a7"}}},{"guid":"9d9eaba3-d21b-4578-8382-5b6d152d0b18","created_at":"2017-02-06T09:42:58Z","updated_at":"2019-06-06T05:38:22Z","username":"shankari.g.r@sap.com","presentation_name":"shankari.g.r@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/9d9eaba3-d21b-4578-8382-5b6d152d0b18"}}},{"guid":"86f93b23-000a-4d44-9fa8-4371da2181b0","created_at":"2017-02-15T06:39:35Z","updated_at":"2019-06-03T08:34:04Z","username":"indhumathi.thiyagarajan@sap.com","presentation_name":"indhumathi.thiyagarajan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/86f93b23-000a-4d44-9fa8-4371da2181b0"}}},{"guid":"efed91b4-d808-40fb-b4b8-7a9449ff1e15","created_at":"2017-06-16T10:49:21Z","updated_at":"2019-07-17T05:28:16Z","username":"kesavan.s@sap.com","presentation_name":"kesavan.s@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/efed91b4-d808-40fb-b4b8-7a9449ff1e15"}}},{"guid":"4595acb0-8a59-4461-83fc-989f0e0c42d7","created_at":"2020-10-14T09:34:51Z","updated_at":"2020-10-14T11:30:00Z","username":"gourab.mukherjee@sap.com","presentation_name":"gourab.mukherjee@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4595acb0-8a59-4461-83fc-989f0e0c42d7"}}},{"guid":"1f263e00-9a07-42d8-be71-b18be6d10b45","created_at":"2021-03-16T06:11:00Z","updated_at":"2021-03-16T06:11:00Z","username":"dl_604f126b654d33027ecbd9b4@global.corp.sap","presentation_name":"dl_604f126b654d33027ecbd9b4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1f263e00-9a07-42d8-be71-b18be6d10b45"}}},{"guid":"5022bdb9-d2fa-494b-820c-2764dfdf91be","created_at":"2021-03-17T07:29:54Z","updated_at":"2021-03-17T07:30:38Z","username":"amit.sahu01@sap.com","presentation_name":"amit.sahu01@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5022bdb9-d2fa-494b-820c-2764dfdf91be"}}},{"guid":"1df19756-0062-405f-90dc-ad25baea56f3","created_at":"2021-06-24T17:12:38Z","updated_at":"2021-07-07T06:19:03Z","username":"rahul.keluskar@sap.com","presentation_name":"rahul.keluskar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1df19756-0062-405f-90dc-ad25baea56f3"}}},{"guid":"29e23730-7da5-4935-bd86-70e9e97519f9","created_at":"2021-12-02T11:27:08Z","updated_at":"2021-12-03T11:21:31Z","username":"mahima.mishra@sap.com","presentation_name":"mahima.mishra@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/29e23730-7da5-4935-bd86-70e9e97519f9"}}},{"guid":"dc990101-35cd-4bcf-b7c3-ecaf2fedb787","created_at":"2022-01-10T07:24:30Z","updated_at":"2022-01-27T06:22:54Z","username":"s.kancherla@sap.com","presentation_name":"s.kancherla@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/dc990101-35cd-4bcf-b7c3-ecaf2fedb787"}}},{"guid":"1ec43a2c-fb61-4db5-9f7c-6192712dd8c9","created_at":"2022-03-21T06:58:00Z","updated_at":"2022-03-21T06:58:00Z","username":"dl_623323d86a0d2d029907abc0@global.corp.sap","presentation_name":"dl_623323d86a0d2d029907abc0@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1ec43a2c-fb61-4db5-9f7c-6192712dd8c9"}}},{"guid":"2f18a18a-19ff-4bc9-9ce6-ba01f43869e0","created_at":"2022-03-21T07:28:21Z","updated_at":"2022-03-21T07:39:19Z","username":"dl_623323ab6a0d2d029907abb8@global.corp.sap","presentation_name":"dl_623323ab6a0d2d029907abb8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f18a18a-19ff-4bc9-9ce6-ba01f43869e0"}}},{"guid":"2f502f84-d8cc-4eb9-a6f5-854a6cf5045f","created_at":"2022-07-19T09:09:59Z","updated_at":"2022-08-18T05:43:38Z","username":"pashva.mehta@sap.com","presentation_name":"pashva.mehta@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f502f84-d8cc-4eb9-a6f5-854a6cf5045f"}}},{"guid":"fc90d693-e23a-4f31-8db4-156a5533a813","created_at":"2022-08-24T10:34:37Z","updated_at":"2022-08-25T09:07:00Z","username":"saumya.suman@sap.com","presentation_name":"saumya.suman@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/fc90d693-e23a-4f31-8db4-156a5533a813"}}},{"guid":"98c69cca-7997-4436-8df3-b1e406bda242","created_at":"2022-11-09T05:27:42Z","updated_at":"2022-11-09T05:27:42Z","username":"dl_623323c16a0d2d029907abbc@global.corp.sap","presentation_name":"dl_623323c16a0d2d029907abbc@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/98c69cca-7997-4436-8df3-b1e406bda242"}}},{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2","created_at":"2023-01-11T09:39:29Z","updated_at":"2023-01-23T06:35:47Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}},{"guid":"cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","presentation_name":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e"}}},{"guid":"0bbb408e-bad8-4880-8be4-e25d584682e3","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623324036A0D2D029907ABC8@global.corp.sap","presentation_name":"DL_623324036A0D2D029907ABC8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0bbb408e-bad8-4880-8be4-e25d584682e3"}}},{"guid":"2695a931-cb48-4cc3-9760-3c90882b05f3","created_at":"2023-07-03T09:09:37Z","updated_at":"2023-07-03T09:19:18Z","username":"dhruv.menon@sap.com","presentation_name":"dhruv.menon@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2695a931-cb48-4cc3-9760-3c90882b05f3"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:29 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 48654bc5a1f7e301
+            X-B3-Traceid:
+                - d80566b2d8eb4f8848654bc5a1f7e301
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1707469388"
+            X-Runtime:
+                - "0.105892"
+            X-Vcap-Request-Id:
+                - d80566b2-d8eb-4f88-4865-4bc5a1f7e301::a4e5d072-4137-4500-84a6-54b6cf1122cb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 287.476356ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=07d04db73f3042988d5b458c04d70467-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 07d04db73f3042988d5b458c04d70467-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"07d04db73f3042988d5b458c04d70467-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"74999688eaa34b2580cf6bffeb0d926d"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:29 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 20c90fd3-ae21-4f95-59e6-a4a7a606a1e6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 191.716424ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":22,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"0174d50d-d72c-4d24-a050-57a11893b7d9","created_at":"2016-07-20T11:09:18Z","updated_at":"2019-06-04T01:27:58Z","username":"ajaysimha.durbhakula@sap.com","presentation_name":"ajaysimha.durbhakula@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0174d50d-d72c-4d24-a050-57a11893b7d9"}}},{"guid":"e86d3ebe-8ed0-406e-b7a8-2293b262f9e1","created_at":"2016-08-30T07:28:13Z","updated_at":"2019-06-03T11:30:44Z","username":"yogesh.purantharan@sap.com","presentation_name":"yogesh.purantharan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/e86d3ebe-8ed0-406e-b7a8-2293b262f9e1"}}},{"guid":"5a4a8f42-5eee-4f9d-afed-e9fc2fe12574","created_at":"2016-09-07T08:03:20Z","updated_at":"2019-06-24T10:48:13Z","username":"vipin.vijaykumar@sap.com","presentation_name":"vipin.vijaykumar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5a4a8f42-5eee-4f9d-afed-e9fc2fe12574"}}},{"guid":"5fa219dc-76cf-4c48-94ad-4c75e6e653a7","created_at":"2016-12-06T08:34:07Z","updated_at":"2019-10-18T06:45:08Z","username":"pooja.gidaveer@sap.com","presentation_name":"pooja.gidaveer@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5fa219dc-76cf-4c48-94ad-4c75e6e653a7"}}},{"guid":"9d9eaba3-d21b-4578-8382-5b6d152d0b18","created_at":"2017-02-06T09:42:58Z","updated_at":"2019-06-06T05:38:22Z","username":"shankari.g.r@sap.com","presentation_name":"shankari.g.r@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/9d9eaba3-d21b-4578-8382-5b6d152d0b18"}}},{"guid":"86f93b23-000a-4d44-9fa8-4371da2181b0","created_at":"2017-02-15T06:39:35Z","updated_at":"2019-06-03T08:34:04Z","username":"indhumathi.thiyagarajan@sap.com","presentation_name":"indhumathi.thiyagarajan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/86f93b23-000a-4d44-9fa8-4371da2181b0"}}},{"guid":"efed91b4-d808-40fb-b4b8-7a9449ff1e15","created_at":"2017-06-16T10:49:21Z","updated_at":"2019-07-17T05:28:16Z","username":"kesavan.s@sap.com","presentation_name":"kesavan.s@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/efed91b4-d808-40fb-b4b8-7a9449ff1e15"}}},{"guid":"4595acb0-8a59-4461-83fc-989f0e0c42d7","created_at":"2020-10-14T09:34:51Z","updated_at":"2020-10-14T11:30:00Z","username":"gourab.mukherjee@sap.com","presentation_name":"gourab.mukherjee@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4595acb0-8a59-4461-83fc-989f0e0c42d7"}}},{"guid":"1f263e00-9a07-42d8-be71-b18be6d10b45","created_at":"2021-03-16T06:11:00Z","updated_at":"2021-03-16T06:11:00Z","username":"dl_604f126b654d33027ecbd9b4@global.corp.sap","presentation_name":"dl_604f126b654d33027ecbd9b4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1f263e00-9a07-42d8-be71-b18be6d10b45"}}},{"guid":"5022bdb9-d2fa-494b-820c-2764dfdf91be","created_at":"2021-03-17T07:29:54Z","updated_at":"2021-03-17T07:30:38Z","username":"amit.sahu01@sap.com","presentation_name":"amit.sahu01@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5022bdb9-d2fa-494b-820c-2764dfdf91be"}}},{"guid":"1df19756-0062-405f-90dc-ad25baea56f3","created_at":"2021-06-24T17:12:38Z","updated_at":"2021-07-07T06:19:03Z","username":"rahul.keluskar@sap.com","presentation_name":"rahul.keluskar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1df19756-0062-405f-90dc-ad25baea56f3"}}},{"guid":"29e23730-7da5-4935-bd86-70e9e97519f9","created_at":"2021-12-02T11:27:08Z","updated_at":"2021-12-03T11:21:31Z","username":"mahima.mishra@sap.com","presentation_name":"mahima.mishra@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/29e23730-7da5-4935-bd86-70e9e97519f9"}}},{"guid":"dc990101-35cd-4bcf-b7c3-ecaf2fedb787","created_at":"2022-01-10T07:24:30Z","updated_at":"2022-01-27T06:22:54Z","username":"s.kancherla@sap.com","presentation_name":"s.kancherla@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/dc990101-35cd-4bcf-b7c3-ecaf2fedb787"}}},{"guid":"1ec43a2c-fb61-4db5-9f7c-6192712dd8c9","created_at":"2022-03-21T06:58:00Z","updated_at":"2022-03-21T06:58:00Z","username":"dl_623323d86a0d2d029907abc0@global.corp.sap","presentation_name":"dl_623323d86a0d2d029907abc0@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1ec43a2c-fb61-4db5-9f7c-6192712dd8c9"}}},{"guid":"2f18a18a-19ff-4bc9-9ce6-ba01f43869e0","created_at":"2022-03-21T07:28:21Z","updated_at":"2022-03-21T07:39:19Z","username":"dl_623323ab6a0d2d029907abb8@global.corp.sap","presentation_name":"dl_623323ab6a0d2d029907abb8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f18a18a-19ff-4bc9-9ce6-ba01f43869e0"}}},{"guid":"2f502f84-d8cc-4eb9-a6f5-854a6cf5045f","created_at":"2022-07-19T09:09:59Z","updated_at":"2022-08-18T05:43:38Z","username":"pashva.mehta@sap.com","presentation_name":"pashva.mehta@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f502f84-d8cc-4eb9-a6f5-854a6cf5045f"}}},{"guid":"fc90d693-e23a-4f31-8db4-156a5533a813","created_at":"2022-08-24T10:34:37Z","updated_at":"2022-08-25T09:07:00Z","username":"saumya.suman@sap.com","presentation_name":"saumya.suman@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/fc90d693-e23a-4f31-8db4-156a5533a813"}}},{"guid":"98c69cca-7997-4436-8df3-b1e406bda242","created_at":"2022-11-09T05:27:42Z","updated_at":"2022-11-09T05:27:42Z","username":"dl_623323c16a0d2d029907abbc@global.corp.sap","presentation_name":"dl_623323c16a0d2d029907abbc@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/98c69cca-7997-4436-8df3-b1e406bda242"}}},{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2","created_at":"2023-01-11T09:39:29Z","updated_at":"2023-01-23T06:35:47Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}},{"guid":"cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","presentation_name":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e"}}},{"guid":"0bbb408e-bad8-4880-8be4-e25d584682e3","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623324036A0D2D029907ABC8@global.corp.sap","presentation_name":"DL_623324036A0D2D029907ABC8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0bbb408e-bad8-4880-8be4-e25d584682e3"}}},{"guid":"2695a931-cb48-4cc3-9760-3c90882b05f3","created_at":"2023-07-03T09:09:37Z","updated_at":"2023-07-03T09:19:18Z","username":"dhruv.menon@sap.com","presentation_name":"dhruv.menon@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2695a931-cb48-4cc3-9760-3c90882b05f3"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:29 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 735f62d14b3e7e4b
+            X-B3-Traceid:
+                - d0fd761719a3484d735f62d14b3e7e4b
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1707469388"
+            X-Runtime:
+                - "0.080450"
+            X-Vcap-Request-Id:
+                - d0fd7617-19a3-484d-735f-62d14b3e7e4b::fa36cbd9-94dd-4f33-aa56-fd6ae6e81c10
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 261.467584ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=07d04db73f3042988d5b458c04d70467-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 07d04db73f3042988d5b458c04d70467-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"07d04db73f3042988d5b458c04d70467-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"aa05bb793f3f49fc8710edb9803960bf"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:29 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - a4ff596e-5d33-44c5-4541-cb2adcdb50de
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 199.231156ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":22,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/spaces/dd457c79-f7c9-4828-862b-35843d3b646d/users?page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"0174d50d-d72c-4d24-a050-57a11893b7d9","created_at":"2016-07-20T11:09:18Z","updated_at":"2019-06-04T01:27:58Z","username":"ajaysimha.durbhakula@sap.com","presentation_name":"ajaysimha.durbhakula@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0174d50d-d72c-4d24-a050-57a11893b7d9"}}},{"guid":"e86d3ebe-8ed0-406e-b7a8-2293b262f9e1","created_at":"2016-08-30T07:28:13Z","updated_at":"2019-06-03T11:30:44Z","username":"yogesh.purantharan@sap.com","presentation_name":"yogesh.purantharan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/e86d3ebe-8ed0-406e-b7a8-2293b262f9e1"}}},{"guid":"5a4a8f42-5eee-4f9d-afed-e9fc2fe12574","created_at":"2016-09-07T08:03:20Z","updated_at":"2019-06-24T10:48:13Z","username":"vipin.vijaykumar@sap.com","presentation_name":"vipin.vijaykumar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5a4a8f42-5eee-4f9d-afed-e9fc2fe12574"}}},{"guid":"5fa219dc-76cf-4c48-94ad-4c75e6e653a7","created_at":"2016-12-06T08:34:07Z","updated_at":"2019-10-18T06:45:08Z","username":"pooja.gidaveer@sap.com","presentation_name":"pooja.gidaveer@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5fa219dc-76cf-4c48-94ad-4c75e6e653a7"}}},{"guid":"9d9eaba3-d21b-4578-8382-5b6d152d0b18","created_at":"2017-02-06T09:42:58Z","updated_at":"2019-06-06T05:38:22Z","username":"shankari.g.r@sap.com","presentation_name":"shankari.g.r@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/9d9eaba3-d21b-4578-8382-5b6d152d0b18"}}},{"guid":"86f93b23-000a-4d44-9fa8-4371da2181b0","created_at":"2017-02-15T06:39:35Z","updated_at":"2019-06-03T08:34:04Z","username":"indhumathi.thiyagarajan@sap.com","presentation_name":"indhumathi.thiyagarajan@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/86f93b23-000a-4d44-9fa8-4371da2181b0"}}},{"guid":"efed91b4-d808-40fb-b4b8-7a9449ff1e15","created_at":"2017-06-16T10:49:21Z","updated_at":"2019-07-17T05:28:16Z","username":"kesavan.s@sap.com","presentation_name":"kesavan.s@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/efed91b4-d808-40fb-b4b8-7a9449ff1e15"}}},{"guid":"4595acb0-8a59-4461-83fc-989f0e0c42d7","created_at":"2020-10-14T09:34:51Z","updated_at":"2020-10-14T11:30:00Z","username":"gourab.mukherjee@sap.com","presentation_name":"gourab.mukherjee@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4595acb0-8a59-4461-83fc-989f0e0c42d7"}}},{"guid":"1f263e00-9a07-42d8-be71-b18be6d10b45","created_at":"2021-03-16T06:11:00Z","updated_at":"2021-03-16T06:11:00Z","username":"dl_604f126b654d33027ecbd9b4@global.corp.sap","presentation_name":"dl_604f126b654d33027ecbd9b4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1f263e00-9a07-42d8-be71-b18be6d10b45"}}},{"guid":"5022bdb9-d2fa-494b-820c-2764dfdf91be","created_at":"2021-03-17T07:29:54Z","updated_at":"2021-03-17T07:30:38Z","username":"amit.sahu01@sap.com","presentation_name":"amit.sahu01@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/5022bdb9-d2fa-494b-820c-2764dfdf91be"}}},{"guid":"1df19756-0062-405f-90dc-ad25baea56f3","created_at":"2021-06-24T17:12:38Z","updated_at":"2021-07-07T06:19:03Z","username":"rahul.keluskar@sap.com","presentation_name":"rahul.keluskar@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1df19756-0062-405f-90dc-ad25baea56f3"}}},{"guid":"29e23730-7da5-4935-bd86-70e9e97519f9","created_at":"2021-12-02T11:27:08Z","updated_at":"2021-12-03T11:21:31Z","username":"mahima.mishra@sap.com","presentation_name":"mahima.mishra@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/29e23730-7da5-4935-bd86-70e9e97519f9"}}},{"guid":"dc990101-35cd-4bcf-b7c3-ecaf2fedb787","created_at":"2022-01-10T07:24:30Z","updated_at":"2022-01-27T06:22:54Z","username":"s.kancherla@sap.com","presentation_name":"s.kancherla@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/dc990101-35cd-4bcf-b7c3-ecaf2fedb787"}}},{"guid":"1ec43a2c-fb61-4db5-9f7c-6192712dd8c9","created_at":"2022-03-21T06:58:00Z","updated_at":"2022-03-21T06:58:00Z","username":"dl_623323d86a0d2d029907abc0@global.corp.sap","presentation_name":"dl_623323d86a0d2d029907abc0@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/1ec43a2c-fb61-4db5-9f7c-6192712dd8c9"}}},{"guid":"2f18a18a-19ff-4bc9-9ce6-ba01f43869e0","created_at":"2022-03-21T07:28:21Z","updated_at":"2022-03-21T07:39:19Z","username":"dl_623323ab6a0d2d029907abb8@global.corp.sap","presentation_name":"dl_623323ab6a0d2d029907abb8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f18a18a-19ff-4bc9-9ce6-ba01f43869e0"}}},{"guid":"2f502f84-d8cc-4eb9-a6f5-854a6cf5045f","created_at":"2022-07-19T09:09:59Z","updated_at":"2022-08-18T05:43:38Z","username":"pashva.mehta@sap.com","presentation_name":"pashva.mehta@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2f502f84-d8cc-4eb9-a6f5-854a6cf5045f"}}},{"guid":"fc90d693-e23a-4f31-8db4-156a5533a813","created_at":"2022-08-24T10:34:37Z","updated_at":"2022-08-25T09:07:00Z","username":"saumya.suman@sap.com","presentation_name":"saumya.suman@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/fc90d693-e23a-4f31-8db4-156a5533a813"}}},{"guid":"98c69cca-7997-4436-8df3-b1e406bda242","created_at":"2022-11-09T05:27:42Z","updated_at":"2022-11-09T05:27:42Z","username":"dl_623323c16a0d2d029907abbc@global.corp.sap","presentation_name":"dl_623323c16a0d2d029907abbc@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/98c69cca-7997-4436-8df3-b1e406bda242"}}},{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2","created_at":"2023-01-11T09:39:29Z","updated_at":"2023-01-23T06:35:47Z","username":"debaditya.ray@sap.com","presentation_name":"debaditya.ray@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}},{"guid":"cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","presentation_name":"DL_623323EE6A0D2D029907ABC4@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/cf5cb1cd-d4f4-48b1-81ab-d08bd9a3107e"}}},{"guid":"0bbb408e-bad8-4880-8be4-e25d584682e3","created_at":"2023-04-21T06:01:49Z","updated_at":"2023-04-21T06:01:49Z","username":"DL_623324036A0D2D029907ABC8@global.corp.sap","presentation_name":"DL_623324036A0D2D029907ABC8@global.corp.sap","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/0bbb408e-bad8-4880-8be4-e25d584682e3"}}},{"guid":"2695a931-cb48-4cc3-9760-3c90882b05f3","created_at":"2023-07-03T09:09:37Z","updated_at":"2023-07-03T09:19:18Z","username":"dhruv.menon@sap.com","presentation_name":"dhruv.menon@sap.com","origin":"sap.ids","metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/2695a931-cb48-4cc3-9760-3c90882b05f3"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 09 Feb 2024 08:54:30 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4359f9f49e0d394a
+            X-B3-Traceid:
+                - affb8b01ccee40a04359f9f49e0d394a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1707469388"
+            X-Runtime:
+                - "0.086198"
+            X-Vcap-Request-Id:
+                - affb8b01-ccee-40a0-4359-f9f49e0d394a::34ab6257-742f-43c5-a960-74ab0603fb00
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 271.566857ms

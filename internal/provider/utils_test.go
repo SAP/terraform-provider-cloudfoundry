@@ -25,8 +25,10 @@ var (
 	regexpValidRFC3999Format = regexp.MustCompile(`\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z`)
 	testOrg                  = "tf-test-do-not-delete"
 	testOrgGUID              = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+	testOrg2GUID             = "784b4cd0-4771-4e4d-9052-a07e178bae56"
 	testSpace                = "tf-test-do-not-delete"
 	testSpaceGUID            = "3bc20dc4-1870-4835-8308-dda2d766e61e"
+	testSpace2GUID           = "dd457c79-f7c9-4828-862b-35843d3b646d"
 	testOrgQuota             = "tf-test-do-not-delete"
 	invalidOrgGUID           = "40b73419-5e01-4be0-baea-932d46cea45b"
 	testIsolationSegmentGUID = "5215e4df-79a4-4ce8-a933-837d6aa7a77b"

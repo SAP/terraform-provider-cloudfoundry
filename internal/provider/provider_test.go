@@ -236,6 +236,7 @@ func TestProvider_HasDataSources(t *testing.T) {
 		"cloudfoundry_user",
 		"cloudfoundry_space_quota",
 		"cloudfoundry_role",
+		"cloudfoundry_users",
 	}
 
 	ctx := context.Background()

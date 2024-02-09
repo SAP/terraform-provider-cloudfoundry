@@ -27,6 +27,12 @@ type usersType struct {
 	Name  types.String `tfsdk:"name"`
 }
 
+type spaceOrgUsersType struct {
+	Users        types.List   `tfsdk:"users"`
+	Space        types.String `tfsdk:"space"`
+	Organization types.String `tfsdk:"org"`
+}
+
 var userObjType = types.ObjectType{
 	AttrTypes: map[string]attr.Type{
 		"id":       types.StringType,
@@ -93,8 +99,8 @@ func (plan *userType) mapUpdateUserTypeToValues(ctx context.Context, state userT
 	return *updateUser, diagnostics
 }
 
-// Sets the terraform struct values from the user resource returned by the cf-client
-func mapUsersValuesToType(ctx context.Context, data usersType, users []*resource.User) (usersType, diag.Diagnostics) {
+// Prepares a terraform list from the user resources returned by the cf-client
+func mapUsersValuesToListType(ctx context.Context, users []*resource.User) (types.List, diag.Diagnostics) {
 
 	var diags, diagnostics diag.Diagnostics
 	userValues := []userType{}
@@ -103,11 +109,42 @@ func mapUsersValuesToType(ctx context.Context, data usersType, users []*resource
 		diagnostics.Append(diags...)
 		userValues = append(userValues, userValue)
 	}
+
+	usersList, diags := types.ListValueFrom(ctx, userObjType, userValues)
+	diagnostics.Append(diags...)
+
+	return usersList, diagnostics
+}
+
+// Sets the terraform struct values from the user resources returned by the cf-client
+func mapUsersValuesToType(ctx context.Context, data usersType, users []*resource.User) (usersType, diag.Diagnostics) {
+
+	var diags, diagnostics diag.Diagnostics
 	usersType := usersType{
 		Name: data.Name,
 	}
-	usersType.Users, diags = types.ListValueFrom(ctx, userObjType, userValues)
+	usersType.Users, diags = mapUsersValuesToListType(ctx, users)
 	diagnostics.Append(diags...)
 
 	return usersType, diagnostics
+}
+
+// Sets the terraform struct values from the user resources returned by the cf-client
+func mapSpaceOrgUsersValuesToType(ctx context.Context, data spaceOrgUsersType, users []*resource.User) (spaceOrgUsersType, diag.Diagnostics) {
+
+	var diags, diagnostics diag.Diagnostics
+	spaceOrgUsersType := spaceOrgUsersType{}
+
+	if !data.Organization.IsNull() {
+		spaceOrgUsersType.Organization = data.Organization
+	}
+
+	if !data.Space.IsNull() {
+		spaceOrgUsersType.Space = data.Space
+	}
+
+	spaceOrgUsersType.Users, diags = mapUsersValuesToListType(ctx, users)
+	diagnostics.Append(diags...)
+
+	return spaceOrgUsersType, diagnostics
 }
