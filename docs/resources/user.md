@@ -13,8 +13,8 @@ Provides a Cloud Foundry resource for registering users.
 
 ```terraform
 resource "cloudfoundry_user" "my_user" {
-  id      = "test-user567"
-  annotations = {purpose:"testing"}
+  id          = "test-user567"
+  annotations = { purpose : "testing" }
 }
 ```
 

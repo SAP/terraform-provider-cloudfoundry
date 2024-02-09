@@ -1,0 +1,186 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/e17839d9-cd4f-4e4b-baf0-18786f12fede
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"e17839d9-cd4f-4e4b-baf0-18786f12fede","created_at":"2024-02-08T10:31:58Z","updated_at":"2024-02-08T10:31:58Z","type":"organization_user","relationships":{"user":{"data":{"guid":"space"}},"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"space":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/e17839d9-cd4f-4e4b-baf0-18786f12fede"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 12:05:56 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 716f9511a6f78a56
+            X-B3-Traceid:
+                - 9b13ab67f9a048d4716f9511a6f78a56
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.013105"
+            X-Vcap-Request-Id:
+                - 9b13ab67-f9a0-48d4-716f-9511a6f78a56::7161e1ca-277f-4816-861f-900a212dda5d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 888.21375ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/e17839d9-cd4f-4e4b-baf0-18786f12fede
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"e17839d9-cd4f-4e4b-baf0-18786f12fede","created_at":"2024-02-08T10:31:58Z","updated_at":"2024-02-08T10:31:58Z","type":"organization_user","relationships":{"user":{"data":{"guid":"space"}},"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"space":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/e17839d9-cd4f-4e4b-baf0-18786f12fede"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 12:05:56 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - "53037777409139e2"
+            X-B3-Traceid:
+                - f3f95f71422849b653037777409139e2
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.010087"
+            X-Vcap-Request-Id:
+                - f3f95f71-4228-49b6-5303-7777409139e2::3243d9e4-df28-4890-a044-e728b4e769fb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 209.741579ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/e17839d9-cd4f-4e4b-baf0-18786f12fede
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"e17839d9-cd4f-4e4b-baf0-18786f12fede","created_at":"2024-02-08T10:31:58Z","updated_at":"2024-02-08T10:31:58Z","type":"organization_user","relationships":{"user":{"data":{"guid":"space"}},"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"space":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/e17839d9-cd4f-4e4b-baf0-18786f12fede"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 12:05:56 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6a25520b35f57820
+            X-B3-Traceid:
+                - cfa055486cd54a276a25520b35f57820
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.006014"
+            X-Vcap-Request-Id:
+                - cfa05548-6cd5-4a27-6a25-520b35f57820::ed94580d-f743-4c90-8ae4-47b7a536e93b
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 187.181123ms

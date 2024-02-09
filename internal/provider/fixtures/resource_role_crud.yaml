@@ -1,0 +1,684 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 155
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"type":"organization_manager","relationships":{"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"user":{"data":{"guid":"space"}}}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb","created_at":"2024-02-08T10:33:07Z","updated_at":"2024-02-08T10:33:07Z","type":"organization_manager","relationships":{"user":{"data":{"guid":"space"}},"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"space":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:07 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 645f250965266d3b
+            X-B3-Traceid:
+                - f9326241e1d342a0645f250965266d3b
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.071024"
+            X-Vcap-Request-Id:
+                - f9326241-e1d3-42a0-645f-250965266d3b::b9e95bf2-b000-4f39-99cd-83b5e9a3aa52
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 643.27801ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb","created_at":"2024-02-08T10:33:07Z","updated_at":"2024-02-08T10:33:07Z","type":"organization_manager","relationships":{"user":{"data":{"guid":"space"}},"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"space":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:07 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5ca466ced0d23882
+            X-B3-Traceid:
+                - ed3ebbc2ce0745155ca466ced0d23882
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.007413"
+            X-Vcap-Request-Id:
+                - ed3ebbc2-ce07-4515-5ca4-66ced0d23882::c0f892c1-be88-4c56-81cd-facbcb7e3ba3
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 207.569138ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb","created_at":"2024-02-08T10:33:07Z","updated_at":"2024-02-08T10:33:07Z","type":"organization_manager","relationships":{"user":{"data":{"guid":"space"}},"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"space":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:08 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7a662770c88bb8c2
+            X-B3-Traceid:
+                - e000ae4a79364db07a662770c88bb8c2
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.010858"
+            X-Vcap-Request-Id:
+                - e000ae4a-7936-4db0-7a66-2770c88bb8c2::67ba6a29-682a-4c9a-aa80-79f4bc9c2a67
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 196.765382ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/ceecbe7d-1ad1-4cc5-8b9e-326a197d1feb
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - text/html
+            Date:
+                - Thu, 08 Feb 2024 10:33:08 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/7384afb3-8d21-40a5-8db2-3e140cd4574f
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 45f10c0b0c2a027b
+            X-B3-Traceid:
+                - 4f5f459e51b548bb45f10c0b0c2a027b
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.051572"
+            X-Vcap-Request-Id:
+                - 4f5f459e-51b5-48bb-45f1-0c0b0c2a027b::a7bcc4f5-1690-4ace-83b4-82268290c424
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 238.461891ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/jobs/7384afb3-8d21-40a5-8db2-3e140cd4574f
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"7384afb3-8d21-40a5-8db2-3e140cd4574f","created_at":"2024-02-08T10:33:08Z","updated_at":"2024-02-08T10:33:10Z","operation":"role.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/7384afb3-8d21-40a5-8db2-3e140cd4574f"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:10 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 45e60b0645ea8552
+            X-B3-Traceid:
+                - 76daf91bda9740c045e60b0645ea8552
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.009925"
+            X-Vcap-Request-Id:
+                - 76daf91b-da97-40c0-45e6-0b0645ea8552::940a7ca0-b1e8-4702-9324-d381ce289fed
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 205.789167ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 141
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"type":"space_manager","relationships":{"space":{"data":{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"}},"user":{"data":{"guid":"space"}}}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"f33978f7-680e-43bc-ab95-f1ff29df3946","created_at":"2024-02-08T10:33:10Z","updated_at":"2024-02-08T10:33:10Z","type":"space_manager","relationships":{"user":{"data":{"guid":"space"}},"space":{"data":{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"}},"organization":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:10 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5c7093ddfeec1a11
+            X-B3-Traceid:
+                - 2b87799025164d045c7093ddfeec1a11
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.079773"
+            X-Vcap-Request-Id:
+                - 2b877990-2516-4d04-5c70-93ddfeec1a11::95abf728-c7e9-4d59-ada8-6ebefef1270a
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 265.599552ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"f33978f7-680e-43bc-ab95-f1ff29df3946","created_at":"2024-02-08T10:33:10Z","updated_at":"2024-02-08T10:33:10Z","type":"space_manager","relationships":{"user":{"data":{"guid":"space"}},"space":{"data":{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"}},"organization":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:11 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7559b3c7f65b6770
+            X-B3-Traceid:
+                - d72da7ba452341a07559b3c7f65b6770
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.010957"
+            X-Vcap-Request-Id:
+                - d72da7ba-4523-41a0-7559-b3c7f65b6770::83fd6501-6e73-4190-97c8-9184756f6c49
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 251.236194ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"f33978f7-680e-43bc-ab95-f1ff29df3946","created_at":"2024-02-08T10:33:10Z","updated_at":"2024-02-08T10:33:10Z","type":"space_manager","relationships":{"user":{"data":{"guid":"space"}},"space":{"data":{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"}},"organization":{"data":null}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946"},"user":{"href":"https://api.x.x.x.x.com/v3/users/space"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/3bc20dc4-1870-4835-8308-dda2d766e61e"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:12 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5556bdff8cb62dfb
+            X-B3-Traceid:
+                - d1b64957156348995556bdff8cb62dfb
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.006928"
+            X-Vcap-Request-Id:
+                - d1b64957-1563-4899-5556-bdff8cb62dfb::55534311-3b8a-4dfa-b74a-236ff8ece8c0
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 192.678934ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - text/html
+            Date:
+                - Thu, 08 Feb 2024 10:33:12 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/caa6a3db-4687-4957-927f-fe34231b2803
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5aea7898068638a1
+            X-B3-Traceid:
+                - eb817a7d6d8544ac5aea7898068638a1
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.055184"
+            X-Vcap-Request-Id:
+                - eb817a7d-6d85-44ac-5aea-7898068638a1::9803f734-b8b4-4b93-8b64-e75eefc15fc4
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 267.317511ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/jobs/caa6a3db-4687-4957-927f-fe34231b2803
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"caa6a3db-4687-4957-927f-fe34231b2803","created_at":"2024-02-08T10:33:12Z","updated_at":"2024-02-08T10:33:12Z","operation":"role.delete","state":"PROCESSING","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/caa6a3db-4687-4957-927f-fe34231b2803"},"role":{"href":"https://api.x.x.x.x.com/v3/roles/f33978f7-680e-43bc-ab95-f1ff29df3946"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:14 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7496ac5f3ec03628
+            X-B3-Traceid:
+                - 64ff90542b8746dc7496ac5f3ec03628
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.015174"
+            X-Vcap-Request-Id:
+                - 64ff9054-2b87-46dc-7496-ac5f3ec03628::acfabb1b-3a79-4ea2-8a0c-c2552cc4f3e6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 293.797785ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/jobs/caa6a3db-4687-4957-927f-fe34231b2803
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"caa6a3db-4687-4957-927f-fe34231b2803","created_at":"2024-02-08T10:33:12Z","updated_at":"2024-02-08T10:33:15Z","operation":"role.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/caa6a3db-4687-4957-927f-fe34231b2803"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 08 Feb 2024 10:33:16 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 51ec32243dec924a
+            X-B3-Traceid:
+                - 869a088e45ae412051ec32243dec924a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.007807"
+            X-Vcap-Request-Id:
+                - 869a088e-45ae-4120-51ec-32243dec924a::78ee0fae-e241-4b6d-a921-86394d24a131
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 202.37533ms

@@ -257,6 +257,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 		NewSpaceResource,
 		NewUserResource,
 		NewSpaceQuotaResource,
+		NewRoleResource,
 	}
 }
 
@@ -267,6 +268,7 @@ func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasou
 		NewSpaceDataSource,
 		NewUserDataSource,
 		NewSpaceQuotaDataSource,
+		NewRoleDataSource,
 	}
 }
 
