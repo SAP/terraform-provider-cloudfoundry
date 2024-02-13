@@ -112,13 +112,12 @@ func (r *orgResource) Create(ctx context.Context, req resource.CreateRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	//TODO @k7 check if initialize is needed
 	createOrg := cfv3resource.OrganizationCreate{
 		Name:     plan.Name.ValueString(),
 		Metadata: cfv3resource.NewMetadata(),
 	}
 
-	if !plan.Suspended.IsUnknown() {
+	if !plan.Suspended.IsNull() {
 		createOrg.Suspended = plan.Suspended.ValueBoolPointer()
 	}
 	labelsDiags := plan.Labels.ElementsAs(ctx, &createOrg.Metadata.Labels, false)
