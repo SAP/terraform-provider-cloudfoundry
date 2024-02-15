@@ -22,7 +22,7 @@ var (
 	_ datasource.DataSourceWithConfigure = &UsersDataSource{}
 )
 
-// Instantiates a space users data source
+// Instantiates a space/org users data source
 func NewUsersDataSource() datasource.DataSource {
 	return &UsersDataSource{}
 }

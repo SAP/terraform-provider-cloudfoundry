@@ -7,6 +7,7 @@ import (
 
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -14,6 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/samber/lo"
@@ -50,6 +52,9 @@ func resourceLabelsSchema() *schema.MapAttribute {
 		MarkdownDescription: `The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).`,
 		ElementType:         types.StringType,
 		Optional:            true,
+		Validators: []validator.Map{
+			mapvalidator.SizeAtLeast(1),
+		},
 	}
 }
 
@@ -58,6 +63,9 @@ func resourceAnnotationsSchema() *schema.MapAttribute {
 		MarkdownDescription: "The annotations associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).",
 		ElementType:         types.StringType,
 		Optional:            true,
+		Validators: []validator.Map{
+			mapvalidator.SizeAtLeast(1),
+		},
 	}
 }
 
@@ -187,4 +195,14 @@ func setClientMetadataForUpdate(ctx context.Context, StateLabels basetypes.MapVa
 	}
 
 	return metadata, diagnostics
+}
+
+// Returns a pointer to a bool
+func booltoboolptr(s bool) *bool {
+	return &s
+}
+
+// Returns a pointer to an int
+func inttointptr(s int) *int {
+	return &s
 }

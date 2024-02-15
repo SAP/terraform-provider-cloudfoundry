@@ -24,7 +24,7 @@ var (
 	_ resource.ResourceWithImportState = &RoleResource{}
 )
 
-// Instantiates a space resource
+// Instantiates a role resource
 func NewRoleResource() resource.Resource {
 	return &RoleResource{}
 }
@@ -172,7 +172,6 @@ func (rs *RoleResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	}
 
 	data = mapRoleValuesToType(role)
-	resp.Diagnostics.Append(diags...)
 
 	tflog.Trace(ctx, "read a role resource")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

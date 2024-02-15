@@ -13,7 +13,7 @@ Retrieves all users with a role in the specified space or organization
 
 ```terraform
 data "cloudfoundry_users" "my_users" {
-    org = "784b4cd0-4771-4e4d-9052-a07e178bae56"
+  org = "784b4cd0-4771-4e4d-9052-a07e178bae56"
 }
 
 output "users" {
