@@ -8,6 +8,7 @@ import (
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -87,6 +88,10 @@ func (r *spaceQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest,
 				MarkdownDescription: "Set of space GUIDs to which this space quota would be assigned.",
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.ValueStringsAre(validation.ValidUUID()),
+					setvalidator.SizeAtLeast(1),
+				},
 			},
 			"org": schema.StringAttribute{
 				MarkdownDescription: "The ID of the Org within which to create the space quota",

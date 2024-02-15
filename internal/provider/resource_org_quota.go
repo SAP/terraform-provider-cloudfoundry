@@ -5,11 +5,14 @@ import (
 	"fmt"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/samber/lo"
 )
@@ -87,6 +90,10 @@ func (r *orgQuotaResource) Schema(_ context.Context, _ resource.SchemaRequest, r
 				MarkdownDescription: "Set of Org GUIDs to which this org quota would be assigned.",
 				ElementType:         types.StringType,
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.ValueStringsAre(validation.ValidUUID()),
+					setvalidator.SizeAtLeast(1),
+				},
 			},
 			idKey:        guidSchema(),
 			createdAtKey: createdAtSchema(),

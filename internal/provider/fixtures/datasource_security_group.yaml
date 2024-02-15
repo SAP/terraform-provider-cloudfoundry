@@ -1,0 +1,357 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=b373912936bb4f7aad76cd99f77d67c9-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - b373912936bb4f7aad76cd99f77d67c9-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"b373912936bb4f7aad76cd99f77d67c9-r","expires_in":1199,"scope":"clients.read openid routing.router_groups.write scim.read cloud_controller.admin uaa.user routing.router_groups.read cloud_controller.read password.write cloud_controller.write network.admin doppler.firehose scim.write","jti":"c6d2404e580046cfa240ef3a736b08ff"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 15 Feb 2024 03:54:40 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 44f254cb-212f-499b-7861-62d54510c8a4
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 554.718088ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"f5112a28-5379-4e52-8c6a-1b076e72e44d","created_at":"2024-02-14T12:50:28Z","updated_at":"2024-02-15T03:34:53Z","name":"tf-test-do-not-delete","rules":[{"protocol":"tcp","destination":"192.168.1.100","ports":"1883,8883","log":true},{"protocol":"udp","destination":"192.168.1.100","ports":"1883,8883","log":false},{"protocol":"icmp","destination":"192.168.1.100","type":0,"code":0,"log":false}],"globally_enabled":{"running":false,"staging":false},"relationships":{"running_spaces":{"data":[{"guid":"e6886bba-e263-4b52-aaf1-85d410f15fc8"}]},"staging_spaces":{"data":[{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"},{"guid":"e6886bba-e263-4b52-aaf1-85d410f15fc8"}]}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/security_groups/f5112a28-5379-4e52-8c6a-1b076e72e44d"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 15 Feb 2024 03:54:41 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 460ffcb337352306
+            X-B3-Traceid:
+                - e863324f77814d88460ffcb337352306
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.011110"
+            X-Vcap-Request-Id:
+                - e863324f-7781-4d88-460f-fcb337352306::5b0dbed8-aacb-4833-ac59-82a418a6e5b2
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 543.159977ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=b373912936bb4f7aad76cd99f77d67c9-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - b373912936bb4f7aad76cd99f77d67c9-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"b373912936bb4f7aad76cd99f77d67c9-r","expires_in":1199,"scope":"clients.read openid routing.router_groups.write scim.read cloud_controller.admin uaa.user routing.router_groups.read cloud_controller.read password.write cloud_controller.write network.admin doppler.firehose scim.write","jti":"86f6d3320e4a4e4a9994ec43e02f87fb"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 15 Feb 2024 03:54:41 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 7cf82521-c282-4548-5006-f828106489b4
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 240.557605ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"f5112a28-5379-4e52-8c6a-1b076e72e44d","created_at":"2024-02-14T12:50:28Z","updated_at":"2024-02-15T03:34:53Z","name":"tf-test-do-not-delete","rules":[{"protocol":"tcp","destination":"192.168.1.100","ports":"1883,8883","log":true},{"protocol":"udp","destination":"192.168.1.100","ports":"1883,8883","log":false},{"protocol":"icmp","destination":"192.168.1.100","type":0,"code":0,"log":false}],"globally_enabled":{"running":false,"staging":false},"relationships":{"running_spaces":{"data":[{"guid":"e6886bba-e263-4b52-aaf1-85d410f15fc8"}]},"staging_spaces":{"data":[{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"},{"guid":"e6886bba-e263-4b52-aaf1-85d410f15fc8"}]}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/security_groups/f5112a28-5379-4e52-8c6a-1b076e72e44d"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 15 Feb 2024 03:54:42 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5b7f0400789faa78
+            X-B3-Traceid:
+                - 0739ade9b50e4b3c5b7f0400789faa78
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.010298"
+            X-Vcap-Request-Id:
+                - 0739ade9-b50e-4b3c-5b7f-0400789faa78::258ee863-1a59-48d0-8e32-72fd0cd83853
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 188.224472ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=b373912936bb4f7aad76cd99f77d67c9-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - b373912936bb4f7aad76cd99f77d67c9-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"b373912936bb4f7aad76cd99f77d67c9-r","expires_in":1199,"scope":"clients.read openid routing.router_groups.write scim.read cloud_controller.admin uaa.user routing.router_groups.read cloud_controller.read password.write cloud_controller.write network.admin doppler.firehose scim.write","jti":"eebd4158958542bcabdf683176d159d1"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 15 Feb 2024 03:54:41 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 2d2eb11e-35d9-493e-5169-2e4deb947c07
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 235.194654ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/security_groups?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"f5112a28-5379-4e52-8c6a-1b076e72e44d","created_at":"2024-02-14T12:50:28Z","updated_at":"2024-02-15T03:34:53Z","name":"tf-test-do-not-delete","rules":[{"protocol":"tcp","destination":"192.168.1.100","ports":"1883,8883","log":true},{"protocol":"udp","destination":"192.168.1.100","ports":"1883,8883","log":false},{"protocol":"icmp","destination":"192.168.1.100","type":0,"code":0,"log":false}],"globally_enabled":{"running":false,"staging":false},"relationships":{"running_spaces":{"data":[{"guid":"e6886bba-e263-4b52-aaf1-85d410f15fc8"}]},"staging_spaces":{"data":[{"guid":"3bc20dc4-1870-4835-8308-dda2d766e61e"},{"guid":"e6886bba-e263-4b52-aaf1-85d410f15fc8"}]}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/security_groups/f5112a28-5379-4e52-8c6a-1b076e72e44d"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 15 Feb 2024 03:54:42 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 60c0116bb7845c96
+            X-B3-Traceid:
+                - 6f8de9336a4041e560c0116bb7845c96
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.011877"
+            X-Vcap-Request-Id:
+                - 6f8de933-6a40-41e5-60c0-116bb7845c96::09595196-d3ba-406d-9ebc-8e69fc2f2884
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 194.817704ms

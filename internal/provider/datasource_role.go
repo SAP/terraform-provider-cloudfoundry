@@ -19,7 +19,7 @@ var (
 	_ datasource.DataSourceWithConfigure = &RoleDataSource{}
 )
 
-// Instantiates a space users data source
+// Instantiates a role data source
 func NewRoleDataSource() datasource.DataSource {
 	return &RoleDataSource{}
 }

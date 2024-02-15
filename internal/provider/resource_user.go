@@ -20,7 +20,7 @@ var (
 	_ resource.ResourceWithImportState = &UserResource{}
 )
 
-// Instantiates a space resource
+// Instantiates a user resource
 func NewUserResource() resource.Resource {
 	return &UserResource{}
 }
