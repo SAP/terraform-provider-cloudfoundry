@@ -40,6 +40,33 @@ var (
 	testUser2ID              = "space"
 	testRoleGUID             = "e17839d9-cd4f-4e4b-baf0-18786f12fede"
 	testOrgQuotaGUID         = "e3cef997-9ba5-4cb4-b25b-c79faa81a33f"
+	createRules              = `[{
+									protocol = "tcp"
+									destination = "192.168.1.100"
+									ports = "1883,8883"
+									log = true
+								},{
+									protocol = "udp"
+									destination = "192.168.1.100"
+									ports = "1883,8883"
+									log = false
+								},
+								{
+									protocol = "icmp"
+									type = 0
+									code = 0
+									destination = "192.168.1.100"
+									log = false
+								}]`
+	invalidRules = `[{
+									protocol = "tcp"
+									type = 0
+									code = 0
+									destination = "192.168.1.100"
+									log = false
+								}]`
+	stagingSpaces = "[\"3bc20dc4-1870-4835-8308-dda2d766e61e\", \"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
+	runningSpaces = "[\"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {
@@ -184,11 +211,6 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 }
 
 func strtostrptr(s string) *string {
-	return &s
-}
-
-// Returns a pointer to a bool
-func booltoboolptr(s bool) *bool {
 	return &s
 }
 

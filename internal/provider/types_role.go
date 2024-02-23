@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// Terraform struct for storing values for user data source and resource
+// Terraform struct for storing values for role data source and resource
 type roleType struct {
 	Type         types.String `tfsdk:"type"`
 	User         types.String `tfsdk:"user"`
