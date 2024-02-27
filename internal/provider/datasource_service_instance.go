@@ -7,7 +7,6 @@ import (
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -47,11 +46,6 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "The ID of the service plan from which to create the service instance",
 				Computed:            true,
 			},
-			"parameters": schema.StringAttribute{
-				MarkdownDescription: "A JSON object that is passed to the service broker",
-				Computed:            true,
-				CustomType:          jsontypes.NormalizedType{},
-			},
 			"tags": schema.SetAttribute{
 				MarkdownDescription: "Set of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.",
 				ElementType:         types.StringType,
@@ -65,7 +59,7 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "URL to which requests for bound routes will be forwarded; only shown when type is user-provided.",
 				Computed:            true,
 			},
-			"maintenance_info": schema.ListAttribute{
+			"maintenance_info": schema.MapAttribute{
 				MarkdownDescription: "Information about the version of this service instance; only shown when type is managed",
 				ElementType:         maintenanceInfoAttrTypes,
 				Computed:            true,
@@ -110,7 +104,7 @@ func (d *ServiceInstanceDataSource) Configure(ctx context.Context, req datasourc
 
 func (d *ServiceInstanceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 
-	var data serviceInstanceType
+	var data datasourceServiceInstanceType
 
 	diags := req.Config.Get(ctx, &data)
 	resp.Diagnostics.Append(diags...)
@@ -143,7 +137,12 @@ func (d *ServiceInstanceDataSource) Read(ctx context.Context, req datasource.Rea
 		return
 	}
 
-	data, diags = mapServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
+	switch svcInstance.Type {
+	case "managed":
+		data, diags = mapDataSourceServiceInstanceValuesToType(ctx, svcInstance)
+	case "user-provided":
+		data, diags = mapDataSourceServiceInstanceValuesToType(ctx, svcInstance)
+	}
 	resp.Diagnostics.Append(diags...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

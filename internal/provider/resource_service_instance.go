@@ -10,6 +10,7 @@ import (
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -29,6 +30,11 @@ var (
 	_ resource.ResourceWithConfigure      = &serviceInstanceResource{}
 	_ resource.ResourceWithImportState    = &serviceInstanceResource{}
 	_ resource.ResourceWithValidateConfig = &serviceInstanceResource{}
+)
+
+const (
+	managedSerivceInstance      = "managed"
+	userProvidedServiceInstance = "user-provided"
 )
 
 func NewServiceInstanceResource() resource.Resource {
@@ -64,7 +70,7 @@ https://docs.cloudfoundry.org/devguide/services`,
 			},
 			"service_plan": schema.StringAttribute{
 				MarkdownDescription: "The ID of the service plan from which to create the service instance",
-				Required:            true,
+				Optional:            true,
 			},
 			"parameters": schema.StringAttribute{
 				MarkdownDescription: "A JSON object that is passed to the service broker for managed service instance.",
@@ -95,10 +101,12 @@ https://docs.cloudfoundry.org/devguide/services`,
 			"maintenance_info": schema.ListAttribute{
 				MarkdownDescription: "Information about the version of this service instance; only shown when type is managed",
 				ElementType:         maintenanceInfoAttrTypes,
+				Optional:            true,
 				Computed:            true,
 			},
 			"upgrade_available": schema.BoolAttribute{
 				MarkdownDescription: "Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed",
+				Optional:            true,
 				Computed:            true,
 			},
 			"dashboard_url": schema.StringAttribute{
@@ -135,15 +143,34 @@ func (r *serviceInstanceResource) Configure(ctx context.Context, req resource.Co
 }
 
 func (r *serviceInstanceResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var data serviceInstanceType
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	var config serviceInstanceType
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
+	if config.Type.ValueString() == userProvidedServiceInstance && !config.ServicePlan.IsNull() {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("service_plan"),
+			"Conflicting attribute service instance",
+			"Service plan is not allowed for user-provided service instance",
+		)
+		return
+	}
+
+	if config.Type.ValueString() == managedSerivceInstance && config.ServicePlan.IsNull() {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("service_plan"),
+			"Missing attribute service instance",
+			"Service plan is required for managed service instance",
+		)
+		return
+
+	}
+
 	// If Service Instance is of type managed only parameters is allowed to pass
-	if !data.Parameters.IsNull() && data.Type.ValueString() != "managed" {
+	if !config.Parameters.IsNull() && config.Type.ValueString() != "managed" {
 		resp.Diagnostics.AddAttributeError(
 			path.Root("type"),
 			"Parameters can only passed to service instance of type managed",
@@ -153,8 +180,8 @@ func (r *serviceInstanceResource) ValidateConfig(ctx context.Context, req resour
 	}
 
 	// If Service instance of type user-provided then credentials , syslog_drain_url and route_service_url allowed
-	if !data.SyslogDrainURL.IsNull() || !data.RouteServiceURL.IsNull() || !data.Credentials.IsNull() {
-		if data.Type.ValueString() != "user-provided" {
+	if !config.SyslogDrainURL.IsNull() || !config.RouteServiceURL.IsNull() || !config.Credentials.IsNull() {
+		if config.Type.ValueString() != "user-provided" {
 			resp.Diagnostics.AddAttributeError(
 				path.Root("type"),
 				"Mistmatch attribute passed to user provided service instance",
@@ -174,38 +201,26 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	createServiceInstance := cfv3resource.ServiceInstanceCreate{
-		Type: plan.Type.ValueString(),
-		Name: plan.Name.ValueString(),
-		Relationships: cfv3resource.ServiceInstanceRelationships{
-			ServicePlan: &cfv3resource.ToOneRelationship{
-				Data: &cfv3resource.Relationship{
-					GUID: plan.ServicePlan.ValueString(),
-				},
-			},
-			Space: &cfv3resource.ToOneRelationship{
-				Data: &cfv3resource.Relationship{
-					GUID: plan.Space.ValueString(),
-				},
-			},
-		},
-		Metadata: cfv3resource.NewMetadata(),
-	}
-	tags, diags := toTagsList(ctx, plan.Tags)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	createServiceInstance.Tags = tags
-
-	labelsDiags := plan.Labels.ElementsAs(ctx, &createServiceInstance.Metadata.Labels, false)
-	resp.Diagnostics.Append(labelsDiags...)
-
-	annotationsDiags := plan.Annotations.ElementsAs(ctx, &createServiceInstance.Metadata.Annotations, false)
-	resp.Diagnostics.Append(annotationsDiags...)
 
 	switch plan.Type.ValueString() {
-	case "managed":
+	case managedSerivceInstance:
+		createServiceInstance := cfv3resource.ServiceInstanceManagedCreate{
+			Type: plan.Type.ValueString(),
+			Name: plan.Name.ValueString(),
+			Relationships: cfv3resource.ServiceInstanceRelationships{
+				ServicePlan: &cfv3resource.ToOneRelationship{
+					Data: &cfv3resource.Relationship{
+						GUID: plan.ServicePlan.ValueString(),
+					},
+				},
+				Space: &cfv3resource.ToOneRelationship{
+					Data: &cfv3resource.Relationship{
+						GUID: plan.Space.ValueString(),
+					},
+				},
+			},
+			Metadata: cfv3resource.NewMetadata(),
+		}
 		if !plan.Parameters.IsNull() {
 			var params json.RawMessage
 			err := json.Unmarshal([]byte(plan.Parameters.ValueString()), &params)
@@ -218,6 +233,20 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 			}
 			createServiceInstance.Parameters = &params
 		}
+		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
+			tags, diags := toTagsList(ctx, plan.Tags)
+			resp.Diagnostics.Append(diags...)
+			if resp.Diagnostics.HasError() {
+				return
+			}
+			createServiceInstance.Tags = tags
+		}
+		labelsDiags := plan.Labels.ElementsAs(ctx, &createServiceInstance.Metadata.Labels, false)
+		resp.Diagnostics.Append(labelsDiags...)
+
+		annotationsDiags := plan.Annotations.ElementsAs(ctx, &createServiceInstance.Metadata.Annotations, false)
+		resp.Diagnostics.Append(annotationsDiags...)
+
 		jobID, err := r.cfClient.ServiceInstances.CreateManaged(ctx, &createServiceInstance)
 		if err != nil {
 			resp.Diagnostics.AddError(
@@ -250,20 +279,76 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 			)
 		}
 
-		plan, diags = mapServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
+		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
 		resp.Diagnostics.Append(diags...)
-	case "user-provided":
-		if !plan.Credentials.IsNull() {
 
+	case userProvidedServiceInstance:
+
+		createServiceInstance := cfv3resource.ServiceInstanceUserProvidedCreate{
+			Type: plan.Type.ValueString(),
+			Name: plan.Name.ValueString(),
+			Relationships: cfv3resource.ServiceInstanceRelationships{
+				Space: &cfv3resource.ToOneRelationship{
+					Data: &cfv3resource.Relationship{
+						GUID: plan.Space.ValueString(),
+					},
+				},
+			},
 		}
-		serviceInstance, err = r.cfClient.ServiceInstances.CreateUserProvided(ctx, &createServiceInstance)
+		if !plan.Credentials.IsNull() {
+			var credentials json.RawMessage
+			err := json.Unmarshal([]byte(plan.Credentials.ValueString()), &credentials)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Error in unmarshalling credentials",
+					"Unable to unmarshal json credentials of service instance"+plan.Name.ValueString()+": "+err.Error(),
+				)
+				return
+			}
+			createServiceInstance.Credentials = &credentials
+		}
+		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
+			tags, diags := toTagsList(ctx, plan.Tags)
+			resp.Diagnostics.Append(diags...)
+			if resp.Diagnostics.HasError() {
+				return
+			}
+			createServiceInstance.Tags = tags
+		}
+
+		if !plan.SyslogDrainURL.IsNull() {
+			createServiceInstance.SyslogDrainURL = plan.SyslogDrainURL.ValueStringPointer()
+		}
+		if !plan.RouteServiceURL.IsNull() {
+			createServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
+		}
+
+		_, err = r.cfClient.ServiceInstances.CreateUserProvided(ctx, &createServiceInstance)
 		if err != nil {
 			resp.Diagnostics.AddError(
 				"API Error in creating user-provided service instance",
 				"Unable to create service instance "+plan.Name.ValueString()+": "+err.Error(),
 			)
 		}
-		plan, diags = mapServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
+		serviceInstance, err = r.cfClient.ServiceInstances.Single(ctx, &cfv3client.ServiceInstanceListOptions{
+			Names: cfv3client.Filter{
+				Values: []string{
+					plan.Name.ValueString(),
+				},
+			},
+			SpaceGUIDs: cfv3client.Filter{
+				Values: []string{
+					plan.Space.ValueString(),
+				},
+			},
+		})
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error get service instance after creation",
+				"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
+			)
+		}
+		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
 		resp.Diagnostics.Append(diags...)
 	}
 
@@ -300,120 +385,181 @@ func (r *serviceInstanceResource) Read(ctx context.Context, req resource.ReadReq
 		)
 		return
 	}
-	data, diags = mapServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
+	data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
 	resp.Diagnostics.Append(diags...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
 }
 
 func (r *serviceInstanceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	// var plan, previousState serviceInstanceType
-	// var diags diag.Diagnostics
-	// var err error
-	// var tags []string
-	// resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
-	// resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
-	// if resp.Diagnostics.HasError() {
-	// 	return
-	// }
 
-	// _, err = r.cfClient.ServiceInstances.Get(ctx, plan.ID.ValueString())
-	// if err != nil {
-	// 	resp.Diagnostics.AddError(
-	// 		"Unable to fetch service instance Data",
-	// 		"Could not get servvice instance with ID "+plan.ID.ValueString()+": "+err.Error(),
-	// 	)
-	// 	return
-	// }
-	// // if plan.Space != previousState.Space {
-	// // 	resp.Diagnostics.AddError(
-	// // 		"Cannot "
-	// // 	)
-	// // }
+	var plan, previousState serviceInstanceType
+	var diags diag.Diagnostics
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
 
-	// var serviceInstance *cfv3resource.ServiceInstance
-	// switch plan.Type.ValueString() {
-	// case "managed":
-	// 	updateServiceInstance := cfv3resource.ServiceInstanceManagedUpdate{
-	// 		Name: plan.Name.ValueStringPointer(),
-	// 		Relationships: &cfv3resource.ServiceInstanceRelationships{
-	// 			ServicePlan: &cfv3resource.ToOneRelationship{
-	// 				Data: &cfv3resource.Relationship{
-	// 					GUID: plan.ServicePlan.ValueString(),
-	// 				},
-	// 			},
-	// 			Space: &cfv3resource.ToOneRelationship{
-	// 				Data: &cfv3resource.Relationship{
-	// 					GUID: plan.Space.ValueString(),
-	// 				},
-	// 			},
-	// 		},
-	// 		Metadata: cfv3resource.NewMetadata(),
-	// 	}
-	// 	var params json.RawMessage
-	// 	err := json.Unmarshal([]byte(plan.Parameters.ValueString()), &params)
-	// 	if err != nil {
-	// 		resp.Diagnostics.AddError(
-	// 			"Error in unmarshalling parameters",
-	// 			"Unable to unmarshal json parameters of service instance"+plan.Name.ValueString()+": "+err.Error(),
-	// 		)
-	// 		return
-	// 	}
-	// 	updateServiceInstance.Parameters = &params
-	// 	tags, diags = toTagsList(ctx, plan.Tags)
-	// 	//diags = plan.Tags.ElementsAs(ctx, createServiceInstance.Tags, false)
-	// 	resp.Diagnostics.Append(diags...)
-	// 	if resp.Diagnostics.HasError() {
-	// 		return
-	// 	}
-	// 	updateServiceInstance.Tags = tags
+	switch plan.Type.ValueString() {
+	case managedSerivceInstance:
 
-	// 	updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
-	// 	resp.Diagnostics.Append(diags...)
-	// 	if resp.Diagnostics.HasError() {
-	// 		return
-	// 	}
+		updateServiceInstance := cfv3resource.ServiceInstanceManagedUpdate{
+			Name: plan.Name.ValueStringPointer(),
+		}
+		// Check if the service plan is different from the previous state
+		if plan.ServicePlan.ValueString() != previousState.ServicePlan.ValueString() {
+			ok, err := isServiceInstanceUpgradable(ctx, previousState.ID.ValueString(), *r.cfClient)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Error in checking service instance upgradability",
+					"Unable to check service instance upgradability"+plan.Name.ValueString()+": "+err.Error(),
+				)
+				return
+			}
+			if !ok {
+				resp.Diagnostics.AddError(
+					"Service instance not upgradable",
+					"Service instance "+plan.Name.ValueString()+" is not upgradable",
+				)
+				return
+			}
+			updateServiceInstance.Relationships = &cfv3resource.ServiceInstanceRelationships{
+				ServicePlan: &cfv3resource.ToOneRelationship{
+					Data: &cfv3resource.Relationship{
+						GUID: plan.ServicePlan.ValueString(),
+					},
+				},
+			}
+		}
+		if !plan.Parameters.IsNull() {
+			var params json.RawMessage
+			err := json.Unmarshal([]byte(plan.Parameters.ValueString()), &params)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Error in unmarshalling parameters",
+					"Unable to unmarshal json parameters during update of service instance"+plan.Name.ValueString()+": "+err.Error(),
+				)
+				return
+			}
+			updateServiceInstance.Parameters = &params
+		}
+		// check if tag is not null and update the tags
+		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
+			tags, diags := toTagsList(ctx, plan.Tags)
+			resp.Diagnostics.Append(diags...)
+			if resp.Diagnostics.HasError() {
+				return
+			}
+			updateServiceInstance.Tags = tags
+		}
 
-	// 	jobID, _, err := r.cfClient.ServiceInstances.UpdateManaged(ctx, plan.ID.ValueString(), &updateServiceInstance)
-	// 	if err != nil {
-	// 		resp.Diagnostics.AddError(
-	// 			"API Error in Updating Managed Service instance",
-	// 			"Could not update managed service instance of ID"+plan.ID.ValueString()+" and name "+plan.Name.ValueString()+": "+err.Error(),
-	// 		)
-	// 		err := pollJob(ctx, *r.cfClient, jobID)
-	// 		if err != nil {
-	// 			resp.Diagnostics.AddError(
-	// 				"Unable to verify service instance update",
-	// 				"Service Instance update failed for "+plan.Name.ValueString()+": "+err.Error(),
-	// 			)
-	// 		}
-	// 	}
-	// 	serviceInstance, err = r.cfClient.ServiceInstances.Single(ctx, &cfv3client.ServiceInstanceListOptions{
-	// 		Names: cfv3client.Filter{
-	// 			Values: []string{
-	// 				plan.Name.ValueString(),
-	// 			},
-	// 		},
-	// 		SpaceGUIDs: cfv3client.Filter{
-	// 			Values: []string{
-	// 				plan.Space.ValueString(),
-	// 			},
-	// 		},
-	// 	})
-	// 	if err != nil {
-	// 		resp.Diagnostics.AddError(
-	// 			"Error get service instance after creation",
-	// 			"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
-	// 		)
-	// 	}
+		updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
+		resp.Diagnostics.Append(diags...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
 
-	// case "user-provided":
-
-	// }
+		jobID, _, err := r.cfClient.ServiceInstances.UpdateManaged(ctx, previousState.ID.ValueString(), &updateServiceInstance)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error in updating managed service instance",
+				"Unable to update service instance "+plan.Name.ValueString()+": "+err.Error(),
+			)
+		}
+		if jobID != "" {
+			if pollJob(ctx, *r.cfClient, jobID) != nil {
+				resp.Diagnostics.AddError(
+					"Unable to verify service instance update",
+					"Service Instance update verification failed for "+plan.Name.ValueString()+": "+err.Error(),
+				)
+			}
+		}
+		serviceInstance, err := r.cfClient.ServiceInstances.Get(ctx, plan.ID.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error get service instance after update",
+				"Unable to fetch updated service instance"+plan.Name.ValueString()+": "+err.Error(),
+			)
+		}
+		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
+		resp.Diagnostics.Append(diags...)
+		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+	case userProvidedServiceInstance:
+		updateServiceInstance := cfv3resource.ServiceInstanceUserProvidedUpdate{
+			Name: plan.Name.ValueStringPointer(),
+		}
+		if !plan.Credentials.IsNull() {
+			var credentials json.RawMessage
+			err := json.Unmarshal([]byte(plan.Credentials.ValueString()), &credentials)
+			if err != nil {
+				resp.Diagnostics.AddError(
+					"Error in unmarshalling credentials",
+					"Unable to unmarshal json credentials during update of service instance"+plan.Name.ValueString()+": "+err.Error(),
+				)
+				return
+			}
+			updateServiceInstance.Credentials = &credentials
+		}
+		if !plan.SyslogDrainURL.IsNull() {
+			updateServiceInstance.SyslogDrainURL = plan.SyslogDrainURL.ValueStringPointer()
+		}
+		if !plan.RouteServiceURL.IsNull() {
+			updateServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
+		}
+		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
+			tags, diags := toTagsList(ctx, plan.Tags)
+			resp.Diagnostics.Append(diags...)
+			if resp.Diagnostics.HasError() {
+				return
+			}
+			updateServiceInstance.Tags = tags
+		}
+		updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
+		resp.Diagnostics.Append(diags...)
+		_, err := r.cfClient.ServiceInstances.UpdateUserProvided(ctx, previousState.ID.ValueString(), &updateServiceInstance)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error in updating user-provided service instance",
+				"Unable to update service instance "+plan.Name.ValueString()+": "+err.Error(),
+			)
+		}
+		serviceInstance, err := r.cfClient.ServiceInstances.Get(ctx, plan.ID.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error get service instance after update",
+				"Unable to fetch updated service instance"+plan.Name.ValueString()+": "+err.Error(),
+			)
+		}
+		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
+		resp.Diagnostics.Append(diags...)
+		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+	}
 
 }
 
 func (r *serviceInstanceResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state serviceInstanceType
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	jobID, err := r.cfClient.ServiceInstances.Delete(ctx, state.ID.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error in deleting service instance",
+			"Unable to delete service instance "+state.Name.ValueString()+": "+err.Error(),
+		)
+
+	}
+	if jobID != "" {
+		if pollJob(ctx, *r.cfClient, jobID) != nil {
+			resp.Diagnostics.AddError(
+				"Unable to verify service instance deletion",
+				"Service Instance deletion verification failed for "+state.ID.ValueString()+": "+err.Error(),
+			)
+		}
+	}
+
 }
 
 func (rs *serviceInstanceResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

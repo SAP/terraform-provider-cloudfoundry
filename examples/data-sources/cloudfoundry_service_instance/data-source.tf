@@ -9,7 +9,7 @@ provider "cloudfoundry" {
 }
 
 data "cloudfoundry_service_instance" "svc" {
-    name = "tf-uaa"
+    name = "tf-test-do-not-delete"
 }
 
 output "guid" {
