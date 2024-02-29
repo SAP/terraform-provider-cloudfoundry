@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.21.4
 
 require (
-	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240131015817-5f2155bebf6f
+	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240221075938-fa1d959802a2
 	github.com/hashicorp/terraform-plugin-docs v0.17.0
 	github.com/hashicorp/terraform-plugin-framework v1.5.0
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0

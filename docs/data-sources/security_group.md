@@ -22,11 +22,11 @@ terraform {
 provider "cloudfoundry" {}
 
 data "cloudfoundry_security_group" "sgroup" {
-    name = "riemann"
+  name = "riemann"
 }
 
 output "sgroup" {
-    value = data.cloudfoundry_security_group.sgroup
+  value = data.cloudfoundry_security_group.sgroup
 }
 ```
 

@@ -210,6 +210,25 @@ func (rs *SpaceResource) Update(ctx context.Context, req resource.UpdateRequest,
 		return
 	}
 
+	var err error
+	if !plan.AllowSSH.IsUnknown() {
+		err = rs.cfClient.SpaceFeatures.EnableSSH(ctx, plan.Id.ValueString(), plan.AllowSSH.ValueBool())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Updating Space SSH",
+				"Could not set the SSH feature value on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+			)
+		}
+	}
+
+	err = rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Updating Isolation Segment",
+			"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID "+plan.Id.ValueString()+": "+err.Error(),
+		)
+	}
+
 	updateSpace, diags := plan.mapUpdateSpaceTypeToValues(ctx, previousState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -223,22 +242,6 @@ func (rs *SpaceResource) Update(ctx context.Context, req resource.UpdateRequest,
 			"Could not update Space with ID "+plan.Id.ValueString()+": "+err.Error(),
 		)
 		return
-	}
-
-	err = rs.cfClient.SpaceFeatures.EnableSSH(ctx, plan.Id.ValueString(), plan.AllowSSH.ValueBool())
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"API Error Updating Space SSH",
-			"Could not set the SSH feature value on space with ID "+plan.Id.ValueString()+": "+err.Error(),
-		)
-	}
-
-	err = rs.cfClient.Spaces.AssignIsolationSegment(ctx, plan.Id.ValueString(), plan.IsolationSegment.ValueString())
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"API Error Updating Isolation Segment",
-			"Could not assign the Isolation Segment with ID "+plan.IsolationSegment.ValueString()+" on space with ID "+plan.Id.ValueString()+": "+err.Error(),
-		)
 	}
 
 	data, diags := mapSpaceValuesToType(ctx, space, plan.AllowSSH.ValueBool(), plan.IsolationSegment.ValueString())
