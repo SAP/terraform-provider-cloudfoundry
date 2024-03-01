@@ -96,7 +96,7 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 ### Optional
 
 - `annotations` (Map of String) The annotations associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
-- `credentials` (String) A JSON object that is made available to apps bound to this service instance of type user-provided.
+- `credentials` (String, Sensitive) A JSON object that is made available to apps bound to this service instance of type user-provided.
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `parameters` (String) A JSON object that is passed to the service broker for managed service instance.
 - `route_service_url` (String) URL to which requests for bound routes will be forwarded; only shown when type is user-provided.

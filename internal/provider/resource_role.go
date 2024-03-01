@@ -16,12 +16,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/samber/lo"
 )
 
 var (
-	_ resource.Resource                = &RoleResource{}
-	_ resource.ResourceWithConfigure   = &RoleResource{}
-	_ resource.ResourceWithImportState = &RoleResource{}
+	_ resource.Resource                   = &RoleResource{}
+	_ resource.ResourceWithConfigure      = &RoleResource{}
+	_ resource.ResourceWithImportState    = &RoleResource{}
+	_ resource.ResourceWithValidateConfig = &RoleResource{}
 )
 
 // Instantiates a role resource
@@ -47,11 +49,6 @@ func (r *RoleResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
-				},
-				Validators: []validator.String{
-					stringvalidator.OneOf("space_auditor", "space_developer", "space_manager", "space_supporter",
-						"organization_user", "organization_auditor", "organization_manager", "organization_billing_manager",
-					),
 				},
 			},
 			"user": schema.StringAttribute{
@@ -107,6 +104,60 @@ func (r *RoleResource) Configure(ctx context.Context, req resource.ConfigureRequ
 	r.cfClient = session.CFClient
 }
 
+func (r *RoleResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
+	var config roleType
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	spaceRoles := []string{"space_auditor", "space_developer", "space_manager", "space_supporter"}
+	orgRoles := []string{"organization_user", "organization_auditor", "organization_manager", "organization_billing_manager"}
+	var roles []string = append(spaceRoles, orgRoles...)
+
+	_, found := lo.Find(roles, func(role string) bool {
+		return role == config.Type.ValueString()
+	})
+	if !found {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("type"),
+			"Invalid Attribute Value Match",
+			fmt.Sprintf("Attribute type value must be one of: %s, got: %s", roles, config.Type.ValueString()),
+		)
+		return
+	}
+
+	if !config.Organization.IsNull() {
+		_, found := lo.Find(orgRoles, func(role string) bool {
+			return role == config.Type.ValueString()
+		})
+		if !found {
+			resp.Diagnostics.AddAttributeError(
+				path.Root("type"),
+				"Invalid Role Type",
+				"Could not register Space Role "+config.Type.ValueString()+" for the given org. Please assign an organization role instead.",
+			)
+			return
+		}
+	}
+
+	if !config.Space.IsNull() {
+		_, found := lo.Find(spaceRoles, func(role string) bool {
+			return role == config.Type.ValueString()
+		})
+		if !found {
+			resp.Diagnostics.AddAttributeError(
+				path.Root("type"),
+				"Invalid Role Type",
+				"Could not register Organization Role "+config.Type.ValueString()+" for the given space. Please assign a space role instead.",
+			)
+			return
+		}
+	}
+
+}
+
 func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var plan roleType
 	diags := req.Plan.Get(ctx, &plan)
@@ -121,23 +172,9 @@ func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, r
 	)
 	if !plan.Organization.IsNull() {
 		orgRoleType := plan.getOrgRoleType()
-		if orgRoleType == cfv3resource.OrganizationRoleNone {
-			resp.Diagnostics.AddError(
-				"Invalid Role Type",
-				"Could not register Space Role "+plan.Type.ValueString()+" for the organization with ID "+plan.Organization.ValueString()+". Please assign an organization role instead.",
-			)
-			return
-		}
 		role, err = r.cfClient.Roles.CreateOrganizationRole(ctx, plan.Organization.ValueString(), plan.User.ValueString(), orgRoleType)
 	} else {
 		spaceRoleType := plan.getSpaceRoleType()
-		if spaceRoleType == cfv3resource.SpaceRoleNone {
-			resp.Diagnostics.AddError(
-				"Invalid Role Type",
-				"Could not register Organization Role "+plan.Type.ValueString()+" for the space with ID "+plan.Space.ValueString()+". Please assign a space role instead.",
-			)
-			return
-		}
 		role, err = r.cfClient.Roles.CreateSpaceRole(ctx, plan.Space.ValueString(), plan.User.ValueString(), spaceRoleType)
 	}
 

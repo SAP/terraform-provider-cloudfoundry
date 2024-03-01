@@ -50,7 +50,7 @@ output "guid" {
 <a id="nestedatt--last_operation"></a>
 ### Nested Schema for `last_operation`
 
-Optional:
+Read-Only:
 
 - `created_at` (String) The time at which the last operation was created
 - `description` (String) A description of the last operation
@@ -62,7 +62,7 @@ Optional:
 <a id="nestedatt--maintenance_info"></a>
 ### Nested Schema for `maintenance_info`
 
-Optional:
+Read-Only:
 
 - `description` (String) A description of the version of the service instance
 - `version` (String) The version of the service instance

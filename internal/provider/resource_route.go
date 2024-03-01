@@ -42,7 +42,7 @@ func (r *RouteResource) Metadata(ctx context.Context, req resource.MetadataReque
 
 func (r *RouteResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Gets information on a Cloud Foundry route.",
+		MarkdownDescription: "Provides a Cloud Foundry resource for managing Cloud Foundry application routes.",
 		Attributes: map[string]schema.Attribute{
 			idKey: guidSchema(),
 			"space": schema.StringAttribute{
@@ -66,21 +66,27 @@ func (r *RouteResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				},
 			},
 			"host": schema.StringAttribute{
-				MarkdownDescription: "The hostname associated to the route to lookup.",
+				MarkdownDescription: "The hostname for the route; not compatible with routes specifying the tcp protocol; must be either a wildcard (*) or be under 63 characters long and only contain letters, numbers, dashes (-) or underscores(_)",
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"path": schema.StringAttribute{
-				MarkdownDescription: "The path associated to the route to lookup.",
+				MarkdownDescription: "The path for the route; not compatible with routes specifying the tcp protocol; must be under 128 characters long and not contain question marks (?), begin with a slash (/) and not be exactly a slash (/).",
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(2),
+				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"port": schema.Int64Attribute{
-				MarkdownDescription: "The port associated to the route to lookup.",
+				MarkdownDescription: "The port that the route listens on. Only compatible with routes specifying the tcp protocol",
 				Optional:            true,
 				PlanModifiers: []planmodifier.Int64{
 					int64planmodifier.RequiresReplace(),
@@ -141,6 +147,9 @@ func (r *RouteResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 						"weight": schema.Int64Attribute{
 							MarkdownDescription: "Percentage of traffic which will be routed to this destination.",
 							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 100),
+							},
 							PlanModifiers: []planmodifier.Int64{
 								ReComputeIntValue(),
 							},
@@ -213,7 +222,7 @@ func (r *RouteResource) Create(ctx context.Context, req resource.CreateRequest, 
 			return
 		}
 
-		insertedDestinations, err := r.cfClient.Routes.InsertDestinations(ctx, route.GUID, insertDestinations)
+		insertedDestinations, err := r.cfClient.Routes.ReplaceDestinations(ctx, route.GUID, insertDestinations)
 		if err != nil {
 			resp.Diagnostics.AddError(
 				"API Error Inserting Destinations",
@@ -315,7 +324,7 @@ func (rs *RouteResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	if pollJob(ctx, *rs.cfClient, jobID) != nil {
+	if err = pollJob(ctx, *rs.cfClient, jobID); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting Route",
 			"Failed in deleting the Route with ID "+state.Id.ValueString()+" : "+err.Error(),
