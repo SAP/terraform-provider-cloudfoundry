@@ -65,10 +65,8 @@ var (
 									destination = "192.168.1.100"
 									log = false
 								}]`
-	stagingSpaces           = "[\"3bc20dc4-1870-4835-8308-dda2d766e61e\", \"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
-	runningSpaces           = "[\"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
-	testServiceInstance     = "tf-test-do-not-delete" // in canary -> PerformanceTeamBLR -> tf-space-1
-	testServiceInstanceGUID = "5e2976bb-332e-41e1-8be3-53baafea9296"
+	stagingSpaces = "[\"3bc20dc4-1870-4835-8308-dda2d766e61e\", \"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
+	runningSpaces = "[\"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
 )
 
 func (cfg *CloudFoundryProviderConfigPtr) GetHook() func(i *cassette.Interaction) error {

@@ -34,12 +34,12 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "The name of the service instance to look up",
 				Required:            true,
 			},
-			"type": schema.StringAttribute{
-				MarkdownDescription: "Type of the service instnace. Either managed or user-provided.",
-				Computed:            true,
-			},
 			"space": schema.StringAttribute{
 				MarkdownDescription: "The ID of the space in which to create the service instance",
+				Required:            true,
+			},
+			"type": schema.StringAttribute{
+				MarkdownDescription: "Type of the service instnace. Either managed or user-provided.",
 				Computed:            true,
 			},
 			"service_plan": schema.StringAttribute{
@@ -59,10 +59,21 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "URL to which requests for bound routes will be forwarded; only shown when type is user-provided.",
 				Computed:            true,
 			},
-			"maintenance_info": schema.MapAttribute{
+			"maintenance_info": schema.SingleNestedAttribute{
 				MarkdownDescription: "Information about the version of this service instance; only shown when type is managed",
-				ElementType:         maintenanceInfoAttrTypes,
 				Computed:            true,
+				Attributes: map[string]schema.Attribute{
+					"version": schema.StringAttribute{
+						MarkdownDescription: "The version of the service instance",
+						Optional:            true,
+						Computed:            true,
+					},
+					"description": schema.StringAttribute{
+						MarkdownDescription: "A description of the version of the service instance",
+						Optional:            true,
+						Computed:            true,
+					},
+				},
 			},
 			"upgrade_available": schema.BoolAttribute{
 				MarkdownDescription: "Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed",
@@ -72,10 +83,37 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "The URL to the service instance dashboard (or null if there is none); only shown when type is managed.",
 				Computed:            true,
 			},
-			"last_operation": schema.ListAttribute{
-				MarkdownDescription: "The last operation of this service instance.",
+			"last_operation": schema.SingleNestedAttribute{
+				MarkdownDescription: "The last operation performed on the service instance",
 				Computed:            true,
-				ElementType:         lastOperationAttrTypes,
+				Optional:            false,
+				Attributes: map[string]schema.Attribute{
+					"type": schema.StringAttribute{
+						MarkdownDescription: "The type of the last operation",
+						Computed:            true,
+						Optional:            true,
+					},
+					"state": schema.StringAttribute{
+						MarkdownDescription: "The state of the last operation",
+						Computed:            true,
+						Optional:            true,
+					},
+					"description": schema.StringAttribute{
+						MarkdownDescription: "A description of the last operation",
+						Computed:            true,
+						Optional:            true,
+					},
+					"updated_at": schema.StringAttribute{
+						MarkdownDescription: "The time at which the last operation was updated",
+						Computed:            true,
+						Optional:            true,
+					},
+					"created_at": schema.StringAttribute{
+						MarkdownDescription: "The time at which the last operation was created",
+						Computed:            true,
+						Optional:            true,
+					},
+				},
 			},
 			idKey:          guidSchema(),
 			labelsKey:      datasourceLabelsSchema(),

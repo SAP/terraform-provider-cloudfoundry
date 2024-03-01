@@ -44,7 +44,7 @@ func hclServiceInstance(sip *DataSourceServiceInstanceModelPtr) string {
 			{{- end -}}
 			{{if .Space}}
 				space = "{{.Space}}"
-			{{- end -}}
+			{{- end }}
 			{{if .ServicePlan}}
 				service_plan = "{{.ServicePlan}}"
 			{{- end -}}
@@ -72,7 +72,13 @@ func hclServiceInstance(sip *DataSourceServiceInstanceModelPtr) string {
 	return sip.HclType + ` "cloudfoundry_service_instance"  "` + sip.HclObjectName + ` {}`
 }
 
-func TestServiceInstanceDataSource_Configure(t *testing.T) {
+func TestServiceInstanceDataSource(t *testing.T) {
+	var (
+		// in canary -> PerformanceTeamBLR -> tf-space-1
+		testSpaceGUID           = "02c0cc92-6ecc-44b1-b7b2-096ca19ee143"
+		testServiceInstance     = "tf-test-do-not-delete"
+		testServiceInstanceGUID = "5e2976bb-332e-41e1-8be3-53baafea9296" // in canary -> PerformanceTeamBLR -> tf-space-1
+	)
 	t.Parallel()
 	t.Run("happy path - read service instance user-provided", func(t *testing.T) {
 		cfg := getCFHomeConf()
@@ -88,6 +94,7 @@ func TestServiceInstanceDataSource_Configure(t *testing.T) {
 						HclType:       hclObjectDataSource,
 						HclObjectName: "ds",
 						Name:          strtostrptr(testServiceInstance),
+						Space:         strtostrptr(testSpaceGUID),
 					}),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						resource.TestCheckResourceAttr(dataSourceName, "id", testServiceInstanceGUID),

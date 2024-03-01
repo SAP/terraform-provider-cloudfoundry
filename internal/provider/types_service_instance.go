@@ -10,7 +10,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 type serviceInstanceType struct {
@@ -20,13 +19,13 @@ type serviceInstanceType struct {
 	Space            types.String         `tfsdk:"space"`
 	ServicePlan      types.String         `tfsdk:"service_plan"`
 	Parameters       jsontypes.Normalized `tfsdk:"parameters"`
-	LastOperation    types.List           `tfsdk:"last_operation"` //LastOperationType
+	LastOperation    types.Object         `tfsdk:"last_operation"` //LastOperationType
 	Tags             types.Set            `tfsdk:"tags"`
 	DashboardURL     types.String         `tfsdk:"dashboard_url"`
 	Credentials      jsontypes.Normalized `tfsdk:"credentials"`
 	SyslogDrainURL   types.String         `tfsdk:"syslog_drain_url"`
 	RouteServiceURL  types.String         `tfsdk:"route_service_url"`
-	MaintenanceInfo  types.List           `tfsdk:"maintenance_info"` //maintenanceInfoType
+	MaintenanceInfo  types.Object         `tfsdk:"maintenance_info"` //maintenanceInfoType
 	UpgradeAvailable types.Bool           `tfsdk:"upgrade_available"`
 	Labels           types.Map            `tfsdk:"labels"`
 	Annotations      types.Map            `tfsdk:"annotations"`
@@ -40,12 +39,12 @@ type datasourceServiceInstanceType struct {
 	Type             types.String `tfsdk:"type"`
 	Space            types.String `tfsdk:"space"`
 	ServicePlan      types.String `tfsdk:"service_plan"`
-	LastOperation    types.List   `tfsdk:"last_operation"` //LastOperationType
+	LastOperation    types.Object `tfsdk:"last_operation"` //LastOperationType
 	Tags             types.Set    `tfsdk:"tags"`
 	DashboardURL     types.String `tfsdk:"dashboard_url"`
 	SyslogDrainURL   types.String `tfsdk:"syslog_drain_url"`
 	RouteServiceURL  types.String `tfsdk:"route_service_url"`
-	MaintenanceInfo  types.List   `tfsdk:"maintenance_info"` //maintenanceInfoType
+	MaintenanceInfo  types.Object `tfsdk:"maintenance_info"` //maintenanceInfoType
 	UpgradeAvailable types.Bool   `tfsdk:"upgrade_available"`
 	Labels           types.Map    `tfsdk:"labels"`
 	Annotations      types.Map    `tfsdk:"annotations"`
@@ -64,6 +63,19 @@ type lastOperationType struct {
 type maintenanceInfoType struct {
 	Version     types.String `tfsdk:"version"`
 	Description types.String `tfsdk:"description"`
+}
+
+var maintenanceInfoAttrTypes = map[string]attr.Type{
+	"version":     types.StringType,
+	"description": types.StringType,
+}
+
+var lastOperationAttrTypes = map[string]attr.Type{
+	"type":        types.StringType,
+	"state":       types.StringType,
+	"description": types.StringType,
+	"created_at":  types.StringType,
+	"updated_at":  types.StringType,
 }
 
 func mapDataSourceServiceInstanceValuesToType(ctx context.Context, value *resource.ServiceInstance) (datasourceServiceInstanceType, diag.Diagnostics) {
@@ -85,9 +97,6 @@ func mapDataSourceServiceInstanceValuesToType(ctx context.Context, value *resour
 		if value.DashboardURL != nil {
 			dsServiceInstanceType.DashboardURL = types.StringValue(*value.DashboardURL)
 		}
-		maintenanceInfo, diags := flattenMaintenanceInfo(ctx, value.MaintenanceInfo)
-		diagnostics.Append(diags...)
-		dsServiceInstanceType.MaintenanceInfo = *maintenanceInfo
 	case userProvidedServiceInstance:
 		if value.SyslogDrainURL != nil {
 			dsServiceInstanceType.SyslogDrainURL = types.StringValue(*value.SyslogDrainURL)
@@ -95,13 +104,20 @@ func mapDataSourceServiceInstanceValuesToType(ctx context.Context, value *resour
 		if value.RouteServiceURL != nil {
 			dsServiceInstanceType.RouteServiceURL = types.StringValue(*value.RouteServiceURL)
 		}
-		dsServiceInstanceType.MaintenanceInfo = types.ListNull(maintenanceInfoAttrTypes)
 	}
 	dsServiceInstanceType.Labels, diags = mapMetadataValueToType(ctx, value.Metadata.Labels)
 	diagnostics.Append(diags...)
 	dsServiceInstanceType.Annotations, diags = mapMetadataValueToType(ctx, value.Metadata.Annotations)
 	diagnostics.Append(diags...)
+	if value.MaintenanceInfo != nil {
+		dsServiceInstanceType.MaintenanceInfo, diags = types.ObjectValueFrom(ctx, maintenanceInfoAttrTypes, mapMaintenanceInfo(*value.MaintenanceInfo))
+		diagnostics.Append(diags...)
+	} else {
+		dsServiceInstanceType.MaintenanceInfo = types.ObjectNull(maintenanceInfoAttrTypes)
 
+	}
+	dsServiceInstanceType.LastOperation, diags = types.ObjectValueFrom(ctx, lastOperationAttrTypes, mapLastOperation(value.LastOperation))
+	diagnostics.Append(diags...)
 	//tags mapping
 	if len(value.Tags) > 0 {
 		tags := make([]types.String, 0, len(value.Tags))
@@ -114,10 +130,6 @@ func mapDataSourceServiceInstanceValuesToType(ctx context.Context, value *resour
 		dsServiceInstanceType.Tags = types.SetNull(types.StringType)
 
 	}
-
-	lastOperation, diags := flattenLastOperation(ctx, &value.LastOperation)
-	diagnostics.Append(diags...)
-	dsServiceInstanceType.LastOperation = *lastOperation
 
 	return dsServiceInstanceType, diagnostics
 }
@@ -142,10 +154,8 @@ func mapResourceServiceInstanceValuesToType(ctx context.Context, value *resource
 		if value.DashboardURL != nil {
 			serviceInstanceType.DashboardURL = types.StringValue(*value.DashboardURL)
 		}
-		maintenanceInfo, diags := flattenMaintenanceInfo(ctx, value.MaintenanceInfo)
+		serviceInstanceType.MaintenanceInfo, diags = types.ObjectValueFrom(ctx, maintenanceInfoAttrTypes, mapMaintenanceInfo(*value.MaintenanceInfo))
 		diagnostics.Append(diags...)
-
-		serviceInstanceType.MaintenanceInfo = *maintenanceInfo
 
 		if !paramCreds.IsNull() {
 			serviceInstanceType.Parameters = jsontypes.NewNormalizedValue(paramCreds.ValueString())
@@ -159,8 +169,7 @@ func mapResourceServiceInstanceValuesToType(ctx context.Context, value *resource
 		if value.RouteServiceURL != nil {
 			serviceInstanceType.RouteServiceURL = types.StringValue(*value.RouteServiceURL)
 		}
-		serviceInstanceType.MaintenanceInfo = types.ListNull(maintenanceInfoAttrTypes)
-		diagnostics.Append(diags...)
+		serviceInstanceType.MaintenanceInfo = types.ObjectNull(maintenanceInfoAttrTypes)
 		if !paramCreds.IsNull() {
 			serviceInstanceType.Credentials = jsontypes.NewNormalizedValue(paramCreds.ValueString())
 		} else {
@@ -181,80 +190,31 @@ func mapResourceServiceInstanceValuesToType(ctx context.Context, value *resource
 		diagnostics.Append(diags...)
 	}
 
-	lastOperation, diags := flattenLastOperation(ctx, &value.LastOperation)
+	serviceInstanceType.LastOperation, diags = types.ObjectValueFrom(ctx, lastOperationAttrTypes, mapLastOperation(value.LastOperation))
 	diagnostics.Append(diags...)
-	serviceInstanceType.LastOperation = *lastOperation
 
 	return serviceInstanceType, diagnostics
 }
 
-func flattenMaintenanceInfo(ctx context.Context, maintenanceInfo *resource.ServiceInstanceMaintenanceInfo) (*basetypes.ListValue, diag.Diagnostics) {
-	if maintenanceInfo == nil {
-		return nil, nil
-	}
-	result := make(map[string]attr.Value)
-
-	result["version"] = types.StringValue(maintenanceInfo.Version)
-	result["description"] = types.StringValue(maintenanceInfo.Description)
-
-	obj, diags := types.ObjectValue(maintenanceInfoAttrTypes.AttrTypes, result)
-	if diags.HasError() {
-		return nil, diags
-	}
-	objList := []attr.Value{obj}
-
-	resultList, diag := basetypes.NewListValue(
-		maintenanceInfoAttrTypes,
-		objList,
-	)
-	if diag.HasError() {
-		return nil, diag
-	}
-
-	return &resultList, nil
+func mapLastOperation(value resource.LastOperation) lastOperationType {
+	var lastOps lastOperationType
+	lastOps.Type = types.StringValue(value.Type)
+	lastOps.State = types.StringValue(value.State)
+	lastOps.Description = types.StringValue(value.Description)
+	lastOps.CreatedAt = types.StringValue(value.CreatedAt.Format(time.RFC3339))
+	lastOps.UpdatedAt = types.StringValue(value.UpdatedAt.Format(time.RFC3339))
+	return lastOps
 }
 
-var maintenanceInfoAttrTypes = types.ObjectType{
-	AttrTypes: map[string]attr.Type{
-		"version":     types.StringType,
-		"description": types.StringType,
-	},
-}
-
-var lastOperationAttrTypes = types.ObjectType{
-	AttrTypes: map[string]attr.Type{
-		"type":        types.StringType,
-		"state":       types.StringType,
-		"description": types.StringType,
-		"created_at":  types.StringType,
-		"updated_at":  types.StringType,
-	},
-}
-
-func flattenLastOperation(ctx context.Context, lastOperation *resource.LastOperation) (*basetypes.ListValue, diag.Diagnostics) {
-	result := make(map[string]attr.Value)
-
-	result["type"] = types.StringValue(lastOperation.Type)
-	result["state"] = types.StringValue(lastOperation.State)
-	result["description"] = types.StringValue(lastOperation.Description)
-	result["created_at"] = types.StringValue(lastOperation.CreatedAt.Format(time.RFC3339))
-	result["updated_at"] = types.StringValue(lastOperation.UpdatedAt.Format(time.RFC3339))
-
-	obj, diags := types.ObjectValue(lastOperationAttrTypes.AttrTypes, result)
-	if diags.HasError() {
-		return nil, diags
-	}
-	objList := []attr.Value{obj}
-
-	resultList, diag := basetypes.NewListValue(
-		lastOperationAttrTypes,
-		objList,
-	)
-	if diag.HasError() {
-		return nil, diag
+func mapMaintenanceInfo(value resource.ServiceInstanceMaintenanceInfo) maintenanceInfoType {
+	var maintenance maintenanceInfoType
+	if value.Version != "" && value.Description != "" {
+		maintenance.Version = types.StringValue(value.Version)
+		maintenance.Description = types.StringValue(value.Description)
 	}
 
-	return &resultList, nil
+	return maintenance
+
 }
 
 // isServiceInstanceUpgradable checks if the service instance is upgradable
