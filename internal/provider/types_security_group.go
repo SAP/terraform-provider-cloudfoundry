@@ -72,7 +72,7 @@ func mapSecurityGroupValuesToType(ctx context.Context, securityGroup *resource.S
 }
 
 // Sets the terraform struct values from the rule resource returned by the cf-client
-func mapRuleValuesToType(ctx context.Context, rule *resource.SecurityGroupRule) ruleType {
+func mapRuleValuesToType(rule *resource.SecurityGroupRule) ruleType {
 
 	ruleType := ruleType{
 		Protocol:    types.StringValue(rule.Protocol),
@@ -104,7 +104,7 @@ func mapRuleValuesToListType(ctx context.Context, rules *[]resource.SecurityGrou
 	var diags, diagnostics diag.Diagnostics
 	ruleValues := []ruleType{}
 	for _, rule := range *rules {
-		ruleValue := mapRuleValuesToType(ctx, &rule)
+		ruleValue := mapRuleValuesToType(&rule)
 		ruleValues = append(ruleValues, ruleValue)
 	}
 

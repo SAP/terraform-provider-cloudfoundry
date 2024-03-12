@@ -100,7 +100,7 @@ func TestSpaceQuotaDataSource_Configure(t *testing.T) {
 	t.Parallel()
 	t.Run("error path - get unavailable datasource space quota", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_space_invalid_space_quota_name")
+		rec := cfg.SetupVCR(t, "fixtures/datasource_space_quota_invalid_name")
 		defer stopQuietly(rec)
 
 		resource.Test(t, resource.TestCase{

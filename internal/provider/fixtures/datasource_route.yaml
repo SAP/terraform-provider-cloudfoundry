@@ -1,0 +1,186 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea&space_guids=795a961c-6360-479a-9666-fff9cb906aad
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":3,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=795a961c-6360-479a-9666-fff9cb906aad"},"last":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=795a961c-6360-479a-9666-fff9cb906aad"},"next":null,"previous":null},"resources":[{"guid":"471cf078-7f8a-4038-89bd-e1623bf606e9","created_at":"2024-02-21T05:59:58Z","updated_at":"2024-02-21T05:59:58Z","protocol":"http","host":"hahadban2-accountable-jackal-fn","path":"","port":null,"url":"hahadban2-accountable-jackal-fn.cert.cfapps.stagingazure.hanavlab.ondemand.com","destinations":[{"guid":"36a06305-a000-4296-ae58-b3c7dc85ab00","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"6d7a9e55-1838-49a8-a134-245c140299d7","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/471cf078-7f8a-4038-89bd-e1623bf606e9"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/471cf078-7f8a-4038-89bd-e1623bf606e9/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},{"guid":"de71ad1e-f066-4395-8882-1f83f89c1483","created_at":"2024-02-21T06:00:44Z","updated_at":"2024-02-21T06:00:44Z","protocol":"http","host":"hahadban3","path":"","port":null,"url":"hahadban3.cert.cfapps.stagingazure.hanavlab.ondemand.com","destinations":[{"guid":"f3dff945-85ff-4ab7-bddc-d0006e787608","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/de71ad1e-f066-4395-8882-1f83f89c1483"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/de71ad1e-f066-4395-8882-1f83f89c1483/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},{"guid":"8746cfc6-92bc-4d69-9f39-8b4de0198804","created_at":"2024-02-28T11:20:47Z","updated_at":"2024-02-28T11:20:47Z","protocol":"http","host":"testing123","path":"/bruh","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/bruh","destinations":[{"guid":"5c055ccd-595f-466d-ab4f-045a687ea569","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"8e9e0216-837c-479b-a4c3-1687a2347e11","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"Hifii"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/8746cfc6-92bc-4d69-9f39-8b4de0198804"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/8746cfc6-92bc-4d69-9f39-8b4de0198804/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 28 Feb 2024 11:24:07 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6b0535e822311dc8
+            X-B3-Traceid:
+                - a0b747049c3e495c6b0535e822311dc8
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.033435"
+            X-Vcap-Request-Id:
+                - a0b74704-9c3e-495c-6b05-35e822311dc8::834bf75a-ebd5-4b8a-a3e3-4e8856ed96c7
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 557.037685ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea&space_guids=795a961c-6360-479a-9666-fff9cb906aad
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":3,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=795a961c-6360-479a-9666-fff9cb906aad"},"last":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=795a961c-6360-479a-9666-fff9cb906aad"},"next":null,"previous":null},"resources":[{"guid":"471cf078-7f8a-4038-89bd-e1623bf606e9","created_at":"2024-02-21T05:59:58Z","updated_at":"2024-02-21T05:59:58Z","protocol":"http","host":"hahadban2-accountable-jackal-fn","path":"","port":null,"url":"hahadban2-accountable-jackal-fn.cert.cfapps.stagingazure.hanavlab.ondemand.com","destinations":[{"guid":"36a06305-a000-4296-ae58-b3c7dc85ab00","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"6d7a9e55-1838-49a8-a134-245c140299d7","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/471cf078-7f8a-4038-89bd-e1623bf606e9"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/471cf078-7f8a-4038-89bd-e1623bf606e9/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},{"guid":"de71ad1e-f066-4395-8882-1f83f89c1483","created_at":"2024-02-21T06:00:44Z","updated_at":"2024-02-21T06:00:44Z","protocol":"http","host":"hahadban3","path":"","port":null,"url":"hahadban3.cert.cfapps.stagingazure.hanavlab.ondemand.com","destinations":[{"guid":"f3dff945-85ff-4ab7-bddc-d0006e787608","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/de71ad1e-f066-4395-8882-1f83f89c1483"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/de71ad1e-f066-4395-8882-1f83f89c1483/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},{"guid":"8746cfc6-92bc-4d69-9f39-8b4de0198804","created_at":"2024-02-28T11:20:47Z","updated_at":"2024-02-28T11:20:47Z","protocol":"http","host":"testing123","path":"/bruh","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/bruh","destinations":[{"guid":"5c055ccd-595f-466d-ab4f-045a687ea569","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"8e9e0216-837c-479b-a4c3-1687a2347e11","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"Hifii"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/8746cfc6-92bc-4d69-9f39-8b4de0198804"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/8746cfc6-92bc-4d69-9f39-8b4de0198804/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 28 Feb 2024 11:24:08 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 42e27e6b19582171
+            X-B3-Traceid:
+                - c47219cddb60461742e27e6b19582171
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.035494"
+            X-Vcap-Request-Id:
+                - c47219cd-db60-4617-42e2-7e6b19582171::0bcdb2d3-0cfa-4069-9f25-059193825304
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 205.733598ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea&space_guids=795a961c-6360-479a-9666-fff9cb906aad
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":3,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=795a961c-6360-479a-9666-fff9cb906aad"},"last":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=795a961c-6360-479a-9666-fff9cb906aad"},"next":null,"previous":null},"resources":[{"guid":"471cf078-7f8a-4038-89bd-e1623bf606e9","created_at":"2024-02-21T05:59:58Z","updated_at":"2024-02-21T05:59:58Z","protocol":"http","host":"hahadban2-accountable-jackal-fn","path":"","port":null,"url":"hahadban2-accountable-jackal-fn.cert.cfapps.stagingazure.hanavlab.ondemand.com","destinations":[{"guid":"36a06305-a000-4296-ae58-b3c7dc85ab00","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"6d7a9e55-1838-49a8-a134-245c140299d7","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/471cf078-7f8a-4038-89bd-e1623bf606e9"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/471cf078-7f8a-4038-89bd-e1623bf606e9/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},{"guid":"de71ad1e-f066-4395-8882-1f83f89c1483","created_at":"2024-02-21T06:00:44Z","updated_at":"2024-02-21T06:00:44Z","protocol":"http","host":"hahadban3","path":"","port":null,"url":"hahadban3.cert.cfapps.stagingazure.hanavlab.ondemand.com","destinations":[{"guid":"f3dff945-85ff-4ab7-bddc-d0006e787608","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/de71ad1e-f066-4395-8882-1f83f89c1483"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/de71ad1e-f066-4395-8882-1f83f89c1483/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},{"guid":"8746cfc6-92bc-4d69-9f39-8b4de0198804","created_at":"2024-02-28T11:20:47Z","updated_at":"2024-02-28T11:20:47Z","protocol":"http","host":"testing123","path":"/bruh","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/bruh","destinations":[{"guid":"5c055ccd-595f-466d-ab4f-045a687ea569","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"8e9e0216-837c-479b-a4c3-1687a2347e11","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"Hifii"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/8746cfc6-92bc-4d69-9f39-8b4de0198804"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/8746cfc6-92bc-4d69-9f39-8b4de0198804/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 28 Feb 2024 11:24:09 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4ad8ebd3a7630242
+            X-B3-Traceid:
+                - d048b1131dec475c4ad8ebd3a7630242
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.037471"
+            X-Vcap-Request-Id:
+                - d048b113-1dec-475c-4ad8-ebd3a7630242::cb4751fe-544a-4412-ae01-50df82dc5675
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 207.245261ms
