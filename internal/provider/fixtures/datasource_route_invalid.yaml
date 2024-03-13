@@ -6,24 +6,21 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 196
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: api.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
-        body: |
-            {"name":"tf-unit-test","relationships":{"organization":{"data":{"guid":"40b73419-5e01-4be0-baea-932d46cea45b"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
+        body: ""
         form: {}
         headers:
             Authorization:
                 - Bearer redacted
-            Content-Type:
-                - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/spaces
-        method: POST
+        url: https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea&space_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea
+        method: GET
       response:
         proto: HTTP/2.0
         proto_major: 2
@@ -32,12 +29,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"errors":[{"detail":"Invalid organization. Ensure the organization exists and you have access to it.","title":"CF-UnprocessableEntity","code":10008}]}'
+        body: '{"pagination":{"total_results":0,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea"},"last":{"href":"https://api.x.x.x.x.com/v3/routes?domain_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea\u0026page=1\u0026per_page=50\u0026space_guids=440e24e5-ee11-41d9-a996-2ed0a1e2deea"},"next":null,"previous":null},"resources":[]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:31:53 GMT
+                - Wed, 28 Feb 2024 11:24:09 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -45,9 +42,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 418f74b9957ca9f7
+                - 4a8deb9d78aa5cc9
             X-B3-Traceid:
-                - f621b14f0e2f4328418f74b9957ca9f7
+                - 4cc025d3e8ce4eca4a8deb9d78aa5cc9
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -57,11 +54,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.003873"
+                - "0.006366"
             X-Vcap-Request-Id:
-                - f621b14f-0e2f-4328-418f-74b9957ca9f7::41482d45-89eb-40fc-871d-c9b4561c9607
+                - 4cc025d3-e8ce-4eca-4a8d-eb9d78aa5cc9::e60977d1-1bad-44d2-ac53-96e75af2ff10
             X-Xss-Protection:
                 - 1; mode=block
-        status: 422 Unprocessable Entity
-        code: 422
-        duration: 185.794875ms
+        status: 200 OK
+        code: 200
+        duration: 173.533627ms

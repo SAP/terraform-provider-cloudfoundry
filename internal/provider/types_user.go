@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -22,33 +21,15 @@ type userType struct {
 	UpdatedAt        types.String `tfsdk:"updated_at"`
 }
 
-type usersType struct {
-	Users types.List   `tfsdk:"users"`
+type datasourceUserType struct {
+	Users []userType   `tfsdk:"users"`
 	Name  types.String `tfsdk:"name"`
 }
 
 type spaceOrgUsersType struct {
-	Users        types.List   `tfsdk:"users"`
+	Users        []userType   `tfsdk:"users"`
 	Space        types.String `tfsdk:"space"`
 	Organization types.String `tfsdk:"org"`
-}
-
-var userObjType = types.ObjectType{
-	AttrTypes: map[string]attr.Type{
-		"id":       types.StringType,
-		"username": types.StringType,
-
-		"presentation_name": types.StringType,
-		"origin":            types.StringType,
-		"labels": types.MapType{
-			ElemType: types.StringType,
-		},
-		"annotations": types.MapType{
-			ElemType: types.StringType,
-		},
-		"created_at": types.StringType,
-		"updated_at": types.StringType,
-	},
 }
 
 // Sets the user resource values for creation with cf-client from the terraform struct values
@@ -100,9 +81,9 @@ func (plan *userType) mapUpdateUserTypeToValues(ctx context.Context, state userT
 }
 
 // Prepares a terraform list from the user resources returned by the cf-client
-func mapUsersValuesToListType(ctx context.Context, users []*resource.User) (types.List, diag.Diagnostics) {
+func mapUsersValuesToListType(ctx context.Context, users []*resource.User) ([]userType, diag.Diagnostics) {
 
-	var diags, diagnostics diag.Diagnostics
+	var diagnostics diag.Diagnostics
 	userValues := []userType{}
 	for _, user := range users {
 		userValue, diags := mapUserValuesToType(ctx, user)
@@ -110,19 +91,17 @@ func mapUsersValuesToListType(ctx context.Context, users []*resource.User) (type
 		userValues = append(userValues, userValue)
 	}
 
-	usersList, diags := types.ListValueFrom(ctx, userObjType, userValues)
-	diagnostics.Append(diags...)
-
-	return usersList, diagnostics
+	return userValues, diagnostics
 }
 
 // Sets the terraform struct values from the user resources returned by the cf-client
-func mapUsersValuesToType(ctx context.Context, data usersType, users []*resource.User) (usersType, diag.Diagnostics) {
+func mapUsersValuesToType(ctx context.Context, data datasourceUserType, users []*resource.User) (datasourceUserType, diag.Diagnostics) {
 
 	var diags, diagnostics diag.Diagnostics
-	usersType := usersType{
+	usersType := datasourceUserType{
 		Name: data.Name,
 	}
+
 	usersType.Users, diags = mapUsersValuesToListType(ctx, users)
 	diagnostics.Append(diags...)
 

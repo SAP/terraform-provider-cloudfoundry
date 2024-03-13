@@ -29,6 +29,8 @@ var (
 	testSpace                = "tf-test-do-not-delete"
 	testSpaceGUID            = "3bc20dc4-1870-4835-8308-dda2d766e61e"
 	testSpace2GUID           = "dd457c79-f7c9-4828-862b-35843d3b646d"
+	testSpaceRouteGUID       = "795a961c-6360-479a-9666-fff9cb906aad"
+	testDomainRouteGUID      = "440e24e5-ee11-41d9-a996-2ed0a1e2deea"
 	testOrgQuota             = "tf-test-do-not-delete"
 	invalidOrgGUID           = "40b73419-5e01-4be0-baea-932d46cea45b"
 	testIsolationSegmentGUID = "5215e4df-79a4-4ce8-a933-837d6aa7a77b"
@@ -65,6 +67,31 @@ var (
 									destination = "192.168.1.100"
 									log = false
 								}]`
+	createDestinations = `[{
+								app_id = "24a711f2-148b-4d48-b37a-90a66d6e842f"				
+					  		},
+					  		{
+								app_id = "15a74002-cf3a-4bf2-b76f-fe96867c46ee"
+								app_process_type = "web"
+								port = 36001 
+					  		}]`
+	updateDestinations1 = `[{
+								app_id = "24a711f2-148b-4d48-b37a-90a66d6e842f"				
+					  		},
+					  		{
+								app_id = "15a74002-cf3a-4bf2-b76f-fe96867c46ee"
+								app_process_type = "web"
+								port = 36001 
+					  		},
+							{
+								app_id = "15a74002-cf3a-4bf2-b76f-fe96867c46ee"
+					  		}]`
+	updateDestinations2 = `[{
+								app_id = "24a711f2-148b-4d48-b37a-90a66d6e842f"				
+					  		},
+							{
+								app_id = "15a74002-cf3a-4bf2-b76f-fe96867c46ee"
+					  		}]`
 	stagingSpaces = "[\"3bc20dc4-1870-4835-8308-dda2d766e61e\", \"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
 	runningSpaces = "[\"e6886bba-e263-4b52-aaf1-85d410f15fc8\"]"
 )
