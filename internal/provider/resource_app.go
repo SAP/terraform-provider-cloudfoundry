@@ -16,9 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
@@ -77,7 +75,6 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				MarkdownDescription: "Multiple buildpacks used to stage the application.",
 				ElementType:         types.StringType,
 				Optional:            true,
-				Computed:            true,
 			},
 			"path": schema.StringAttribute{
 				MarkdownDescription: "An uri or path to target a zip file. this can be in the form of unix path (/my/path.zip) or url path (http://zip.com/my.zip).",
@@ -116,13 +113,13 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"strategy": schema.StringAttribute{
 				MarkdownDescription: "The deployment strategy to use when deploying the application. Valid values are 'none', 'rolling', and 'blue-green', defaults to 'none'.",
 				Optional:            true,
-				Default:             stringdefault.StaticString("none"),
 				Validators: []validator.String{
 					stringvalidator.OneOf("none", "rolling", "blue-green"),
 				},
 			},
 			"service_bindings": schema.SetNestedAttribute{
 				MarkdownDescription: "Service instances to bind to the application.",
+				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"service_instance": schema.StringAttribute{
@@ -130,6 +127,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 							Required:            true,
 						},
 						"params": schema.MapAttribute{
+							ElementType:         types.StringType,
 							MarkdownDescription: "A list of key/value parameters used by the service broker to create the binding.",
 							Optional:            true,
 						},
@@ -138,6 +136,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			},
 			"routes": schema.SetNestedAttribute{
 				MarkdownDescription: "The routes to map to the application to control its ingress traffic.",
+				Optional:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"route": schema.StringAttribute{
@@ -147,6 +146,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 						"protocol": schema.StringAttribute{
 							MarkdownDescription: "The protocol to use for the route. Valid values are http2, http1, and tcp.",
 							Optional:            true,
+							Computed:            true,
 							Validators: []validator.String{
 								stringvalidator.OneOf("http2", "http1", "tcp"),
 							},
@@ -159,29 +159,6 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				Optional:            true,
 				ElementType:         types.StringType,
 			},
-			"health_check_interval": schema.Int64Attribute{
-				MarkdownDescription: "The interval in seconds between health checks.",
-			},
-			"readiness_health_check_type": schema.StringAttribute{
-				MarkdownDescription: "The readiness health check type which can be one of 'port', 'process', 'http'.",
-				Optional:            true,
-			},
-			"readiness_health_check_http_endpoint": schema.StringAttribute{
-				MarkdownDescription: "The endpoint for the http readiness health check type.",
-				Optional:            true,
-			},
-			"readiness_health_check_invocation_timeout": schema.Int64Attribute{
-				MarkdownDescription: "The timeout in seconds for the readiness health check requests for http and port health checks.",
-				Optional:            true,
-			},
-			"readiness_health_check_interval": schema.Int64Attribute{
-				MarkdownDescription: "The interval in seconds between readiness health checks.",
-				Optional:            true,
-			},
-			"log_rate_limit_per_second": schema.StringAttribute{
-				MarkdownDescription: "The attribute specifies the log rate limit for all instances of an app.",
-				Optional:            true,
-			},
 			"no_route": schema.BoolAttribute{
 				MarkdownDescription: "The attribute with a value of true to prevent a route from being created for your app.",
 				Optional:            true,
@@ -193,6 +170,22 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"processes": schema.SetNestedAttribute{
 				MarkdownDescription: "List of configurations for individual process types.",
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.ConflictsWith(path.MatchRoot("command")),
+					setvalidator.ConflictsWith(path.MatchRoot("disk_quota")),
+					setvalidator.ConflictsWith(path.MatchRoot("health_check_http_endpoint")),
+					setvalidator.ConflictsWith(path.MatchRoot("health_check_invocation_timeout")),
+					setvalidator.ConflictsWith(path.MatchRoot("health_check_type")),
+					setvalidator.ConflictsWith(path.MatchRoot("health_check_interval")),
+					setvalidator.ConflictsWith(path.MatchRoot("readiness_health_check_type")),
+					setvalidator.ConflictsWith(path.MatchRoot("readiness_health_check_http_endpoint")),
+					setvalidator.ConflictsWith(path.MatchRoot("readiness_health_check_invocation_timeout")),
+					setvalidator.ConflictsWith(path.MatchRoot("readiness_health_check_interval")),
+					setvalidator.ConflictsWith(path.MatchRoot("log_rate_limit_per_second")),
+					setvalidator.ConflictsWith(path.MatchRoot("instances")),
+					setvalidator.ConflictsWith(path.MatchRoot("memory")),
+					setvalidator.ConflictsWith(path.MatchRoot("timeout")),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: r.ProcessSchemaAttributes(),
 				},
@@ -225,8 +218,14 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 					},
 				},
 			},
-			idKey:        guidSchema(),
-			createdAtKey: createdAtSchema(),
+			idKey: schema.StringAttribute{
+				MarkdownDescription: "The GUID of the object.",
+				Computed:            true,
+			},
+			createdAtKey: schema.StringAttribute{
+				MarkdownDescription: "The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.",
+				Computed:            true,
+			},
 			updatedAtKey: updatedAtSchema(),
 		},
 	}
@@ -241,7 +240,7 @@ func (r *appResource) ProcessSchemaAttributes() map[string]schema.Attribute {
 	pSchema := map[string]schema.Attribute{
 		"type": schema.StringAttribute{
 			MarkdownDescription: "The process type. Can be web or worker.",
-			Optional:            true,
+			Required:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("web", "worker"),
 			},
@@ -276,17 +275,47 @@ func (r *appResource) ProcessAppCommonSchema() map[string]schema.Attribute {
 		"health_check_type": schema.StringAttribute{
 			MarkdownDescription: "The health check type which can be one of 'port', 'process', 'http'.",
 			Optional:            true,
+			Computed:            true,
 			Validators: []validator.String{
 				stringvalidator.OneOf("port", "process", "http"),
 			},
 		},
+		"health_check_interval": schema.Int64Attribute{
+			MarkdownDescription: "The interval in seconds between health checks.",
+			Optional:            true,
+		},
+		"readiness_health_check_type": schema.StringAttribute{
+			MarkdownDescription: "The readiness health check type which can be one of 'port', 'process', 'http'.",
+			Optional:            true,
+			Computed:            true,
+			Validators: []validator.String{
+				stringvalidator.OneOf("port", "process", "http"),
+			},
+		},
+		"readiness_health_check_http_endpoint": schema.StringAttribute{
+			MarkdownDescription: "The endpoint for the http readiness health check type.",
+			Optional:            true,
+		},
+		"readiness_health_check_invocation_timeout": schema.Int64Attribute{
+			MarkdownDescription: "The timeout in seconds for the readiness health check requests for http and port health checks.",
+			Optional:            true,
+		},
+		"readiness_health_check_interval": schema.Int64Attribute{
+			MarkdownDescription: "The interval in seconds between readiness health checks.",
+			Optional:            true,
+		},
+		"log_rate_limit_per_second": schema.StringAttribute{
+			MarkdownDescription: "The attribute specifies the log rate limit for all instances of an app.",
+			Computed:            true,
+			Optional:            true,
+		},
 		"instances": schema.Int64Attribute{
 			MarkdownDescription: "The number of app instances that you want to start. Defaults to 1.",
 			Optional:            true,
-			Default:             int64default.StaticInt64(int64(1)),
+			Computed:            true,
 		},
-		"memory": schema.Int64Attribute{
-			MarkdownDescription: "The memory limit for each application instance in megabytes. If not provided, value is computed and retreived from Cloud Foundry.",
+		"memory": schema.StringAttribute{
+			MarkdownDescription: "The memory limit for each application instance. If not provided, value is computed and retreived from Cloud Foundry.",
 			Optional:            true,
 			Computed:            true,
 		},
@@ -338,8 +367,13 @@ func (r *appResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 		resp.Diagnostics.AddError("Error fetching app", err.Error())
 		return
 	}
-	plan, diags := mapAppValuesToType(ctx, appManifest.Applications[0], appResp)
+	plan, diags := mapAppValuesToType(ctx, appManifest.Applications[0], appResp, &appType)
 	resp.Diagnostics.Append(diags...)
+	plan.Space = appType.Space
+	plan.Org = appType.Org
+	plan.Path = appType.Path
+	plan.Strategy = appType.Strategy
+	plan.SourceCodeHash = appType.SourceCodeHash
 	resp.State.Set(ctx, &plan)
 }
 
@@ -373,7 +407,7 @@ func (r *appResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 	if err != nil {
 		respDiags.AddError("Error unmarshalling manifest", err.Error())
 	}
-	plan, diags := mapAppValuesToType(ctx, manifest.Applications[0], appResp)
+	plan, diags := mapAppValuesToType(ctx, manifest.Applications[0], appResp, &appType)
 	respDiags.Append(diags...)
 	plan.Space = appType.Space
 	plan.Org = appType.Org

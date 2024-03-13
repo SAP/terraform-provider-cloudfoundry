@@ -275,6 +275,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 		NewSecurityGroupResource,
 		NewRouteResource,
 		NewDomainResource,
+		NewAppResource,
 	}
 }
 
