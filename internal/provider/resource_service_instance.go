@@ -18,7 +18,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/setplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/samber/lo"
 )
 
 type serviceInstanceResource struct {
@@ -285,11 +284,13 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 				"API Error in creating managed service instance",
 				"Unable to create service instance "+plan.Name.ValueString()+": "+err.Error(),
 			)
+			return
 		}
-		if pollJob(ctx, *r.cfClient, jobID) != nil {
+		err = pollJob(ctx, *r.cfClient, jobID)
+		if err != nil {
 			resp.Diagnostics.AddError(
 				"Unable to verify service instance creation",
-				"Service Instance verification failed for "+plan.Name.ValueString()+": "+err.Error(),
+				"Service Instance verification failed for+ "+plan.Name.ValueString()+": "+err.Error(),
 			)
 		}
 		serviceInstance, err = r.cfClient.ServiceInstances.Single(ctx, &cfv3client.ServiceInstanceListOptions{
@@ -361,6 +362,7 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 				"API Error in creating user-provided service instance",
 				"Unable to create service instance "+plan.Name.ValueString()+": "+err.Error(),
 			)
+			return
 		}
 		serviceInstance, err = r.cfClient.ServiceInstances.Single(ctx, &cfv3client.ServiceInstanceListOptions{
 			Names: cfv3client.Filter{
@@ -396,27 +398,12 @@ func (r *serviceInstanceResource) Read(ctx context.Context, req resource.ReadReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	svcInstances, err := r.cfClient.ServiceInstances.ListAll(ctx, &cfv3client.ServiceInstanceListOptions{
-		Names: cfv3client.Filter{
-			Values: []string{
-				data.Name.ValueString(),
-			},
-		},
-	})
+	svcInstance, err := r.cfClient.ServiceInstances.Get(ctx, data.ID.ValueString())
 	if err != nil {
 		handleReadErrors(ctx, resp, err, "service_instance", data.ID.ValueString())
 		return
 	}
-	svcInstance, found := lo.Find(svcInstances, func(svcInstance *cfv3resource.ServiceInstance) bool {
-		return svcInstance.Name == data.Name.ValueString()
-	})
-	if !found {
-		resp.Diagnostics.AddError(
-			"Unable to find service instance in list",
-			fmt.Sprintf("Given name %s not in the list of service instances.", data.Name.ValueString()),
-		)
-		return
-	}
+
 	data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
 	resp.Diagnostics.Append(diags...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -515,6 +502,7 @@ func (r *serviceInstanceResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.Append(diags...)
 		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 	case userProvidedServiceInstance:
+
 		updateServiceInstance := cfv3resource.ServiceInstanceUserProvidedUpdate{
 			Name: plan.Name.ValueStringPointer(),
 		}

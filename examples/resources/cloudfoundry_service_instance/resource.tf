@@ -23,16 +23,16 @@ data "cloudfoundry_service" "autoscaler_svc" {
   name = "autoscaler"
 }
 resource "cloudfoundry_service_instance" "xsuaa_svc" {
-  name         = "tf-xsuaa-test"
+  name         = "xsuaa_svc"
   type         = "managed"
-  tags =       ["terraform-test","xsuaa-test"]
+  tags =       ["terraform-test","test1"]
   space        = data.cloudfoundry_space.team_space.id
   service_plan = data.cloudfoundry_service.xsuaa_svc.service_plans["application"]
   parameters = <<EOT
   {
-  "xsappname": "tf-test1",
+  "xsappname": "tf-test23",
   "tenant-mode": "dedicated",
-  "description": "tf test1",
+  "description": "tf test123",
   "foreign-scope-references": ["user_attributes"],
   "scopes": [
     {
@@ -68,7 +68,7 @@ resource "cloudfoundry_service_instance" "dev-usp" {
   credentials = <<EOT
   {
     "user": "user1",
-    "password": "xxxxxx"
+    "password": "demo122"
   }
   EOT
 }

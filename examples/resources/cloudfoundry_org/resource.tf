@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    cloudfoundry = {
+      source = "sap/cloudfoundry"
+    }
+  }
+}
+provider "cloudfoundry" {}
 resource "cloudfoundry_org" "org" {
   name      = "tf-test"
   suspended = false

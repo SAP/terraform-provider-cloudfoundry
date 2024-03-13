@@ -3,4 +3,4 @@ default: test
 # Run acceptance tests
 .PHONY: test
 test:
-	go test -count=1 ./... -v $(TESTARGS) -timeout 10m
+	go test -cover  -count=1 ./... -v $(TESTARGS) -timeout 10m

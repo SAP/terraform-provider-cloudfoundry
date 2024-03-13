@@ -1,0 +1,339 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 139
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"type":"user-provided","name":"test-si-user-provided","relationships":{"space":{"data":{"guid":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143"}}}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"24db218e-1859-4e41-b6c5-cdb6e3764b27","created_at":"2024-03-13T17:50:51Z","updated_at":"2024-03-13T17:50:51Z","name":"test-si-user-provided","tags":[],"last_operation":{"type":"create","state":"succeeded","description":"Operation succeeded","updated_at":"2024-03-13T17:50:51Z","created_at":"2024-03-13T17:50:51Z"},"type":"user-provided","syslog_drain_url":null,"route_service_url":null,"relationships":{"space":{"data":{"guid":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143"},"service_credential_bindings":{"href":"https://api.x.x.x.x.com/v3/service_credential_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"service_route_bindings":{"href":"https://api.x.x.x.x.com/v3/service_route_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"credentials":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27/credentials"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 13 Mar 2024 17:50:51 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 70bdae47c69fdff1
+            X-B3-Traceid:
+                - b8d0abb98650466670bdae47c69fdff1
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710353864"
+            X-Runtime:
+                - "0.019549"
+            X-Vcap-Request-Id:
+                - b8d0abb9-8650-4666-70bd-ae47c69fdff1::7651e225-aed4-488c-89ab-33a9f49df18c
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 203.742625ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances?names=test-si-user-provided&space_guids=02c0cc92-6ecc-44b1-b7b2-096ca19ee143
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/service_instances?names=test-si-user-provided\u0026page=1\u0026per_page=50\u0026space_guids=02c0cc92-6ecc-44b1-b7b2-096ca19ee143"},"last":{"href":"https://api.x.x.x.x.com/v3/service_instances?names=test-si-user-provided\u0026page=1\u0026per_page=50\u0026space_guids=02c0cc92-6ecc-44b1-b7b2-096ca19ee143"},"next":null,"previous":null},"resources":[{"guid":"24db218e-1859-4e41-b6c5-cdb6e3764b27","created_at":"2024-03-13T17:50:51Z","updated_at":"2024-03-13T17:50:51Z","name":"test-si-user-provided","tags":[],"last_operation":{"type":"create","state":"succeeded","description":"Operation succeeded","updated_at":"2024-03-13T17:50:51Z","created_at":"2024-03-13T17:50:51Z"},"type":"user-provided","syslog_drain_url":null,"route_service_url":null,"relationships":{"space":{"data":{"guid":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143"},"service_credential_bindings":{"href":"https://api.x.x.x.x.com/v3/service_credential_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"service_route_bindings":{"href":"https://api.x.x.x.x.com/v3/service_route_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"credentials":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27/credentials"}}}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 13 Mar 2024 17:50:51 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 435652b50aa1201c
+            X-B3-Traceid:
+                - 30d93d4c1e5a4b79435652b50aa1201c
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710353864"
+            X-Runtime:
+                - "0.029249"
+            X-Vcap-Request-Id:
+                - 30d93d4c-1e5a-4b79-4356-52b50aa1201c::6969b81a-eca1-4738-b61f-ad7e7bc380fb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 216.205583ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"24db218e-1859-4e41-b6c5-cdb6e3764b27","created_at":"2024-03-13T17:50:51Z","updated_at":"2024-03-13T17:50:51Z","name":"test-si-user-provided","tags":[],"last_operation":{"type":"create","state":"succeeded","description":"Operation succeeded","updated_at":"2024-03-13T17:50:51Z","created_at":"2024-03-13T17:50:51Z"},"type":"user-provided","syslog_drain_url":null,"route_service_url":null,"relationships":{"space":{"data":{"guid":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143"},"service_credential_bindings":{"href":"https://api.x.x.x.x.com/v3/service_credential_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"service_route_bindings":{"href":"https://api.x.x.x.x.com/v3/service_route_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"credentials":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27/credentials"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 13 Mar 2024 17:50:51 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 60d996084fcdcb0a
+            X-B3-Traceid:
+                - 4df9e593d34f45ba60d996084fcdcb0a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710353864"
+            X-Runtime:
+                - "0.016474"
+            X-Vcap-Request-Id:
+                - 4df9e593-d34f-45ba-60d9-96084fcdcb0a::b45ac788-4a59-4ec5-a6d0-87f3fdf5501d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 203.408583ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"guid":"24db218e-1859-4e41-b6c5-cdb6e3764b27","created_at":"2024-03-13T17:50:51Z","updated_at":"2024-03-13T17:50:51Z","name":"test-si-user-provided","tags":[],"last_operation":{"type":"create","state":"succeeded","description":"Operation succeeded","updated_at":"2024-03-13T17:50:51Z","created_at":"2024-03-13T17:50:51Z"},"type":"user-provided","syslog_drain_url":null,"route_service_url":null,"relationships":{"space":{"data":{"guid":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143"}}},"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143"},"service_credential_bindings":{"href":"https://api.x.x.x.x.com/v3/service_credential_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"service_route_bindings":{"href":"https://api.x.x.x.x.com/v3/service_route_bindings?service_instance_guids=24db218e-1859-4e41-b6c5-cdb6e3764b27"},"credentials":{"href":"https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27/credentials"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 13 Mar 2024 17:50:52 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 57b1c757bdbd2205
+            X-B3-Traceid:
+                - 9a196281887d461257b1c757bdbd2205
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710353865"
+            X-Runtime:
+                - "0.016279"
+            X-Vcap-Request-Id:
+                - 9a196281-887d-4612-57b1-c757bdbd2205::10d446ba-25f0-4ba3-b2c2-db91486808c9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 201.7385ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances/24db218e-1859-4e41-b6c5-cdb6e3764b27
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 13 Mar 2024 17:50:52 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7be8d1a5f8d5559d
+            X-B3-Traceid:
+                - 87836e636f3b4df07be8d1a5f8d5559d
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710353864"
+            X-Runtime:
+                - "0.031767"
+            X-Vcap-Request-Id:
+                - 87836e63-6f3b-4df0-7be8-d1a5f8d5559d::878279cc-6706-40d9-9c73-6e3751583500
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 220.355375ms

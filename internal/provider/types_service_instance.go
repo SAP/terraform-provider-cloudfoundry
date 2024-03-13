@@ -188,6 +188,9 @@ func mapResourceServiceInstanceValuesToType(ctx context.Context, value *resource
 		}
 		serviceInstanceType.Tags, diags = types.SetValueFrom(ctx, types.StringType, tags)
 		diagnostics.Append(diags...)
+	} else {
+		serviceInstanceType.Tags = types.SetNull(types.StringType)
+
 	}
 
 	serviceInstanceType.LastOperation, diags = types.ObjectValueFrom(ctx, lastOperationAttrTypes, mapLastOperation(value.LastOperation))
