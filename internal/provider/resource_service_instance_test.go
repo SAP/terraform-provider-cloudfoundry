@@ -67,6 +67,8 @@ func TestResourceServiceInstance(t *testing.T) {
 						resource.TestCheckResourceAttr(resourceName, "space", testSpaceGUID),
 						resource.TestCheckResourceAttr(resourceName, "service_plan", testServicePanGUID),
 						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
+						resource.TestMatchResourceAttr(resourceName, "parameters", regexp.MustCompile(`"tf test1-update"`)),
+						resource.TestCheckResourceAttr(resourceName, "tags.0", "test-tag"),
 						resource.TestMatchResourceAttr(resourceName, "created_at", regexpValidRFC3999Format),
 						resource.TestMatchResourceAttr(resourceName, "updated_at", regexpValidRFC3999Format),
 					),

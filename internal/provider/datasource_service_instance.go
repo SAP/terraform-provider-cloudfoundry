@@ -65,12 +65,10 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				Attributes: map[string]schema.Attribute{
 					"version": schema.StringAttribute{
 						MarkdownDescription: "The version of the service instance",
-						Optional:            true,
 						Computed:            true,
 					},
 					"description": schema.StringAttribute{
 						MarkdownDescription: "A description of the version of the service instance",
-						Optional:            true,
 						Computed:            true,
 					},
 				},
@@ -86,32 +84,26 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 			"last_operation": schema.SingleNestedAttribute{
 				MarkdownDescription: "The last operation performed on the service instance",
 				Computed:            true,
-				Optional:            false,
 				Attributes: map[string]schema.Attribute{
 					"type": schema.StringAttribute{
 						MarkdownDescription: "The type of the last operation",
 						Computed:            true,
-						Optional:            true,
 					},
 					"state": schema.StringAttribute{
 						MarkdownDescription: "The state of the last operation",
 						Computed:            true,
-						Optional:            true,
 					},
 					"description": schema.StringAttribute{
 						MarkdownDescription: "A description of the last operation",
 						Computed:            true,
-						Optional:            true,
 					},
 					"updated_at": schema.StringAttribute{
 						MarkdownDescription: "The time at which the last operation was updated",
 						Computed:            true,
-						Optional:            true,
 					},
 					"created_at": schema.StringAttribute{
 						MarkdownDescription: "The time at which the last operation was created",
 						Computed:            true,
-						Optional:            true,
 					},
 				},
 			},
@@ -152,9 +144,10 @@ func (d *ServiceInstanceDataSource) Read(ctx context.Context, req datasource.Rea
 
 	svcInstances, err := d.cfClient.ServiceInstances.ListAll(ctx, &cfv3client.ServiceInstanceListOptions{
 		Names: cfv3client.Filter{
-			Values: []string{
-				data.Name.ValueString(),
-			},
+			Values: []string{data.Name.ValueString()},
+		},
+		SpaceGUIDs: cfv3client.Filter{
+			Values: []string{data.Space.ValueString()},
 		},
 	})
 	if err != nil {
@@ -175,12 +168,7 @@ func (d *ServiceInstanceDataSource) Read(ctx context.Context, req datasource.Rea
 		return
 	}
 
-	switch svcInstance.Type {
-	case "managed":
-		data, diags = mapDataSourceServiceInstanceValuesToType(ctx, svcInstance)
-	case "user-provided":
-		data, diags = mapDataSourceServiceInstanceValuesToType(ctx, svcInstance)
-	}
+	data, diags = mapDataSourceServiceInstanceValuesToType(ctx, svcInstance)
 	resp.Diagnostics.Append(diags...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

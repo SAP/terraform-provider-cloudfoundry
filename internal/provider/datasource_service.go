@@ -108,13 +108,7 @@ func (d *ServiceDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		}
 	}
 
-	serviceOfferings, err := d.cfClient.ServiceOfferings.ListAll(ctx, &cfv3client.ServiceOfferingListOptions{
-		Names: cfv3client.Filter{
-			Values: []string{
-				data.Name.ValueString(),
-			},
-		},
-	})
+	serviceOfferings, err := d.cfClient.ServiceOfferings.ListAll(ctx, svcOfferingOpts)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Fetching service offering",
