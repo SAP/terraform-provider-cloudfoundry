@@ -1,0 +1,73 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 229
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"type":"managed","name":"test-si-wrong-space","relationships":{"service_plan":{"data":{"guid":"432bd9db-20e2-4997-825f-e4a937705b87"}},"space":{"data":{"guid":"wrong-space-guid"}}},"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"errors":[{"detail":"Invalid space. Ensure that the space exists and you have access to it.","title":"CF-UnprocessableEntity","code":10008}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 14 Mar 2024 08:40:42 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 68c90a74237f6e8d
+            X-B3-Traceid:
+                - fc323c46eea0415a68c90a74237f6e8d
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710406063"
+            X-Runtime:
+                - "0.003205"
+            X-Vcap-Request-Id:
+                - fc323c46-eea0-415a-68c9-0a74237f6e8d::b477f61e-e938-4927-9c58-67b15c22e99a
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 548.007167ms

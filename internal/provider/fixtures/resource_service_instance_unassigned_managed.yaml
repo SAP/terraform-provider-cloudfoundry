@@ -1,0 +1,73 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 256
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"type":"managed","name":"test-si-unassigned-managed","relationships":{"service_plan":{"data":{"guid":"69867829-3044-458c-a7f4-f32dee0d8174"}},"space":{"data":{"guid":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143"}}},"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/service_instances
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"errors":[{"detail":"The service instance name is taken: test-si-unassigned-managed.","title":"CF-UnprocessableEntity","code":10008}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 13 Mar 2024 17:09:36 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4706f83c508986b6
+            X-B3-Traceid:
+                - e74d22226a65495a4706f83c508986b6
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1710351474"
+            X-Runtime:
+                - "0.039578"
+            X-Vcap-Request-Id:
+                - e74d2222-6a65-495a-4706-f83c508986b6::20d08b40-0335-4865-8159-8cec5fe07aa3
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 261.067333ms
