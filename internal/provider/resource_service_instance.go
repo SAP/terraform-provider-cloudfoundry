@@ -82,6 +82,7 @@ https://docs.cloudfoundry.org/devguide/services`,
 			"credentials": schema.StringAttribute{
 				MarkdownDescription: "A JSON object that is made available to apps bound to this service instance of type user-provided.",
 				Optional:            true,
+				Sensitive:           true,
 				CustomType:          jsontypes.NormalizedType{},
 			},
 			"syslog_drain_url": schema.StringAttribute{
