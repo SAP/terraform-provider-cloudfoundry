@@ -1,13 +1,13 @@
 ---
-page_title: "cloudfoundry_app Resource - terraform-provider-cloudfoundry"
+page_title: "cloudfoundry_app Data Source - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Provides a Cloud Foundry resource to manage applications.
+  Gets information on a Cloud Foundry application.
 ---
 
-# cloudfoundry_app (Resource)
+# cloudfoundry_app (Data Source)
 
-Provides a Cloud Foundry resource to manage applications.
+Gets information on a Cloud Foundry application.
 
 ## Example Usage
 
@@ -17,78 +17,40 @@ terraform {
     cloudfoundry = {
       source = "sap/cloudfoundry"
     }
-    zipper = {
-      source = "ArthurHlt/zipper"
-    }
   }
 }
 provider "cloudfoundry" {}
 
-provider "zipper" {}
-
-resource "zipper_file" "fixture" {
-  source      = "https://github.com/cloudfoundry-samples/cf-sample-app-nodejs.git"
-  output_path = "cf-sample-app-nodejs.zip"
+data "cloudfoundry_app" "http-bin-server" {
+  name  = "cf-nodejs"
+  space = "tf-space-1"
+  org   = "PerformanceTeamBLR"
 }
 
-resource "cloudfoundry_app" "gobis-server" {
-  name             = "cf-nodejs"
-  space            = "tf-space-1"
-  org              = "PerformanceTeamBLR"
-  path             = zipper_file.fixture.output_path
-  source_code_hash = zipper_file.fixture.output_sha
-  instances        = 1
-  environment = {
-    MY_ENV = "red",
-  }
-  strategy = "rolling"
-  services = [
-    "xsuaa-tf",
-  ]
-  routes = [
-    {
-      route = "cf-sample.cfapps.sap.hana.ondemand.com"
-    }
-  ]
+output "id" {
+  value = data.cloudfoundry_app.http-bin-server.id
 }
 
-resource "cloudfoundry_app" "http-bin-server" {
-  name         = "http-bin"
-  space        = "tf-space-1"
-  org          = "PerformanceTeamBLR"
-  docker_image = "kennethreitz/httpbin"
-  strategy     = "blue-green"
-  processes = [
-    {
-      type                                 = "web",
-      instances                            = 1
-      memory                               = "256M"
-      disk_quota                           = "1024M"
-      health_check_type                    = "http"
-      health_check_http_endpoint           = "/get"
-      readiness_health_check_type          = "http"
-      readiness_health_check_http_endpoint = "/get"
-    }
-  ]
-  no_route = true
+output "name" {
+  value = data.cloudfoundry_app.http-bin-server.name
 }
-
-resource "cloudfoundry_app" "http-bin-sidecar" {
-  name         = "http-bin-sidecar"
-  space        = "tf-space-1"
-  org          = "PerformanceTeamBLR"
-  docker_image = "kennethreitz/httpbin"
-  sidecars = [
-    {
-      name = "sidecar-2"
-      process_types = [
-        "worker"
-      ]
-      command = "sleep 5200"
-      memory  = "256M"
-    }
-  ]
-  no_route = true
+output "environment" {
+  value = data.cloudfoundry_app.http-bin-server.environment
+}
+output "instances" {
+  value = data.cloudfoundry_app.http-bin-server.instances
+}
+output "memory" {
+  value = data.cloudfoundry_app.http-bin-server.memory
+}
+output "disk_quota" {
+  value = data.cloudfoundry_app.http-bin-server.disk_quota
+}
+output "routes" {
+  value = data.cloudfoundry_app.http-bin-server.routes
+}
+output "buildpacks" {
+  value = data.cloudfoundry_app.http-bin-server.buildpacks
 }
 ```
 
@@ -97,69 +59,51 @@ resource "cloudfoundry_app" "http-bin-sidecar" {
 
 ### Required
 
-- `name` (String) The name of the application.
-- `org` (String) The name of the associated Cloud Foundry organization.
-- `space` (String) The name of the associated Cloud Foundry space.
+- `name` (String) The name of the application to look up
+- `org` (String) The name of the associated Cloud Foundry organization to look up
+- `space` (String) The name of the space to look up
 
-### Optional
+### Read-Only
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `buildpacks` (Set of String) Multiple buildpacks used to stage the application.
 - `command` (String) A custom start command for the application. This overrides the start command provided by the buildpack.
+- `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `disk_quota` (String) The disk space to be allocated for each application instance.
 - `docker_credentials` (Attributes) Defines login credentials for private docker repositories (see [below for nested schema](#nestedatt--docker_credentials))
-- `docker_image` (String) The URL to the docker image with tag e.g registry.example.com:5000/user/repository/tag or docker image name from the public repo e.g. redis:4.0
+- `docker_image` (String) The URL to the docker image with tag
 - `environment` (Map of String) Key/value pairs of custom environment variables to set in your app. Does not include any system or service variables.
 - `health_check_http_endpoint` (String) The endpoint for the http health check type.
 - `health_check_interval` (Number) The interval in seconds between health checks.
 - `health_check_invocation_timeout` (Number) The timeout in seconds for the health check requests for http and port health checks.
 - `health_check_type` (String) The health check type which can be one of 'port', 'process', 'http'.
+- `id` (String) The GUID of the object.
 - `instances` (Number) The number of app instances that you want to start. Defaults to 1.
-- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `log_rate_limit_per_second` (String) The attribute specifies the log rate limit for all instances of an app.
 - `memory` (String) The memory limit for each application instance. If not provided, value is computed and retreived from Cloud Foundry.
-- `no_route` (Boolean) The attribute with a value of true to prevent a route from being created for your app.
-- `path` (String) An uri or path to target a zip file. this can be in the form of unix path (/my/path.zip) or url path (http://zip.com/my.zip).
 - `processes` (Attributes Set) List of configurations for individual process types. (see [below for nested schema](#nestedatt--processes))
-- `random_route` (Boolean) The random-route attribute to generate a unique route and avoid name collisions.
 - `readiness_health_check_http_endpoint` (String) The endpoint for the http readiness health check type.
 - `readiness_health_check_interval` (Number) The interval in seconds between readiness health checks.
 - `readiness_health_check_invocation_timeout` (Number) The timeout in seconds for the readiness health check requests for http and port health checks.
 - `readiness_health_check_type` (String) The readiness health check type which can be one of 'port', 'process', 'http'.
 - `routes` (Attributes Set) The routes to map to the application to control its ingress traffic. (see [below for nested schema](#nestedatt--routes))
-- `service_bindings` (Attributes Set) Service instances to bind to the application. (see [below for nested schema](#nestedatt--service_bindings))
+- `service_bindings` (Attributes Set) Service instances bound to the application. (see [below for nested schema](#nestedatt--service_bindings))
 - `sidecars` (Attributes Set) The attribute specifies additional processes to run in the same container as your app (see [below for nested schema](#nestedatt--sidecars))
-- `source_code_hash` (String) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the path specified.
 - `stack` (String) The name of the stack the application will be deployed to.
-- `strategy` (String) The deployment strategy to use when deploying the application. Valid values are 'none', 'rolling', and 'blue-green', defaults to 'none'.
 - `timeout` (Number) Defines the number of seconds that Cloud Foundry allocates for starting your app.
-
-### Read-Only
-
-- `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
-- `id` (String) The GUID of the object.
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 
 <a id="nestedatt--docker_credentials"></a>
 ### Nested Schema for `docker_credentials`
 
-Required:
+Read-Only:
 
 - `username` (String, Sensitive) The username for the private docker repository.
-
-Optional:
-
-- `password` (String, Sensitive) The password for the private docker repository.
 
 
 <a id="nestedatt--processes"></a>
 ### Nested Schema for `processes`
 
-Required:
-
-- `type` (String) The process type. Can be web or worker.
-
-Optional:
+Read-Only:
 
 - `command` (String) A custom start command for the application. This overrides the start command provided by the buildpack.
 - `disk_quota` (String) The disk space to be allocated for each application instance.
@@ -175,42 +119,36 @@ Optional:
 - `readiness_health_check_invocation_timeout` (Number) The timeout in seconds for the readiness health check requests for http and port health checks.
 - `readiness_health_check_type` (String) The readiness health check type which can be one of 'port', 'process', 'http'.
 - `timeout` (Number) Defines the number of seconds that Cloud Foundry allocates for starting your app.
+- `type` (String) The process type. Can be web or worker.
 
 
 <a id="nestedatt--routes"></a>
 ### Nested Schema for `routes`
 
-Required:
-
-- `route` (String) The fully route qualified domain name which will be bound to app
-
 Optional:
 
 - `protocol` (String) The protocol to use for the route. Valid values are http2, http1, and tcp.
+
+Read-Only:
+
+- `route` (String) The fully route qualified domain name which will be bound to app
 
 
 <a id="nestedatt--service_bindings"></a>
 ### Nested Schema for `service_bindings`
 
-Required:
-
-- `service_instance` (String) The service instance name.
-
-Optional:
+Read-Only:
 
 - `params` (Map of String) A map of arbitrary key/value pairs to send to the service broker during binding.
+- `service_instance` (String) The service instance name.
 
 
 <a id="nestedatt--sidecars"></a>
 ### Nested Schema for `sidecars`
 
-Required:
+Read-Only:
 
 - `command` (String) The command used to start the sidecar.
+- `memory` (String) The memory limit for the sidecar.
 - `name` (String) Sidecar name. The identifier for the sidecars to be configured.
 - `process_types` (Set of String) List of processes to associate sidecar with.
-
-Optional:
-
-- `memory` (String) The memory limit for the sidecar.
-

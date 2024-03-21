@@ -9,7 +9,9 @@ import (
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-validators/boolvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -17,6 +19,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/setplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
@@ -74,11 +77,17 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"buildpacks": schema.SetAttribute{
 				MarkdownDescription: "Multiple buildpacks used to stage the application.",
 				ElementType:         types.StringType,
-				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
+				Optional: true,
 			},
 			"path": schema.StringAttribute{
 				MarkdownDescription: "An uri or path to target a zip file. this can be in the form of unix path (/my/path.zip) or url path (http://zip.com/my.zip).",
-				Required:            true,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.AtLeastOneOf(path.MatchRoot("docker_image"), path.MatchRoot("path")),
+				},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
@@ -86,27 +95,36 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"source_code_hash": schema.StringAttribute{
 				MarkdownDescription: "Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the path specified.",
 				Optional:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 			},
 			"docker_image": schema.StringAttribute{
 				MarkdownDescription: "The URL to the docker image with tag e.g registry.example.com:5000/user/repository/tag or docker image name from the public repo e.g. redis:4.0",
 				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.AtLeastOneOf(path.MatchRoot("docker_image"), path.MatchRoot("path")),
+				},
 			},
-			"docker_credentials": schema.MapNestedAttribute{
+			"docker_credentials": schema.SingleNestedAttribute{
 				MarkdownDescription: "Defines login credentials for private docker repositories",
 				Optional:            true,
-				Validators: []validator.Map{
-					mapvalidator.AlsoRequires(path.MatchRoot("docker_image")),
+				Validators: []validator.Object{
+					objectvalidator.AlsoRequires(path.MatchRoot("docker_image")),
 				},
-				NestedObject: schema.NestedAttributeObject{
-					Attributes: map[string]schema.Attribute{
-						"username": schema.StringAttribute{
-							MarkdownDescription: "The username for the private docker repository. Password must be provided in the environment variable CF_DOCKER_PASSWORD.",
-							Required:            true,
-							Sensitive:           true,
+				Attributes: map[string]schema.Attribute{
+					"username": schema.StringAttribute{
+						MarkdownDescription: "The username for the private docker repository.",
+						Required:            true,
+						Validators: []validator.String{
+							stringvalidator.LengthAtLeast(1),
 						},
+						Sensitive: true,
+					},
+					"password": schema.StringAttribute{
+						MarkdownDescription: "The password for the private docker repository.",
+						Optional:            true,
+						Validators: []validator.String{
+							stringvalidator.LengthAtLeast(1),
+						},
+						Sensitive: true,
 					},
 				},
 			},
@@ -120,15 +138,22 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"service_bindings": schema.SetNestedAttribute{
 				MarkdownDescription: "Service instances to bind to the application.",
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
+				PlanModifiers: []planmodifier.Set{
+					setplanmodifier.RequiresReplace(),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"service_instance": schema.StringAttribute{
-							MarkdownDescription: "The service instance GUID.",
+							MarkdownDescription: "The service instance name.",
 							Required:            true,
 						},
 						"params": schema.MapAttribute{
 							ElementType:         types.StringType,
-							MarkdownDescription: "A list of key/value parameters used by the service broker to create the binding.",
+							Validators:          []validator.Map{mapvalidator.SizeAtLeast(1)},
+							MarkdownDescription: "A map of arbitrary key/value pairs to send to the service broker during binding.",
 							Optional:            true,
 						},
 					},
@@ -137,10 +162,17 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"routes": schema.SetNestedAttribute{
 				MarkdownDescription: "The routes to map to the application to control its ingress traffic.",
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
+				Computed: true,
+				PlanModifiers: []planmodifier.Set{
+					setplanmodifier.RequiresReplace(),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"route": schema.StringAttribute{
-							MarkdownDescription: "The route GUID.",
+							MarkdownDescription: "The fully route qualified domain name which will be bound to app",
 							Required:            true,
 						},
 						"protocol": schema.StringAttribute{
@@ -157,20 +189,32 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"environment": schema.MapAttribute{
 				MarkdownDescription: "Key/value pairs of custom environment variables to set in your app. Does not include any system or service variables.",
 				Optional:            true,
-				ElementType:         types.StringType,
+				Validators: []validator.Map{
+					mapvalidator.SizeAtLeast(1),
+				},
+				ElementType: types.StringType,
 			},
 			"no_route": schema.BoolAttribute{
 				MarkdownDescription: "The attribute with a value of true to prevent a route from being created for your app.",
 				Optional:            true,
+				Validators: []validator.Bool{
+					boolvalidator.ConflictsWith(path.MatchRoot("routes")),
+					boolvalidator.ConflictsWith(path.MatchRoot("random_route")),
+				},
 			},
 			"random_route": schema.BoolAttribute{
 				MarkdownDescription: "The random-route attribute to generate a unique route and avoid name collisions.",
 				Optional:            true,
+				Validators: []validator.Bool{
+					boolvalidator.ConflictsWith(path.MatchRoot("routes")),
+					boolvalidator.ConflictsWith(path.MatchRoot("no_route")),
+				},
 			},
 			"processes": schema.SetNestedAttribute{
 				MarkdownDescription: "List of configurations for individual process types.",
 				Optional:            true,
 				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
 					setvalidator.ConflictsWith(path.MatchRoot("command")),
 					setvalidator.ConflictsWith(path.MatchRoot("disk_quota")),
 					setvalidator.ConflictsWith(path.MatchRoot("health_check_http_endpoint")),
@@ -193,6 +237,12 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"sidecars": schema.SetNestedAttribute{
 				MarkdownDescription: "The attribute specifies additional processes to run in the same container as your app",
 				Optional:            true,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
+				PlanModifiers: []planmodifier.Set{
+					setplanmodifier.RequiresReplace(),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
@@ -208,6 +258,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 							ElementType:         types.StringType,
 							Required:            true,
 							Validators: []validator.Set{
+								setvalidator.SizeAtLeast(1),
 								setvalidator.ValueStringsAre(stringvalidator.OneOf("web", "worker")),
 							},
 						},
@@ -218,6 +269,8 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 					},
 				},
 			},
+			labelsKey:      resourceLabelsSchema(),
+			annotationsKey: resourceAnnotationsSchema(),
 			idKey: schema.StringAttribute{
 				MarkdownDescription: "The GUID of the object.",
 				Computed:            true,
@@ -341,7 +394,7 @@ func (r *appResource) Configure(ctx context.Context, req resource.ConfigureReque
 }
 
 func (r *appResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	r.upsert(ctx, &req.Plan, &resp.State, &resp.Diagnostics)
+	r.upsert(ctx, &req.Plan, nil, &resp.State, &resp.Diagnostics)
 }
 
 func (r *appResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
@@ -349,6 +402,11 @@ func (r *appResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 	diags := req.State.Get(ctx, &appType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
+		return
+	}
+	appResp, err := r.cfClient.Applications.Get(ctx, appType.ID.ValueString())
+	if err != nil {
+		handleReadErrors(ctx, resp, err, "app", appType.ID.ValueString())
 		return
 	}
 	appRaw, err := r.cfClient.Manifests.Generate(ctx, appType.ID.ValueString())
@@ -362,38 +420,40 @@ func (r *appResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 		resp.Diagnostics.AddError("Error unmarshalling app", err.Error())
 		return
 	}
-	appResp, err := r.cfClient.Applications.Get(ctx, appType.ID.ValueString())
-	if err != nil {
-		resp.Diagnostics.AddError("Error fetching app", err.Error())
-		return
-	}
 	plan, diags := mapAppValuesToType(ctx, appManifest.Applications[0], appResp, &appType)
 	resp.Diagnostics.Append(diags...)
-	plan.Space = appType.Space
-	plan.Org = appType.Org
-	plan.Path = appType.Path
-	plan.Strategy = appType.Strategy
-	plan.SourceCodeHash = appType.SourceCodeHash
+	plan.CopyConfigAttributes(&appType)
 	resp.State.Set(ctx, &plan)
 }
 
 func (r *appResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	r.upsert(ctx, &req.Plan, &resp.State, &resp.Diagnostics)
+	r.upsert(ctx, &req.Plan, &req.State, &resp.State, &resp.Diagnostics)
 }
-func (r *appResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState *tfsdk.State, respDiags *diag.Diagnostics) {
-	var appType AppType
-	diags := reqPlan.Get(ctx, &appType)
+func (r *appResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, reqState *tfsdk.State, respState *tfsdk.State, respDiags *diag.Diagnostics) {
+	var desiredState, previousState AppType
+	diags := reqPlan.Get(ctx, &desiredState)
 	respDiags.Append(diags...)
 	if respDiags.HasError() {
 		return
 	}
-
-	appManifestValue, diags := appType.mapAppTypeToValues(ctx)
+	appManifestValue, diags := desiredState.mapAppTypeToValues(ctx)
 	respDiags.Append(diags...)
 	if respDiags.HasError() {
 		return
 	}
-	appResp, err := r.push(appType, appManifestValue, ctx)
+	if reqState != nil {
+		diags = reqState.Get(ctx, &previousState)
+		respDiags.Append(diags...)
+		if respDiags.HasError() {
+			return
+		}
+		appManifestValue.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, desiredState.Labels, desiredState.Annotations)
+		respDiags.Append(diags...)
+		if respDiags.HasError() {
+			return
+		}
+	}
+	appResp, err := r.push(desiredState, appManifestValue, ctx)
 	if err != nil {
 		respDiags.AddError("Error pushing app", err.Error())
 		return
@@ -407,19 +467,19 @@ func (r *appResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 	if err != nil {
 		respDiags.AddError("Error unmarshalling manifest", err.Error())
 	}
-	plan, diags := mapAppValuesToType(ctx, manifest.Applications[0], appResp, &appType)
+	plan, diags := mapAppValuesToType(ctx, manifest.Applications[0], appResp, &desiredState)
 	respDiags.Append(diags...)
-	plan.Space = appType.Space
-	plan.Org = appType.Org
-	plan.Path = appType.Path
-	plan.Strategy = appType.Strategy
-	plan.SourceCodeHash = appType.SourceCodeHash
+	plan.CopyConfigAttributes(&desiredState)
 	respDiags.Append(respState.Set(ctx, &plan)...)
 }
 func (r *appResource) push(appType AppType, appManifestValue *cfv3operation.AppManifest, ctx context.Context) (*cfv3resource.App, error) {
-	file, err := os.Open(appType.Path.ValueString())
-	if err != nil {
-		return nil, err
+	var file *os.File
+	var err error
+	if !appType.Path.IsNull() {
+		file, err = os.Open(appType.Path.ValueString())
+		if err != nil {
+			return nil, err
+		}
 	}
 	manifestOp := cfv3operation.NewAppPushOperation(r.cfClient, appType.Org.ValueString(), appType.Space.ValueString())
 	if !appType.Strategy.IsNull() {

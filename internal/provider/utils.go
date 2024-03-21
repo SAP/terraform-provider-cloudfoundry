@@ -3,6 +3,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"time"
 
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
@@ -205,4 +206,18 @@ func booltoboolptr(s bool) *bool {
 // Returns a pointer to an int
 func inttointptr(s int) *int {
 	return &s
+}
+
+func copyFields(dst, src interface{}) {
+	dstValue := reflect.ValueOf(dst).Elem()
+	srcValue := reflect.ValueOf(src).Elem()
+
+	for i := 0; i < dstValue.NumField(); i++ {
+		dstField := dstValue.Field(i)
+		srcField := srcValue.FieldByName(dstValue.Type().Field(i).Name)
+
+		if srcField.IsValid() {
+			dstField.Set(srcField)
+		}
+	}
 }

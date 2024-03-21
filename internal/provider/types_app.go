@@ -2,10 +2,12 @@ package provider
 
 import (
 	"context"
+	"os"
 	"time"
 
 	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -23,7 +25,7 @@ type AppType struct {
 	DockerCredentials                     *DockerCredentials `tfsdk:"docker_credentials"`
 	Strategy                              types.String       `tfsdk:"strategy"`
 	ServiceBindings                       []ServiceBinding   `tfsdk:"service_bindings"`
-	Routes                                []Route            `tfsdk:"routes"`
+	Routes                                types.Set          `tfsdk:"routes"`
 	Environment                           types.Map          `tfsdk:"environment"`
 	HealthCheckInterval                   types.Int64        `tfsdk:"health_check_interval"`
 	ReadinessHealthCheckType              types.String       `tfsdk:"readiness_health_check_type"`
@@ -46,6 +48,56 @@ type AppType struct {
 	Instances                             types.Int64        `tfsdk:"instances"`
 	Memory                                types.String       `tfsdk:"memory"`
 	Timeout                               types.Int64        `tfsdk:"timeout"`
+	Labels                                types.Map          `tfsdk:"labels"`
+	Annotations                           types.Map          `tfsdk:"annotations"`
+}
+
+type AppTypeReduced struct {
+	Name                                  types.String       `tfsdk:"name"`
+	Space                                 types.String       `tfsdk:"space"`
+	Org                                   types.String       `tfsdk:"org"`
+	Stack                                 types.String       `tfsdk:"stack"`
+	Buildpacks                            types.Set          `tfsdk:"buildpacks"`
+	DockerImage                           types.String       `tfsdk:"docker_image"`
+	DockerCredentials                     *DockerCredentials `tfsdk:"docker_credentials"`
+	ServiceBindings                       []ServiceBinding   `tfsdk:"service_bindings"`
+	Routes                                types.Set          `tfsdk:"routes"`
+	Environment                           types.Map          `tfsdk:"environment"`
+	HealthCheckInterval                   types.Int64        `tfsdk:"health_check_interval"`
+	ReadinessHealthCheckType              types.String       `tfsdk:"readiness_health_check_type"`
+	ReadinessHealthCheckHttpEndpoint      types.String       `tfsdk:"readiness_health_check_http_endpoint"`
+	ReadinessHealthCheckInvocationTimeout types.Int64        `tfsdk:"readiness_health_check_invocation_timeout"`
+	ReadinessHealthCheckInterval          types.Int64        `tfsdk:"readiness_health_check_interval"`
+	LogRateLimitPerSecond                 types.String       `tfsdk:"log_rate_limit_per_second"`
+	Processes                             []Process          `tfsdk:"processes"`
+	Sidecars                              []Sidecar          `tfsdk:"sidecars"`
+	ID                                    types.String       `tfsdk:"id"`
+	CreatedAt                             types.String       `tfsdk:"created_at"`
+	UpdatedAt                             types.String       `tfsdk:"updated_at"`
+	Command                               types.String       `tfsdk:"command"`
+	DiskQuota                             types.String       `tfsdk:"disk_quota"`
+	HealthCheckHttpEndpoint               types.String       `tfsdk:"health_check_http_endpoint"`
+	HealthCheckInvocationTimeout          types.Int64        `tfsdk:"health_check_invocation_timeout"`
+	HealthCheckType                       types.String       `tfsdk:"health_check_type"`
+	Instances                             types.Int64        `tfsdk:"instances"`
+	Memory                                types.String       `tfsdk:"memory"`
+	Timeout                               types.Int64        `tfsdk:"timeout"`
+	Labels                                types.Map          `tfsdk:"labels"`
+	Annotations                           types.Map          `tfsdk:"annotations"`
+}
+
+// Reduce function to reduce AppType to AppTypeReduced
+// This is used to reuse mapAppValuesToType in both resource and datasource
+func (a *AppType) Reduce() AppTypeReduced {
+	var reduced AppTypeReduced
+	copyFields(&reduced, a)
+	return reduced
+}
+
+func (a *AppTypeReduced) Expand() AppType {
+	var expanded AppType
+	copyFields(&expanded, a)
+	return expanded
 }
 
 type Sidecar struct {
@@ -87,9 +139,16 @@ type Route struct {
 	Protocol types.String `tfsdk:"protocol"`
 }
 
+var routeObjType = types.ObjectType{
+	AttrTypes: map[string]attr.Type{
+		"route":    types.StringType,
+		"protocol": types.StringType,
+	},
+}
+
 // mapAppTypeToValues function maps AppType to cfv3resource manifest type
 func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.AppManifest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+	var diags, tempDiags diag.Diagnostics
 	appmanifest := cfv3operation.AppManifest{}
 	appmanifest.Name = appType.Name.ValueString()
 	if !appType.Stack.IsUnknown() {
@@ -97,7 +156,8 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	}
 	if !appType.Buildpacks.IsNull() {
 		var buildpacks []string
-		diags = appType.Buildpacks.ElementsAs(ctx, &buildpacks, false)
+		tempDiags = appType.Buildpacks.ElementsAs(ctx, &buildpacks, false)
+		diags = append(diags, tempDiags...)
 		appmanifest.Buildpacks = buildpacks
 	}
 	if !appType.DockerImage.IsNull() {
@@ -106,23 +166,35 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 		}
 		if appType.DockerCredentials != nil {
 			appManifestDocker.Username = appType.DockerCredentials.Username.ValueString()
+			err := os.Setenv("CF_DOCKER_PASSWORD", appType.DockerCredentials.Password.ValueString())
+			if err != nil {
+				tempDiags.AddError("Error setting docker password", err.Error())
+				diags = append(diags, tempDiags...)
+			}
 		}
+		appmanifest.Docker = &appManifestDocker
 	}
 	if len(appType.ServiceBindings) != 0 {
-		var serviceBindings cfv3operation.AppManifestServices
-		for _, serviceBinding := range appType.ServiceBindings {
-			var appParam map[string]interface{}
-			diags = serviceBinding.Params.ElementsAs(ctx, &appParam, false)
-			serviceBindings = append(serviceBindings, cfv3operation.AppManifestService{
-				Name:       serviceBinding.ServiceInstance.ValueString(),
-				Parameters: appParam,
-			})
+		var services cfv3operation.AppManifestServices
+		for _, service := range appType.ServiceBindings {
+			serviceManifest := cfv3operation.AppManifestService{
+				Name: service.ServiceInstance.ValueString(),
+			}
+			if !service.Params.IsNull() {
+				var params map[string]interface{}
+				tempDiags = service.Params.ElementsAs(ctx, &params, false)
+				diags = append(diags, tempDiags...)
+				serviceManifest.Parameters = params
+			}
+			services = append(services, serviceManifest)
 		}
-		appmanifest.Services = &serviceBindings
+		appmanifest.Services = &services
 	}
-	if len(appType.Routes) != 0 {
+	if !appType.Routes.IsUnknown() {
 		var routes cfv3operation.AppManifestRoutes
-		for _, route := range appType.Routes {
+		tfRoutes := []Route{}
+		diags = appType.Routes.ElementsAs(ctx, &tfRoutes, false)
+		for _, route := range tfRoutes {
 			routeManifest := cfv3operation.AppManifestRoute{
 				Route: route.Route.ValueString(),
 			}
@@ -135,7 +207,8 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	}
 	if !appType.Environment.IsNull() {
 		var env map[string]string
-		diags = appType.Environment.ElementsAs(ctx, &env, false)
+		tempDiags = appType.Environment.ElementsAs(ctx, &env, false)
+		diags = append(diags, tempDiags...)
 		appmanifest.Env = env
 	}
 	if !appType.HealthCheckInterval.IsNull() {
@@ -217,7 +290,8 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 		var sidecars cfv3operation.AppManifestSideCars
 		for _, sidecar := range appType.Sidecars {
 			var processTypes []string
-			diags = sidecar.ProcessTypes.ElementsAs(ctx, &processTypes, false)
+			tempDiags = sidecar.ProcessTypes.ElementsAs(ctx, &processTypes, false)
+			diags = append(diags, tempDiags...)
 			sidecarManifest := cfv3operation.AppManifestSideCar{
 				Name:         sidecar.Name.ValueString(),
 				Command:      sidecar.Command.ValueString(),
@@ -254,6 +328,13 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	if !appType.Timeout.IsNull() {
 		appmanifest.Timeout = uint(appType.Timeout.ValueInt64())
 	}
+	if !appType.Labels.IsNull() {
+		appmanifest.Metadata = cfv3resource.NewMetadata()
+		tempDiags = appType.Labels.ElementsAs(ctx, appmanifest.Metadata.Labels, false)
+		diags = append(diags, tempDiags...)
+		tempDiags = appType.Annotations.ElementsAs(ctx, appmanifest.Metadata.Annotations, false)
+		diags = append(diags, tempDiags...)
+	}
 	return &appmanifest, diags
 }
 
@@ -276,17 +357,23 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 	if appManifest.Docker != nil {
 		appType.DockerImage = types.StringValue(appManifest.Docker.Image)
 		if appManifest.Docker.Username != "" {
+			appType.DockerCredentials = &DockerCredentials{}
 			appType.DockerCredentials.Username = types.StringValue(appManifest.Docker.Username)
+			appType.DockerCredentials.Password = types.StringValue(os.Getenv("CF_DOCKER_PASSWORD"))
 		}
 	}
 	if appManifest.Services != nil {
 		var serviceBindings []ServiceBinding
-		for _, service := range *appManifest.Services {
+		for i, service := range *appManifest.Services {
 			var sb ServiceBinding
 			sb.ServiceInstance = types.StringValue(service.Name)
 			if service.Parameters != nil {
 				sb.Params, tempDiags = types.MapValueFrom(ctx, types.MapType{ElemType: types.StringType}, service.Parameters)
 				diags = append(diags, tempDiags...)
+			} else {
+				if reqPlanType != nil {
+					sb.Params = reqPlanType.ServiceBindings[i].Params
+				}
 			}
 			serviceBindings = append(serviceBindings, sb)
 		}
@@ -302,17 +389,15 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 			}
 			routes = append(routes, r)
 		}
-		appType.Routes = routes
+		appType.Routes, diags = types.SetValueFrom(ctx, routeObjType, routes)
+	} else {
+		appType.Routes = types.SetNull(routeObjType)
 	}
 	if appManifest.Env != nil {
 		appType.Environment, tempDiags = types.MapValueFrom(ctx, types.StringType, appManifest.Env)
 		diags = append(diags, tempDiags...)
-	}
-	if appManifest.NoRoute {
-		appType.NoRoute = types.BoolValue(appManifest.NoRoute)
-	}
-	if appManifest.RandomRoute {
-		appType.RandomRoute = types.BoolValue(appManifest.RandomRoute)
+	} else {
+		appType.Environment = types.MapNull(types.StringType)
 	}
 	if appManifest.Processes != nil {
 		var processes []Process
@@ -434,5 +519,21 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 	appType.ID = types.StringValue(app.GUID)
 	appType.CreatedAt = types.StringValue(app.CreatedAt.Format(time.RFC3339))
 	appType.UpdatedAt = types.StringValue(app.UpdatedAt.Format(time.RFC3339))
+	if app.Metadata != nil {
+		appType.Labels, tempDiags = mapMetadataValueToType(ctx, app.Metadata.Labels)
+		diags = append(diags, tempDiags...)
+		appType.Annotations, tempDiags = mapMetadataValueToType(ctx, app.Metadata.Annotations)
+		diags = append(diags, tempDiags...)
+	}
 	return appType, diags
+}
+
+func (target *AppType) CopyConfigAttributes(source *AppType) {
+	target.Space = source.Space
+	target.Org = source.Org
+	target.Path = source.Path
+	target.Strategy = source.Strategy
+	target.SourceCodeHash = source.SourceCodeHash
+	target.RandomRoute = source.RandomRoute
+	target.NoRoute = source.NoRoute
 }
