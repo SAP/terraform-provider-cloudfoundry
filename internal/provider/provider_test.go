@@ -215,6 +215,7 @@ func TestCloudFoundryProvider_HasResources(t *testing.T) {
 		"cloudfoundry_security_group",
 		"cloudfoundry_service_instance",
 		"cloudfoundry_route",
+		"cloudfoundry_domain",
 	}
 
 	ctx := context.Background()
@@ -244,6 +245,7 @@ func TestProvider_HasDataSources(t *testing.T) {
 		"cloudfoundry_service_instance",
 		"cloudfoundry_service",
 		"cloudfoundry_route",
+		"cloudfoundry_domain",
 	}
 
 	ctx := context.Background()

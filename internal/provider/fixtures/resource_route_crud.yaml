@@ -32,12 +32,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[],"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[],"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:24 GMT
+                - Tue, 12 Mar 2024 05:02:11 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -45,9 +45,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 47fc2502596d84ba
+                - 6fc72acb4b2a108e
             X-B3-Traceid:
-                - 4444e9b175e8460647fc2502596d84ba
+                - 7c7d8540dc0648b16fc72acb4b2a108e
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -57,14 +57,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.075406"
+                - "0.041481"
             X-Vcap-Request-Id:
-                - 4444e9b1-75e8-4606-47fc-2502596d84ba::07bca8a3-736d-4fa8-930f-d3ad0175b948
+                - 7c7d8540-dc06-48b1-6fc7-2acb4b2a108e::a18a943c-4523-4ea8-a89c-3462731e39c3
             X-Xss-Protection:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 636.553292ms
+        duration: 879.077731ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -86,8 +86,8 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations
-        method: POST
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations
+        method: PATCH
       response:
         proto: HTTP/2.0
         proto_major: 2
@@ -96,12 +96,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"route":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"}}}'
+        body: '{"destinations":[{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"route":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:24 GMT
+                - Tue, 12 Mar 2024 05:02:12 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -109,9 +109,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 6a873507f564f3e5
+                - 5f0837f4ab26959d
             X-B3-Traceid:
-                - 42d170e2a35e4d066a873507f564f3e5
+                - 4bcb67fb9888446e5f0837f4ab26959d
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -121,14 +121,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.144513"
+                - "0.179691"
             X-Vcap-Request-Id:
-                - 42d170e2-a35e-4d06-6a87-3507f564f3e5::fa06b849-f1f3-481f-848d-c2918ad82d03
+                - 4bcb67fb-9888-446e-5f08-37f4ab26959d::ea7102db-31dd-4583-869f-202078f9fd81
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 324.358667ms
+        duration: 356.157962ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -147,7 +147,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: GET
       response:
         proto: HTTP/2.0
@@ -157,12 +157,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:25 GMT
+                - Tue, 12 Mar 2024 05:02:12 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -170,9 +170,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4a6fce3aad8ad71a
+                - 5677006d27148b93
             X-B3-Traceid:
-                - 467fcbd56de843ba4a6fce3aad8ad71a
+                - 853deb3f4568473f5677006d27148b93
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -182,14 +182,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.021859"
+                - "0.017418"
             X-Vcap-Request-Id:
-                - 467fcbd5-6de8-43ba-4a6f-ce3aad8ad71a::96a99cf7-55f2-4e85-8cf1-518743a61124
+                - 853deb3f-4568-473f-5677-006d27148b93::6ac1e6d2-587b-4739-af3f-6e6c7d10474f
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 199.602459ms
+        duration: 195.022675ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -208,7 +208,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: GET
       response:
         proto: HTTP/2.0
@@ -218,12 +218,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:25 GMT
+                - Tue, 12 Mar 2024 05:02:13 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -231,9 +231,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 7c9ddd06a7bbc325
+                - 702adc933fba2e82
             X-B3-Traceid:
-                - fc66dd1f0f524a437c9ddd06a7bbc325
+                - 918cbeee921845b4702adc933fba2e82
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -243,14 +243,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.017853"
+                - "0.020919"
             X-Vcap-Request-Id:
-                - fc66dd1f-0f52-4a43-7c9d-dd06a7bbc325::18f597c2-ca4f-47cd-b58a-5030c4ad7db6
+                - 918cbeee-9218-45b4-702a-dc933fba2e82::fecd62bd-b0af-4d1c-b667-dea9667e92dd
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 205.479375ms
+        duration: 198.346102ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -272,7 +272,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -282,12 +282,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"route":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"}}}'
+        body: '{"destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"route":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:26 GMT
+                - Tue, 12 Mar 2024 05:02:14 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -295,9 +295,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 778f4e1d4aaf4232
+                - 7dac497629c0993e
             X-B3-Traceid:
-                - 5a01fa5aa77941e9778f4e1d4aaf4232
+                - 6118c632180641f57dac497629c0993e
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -307,14 +307,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.171462"
+                - "0.191686"
             X-Vcap-Request-Id:
-                - 5a01fa5a-a779-41e9-778f-4e1d4aaf4232::7acecbd5-b26e-48aa-9247-9ca2cb45a2d5
+                - 6118c632-1806-41f5-7dac-497629c0993e::42f1d0bc-d0c0-4cc1-8229-d674dc9bfefa
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 352.215375ms
+        duration: 369.668909ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -336,7 +336,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -346,12 +346,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:26 GMT
+                - Tue, 12 Mar 2024 05:02:14 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -359,9 +359,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 7574913ac7e0f0e0
+                - 6912d64c6de1c07d
             X-B3-Traceid:
-                - 706e03bfd6df41dd7574913ac7e0f0e0
+                - 7d95218faad341126912d64c6de1c07d
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -371,14 +371,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.054113"
+                - "0.059428"
             X-Vcap-Request-Id:
-                - 706e03bf-d6df-41dd-7574-913ac7e0f0e0::23152056-cfb2-41e6-964e-7d998e15c414
+                - 7d95218f-aad3-4112-6912-d64c6de1c07d::ad8f0ad2-1b83-4d04-8400-36e1732b4059
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 233.163625ms
+        duration: 236.872381ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -397,7 +397,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: GET
       response:
         proto: HTTP/2.0
@@ -407,12 +407,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:27 GMT
+                - Tue, 12 Mar 2024 05:02:14 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -420,9 +420,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 6b97bcd212180af5
+                - 5bb31ce2026ffb97
             X-B3-Traceid:
-                - 84a68f1eed074a916b97bcd212180af5
+                - 9137df392f984b6a5bb31ce2026ffb97
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -432,14 +432,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.021988"
+                - "0.021697"
             X-Vcap-Request-Id:
-                - 84a68f1e-ed07-4a91-6b97-bcd212180af5::f845c511-946d-434b-ba79-4d18bf508d1d
+                - 9137df39-2f98-4b6a-5bb3-1ce2026ffb97::91c5362e-b08f-4c3f-acab-37a14aa974d2
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 205.672ms
+        duration: 197.413262ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -458,7 +458,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: GET
       response:
         proto: HTTP/2.0
@@ -468,12 +468,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"3dfd8344-9f1a-4139-9ff0-8e3348be8362","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"},{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"e6f3c2a8-926d-46e9-8bdd-731971652748","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":36001,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:27 GMT
+                - Tue, 12 Mar 2024 05:02:15 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -481,9 +481,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 44130a5afd67975c
+                - 6acc4fe456f58d7b
             X-B3-Traceid:
-                - be9b756a706946fd44130a5afd67975c
+                - 1062284e6861454e6acc4fe456f58d7b
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -493,14 +493,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.021306"
+                - "0.122660"
             X-Vcap-Request-Id:
-                - be9b756a-7069-46fd-4413-0a5afd67975c::9612f096-3b02-46cd-8759-dd7fd21abc38
+                - 1062284e-6861-454e-6acc-4fe456f58d7b::919a80f9-024e-4efd-8520-661dd2d40ebb
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 200.602834ms
+        duration: 319.573843ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -522,7 +522,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -532,12 +532,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"destinations":[{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"route":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"}}}'
+        body: '{"destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"route":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:28 GMT
+                - Tue, 12 Mar 2024 05:02:16 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -545,9 +545,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4b2637b1645b6502
+                - 461d10ab9bb327f8
             X-B3-Traceid:
-                - 57c9bfd46bc942554b2637b1645b6502
+                - 8f31f67d767c4daf461d10ab9bb327f8
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -557,14 +557,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.187527"
+                - "0.156714"
             X-Vcap-Request-Id:
-                - 57c9bfd4-6bc9-4255-4b26-37b1645b6502::dfd0da67-aeab-42c3-b53e-926a9fe9a805
+                - 8f31f67d-767c-4daf-461d-10ab9bb327f8::23982637-06ff-49a5-9e23-cc17dc721f1d
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 365.943916ms
+        duration: 332.835788ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -586,7 +586,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -596,12 +596,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:28 GMT
+                - Tue, 12 Mar 2024 05:02:16 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -609,9 +609,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 40f48033c6c2a615
+                - 615a28567c43208d
             X-B3-Traceid:
-                - 7dc215368b7242bd40f48033c6c2a615
+                - b46e3a6a29c84ef6615a28567c43208d
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -621,14 +621,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.019555"
+                - "0.042798"
             X-Vcap-Request-Id:
-                - 7dc21536-8b72-42bd-40f4-8033c6c2a615::16f27cb4-7704-4900-bfd5-5535de9d219d
+                - b46e3a6a-29c8-4ef6-615a-28567c43208d::f8663aa1-720a-4ab9-bd76-7540142bf0fa
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 200.006167ms
+        duration: 218.106426ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -647,7 +647,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: GET
       response:
         proto: HTTP/2.0
@@ -657,12 +657,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:29 GMT
+                - Tue, 12 Mar 2024 05:02:17 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -670,9 +670,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 6652f160053c3ae4
+                - 5c853886daa92821
             X-B3-Traceid:
-                - 8865a4c59fd54cd56652f160053c3ae4
+                - 4f68dc16fae24e0d5c853886daa92821
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -682,14 +682,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.021292"
+                - "0.020514"
             X-Vcap-Request-Id:
-                - 8865a4c5-9fd5-4cd5-6652-f160053c3ae4::ae5fc15a-db73-466d-80dc-495143a56ac0
+                - 4f68dc16-fae2-4e0d-5c85-3886daa92821::0be31b48-98e1-4099-8bbf-b21d3ff39ea8
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 199.925167ms
+        duration: 198.294853ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -708,7 +708,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: GET
       response:
         proto: HTTP/2.0
@@ -718,12 +718,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"6e37c591-48eb-4a38-a31e-cc877aa0dfda","created_at":"2024-03-01T09:16:24Z","updated_at":"2024-03-01T09:16:24Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"d09f492c-e5e0-49b7-b99c-55299a787798","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"f1688bad-f1c6-4171-9804-cfdd9b6c8c89","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
+        body: '{"guid":"298d344f-5460-4495-80fd-aeb02adcf55b","created_at":"2024-03-12T05:02:11Z","updated_at":"2024-03-12T05:02:11Z","protocol":"http","host":"testing123","path":"/cart","port":null,"url":"testing123.cert.cfapps.stagingazure.hanavlab.ondemand.com/cart","destinations":[{"guid":"23eafced-788d-49a3-8233-06fdd7bc04e4","app":{"guid":"15a74002-cf3a-4bf2-b76f-fe96867c46ee","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"},{"guid":"a4623454-0389-4717-be07-05f10226ec1d","app":{"guid":"24a711f2-148b-4d48-b37a-90a66d6e842f","process":{"type":"web"}},"weight":null,"port":80,"protocol":"http1"}],"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/795a961c-6360-479a-9666-fff9cb906aad"},"destinations":{"href":"https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b/destinations"},"domain":{"href":"https://api.x.x.x.x.com/v3/domains/440e24e5-ee11-41d9-a996-2ed0a1e2deea"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:29 GMT
+                - Tue, 12 Mar 2024 05:02:17 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -731,9 +731,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 56bca5460c04db7a
+                - 40738db3cb6f4da1
             X-B3-Traceid:
-                - da194242f3fc4b7956bca5460c04db7a
+                - 499427d0986d4b3640738db3cb6f4da1
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -743,14 +743,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.022104"
+                - "0.010059"
             X-Vcap-Request-Id:
-                - da194242-f3fc-4b79-56bc-a5460c04db7a::af677a3d-2c30-4b62-bfe3-b9612259b418
+                - 499427d0-986d-4b36-4073-8db3cb6f4da1::f9759718-ed66-4e44-a89f-352038f76b15
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 202.03525ms
+        duration: 193.549436ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -769,7 +769,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes/6e37c591-48eb-4a38-a31e-cc877aa0dfda
+        url: https://api.x.x.x.x.com/v3/routes/298d344f-5460-4495-80fd-aeb02adcf55b
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -784,9 +784,9 @@ interactions:
             Content-Type:
                 - text/html
             Date:
-                - Fri, 01 Mar 2024 09:16:30 GMT
+                - Tue, 12 Mar 2024 05:02:18 GMT
             Location:
-                - https://api.x.x.x.x.com/v3/jobs/c4cd97e1-d9db-47b1-b0ef-23cf151cbc54
+                - https://api.x.x.x.x.com/v3/jobs/2a48697d-2ce6-4f29-b1f7-24e0ccb84693
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -794,9 +794,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 52e517909c3f7790
+                - 6705c308414f5c6b
             X-B3-Traceid:
-                - 267c17e4b845490b52e517909c3f7790
+                - 160ad5d37aca41056705c308414f5c6b
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -806,14 +806,14 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.025998"
+                - "0.016898"
             X-Vcap-Request-Id:
-                - 267c17e4-b845-490b-52e5-17909c3f7790::d353369b-a9b7-4961-8903-a76a7d230aea
+                - 160ad5d3-7aca-4105-6705-c308414f5c6b::574323a0-3a8b-4a0a-8c99-125c21acd6b2
             X-Xss-Protection:
                 - 1; mode=block
         status: 202 Accepted
         code: 202
-        duration: 210.439ms
+        duration: 194.482185ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -832,7 +832,7 @@ interactions:
                 - Bearer redacted
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/jobs/c4cd97e1-d9db-47b1-b0ef-23cf151cbc54
+        url: https://api.x.x.x.x.com/v3/jobs/2a48697d-2ce6-4f29-b1f7-24e0ccb84693
         method: GET
       response:
         proto: HTTP/2.0
@@ -842,12 +842,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"c4cd97e1-d9db-47b1-b0ef-23cf151cbc54","created_at":"2024-03-01T09:16:30Z","updated_at":"2024-03-01T09:16:31Z","operation":"route.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/c4cd97e1-d9db-47b1-b0ef-23cf151cbc54"}}}'
+        body: '{"guid":"2a48697d-2ce6-4f29-b1f7-24e0ccb84693","created_at":"2024-03-12T05:02:18Z","updated_at":"2024-03-12T05:02:20Z","operation":"route.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/2a48697d-2ce6-4f29-b1f7-24e0ccb84693"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 01 Mar 2024 09:16:32 GMT
+                - Tue, 12 Mar 2024 05:02:20 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -855,9 +855,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 61fcb3e15814a782
+                - 72ded24236121cf8
             X-B3-Traceid:
-                - 9da1bf59aec94edb61fcb3e15814a782
+                - 00bd13cd93944d5c72ded24236121cf8
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -867,11 +867,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.004148"
+                - "0.003821"
             X-Vcap-Request-Id:
-                - 9da1bf59-aec9-4edb-61fc-b3e15814a782::282cbaf8-8751-4908-b8e1-da5a8d239f47
+                - 00bd13cd-9394-4d5c-72de-d24236121cf8::63e9494a-ce44-4115-85b9-99ead20b5c7a
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 184.5505ms
+        duration: 188.044267ms

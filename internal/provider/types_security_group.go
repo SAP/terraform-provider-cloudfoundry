@@ -52,8 +52,8 @@ func mapSecurityGroupValuesToType(ctx context.Context, securityGroup *resource.S
 		CreatedAt:              types.StringValue(securityGroup.CreatedAt.Format(time.RFC3339)),
 		UpdatedAt:              types.StringValue(securityGroup.UpdatedAt.Format(time.RFC3339)),
 		Id:                     types.StringValue(securityGroup.GUID),
-		GloballyEnabledRunning: types.BoolValue(securityGroup.GloballyEnabled.Running),
-		GloballyEnabledStaging: types.BoolValue(securityGroup.GloballyEnabled.Staging),
+		GloballyEnabledRunning: types.BoolValue(*securityGroup.GloballyEnabled.Running),
+		GloballyEnabledStaging: types.BoolValue(*securityGroup.GloballyEnabled.Staging),
 	}
 
 	var diags, diagnostics diag.Diagnostics
@@ -122,10 +122,10 @@ func (data *securityGroupType) mapCreateSecurityGroupTypeToValues(ctx context.Co
 	if !data.GloballyEnabledRunning.IsNull() || !data.GloballyEnabledStaging.IsNull() {
 		createSecurityGroup.GloballyEnabled = &resource.SecurityGroupGloballyEnabled{}
 		if !data.GloballyEnabledRunning.IsNull() {
-			createSecurityGroup.GloballyEnabled.Running = data.GloballyEnabledRunning.ValueBool()
+			createSecurityGroup.GloballyEnabled.Running = data.GloballyEnabledRunning.ValueBoolPointer()
 		}
 		if !data.GloballyEnabledStaging.IsNull() {
-			createSecurityGroup.GloballyEnabled.Staging = data.GloballyEnabledStaging.ValueBool()
+			createSecurityGroup.GloballyEnabled.Staging = data.GloballyEnabledStaging.ValueBoolPointer()
 		}
 	}
 
@@ -204,10 +204,10 @@ func (plan *securityGroupType) mapUpdateSecurityGroupTypeToValues(ctx context.Co
 	if !plan.GloballyEnabledRunning.IsNull() || !plan.GloballyEnabledStaging.IsNull() {
 		updateSecurityGroup.GloballyEnabled = &resource.SecurityGroupGloballyEnabled{}
 		if !plan.GloballyEnabledRunning.IsNull() {
-			updateSecurityGroup.GloballyEnabled.Running = plan.GloballyEnabledRunning.ValueBool()
+			updateSecurityGroup.GloballyEnabled.Running = plan.GloballyEnabledRunning.ValueBoolPointer()
 		}
 		if !plan.GloballyEnabledStaging.IsNull() {
-			updateSecurityGroup.GloballyEnabled.Staging = plan.GloballyEnabledStaging.ValueBool()
+			updateSecurityGroup.GloballyEnabled.Staging = plan.GloballyEnabledStaging.ValueBoolPointer()
 		}
 	}
 

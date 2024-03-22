@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 209
+        content_length: 121
         transfer_encoding: []
         trailer: {}
         host: api.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"relationships":{"space":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}},"domain":{"data":{"guid":"795a961c-6360-479a-9666-fff9cb906aad"}}},"port":null,"metadata":{"labels":null,"annotations":null}}
+            {"name":"cert.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"metadata":{"labels":null,"annotations":null}}
         form: {}
         headers:
             Authorization:
@@ -22,7 +22,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/routes
+        url: https://api.x.x.x.x.com/v3/domains
         method: POST
       response:
         proto: HTTP/2.0
@@ -30,14 +30,16 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 156
         uncompressed: false
-        body: '{"errors":[{"detail":"Invalid domain. Ensure that the domain exists and you have access to it.","title":"CF-UnprocessableEntity","code":10008}]}'
+        body: '{"errors":[{"detail":"The domain name \"cert.cfapps.stagingazure.hanavlab.ondemand.com\" is already in use","title":"CF-UnprocessableEntity","code":10008}]}'
         headers:
+            Content-Length:
+                - "156"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Tue, 12 Mar 2024 05:02:21 GMT
+                - Mon, 18 Mar 2024 05:07:46 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -45,9 +47,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 7867de6f67f20006
+                - 664838519ab81bab
             X-B3-Traceid:
-                - 9c8cf0054b5d4e287867de6f67f20006
+                - 0d0afd37b6434ef6664838519ab81bab
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -57,11 +59,11 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.006079"
+                - "0.028107"
             X-Vcap-Request-Id:
-                - 9c8cf005-4b5d-4e28-7867-de6f67f20006::b67c87b2-5ec4-42a5-818f-ed8b5b642150
+                - 0d0afd37-b643-4ef6-6648-38519ab81bab::4a42bf2e-d378-4cb5-b033-d562f53c4d80
             X-Xss-Protection:
                 - 1; mode=block
         status: 422 Unprocessable Entity
         code: 422
-        duration: 182.95565ms
+        duration: 198.783927ms

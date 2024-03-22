@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 type routeType struct {
@@ -102,6 +103,10 @@ func mapRouteValuesToType(ctx context.Context, route *resource.Route) (routeType
 
 	if route.Path != "" {
 		routeType.Path = types.StringValue(route.Path)
+	}
+
+	if route.Host == "" {
+		routeType.Host = basetypes.NewStringNull()
 	}
 
 	var diags, diagnostics diag.Diagnostics

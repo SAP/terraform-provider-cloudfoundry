@@ -1,0 +1,950 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 377
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"},{"guid":"537e7b58-b3e0-4464-9cad-2deae6120a80"}]}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1115
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"537e7b58-b3e0-4464-9cad-2deae6120a80"},{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"}]}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1115"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:37 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6c8074ff233f0bf3
+            X-B3-Traceid:
+                - 3c24ffe14b4d4e816c8074ff233f0bf3
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.091318"
+            X-Vcap-Request-Id:
+                - 3c24ffe1-4b4d-4e81-6c80-74ff233f0bf3::4661d39e-e10e-48aa-9841-c04e03c3e04e
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 261.538663ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1115
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"537e7b58-b3e0-4464-9cad-2deae6120a80"},{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"}]}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1115"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:38 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7dafa42bc7a5bacb
+            X-B3-Traceid:
+                - 7a736d1cdfa744f87dafa42bc7a5bacb
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.013708"
+            X-Vcap-Request-Id:
+                - 7a736d1c-dfa7-44f8-7daf-a42bc7a5bacb::aa5beb64-7de5-422c-92d2-674955ac60ac
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 187.598295ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1115
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"537e7b58-b3e0-4464-9cad-2deae6120a80"},{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"}]}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1115"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:38 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 538366d99316bec0
+            X-B3-Traceid:
+                - 326f0ca6c71f4c3a538366d99316bec0
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.010407"
+            X-Vcap-Request-Id:
+                - 326f0ca6-c71f-4c3a-5383-66d99316bec0::bba6070d-f741-409d-b0dd-7e9297d3c6d9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 178.15849ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations/537e7b58-b3e0-4464-9cad-2deae6120a80
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 18 Mar 2024 05:07:39 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6c5c7017c1be030a
+            X-B3-Traceid:
+                - 4869fc876e124b6b6c5c7017c1be030a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.022996"
+            X-Vcap-Request-Id:
+                - 4869fc87-6e12-4b6b-6c5c-7017c1be030a::aad35a59-7afa-4e39-a0fb-5bfbd2f4eb81
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 204.532314ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 59
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"data":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}]}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 106
+        uncompressed: false
+        body: '{"data":[{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"},{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}]}'
+        headers:
+            Content-Length:
+                - "106"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:39 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 68d5248aadd3b7c0
+            X-B3-Traceid:
+                - fdd7662e36bd436268d5248aadd3b7c0
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.022764"
+            X-Vcap-Request-Id:
+                - fdd7662e-36bd-4362-68d5-248aadd3b7c0::7f56997b-cd05-4432-b34b-ef93e606e112
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 195.778669ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 101
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"metadata":{"labels":{"landscape":null,"purpose":"production","status":"fine"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1115
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"},{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}]}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1115"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:39 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7bbc7b48c36099d6
+            X-B3-Traceid:
+                - 7c87ef0137874d9c7bbc7b48c36099d6
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.045840"
+            X-Vcap-Request-Id:
+                - 7c87ef01-3787-4d9c-7bbc-7b48c36099d6::bcdd1826-24ca-4b58-a055-35be4e91162f
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 222.269028ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1115
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"},{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}]}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1115"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:40 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 49ec8fba0ebc8f38
+            X-B3-Traceid:
+                - 16ab807e04c4416349ec8fba0ebc8f38
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.012702"
+            X-Vcap-Request-Id:
+                - 16ab807e-04c4-4163-49ec-8fba0ebc8f38::cfed2bdd-863d-45e7-b91d-084cd5397e0b
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 195.524704ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1115
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[{"guid":"30edf44a-2d4c-432c-9680-9a61123edcf1"},{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}]}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1115"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:40 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6eed7c134b74c99f
+            X-B3-Traceid:
+                - e09d553dfac14a846eed7c134b74c99f
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.012034"
+            X-Vcap-Request-Id:
+                - e09d553d-fac1-4a84-6eed-7c134b74c99f::edc26a8c-b021-47d1-aead-c000318002be
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 187.300424ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations/30edf44a-2d4c-432c-9680-9a61123edcf1
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 18 Mar 2024 05:07:41 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5134174f57de809d
+            X-B3-Traceid:
+                - 8f7d572fec5d492d5134174f57de809d
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.021379"
+            X-Vcap-Request-Id:
+                - 8f7d572f-ec5d-492d-5134-174f57de809d::8fbeafc6-09b5-40db-b7df-ad46de93339a
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 212.847758ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 18 Mar 2024 05:07:41 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6a74d46e07bf2d5f
+            X-B3-Traceid:
+                - 8a9809e91d814d746a74d46e07bf2d5f
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.013338"
+            X-Vcap-Request-Id:
+                - 8a9809e9-1d81-4d74-6a74-d46e07bf2d5f::722ce850-060c-4b4f-b23d-5a8130290dc3
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 183.311557ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 84
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1020
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[]}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1020"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:41 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7cd4d3f4519b3770
+            X-B3-Traceid:
+                - d24fc22ddaea4c5f7cd4d3f4519b3770
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.033013"
+            X-Vcap-Request-Id:
+                - d24fc22d-daea-4c5f-7cd4-d3f4519b3770::2ba437a8-25dc-4b1c-9887-31cf6f0b0074
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 202.310507ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1020
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[]}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1020"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:42 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6eff498a3689f119
+            X-B3-Traceid:
+                - 452fd5c054c44b026eff498a3689f119
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.011684"
+            X-Vcap-Request-Id:
+                - 452fd5c0-54c4-4b02-6eff-498a3689f119::3bcd28a3-217a-40b3-b50a-e0d024f2983e
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 185.317909ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1020
+        uncompressed: false
+        body: '{"guid":"2f3290ae-00d4-446a-8af2-6f6489c570c8","created_at":"2024-03-18T05:07:37Z","updated_at":"2024-03-18T05:07:37Z","name":"test.cfapps.stagingazure.hanavlab.ondemand.com","internal":false,"router_group":null,"supported_protocols":["http"],"relationships":{"organization":{"data":{"guid":"23919ba5-f9b6-4128-a1fb-69890818d25c"}},"shared_organizations":{"data":[]}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8"},"route_reservations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/route_reservations"},"organization":{"href":"https://api.x.x.x.x.com/v3/organizations/23919ba5-f9b6-4128-a1fb-69890818d25c"},"shared_organizations":{"href":"https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8/relationships/shared_organizations"}}}'
+        headers:
+            Content-Length:
+                - "1020"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:42 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4819e13daf466114
+            X-B3-Traceid:
+                - 65b4a02ba2d340d64819e13daf466114
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.006411"
+            X-Vcap-Request-Id:
+                - 65b4a02b-a2d3-40d6-4819-e13daf466114::b2a74ce3-91c1-4ded-97f7-641cbfcdf3f4
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 182.846289ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/domains/2f3290ae-00d4-446a-8af2-6f6489c570c8
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Mon, 18 Mar 2024 05:07:43 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/3df86b5c-476f-4fb8-9b84-041591e96e79
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5eaf75fa3928ae13
+            X-B3-Traceid:
+                - ba0d497c5fc04a535eaf75fa3928ae13
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.030484"
+            X-Vcap-Request-Id:
+                - ba0d497c-5fc0-4a53-5eaf-75fa3928ae13::a87fec29-3c47-4f01-b510-353c34f9e0d4
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 203.14211ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Go-CF-Client/3.0
+        url: https://api.x.x.x.x.com/v3/jobs/3df86b5c-476f-4fb8-9b84-041591e96e79
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 315
+        uncompressed: false
+        body: '{"guid":"3df86b5c-476f-4fb8-9b84-041591e96e79","created_at":"2024-03-18T05:07:43Z","updated_at":"2024-03-18T05:07:44Z","operation":"domain.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/3df86b5c-476f-4fb8-9b84-041591e96e79"}}}'
+        headers:
+            Content-Length:
+                - "315"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 18 Mar 2024 05:07:45 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5be2f26828441543
+            X-B3-Traceid:
+                - 37b89c8505c0479f5be2f26828441543
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003938"
+            X-Vcap-Request-Id:
+                - 37b89c85-05c0-479f-5be2-f26828441543::30a23331-ff45-4425-a363-83020070c680
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 173.468606ms

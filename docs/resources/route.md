@@ -2,12 +2,12 @@
 page_title: "cloudfoundry_route Resource - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Gets information on a Cloud Foundry route.
+  Provides a Cloud Foundry resource for managing Cloud Foundry application routes.
 ---
 
 # cloudfoundry_route (Resource)
 
-Gets information on a Cloud Foundry route.
+Provides a Cloud Foundry resource for managing Cloud Foundry application routes.
 
 ## Example Usage
 
@@ -44,10 +44,10 @@ resource "cloudfoundry_route" "bruh" {
 
 - `annotations` (Map of String) The annotations associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `destinations` (Attributes Set) A destination represents the relationship between a route and a resource that can serve traffic. (see [below for nested schema](#nestedatt--destinations))
-- `host` (String) The hostname associated to the route to lookup.
+- `host` (String) The hostname for the route; not compatible with routes specifying the tcp protocol; must be either a wildcard (*) or be under 63 characters long and only contain letters, numbers, dashes (-) or underscores(_)
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
-- `path` (String) The path associated to the route to lookup.
-- `port` (Number) The port associated to the route to lookup.
+- `path` (String) The path for the route; not compatible with routes specifying the tcp protocol; must be under 128 characters long and not contain question marks (?), begin with a slash (/) and not be exactly a slash (/).
+- `port` (Number) The port that the route listens on. Only compatible with routes specifying the tcp protocol
 
 ### Read-Only
 
