@@ -224,7 +224,7 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 		if err != nil {
 			panic(err)
 		}
-		err = os.Setenv("CF_HOME", pwd+"/../../asset")
+		err = os.Setenv("CF_HOME", pwd+"/../../assets")
 		if err != nil {
 			panic(err)
 		}
