@@ -400,7 +400,12 @@ func (r *serviceInstanceResource) Read(ctx context.Context, req resource.ReadReq
 		return
 	}
 
-	data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
+	switch svcInstance.Type {
+	case managedSerivceInstance:
+		data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
+	case userProvidedServiceInstance:
+		data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Credentials)
+	}
 	resp.Diagnostics.Append(diags...)
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
