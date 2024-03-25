@@ -243,7 +243,7 @@ func (r *orgResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		return
 	}
 
-	if pollJob(ctx, *r.cfClient, jobID) != nil {
+	if err = pollJob(ctx, *r.cfClient, jobID); err != nil {
 		resp.Diagnostics.AddError(
 			"Delete org failed",
 			"Failed in Deleting organization "+state.ID.ValueString()+": "+err.Error(),

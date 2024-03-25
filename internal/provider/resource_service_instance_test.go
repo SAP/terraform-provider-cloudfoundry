@@ -13,11 +13,13 @@ func TestResourceServiceInstance(t *testing.T) {
 		testSpaceGUID                         = "02c0cc92-6ecc-44b1-b7b2-096ca19ee143"
 		testServiceInstanceManagedCreate      = "test-si-managed"
 		testServiceInstanceUserProvidedCreate = "test-si-user-provided"
+		testServiceInstanceUserProvidedUpdate = "test-si-user-provided1"
 		// canary --> XSUAA --> application
 		testServicePanGUID     = "432bd9db-20e2-4997-825f-e4a937705b87"
 		testParameters         = `{"xsappname":"tf-unit-test","tenant-mode":"dedicated","description":"tf test1","foreign-scope-references":["user_attributes"],"scopes":[{"name":"uaa.user","description":"UAA"}],"role-templates":[{"name":"Token_Exchange","description":"UAA","scope-references":["uaa.user"]}]}`
 		testParametersUpdated  = `{"xsappname":"tf-unit-test","tenant-mode":"dedicated","description":"tf test1-update","foreign-scope-references":["user_attributes"],"scopes":[{"name":"uaa.user","description":"UAA"}],"role-templates":[{"name":"Token_Exchange","description":"UAA","scope-references":["uaa.user"]}]}`
 		testTags               = `["test-tag"]`
+		testCredentials        = `{"user" : "test","password": "hello"}`
 		testInvalidCredentials = `{"hello"}`
 	)
 	t.Parallel()
@@ -107,6 +109,28 @@ func TestResourceServiceInstance(t *testing.T) {
 						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
 						resource.TestMatchResourceAttr(resourceName, "created_at", regexpValidRFC3999Format),
 						resource.TestMatchResourceAttr(resourceName, "updated_at", regexpValidRFC3999Format),
+					),
+				},
+				{
+					Config: hclProvider(nil) + hclServiceInstance(&ServiceInstanceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "si_user_provided",
+						Name:          strtostrptr(testServiceInstanceUserProvidedUpdate),
+						Type:          strtostrptr(userProvidedServiceInstance),
+						Space:         strtostrptr(testSpaceGUID),
+						Credentials:   strtostrptr(testCredentials),
+						Labels:        strtostrptr(testUpdateLabel),
+					}),
+					Check: resource.ComposeAggregateTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "name", testServiceInstanceUserProvidedUpdate),
+						resource.TestCheckResourceAttr(resourceName, "type", userProvidedServiceInstance),
+						resource.TestCheckResourceAttr(resourceName, "space", testSpaceGUID),
+						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
+						resource.TestMatchResourceAttr(resourceName, "created_at", regexpValidRFC3999Format),
+						resource.TestMatchResourceAttr(resourceName, "updated_at", regexpValidRFC3999Format),
+						resource.TestMatchResourceAttr(resourceName, "credentials", regexp.MustCompile(`"password"`)),
+						resource.TestCheckResourceAttr(resourceName, "labels.purpose", "production"),
+						resource.TestCheckResourceAttr(resourceName, "space", testSpaceGUID),
 					),
 				},
 				{
