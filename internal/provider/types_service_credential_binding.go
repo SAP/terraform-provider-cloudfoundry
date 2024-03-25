@@ -31,47 +31,20 @@ func mapServiceCredentialBindingValuesToType(ctx context.Context, value *resourc
 		UpdatedAt: types.StringValue(value.UpdatedAt.Format(time.RFC3339)),
 	}
 
-	Name:      types.StringValue(value.Name),
-
-	switch value.Type {
-	case managedSerivceInstance:
-		dsServiceInstanceType.ServicePlan = types.StringValue(value.Relationships.ServicePlan.Data.GUID)
-		if value.DashboardURL != nil {
-			dsServiceInstanceType.DashboardURL = types.StringValue(*value.DashboardURL)
-		}
-	case userProvidedServiceInstance:
-		if value.SyslogDrainURL != nil {
-			dsServiceInstanceType.SyslogDrainURL = types.StringValue(*value.SyslogDrainURL)
-		}
-		if value.RouteServiceURL != nil {
-			dsServiceInstanceType.RouteServiceURL = types.StringValue(*value.RouteServiceURL)
-		}
-	}
-	dsServiceInstanceType.Labels, diags = mapMetadataValueToType(ctx, value.Metadata.Labels)
-	diagnostics.Append(diags...)
-	dsServiceInstanceType.Annotations, diags = mapMetadataValueToType(ctx, value.Metadata.Annotations)
-	diagnostics.Append(diags...)
-	if value.MaintenanceInfo != nil {
-		dsServiceInstanceType.MaintenanceInfo, diags = types.ObjectValueFrom(ctx, maintenanceInfoAttrTypes, mapMaintenanceInfo(*value.MaintenanceInfo))
-		diagnostics.Append(diags...)
-	} else {
-		dsServiceInstanceType.MaintenanceInfo = types.ObjectNull(maintenanceInfoAttrTypes)
-
-	}
-	dsServiceInstanceType.LastOperation, diags = types.ObjectValueFrom(ctx, lastOperationAttrTypes, mapLastOperation(value.LastOperation))
-	diagnostics.Append(diags...)
-	//tags mapping
-	if len(value.Tags) > 0 {
-		tags := make([]types.String, 0, len(value.Tags))
-		for _, t := range value.Tags {
-			tags = append(tags, types.StringValue(t))
-		}
-		dsServiceInstanceType.Tags, diags = types.SetValueFrom(ctx, types.StringType, tags)
-		diagnostics.Append(diags...)
-	} else {
-		dsServiceInstanceType.Tags = types.SetNull(types.StringType)
-
+	if value.Name != nil {
+		serviceCredentialBindingType.Name = types.StringValue(value.Name)
 	}
 
-	return dsServiceInstanceType, diagnostics
+	if value.Relationships.App != nil {
+		serviceCredentialBindingType.Name = types.StringValue(value.Name)
+	}
+
+	serviceCredentialBindingType.Labels, diags = mapMetadataValueToType(ctx, value.Metadata.Labels)
+	diagnostics.Append(diags...)
+	serviceCredentialBindingType.Annotations, diags = mapMetadataValueToType(ctx, value.Metadata.Annotations)
+	diagnostics.Append(diags...)
+	serviceCredentialBindingType.LastOperation, diags = types.ObjectValueFrom(ctx, lastOperationAttrTypes, mapLastOperation(value.LastOperation))
+	diagnostics.Append(diags...)
+
+	return serviceCredentialBindingType, diagnostics
 }
