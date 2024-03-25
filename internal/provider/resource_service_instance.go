@@ -323,6 +323,7 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 					},
 				},
 			},
+			Metadata: cfv3resource.NewMetadata(),
 		}
 		if !plan.Credentials.IsNull() {
 			var credentials json.RawMessage
@@ -351,6 +352,12 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 		if !plan.RouteServiceURL.IsNull() {
 			createServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
 		}
+
+		labelsDiags := plan.Labels.ElementsAs(ctx, &createServiceInstance.Metadata.Labels, false)
+		resp.Diagnostics.Append(labelsDiags...)
+
+		annotationsDiags := plan.Annotations.ElementsAs(ctx, &createServiceInstance.Metadata.Annotations, false)
+		resp.Diagnostics.Append(annotationsDiags...)
 
 		_, err = r.cfClient.ServiceInstances.CreateUserProvided(ctx, &createServiceInstance)
 		if err != nil {
