@@ -191,7 +191,9 @@ func getProviders(httpClient *http.Client) map[string]func() (tfprotov6.Provider
 func getCFHomeConf() *CloudFoundryProviderConfigPtr {
 	cfConf, err := cfconfig.NewFromCFHome()
 	if err != nil {
-		panic(err)
+		return &CloudFoundryProviderConfigPtr{
+			Endpoint: strtostrptr("https://api.x.x.x.x.com"),
+		}
 	}
 	apiEndpointURL := cfConf.ApiURL("")
 	cfg := CloudFoundryProviderConfigPtr{

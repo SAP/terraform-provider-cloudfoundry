@@ -12,15 +12,6 @@ Gets information on a Cloud Foundry application security group.
 ## Example Usage
 
 ```terraform
-terraform {
-  required_providers {
-    cloudfoundry = {
-      source = "sap/cloudfoundry"
-    }
-  }
-}
-provider "cloudfoundry" {}
-
 data "cloudfoundry_security_group" "sgroup" {
   name = "riemann"
 }

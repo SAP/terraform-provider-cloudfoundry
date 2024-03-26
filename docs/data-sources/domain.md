@@ -13,7 +13,7 @@ Gets information on a Cloud Foundry domain.
 
 ```terraform
 data "cloudfoundry_domain" "mydomain" {
-    name = "test.cfapps.stagingazure.hanavlab.ondemand.com"
+  name = "test.cfapps.stagingazure.hanavlab.ondemand.com"
 }
 ```
 
