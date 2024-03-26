@@ -34,6 +34,7 @@ type CloudFoundryProviderModel struct {
 	CFClientID        types.String `tfsdk:"cf_client_id"`
 	CFClientSecret    types.String `tfsdk:"cf_client_secret"`
 	SkipSslValidation types.Bool   `tfsdk:"skip_ssl_validation"`
+	Origin            types.String `tfsdk:"origin"`
 }
 
 func (p *CloudFoundryProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -84,6 +85,13 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 			},
 			"skip_ssl_validation": schema.BoolAttribute{
 				Optional: true,
+			},
+			"origin": schema.StringAttribute{
+				MarkdownDescription: "Indicates the identity provider to be used for login",
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 		},
 	}
@@ -173,6 +181,7 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	endpoint := os.Getenv("CF_API_URL")
 	user := os.Getenv("CF_USER")
 	password := os.Getenv("CF_PASSWORD")
+	origin := os.Getenv("CF_ORIGIN")
 	// Attribute name is cf_client_id (for backward compatability) and convention is to add `CF_` prefix to all environment variables, hence `CF_CF_CLIENT_ID`
 	cfclientid := os.Getenv("CF_CF_CLIENT_ID")
 	cfclientsecret := os.Getenv("CF_CF_CLIENT_SECRET")
@@ -201,6 +210,9 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	if !config.CFClientSecret.IsNull() {
 		cfclientsecret = config.CFClientSecret.ValueString()
 	}
+	if !config.Origin.IsNull() {
+		origin = config.Origin.ValueString()
+	}
 	checkConfig(resp, endpoint, user, password, cfclientid, cfclientsecret)
 	if resp.Diagnostics.HasError() {
 		return nil
@@ -216,6 +228,7 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 		CFClientID:        cfclientid,
 		CFClientSecret:    cfclientsecret,
 		SkipSslValidation: skipsslvalidation,
+		Origin:            origin,
 	}
 	return &c
 }

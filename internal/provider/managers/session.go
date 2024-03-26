@@ -14,6 +14,7 @@ type CloudFoundryProviderConfig struct {
 	CFClientID        string
 	CFClientSecret    string
 	SkipSslValidation bool
+	Origin            string
 }
 
 type Session struct {
@@ -34,6 +35,9 @@ func (c *CloudFoundryProviderConfig) NewSession(httpClient *http.Client) (*Sessi
 	switch {
 	case c.User != "" && c.Password != "":
 		opts = append(opts, config.UserPassword(c.User, c.Password))
+		if c.Origin != "" {
+			opts = append(opts, config.Origin(c.Origin))
+		}
 		cfg, err = config.New(c.Endpoint, opts...)
 	case c.CFClientID != "" && c.CFClientSecret != "":
 		opts = append(opts, config.ClientCredentials(c.CFClientID, c.CFClientSecret))

@@ -124,6 +124,9 @@ func (r *RouteResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 						"app_id": schema.StringAttribute{
 							MarkdownDescription: "The GUID of the app to route traffic to.",
 							Required:            true,
+							Validators: []validator.String{
+								validation.ValidUUID(),
+							},
 						},
 						"app_process_type": schema.StringAttribute{
 							MarkdownDescription: "Type of the process belonging to the app to route traffic to.",
