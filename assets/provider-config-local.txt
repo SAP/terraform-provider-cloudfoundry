@@ -1,6 +1,6 @@
 provider_installation {
   dev_overrides {
-    "sap/cloudfoundry" = "/go/bin"
+    "SAP/cloudfoundry" = "/go/bin"
   }
 
   direct {}

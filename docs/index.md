@@ -14,7 +14,7 @@ The Cloud Foundry Terraform plugin is an integration that allows users to levera
 terraform {
   required_providers {
     cloudfoundry = {
-      source = "sap/cloudfoundry"
+      source = "SAP/cloudfoundry"
     }
   }
 }

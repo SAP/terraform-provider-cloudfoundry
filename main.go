@@ -37,7 +37,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/sap/cloudfoundry",
+		Address: "registry.terraform.io/SAP/cloudfoundry",
 		Debug:   debug,
 	}
 
