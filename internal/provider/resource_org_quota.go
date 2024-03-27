@@ -229,6 +229,7 @@ func (r *orgQuotaResource) Update(ctx context.Context, req resource.UpdateReques
 			"Unable to update org quota",
 			fmt.Sprintf("Request failed with %s", err.Error()),
 		)
+		return
 	}
 	orgsQuotaType, diags := mapOrgQuotaValuesToType(orgsQuotaResp)
 	resp.Diagnostics.Append(diags...)

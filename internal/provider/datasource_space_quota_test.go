@@ -53,7 +53,7 @@ func hclSpaceQuota(sqdsmp *SpaceQuotaModelPtr) string {
 				total_routes = {{.TotalRoutes}}
 			{{- end }}
 			{{if .TotalRoutePorts}}
-				total_routes_ports = {{.TotalRoutePorts}}
+				total_route_ports = {{.TotalRoutePorts}}
 			{{- end }}
 			{{if .TotalMemory}}
 				total_memory = {{.TotalMemory}}

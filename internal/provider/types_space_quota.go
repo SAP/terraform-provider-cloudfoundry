@@ -31,6 +31,9 @@ type spaceQuotaType struct {
 func (spaceQuotaType *spaceQuotaType) mapSpaceQuotaTypeToValues(ctx context.Context) (*cfv3resource.SpaceQuotaCreateOrUpdate, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	spaceQuota := cfv3resource.NewSpaceQuotaCreate(spaceQuotaType.Name.ValueString(), spaceQuotaType.Org.ValueString())
+	spaceQuota.Apps = &cfv3resource.AppsQuota{}
+	spaceQuota.Services = &cfv3resource.ServicesQuota{}
+	spaceQuota.Routes = &cfv3resource.RoutesQuota{}
 	spaceQuota.WithPaidServicesAllowed(spaceQuotaType.AllowPaidServicePlans.ValueBool())
 	if !spaceQuotaType.TotalServices.IsNull() {
 		spaceQuota.WithTotalServiceInstances(int(spaceQuotaType.TotalServices.ValueInt64()))
