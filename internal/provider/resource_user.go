@@ -190,7 +190,7 @@ func (rs *UserResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 		return
 	}
 
-	if err = pollJob(ctx, *rs.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *rs.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting User",
 			"Failed in deleting the user with ID "+state.Id.ValueString()+" and name "+state.PresentationName.ValueString()+" : "+err.Error(),

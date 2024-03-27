@@ -4,11 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-timeouts/resource/timeouts"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -18,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
 type serviceInstanceResource struct {
@@ -40,7 +43,7 @@ func NewServiceInstanceResource() resource.Resource {
 	return &serviceInstanceResource{}
 }
 
-func (r *serviceInstanceResource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *serviceInstanceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_service_instance"
 }
 
@@ -153,6 +156,14 @@ https://docs.cloudfoundry.org/devguide/services`,
 					},
 				},
 			},
+			"timeouts": timeouts.Attributes(ctx, timeouts.Opts{
+				Create:            true,
+				CreateDescription: "Timeout for creating the service instance. Default is 40 minutes",
+				Update:            true,
+				UpdateDescription: "Timeout for updating the service instance. Default is 40 minutes",
+				Delete:            true,
+				DeleteDescription: "Timeout for deleting the service instance. Default is 40 minutes",
+			}),
 			idKey:          guidSchema(),
 			labelsKey:      resourceLabelsSchema(),
 			annotationsKey: resourceAnnotationsSchema(),
@@ -228,13 +239,22 @@ func (r *serviceInstanceResource) ValidateConfig(ctx context.Context, req resour
 }
 
 func (r *serviceInstanceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan serviceInstanceType
+	var plan, state serviceInstanceType
 	var serviceInstance *cfv3resource.ServiceInstance
 	var err error
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+
+	createTimeout, diags := plan.Timeouts.Create(ctx, 40*time.Minute)
+
+	if errors := diags.Errors(); len(errors) > 0 {
+		tflog.Warn(ctx, "reading configured create timeout", map[string]interface{}{
+			"summary": errors[0].Summary(),
+			"detail":  errors[0].Detail(),
+		})
 	}
 
 	switch plan.Type.ValueString() {
@@ -290,8 +310,7 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 			)
 			return
 		}
-		err = pollJob(ctx, *r.cfClient, jobID)
-		if err != nil {
+		if err = pollJob(ctx, *r.cfClient, jobID, createTimeout); err != nil {
 			resp.Diagnostics.AddError(
 				"Unable to verify service instance creation",
 				"Service Instance verification failed for+ "+plan.Name.ValueString()+": "+err.Error(),
@@ -316,7 +335,7 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 			)
 		}
 
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
+		state, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
 		resp.Diagnostics.Append(diags...)
 
 	case userProvidedServiceInstance:
@@ -393,16 +412,17 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 				"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
 			)
 		}
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
+		state, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
 		resp.Diagnostics.Append(diags...)
-	}
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+	}
+	state.Timeouts = plan.Timeouts
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 
 }
 
 func (r *serviceInstanceResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data serviceInstanceType
+	var data, newState serviceInstanceType
 
 	diags := req.State.Get(ctx, &data)
 	resp.Diagnostics.Append(diags...)
@@ -417,22 +437,31 @@ func (r *serviceInstanceResource) Read(ctx context.Context, req resource.ReadReq
 
 	switch svcInstance.Type {
 	case managedSerivceInstance:
-		data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
+		newState, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
 	case userProvidedServiceInstance:
-		data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Credentials)
+		newState, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Credentials)
 	}
+	newState.Timeouts = data.Timeouts
 	resp.Diagnostics.Append(diags...)
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &newState)...)
 
 }
 
 func (r *serviceInstanceResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 
-	var plan, previousState serviceInstanceType
+	var plan, state, previousState serviceInstanceType
 	var diags diag.Diagnostics
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
 
+	updateTimeout, diags := plan.Timeouts.Update(ctx, 40*time.Minute)
+
+	if errors := diags.Errors(); len(errors) > 0 {
+		tflog.Warn(ctx, "reading configured update timeout", map[string]interface{}{
+			"summary": errors[0].Summary(),
+			"detail":  errors[0].Detail(),
+		})
+	}
 	switch plan.Type.ValueString() {
 	case managedSerivceInstance:
 
@@ -500,7 +529,7 @@ func (r *serviceInstanceResource) Update(ctx context.Context, req resource.Updat
 			)
 		}
 		if jobID != "" {
-			if pollJob(ctx, *r.cfClient, jobID) != nil {
+			if err := pollJob(ctx, *r.cfClient, jobID, updateTimeout); err != nil {
 				resp.Diagnostics.AddError(
 					"Unable to verify service instance update",
 					"Service Instance update verification failed for "+plan.Name.ValueString()+": "+err.Error(),
@@ -514,9 +543,8 @@ func (r *serviceInstanceResource) Update(ctx context.Context, req resource.Updat
 				"Unable to fetch updated service instance"+plan.Name.ValueString()+": "+err.Error(),
 			)
 		}
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
+		state, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
 		resp.Diagnostics.Append(diags...)
-		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 	case userProvidedServiceInstance:
 
 		updateServiceInstance := cfv3resource.ServiceInstanceUserProvidedUpdate{
@@ -564,10 +592,11 @@ func (r *serviceInstanceResource) Update(ctx context.Context, req resource.Updat
 				"Unable to fetch updated service instance"+plan.Name.ValueString()+": "+err.Error(),
 			)
 		}
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
+		state, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
 		resp.Diagnostics.Append(diags...)
-		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
 	}
+	state.Timeouts = plan.Timeouts
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 
 }
 
@@ -577,6 +606,14 @@ func (r *serviceInstanceResource) Delete(ctx context.Context, req resource.Delet
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
+	}
+	deleteTimeout, diags := state.Timeouts.Delete(ctx, 40*time.Minute)
+
+	if errors := diags.Errors(); len(errors) > 0 {
+		tflog.Warn(ctx, "reading configured delete timeout", map[string]interface{}{
+			"summary": errors[0].Summary(),
+			"detail":  errors[0].Detail(),
+		})
 	}
 
 	jobID, err := r.cfClient.ServiceInstances.Delete(ctx, state.ID.ValueString())
@@ -588,7 +625,7 @@ func (r *serviceInstanceResource) Delete(ctx context.Context, req resource.Delet
 
 	}
 	if jobID != "" {
-		if pollJob(ctx, *r.cfClient, jobID) != nil {
+		if err := pollJob(ctx, *r.cfClient, jobID, deleteTimeout); err != nil {
 			resp.Diagnostics.AddError(
 				"Unable to verify service instance deletion",
 				"Service Instance deletion verification failed for "+state.ID.ValueString()+": "+err.Error(),

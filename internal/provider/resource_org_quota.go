@@ -258,7 +258,7 @@ func (r *orgQuotaResource) Delete(ctx context.Context, req resource.DeleteReques
 		)
 		return
 	}
-	if err = pollJob(ctx, *r.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *r.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to verify org quota deletion",
 			"Org quota deletion verification failed for "+orgQuotaType.ID.ValueString()+": "+err.Error(),

@@ -295,7 +295,7 @@ func (rs *SecurityGroupResource) Delete(ctx context.Context, req resource.Delete
 		return
 	}
 
-	if err = pollJob(ctx, *rs.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *rs.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting Security Group",
 			"Failed in deleting the Security Group with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+" : "+err.Error(),

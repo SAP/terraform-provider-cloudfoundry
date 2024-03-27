@@ -49,6 +49,9 @@ resource "cloudfoundry_service_instance" "dev-autoscaler" {
   tags         = ["terraform-test", "autoscaler"]
   space        = data.cloudfoundry_space.team_space.id
   service_plan = data.cloudfoundry_service.autoscaler_svc.service_plans["standard"]
+  timeouts = {
+    create = "10m"
+  }
 }
 # User provided service instance
 resource "cloudfoundry_service_instance" "dev-usp" {

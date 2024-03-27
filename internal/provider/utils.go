@@ -137,10 +137,10 @@ func handleReadErrors(ctx context.Context, resp *resource.ReadResponse, err erro
 
 }
 
-func pollJob(ctx context.Context, client cfv3client.Client, jobID string) error {
+func pollJob(ctx context.Context, client cfv3client.Client, jobID string, timeout time.Duration) error {
 
 	return client.Jobs.PollComplete(ctx, jobID, &cfv3client.PollingOptions{
-		Timeout:       defaultTimeout,
+		Timeout:       timeout,
 		CheckInterval: time.Second * 2,
 		FailedState:   string(cfv3resource.JobStateFailed),
 	})

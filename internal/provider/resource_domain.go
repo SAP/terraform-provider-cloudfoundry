@@ -258,7 +258,7 @@ func (rs *DomainResource) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 
-	if err = pollJob(ctx, *rs.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *rs.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting Domain",
 			"Failed in deleting the domain with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+": "+err.Error(),
