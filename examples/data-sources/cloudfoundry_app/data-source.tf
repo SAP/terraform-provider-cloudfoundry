@@ -8,13 +8,17 @@ terraform {
 provider "cloudfoundry" {}
 
 data "cloudfoundry_app" "http-bin-server" {
-  name  = "cf-nodejs"
+  name  = "tf-test-do-not-delete-http-bin"
   space = "tf-space-1"
   org   = "PerformanceTeamBLR"
 }
 
 output "id" {
   value = data.cloudfoundry_app.http-bin-server.id
+}
+
+output "space" {
+  value = data.cloudfoundry_app.http-bin-server.space
 }
 
 output "name" {

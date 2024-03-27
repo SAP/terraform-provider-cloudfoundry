@@ -296,15 +296,14 @@ func (d *appDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		resp.Diagnostics.AddError("Error unmarshalling app", err.Error())
 		return
 	}
-	at := atr.Expand()
-	atResp, diags := mapAppValuesToType(ctx, appManifest.Applications[0], app, &at)
+	atResp, diags := mapAppValuesToType(ctx, appManifest.Applications[0], app, nil)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	atrResp := atResp.Reduce()
-	atResp.Org = atr.Org
-	atResp.Space = atr.Space
+	atrResp.Org = atr.Org
+	atrResp.Space = atr.Space
 
 	tflog.Trace(ctx, "read a data source")
 

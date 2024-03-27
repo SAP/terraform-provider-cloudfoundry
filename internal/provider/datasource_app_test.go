@@ -9,9 +9,10 @@ import (
 
 func TestAppDataSource_Configure(t *testing.T) {
 	t.Parallel()
-	t.Run("happy path - read app with bits", func(t *testing.T) {
+	t.Run("happy path - read app with docker", func(t *testing.T) {
 		cfg := getCFHomeConf()
-		rec := cfg.SetupVCR(t, "fixtures/datasource_app_bits")
+		resourceName := "data.cloudfoundry_app.app"
+		rec := cfg.SetupVCR(t, "fixtures/datasource_app_docker")
 		defer stopQuietly(rec)
 		resource.Test(t, resource.TestCase{
 			IsUnitTest:               true,
@@ -25,27 +26,52 @@ data "cloudfoundry_app" "app" {
 	org = "PerformanceTeamBLR"
 }`,
 					Check: resource.ComposeTestCheckFunc(
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "name", "tf-test-do-not-delete-http-bin"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "space", "tf-space-1"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "org", "PerformanceTeamBLR"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "instances", "1"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "memory", "256M"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "disk_quota", "1024M"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "health_check_type", "http"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "health_check_http_endpoint", "/get"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "readiness_health_check_type", "http"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "readiness_health_check_http_endpoint", "/get"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "type", "web"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "docker_image", ""),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "strategy", ""),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "no_route", "false"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "buildpacks.#", "1"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "buildpacks.0", "go_buildpack"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "services.#", "1"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "services.0", "test-service"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "routes.#", "1"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "routes.0.route", "http-bin.cfapps.sap.hana.ondemand.com"),
-						resource.TestCheckResourceAttr("data.cloudfoundry_app.app", "routes.0.protocol", "http1"),
+						resource.TestCheckResourceAttr(resourceName, "name", "tf-test-do-not-delete-http-bin"),
+						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.instances", "1"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.memory", "256M"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.disk_quota", "1024M"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.health_check_type", "http"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.health_check_http_endpoint", "/get"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.readiness_health_check_type", "http"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.readiness_health_check_http_endpoint", "/get"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.type", "web"),
+						resource.TestCheckResourceAttr(resourceName, "docker_image", "kennethreitz/httpbin"),
+						resource.TestCheckResourceAttr(resourceName, "labels.%", "2"),
+						resource.TestCheckResourceAttr(resourceName, "annotations.%", "1"),
+					),
+				},
+			},
+		})
+	})
+	t.Run("happy path - read app with bits", func(t *testing.T) {
+		cfg := getCFHomeConf()
+		resourceName := "data.cloudfoundry_app.app"
+		rec := cfg.SetupVCR(t, "fixtures/datasource_app_bits")
+		defer stopQuietly(rec)
+		resource.Test(t, resource.TestCase{
+			IsUnitTest:               true,
+			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
+			Steps: []resource.TestStep{
+				{
+					Config: hclProvider(nil) + `
+data "cloudfoundry_app" "app" {
+	name = "tf-test-do-not-delete-nodejs"
+	space = "tf-space-1"
+	org = "PerformanceTeamBLR"
+}`,
+					Check: resource.ComposeTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "name", "tf-test-do-not-delete-nodejs"),
+						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.instances", "1"),
+						resource.TestCheckResourceAttr(resourceName, "processes.0.type", "web"),
+						resource.TestCheckResourceAttr(resourceName, "service_bindings.#", "1"),
+						resource.TestCheckResourceAttr(resourceName, "service_bindings.0.service_instance", "xsuaa-tf"),
+						resource.TestCheckResourceAttr(resourceName, "routes.#", "1"),
+						resource.TestCheckResourceAttr(resourceName, "routes.0.protocol", "http1"),
+						resource.TestCheckResourceAttr(resourceName, "environment.MY_ENV", "red"),
 					),
 				},
 			},

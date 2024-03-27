@@ -6,6 +6,63 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=83b6168852eb48988f7b01bdf644f406-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 83b6168852eb48988f7b01bdf644f406-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"83b6168852eb48988f7b01bdf644f406-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"b18a388d4cd64f8ea7dbfb16ac35e6a7"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Wed, 27 Mar 2024 09:07:21 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 4e8bea6e-0ac9-44ee-7a15-a97cb0eba381
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 237.923584ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
         content_length: 0
         transfer_encoding: []
         trailer: {}
@@ -34,7 +91,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Tue, 26 Mar 2024 04:47:50 GMT
+                - Wed, 27 Mar 2024 09:07:21 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -42,9 +99,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 5aee4ed3b9bd8b04
+                - 726886d9465d3ae2
             X-B3-Traceid:
-                - b11c5e4b8ccc447c5aee4ed3b9bd8b04
+                - 33fc0af8c1a5498e726886d9465d3ae2
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -58,17 +115,17 @@ interactions:
             X-Ratelimit-Remaining:
                 - "18000"
             X-Ratelimit-Reset:
-                - "1711429673"
+                - "1711530473"
             X-Runtime:
-                - "0.012211"
+                - "0.011254"
             X-Vcap-Request-Id:
-                - b11c5e4b-8ccc-447c-5aee-4ed3b9bd8b04::f8c5b9a4-c638-4a7b-bada-fe616a92f4fc
+                - 33fc0af8-c1a5-498e-7268-86d9465d3ae2::d1f2c997-ad71-4be6-b722-d10b6f48152a
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 247.996792ms
-    - id: 1
+        duration: 329.4235ms
+    - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -101,7 +158,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Tue, 26 Mar 2024 04:47:50 GMT
+                - Wed, 27 Mar 2024 09:07:22 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -109,9 +166,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 42d1e704c50cacc4
+                - 7db463fbd38aae6e
             X-B3-Traceid:
-                - 4a128521ff6e461442d1e704c50cacc4
+                - 8c6a51ff47ff4be97db463fbd38aae6e
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -125,17 +182,17 @@ interactions:
             X-Ratelimit-Remaining:
                 - "18000"
             X-Ratelimit-Reset:
-                - "1711429673"
+                - "1711530473"
             X-Runtime:
-                - "0.032313"
+                - "0.037246"
             X-Vcap-Request-Id:
-                - 4a128521-ff6e-4614-42d1-e704c50cacc4::9a95b5b9-e391-4442-99d9-1354008d08f7
+                - 8c6a51ff-47ff-4be9-7db4-63fbd38aae6e::648fb8a6-03e4-48e4-8bf1-16a34a4e77e2
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 272.274917ms
-    - id: 2
+        duration: 306.1975ms
+    - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -168,7 +225,7 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Tue, 26 Mar 2024 04:47:51 GMT
+                - Wed, 27 Mar 2024 09:07:22 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -176,9 +233,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 66326c5cf90ccb0e
+                - 428584a8fbf2c95a
             X-B3-Traceid:
-                - 0a715b0955bb409c66326c5cf90ccb0e
+                - ae77685e33364d61428584a8fbf2c95a
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -192,13 +249,13 @@ interactions:
             X-Ratelimit-Remaining:
                 - "18000"
             X-Ratelimit-Reset:
-                - "1711429673"
+                - "1711530473"
             X-Runtime:
-                - "0.031875"
+                - "0.031535"
             X-Vcap-Request-Id:
-                - 0a715b09-55bb-409c-6632-6c5cf90ccb0e::7f4e9e42-be12-423e-9ba0-ed8bfc500cbc
+                - ae77685e-3336-4d61-4285-84a8fbf2c95a::8e47296e-8bc5-47a3-979c-f026fedd8331
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 272.611917ms
+        duration: 266.2365ms

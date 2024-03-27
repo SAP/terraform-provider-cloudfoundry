@@ -77,6 +77,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"buildpacks": schema.SetAttribute{
 				MarkdownDescription: "Multiple buildpacks used to stage the application.",
 				ElementType:         types.StringType,
+				Computed:            true,
 				Validators: []validator.Set{
 					setvalidator.SizeAtLeast(1),
 				},
@@ -86,10 +87,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				MarkdownDescription: "An uri or path to target a zip file. this can be in the form of unix path (/my/path.zip) or url path (http://zip.com/my.zip).",
 				Optional:            true,
 				Validators: []validator.String{
-					stringvalidator.AtLeastOneOf(path.MatchRoot("docker_image"), path.MatchRoot("path")),
-				},
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringvalidator.ExactlyOneOf(path.MatchRoot("docker_image"), path.MatchRoot("path")),
 				},
 			},
 			"source_code_hash": schema.StringAttribute{
@@ -99,9 +97,6 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 			"docker_image": schema.StringAttribute{
 				MarkdownDescription: "The URL to the docker image with tag e.g registry.example.com:5000/user/repository/tag or docker image name from the public repo e.g. redis:4.0",
 				Optional:            true,
-				Validators: []validator.String{
-					stringvalidator.AtLeastOneOf(path.MatchRoot("docker_image"), path.MatchRoot("path")),
-				},
 			},
 			"docker_credentials": schema.SingleNestedAttribute{
 				MarkdownDescription: "Defines login credentials for private docker repositories",
@@ -516,7 +511,7 @@ func (r *appResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		)
 		return
 	}
-	err = pollJob(ctx, *r.cfClient, jobID)
+	err = pollJob(ctx, *r.cfClient, jobID, defaultTimeout)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to verify org quota deletion",

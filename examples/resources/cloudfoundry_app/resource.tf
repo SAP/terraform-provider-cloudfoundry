@@ -49,6 +49,13 @@ resource "cloudfoundry_app" "http-bin-server" {
   org          = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   strategy     = "blue-green"
+  labels = {
+    "app" = "backend",
+    "env" = "production"
+  }
+  annotations = {
+    "created-by" = "me",
+  }
   processes = [
     {
       type                                 = "web",

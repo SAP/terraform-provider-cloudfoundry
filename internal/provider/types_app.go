@@ -154,7 +154,7 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	if !appType.Stack.IsUnknown() {
 		appmanifest.Stack = appType.Stack.ValueString()
 	}
-	if !appType.Buildpacks.IsNull() {
+	if !appType.Buildpacks.IsUnknown() {
 		var buildpacks []string
 		tempDiags = appType.Buildpacks.ElementsAs(ctx, &buildpacks, false)
 		diags = append(diags, tempDiags...)
@@ -328,11 +328,13 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	if !appType.Timeout.IsNull() {
 		appmanifest.Timeout = uint(appType.Timeout.ValueInt64())
 	}
+	appmanifest.Metadata = cfv3resource.NewMetadata()
 	if !appType.Labels.IsNull() {
-		appmanifest.Metadata = cfv3resource.NewMetadata()
-		tempDiags = appType.Labels.ElementsAs(ctx, appmanifest.Metadata.Labels, false)
+		tempDiags = appType.Labels.ElementsAs(ctx, &appmanifest.Metadata.Labels, false)
 		diags = append(diags, tempDiags...)
-		tempDiags = appType.Annotations.ElementsAs(ctx, appmanifest.Metadata.Annotations, false)
+	}
+	if !appType.Annotations.IsNull() {
+		tempDiags = appType.Annotations.ElementsAs(ctx, &appmanifest.Metadata.Annotations, false)
 		diags = append(diags, tempDiags...)
 	}
 	return &appmanifest, diags
@@ -368,11 +370,13 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 			var sb ServiceBinding
 			sb.ServiceInstance = types.StringValue(service.Name)
 			if service.Parameters != nil {
-				sb.Params, tempDiags = types.MapValueFrom(ctx, types.MapType{ElemType: types.StringType}, service.Parameters)
+				sb.Params, tempDiags = types.MapValueFrom(ctx, types.StringType, service.Parameters)
 				diags = append(diags, tempDiags...)
 			} else {
 				if reqPlanType != nil {
 					sb.Params = reqPlanType.ServiceBindings[i].Params
+				} else {
+					sb.Params = types.MapNull(types.StringType)
 				}
 			}
 			serviceBindings = append(serviceBindings, sb)
@@ -403,7 +407,7 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 		var processes []Process
 		for _, process := range *appManifest.Processes {
 			// reqPlanType will be set only for resources else nil
-			// we also check if processes were set in request then map to app spec level else map to process spec level
+			// we also check if processes were not set in request but we have in response then map to app spec level else map to process spec level
 			if reqPlanType != nil && len(reqPlanType.Processes) == 0 {
 				if process.Command != "" {
 					appType.Command = types.StringValue(process.Command)
@@ -519,12 +523,11 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 	appType.ID = types.StringValue(app.GUID)
 	appType.CreatedAt = types.StringValue(app.CreatedAt.Format(time.RFC3339))
 	appType.UpdatedAt = types.StringValue(app.UpdatedAt.Format(time.RFC3339))
-	if app.Metadata != nil {
-		appType.Labels, tempDiags = mapMetadataValueToType(ctx, app.Metadata.Labels)
-		diags = append(diags, tempDiags...)
-		appType.Annotations, tempDiags = mapMetadataValueToType(ctx, app.Metadata.Annotations)
-		diags = append(diags, tempDiags...)
-	}
+
+	appType.Labels, tempDiags = mapMetadataValueToType(ctx, app.Metadata.Labels)
+	diags = append(diags, tempDiags...)
+	appType.Annotations, tempDiags = mapMetadataValueToType(ctx, app.Metadata.Annotations)
+	diags = append(diags, tempDiags...)
 	return appType, diags
 }
 
