@@ -65,4 +65,61 @@ func TestResourceSpaceQuota(t *testing.T) {
 			},
 		})
 	})
+	t.Run("happy path - update space quota", func(t *testing.T) {
+		resourceName := "cloudfoundry_space_quota.rs_update"
+		cfg := getCFHomeConf()
+		rec := cfg.SetupVCR(t, "fixtures/resource_space_quota_update")
+		defer stopQuietly(rec)
+
+		resource.Test(t, resource.TestCase{
+			IsUnitTest:               true,
+			ProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),
+			Steps: []resource.TestStep{
+				{
+					Config: hclProvider(nil) + hclSpaceQuota(&SpaceQuotaModelPtr{
+						HclType:               hclObjectResource,
+						HclObjectName:         "rs_update",
+						Org:                   strtostrptr(testOrgGUID),
+						TotalServices:         inttointptr(10),
+						TotalRoutes:           inttointptr(20),
+						TotalRoutePorts:       inttointptr(4),
+						TotalAppTasks:         inttointptr(10),
+						TotalServiceKeys:      inttointptr(10),
+						AllowPaidServicePlans: booltoboolptr(false),
+						Name:                  strtostrptr("tf-unit-test-update"),
+					}),
+					Check: resource.ComposeAggregateTestCheckFunc(
+						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
+						resource.TestCheckResourceAttr(resourceName, "total_services", "10"),
+						resource.TestCheckResourceAttr(resourceName, "total_routes", "20"),
+						resource.TestCheckResourceAttr(resourceName, "total_route_ports", "4"),
+						resource.TestCheckResourceAttr(resourceName, "total_app_tasks", "10"),
+						resource.TestCheckResourceAttr(resourceName, "total_service_keys", "10"),
+						resource.TestCheckResourceAttr(resourceName, "allow_paid_service_plans", "false"),
+					),
+				},
+				{
+					Config: hclProvider(nil) + hclSpaceQuota(&SpaceQuotaModelPtr{
+						HclType:               hclObjectResource,
+						HclObjectName:         "rs_update",
+						Org:                   strtostrptr(testOrgGUID),
+						TotalRoutes:           inttointptr(20),
+						TotalRoutePorts:       inttointptr(3),
+						TotalAppTasks:         inttointptr(10),
+						TotalServiceKeys:      inttointptr(10),
+						AllowPaidServicePlans: booltoboolptr(true),
+						Name:                  strtostrptr("tf-unit-test-update"),
+					}),
+					Check: resource.ComposeAggregateTestCheckFunc(
+						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
+						resource.TestCheckResourceAttr(resourceName, "total_routes", "20"),
+						resource.TestCheckResourceAttr(resourceName, "total_route_ports", "3"),
+						resource.TestCheckResourceAttr(resourceName, "total_app_tasks", "10"),
+						resource.TestCheckResourceAttr(resourceName, "total_service_keys", "10"),
+						resource.TestCheckResourceAttr(resourceName, "allow_paid_service_plans", "true"),
+					),
+				},
+			},
+		})
+	})
 }

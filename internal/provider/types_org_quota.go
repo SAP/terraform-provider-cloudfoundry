@@ -31,6 +31,10 @@ type OrgQuotaType struct {
 func (orgQuotaType *OrgQuotaType) mapOrgQuotaTypeToValues(ctx context.Context) (*cfv3resource.OrganizationQuotaCreateOrUpdate, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	orgQuota := cfv3resource.NewOrganizationQuotaCreate(orgQuotaType.Name.ValueString())
+	orgQuota.Domains = &cfv3resource.DomainsQuota{}
+	orgQuota.Services = &cfv3resource.ServicesQuota{}
+	orgQuota.Apps = &cfv3resource.AppsQuota{}
+	orgQuota.Routes = &cfv3resource.RoutesQuota{}
 	orgQuota.WithPaidServicesAllowed(orgQuotaType.AllowPaidServicePlans.ValueBool())
 	if !orgQuotaType.TotalServices.IsNull() {
 		orgQuota.WithTotalServiceInstances(int(orgQuotaType.TotalServices.ValueInt64()))
