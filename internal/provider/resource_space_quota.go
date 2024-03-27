@@ -270,7 +270,7 @@ func (r *spaceQuotaResource) Delete(ctx context.Context, req resource.DeleteRequ
 		)
 		return
 	}
-	if err = pollJob(ctx, *r.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *r.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to verify space quota deletion",
 			"space quota deletion verification failed for "+spaceQuotaType.ID.ValueString()+": "+err.Error(),

@@ -68,6 +68,9 @@ resource "cloudfoundry_service_instance" "dev-autoscaler" {
   tags         = ["terraform-test", "autoscaler"]
   space        = data.cloudfoundry_space.team_space.id
   service_plan = data.cloudfoundry_service.autoscaler_svc.service_plans["standard"]
+  timeouts = {
+    create = "10m"
+  }
 }
 # User provided service instance
 resource "cloudfoundry_service_instance" "dev-usp" {
@@ -103,6 +106,7 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 - `service_plan` (String) The ID of the service plan from which to create the service instance
 - `syslog_drain_url` (String) URL to which logs for bound applications will be streamed; only shown when type is user-provided.
 - `tags` (Set of String) Set of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.
+- `timeouts` (Attributes) (see [below for nested schema](#nestedatt--timeouts))
 - `upgrade_available` (Boolean) Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed
 
 ### Read-Only
@@ -113,6 +117,16 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 - `last_operation` (Attributes) The last operation of this service instance. (see [below for nested schema](#nestedatt--last_operation))
 - `maintenance_info` (Attributes) Information about the version of this service instance; only shown when type is managed (see [below for nested schema](#nestedatt--maintenance_info))
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
+
+<a id="nestedatt--timeouts"></a>
+### Nested Schema for `timeouts`
+
+Optional:
+
+- `create` (String) Timeout for creating the service instance. Default is 40 minutes
+- `delete` (String) Timeout for deleting the service instance.Default is 40 minutes
+- `update` (String) Timeout for updating the service instance.Default is 40 minutes
+
 
 <a id="nestedatt--last_operation"></a>
 ### Nested Schema for `last_operation`

@@ -7,6 +7,7 @@ import (
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-timeouts/resource/timeouts"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -31,6 +32,7 @@ type serviceInstanceType struct {
 	Annotations      types.Map            `tfsdk:"annotations"`
 	CreatedAt        types.String         `tfsdk:"created_at"`
 	UpdatedAt        types.String         `tfsdk:"updated_at"`
+	Timeouts         timeouts.Value       `tfsdk:"timeouts"`
 }
 
 type datasourceServiceInstanceType struct {

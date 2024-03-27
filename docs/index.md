@@ -29,6 +29,7 @@ provider "cloudfoundry" {}
 - `api_url` (String) Specific URL representing the entry point for communication between the client and a Cloud Foundry instance.
 - `cf_client_id` (String, Sensitive)
 - `cf_client_secret` (String, Sensitive)
+- `origin` (String) Indicates the identity provider to be used for login
 - `password` (String, Sensitive) A confidential alphanumeric code associated with a user account on the Cloud Foundry platform
 - `skip_ssl_validation` (Boolean)
 - `user` (String, Sensitive) A unique identifier associated with an individual or entity for authentication & authorization purposes.

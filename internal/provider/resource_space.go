@@ -271,7 +271,7 @@ func (rs *SpaceResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	if err = pollJob(ctx, *rs.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *rs.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting Space",
 			"Failed in deleting the space with ID "+state.Id.ValueString()+" and name "+state.Name.ValueString()+": "+err.Error(),

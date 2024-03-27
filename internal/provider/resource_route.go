@@ -327,7 +327,7 @@ func (rs *RouteResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	if err = pollJob(ctx, *rs.cfClient, jobID); err != nil {
+	if err = pollJob(ctx, *rs.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting Route",
 			"Failed in deleting the Route with ID "+state.Id.ValueString()+" : "+err.Error(),
