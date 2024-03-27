@@ -242,6 +242,7 @@ func (r *spaceQuotaResource) Update(ctx context.Context, req resource.UpdateRequ
 			"Unable to update space quota",
 			fmt.Sprintf("Request failed with %s", err.Error()),
 		)
+		return
 	}
 	spacesQuotaType, diags := mapSpaceQuotaValuesToType(spacesQuotaResp)
 	resp.Diagnostics.Append(diags...)

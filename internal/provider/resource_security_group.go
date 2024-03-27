@@ -269,6 +269,7 @@ func (rs *SecurityGroupResource) Update(ctx context.Context, req resource.Update
 			"API Error Updating Security Group",
 			"Could not update Security Group with ID "+plan.Id.ValueString()+" : "+err.Error(),
 		)
+		return
 	}
 
 	data, diags := mapSecurityGroupValuesToType(ctx, securityGroup)

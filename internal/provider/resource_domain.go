@@ -229,6 +229,7 @@ func (rs *DomainResource) Update(ctx context.Context, req resource.UpdateRequest
 			"API Error Updating Domain",
 			"Could not update domain with ID "+plan.Id.ValueString()+": "+err.Error(),
 		)
+		return
 	}
 
 	data, diags := mapDomainValuesToType(ctx, domain)
