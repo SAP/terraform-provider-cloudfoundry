@@ -301,6 +301,7 @@ func (rs *RouteResource) Update(ctx context.Context, req resource.UpdateRequest,
 			"API Error Updating Route",
 			"Could not update Route with ID "+plan.Id.ValueString()+" : "+err.Error(),
 		)
+		return
 	}
 
 	data, diags := mapRouteValuesToType(ctx, route)

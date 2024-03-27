@@ -216,6 +216,7 @@ func (r *orgResource) Update(ctx context.Context, req resource.UpdateRequest, re
 			"Unable to update Org",
 			"Could not update org with ID "+plan.ID.ValueString()+" and name "+plan.Name.ValueString()+": "+err.Error(),
 		)
+		return
 	}
 
 	plan, diags = mapOrgValuesToType(ctx, org)
