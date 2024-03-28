@@ -2,12 +2,12 @@
 page_title: "cloudfoundry_role Resource - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Provides a Cloud Foundry resource for assigning roles. Space roles cannot be assigned until the user has the relevant role in the organization. (Updating a role is not supported according to the docs)
+  Provides a Cloud Foundry resource for assigning roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)
 ---
 
 # cloudfoundry_role (Resource)
 
-Provides a Cloud Foundry resource for assigning roles. Space roles cannot be assigned until the user has the relevant role in the organization. (Updating a role is not supported according to the docs)
+Provides a Cloud Foundry resource for assigning roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)
 
 ## Example Usage
 

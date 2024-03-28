@@ -124,8 +124,8 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 Optional:
 
 - `create` (String) Timeout for creating the service instance. Default is 40 minutes
-- `delete` (String) Timeout for deleting the service instance.Default is 40 minutes
-- `update` (String) Timeout for updating the service instance.Default is 40 minutes
+- `delete` (String) Timeout for deleting the service instance. Default is 40 minutes
+- `update` (String) Timeout for updating the service instance. Default is 40 minutes
 
 
 <a id="nestedatt--last_operation"></a>
