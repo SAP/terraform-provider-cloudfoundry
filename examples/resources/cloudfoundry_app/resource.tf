@@ -30,7 +30,7 @@ resource "cloudfoundry_app" "gobis-server" {
   strategy = "rolling"
   service_bindings = [
     {
-      service_instance: "xsuaa-tf"
+      service_instance : "xsuaa-tf"
       params = {
         role = "Viewer"
       }

@@ -28,8 +28,9 @@ import (
 )
 
 var (
-	_ resource.Resource              = &appResource{}
-	_ resource.ResourceWithConfigure = &appResource{}
+	_ resource.Resource                = &appResource{}
+	_ resource.ResourceWithConfigure   = &appResource{}
+	_ resource.ResourceWithImportState = &appResource{}
 )
 
 func NewAppResource() resource.Resource {
@@ -70,7 +71,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				},
 			},
 			"stack": schema.StringAttribute{
-				MarkdownDescription: "The name of the stack the application will be deployed to.",
+				MarkdownDescription: "The base operating system and file system that your application will execute in. Please refer to the [docs](https://v3-apidocs.cloudfoundry.org/version/3.155.0/index.html#stacks) for more information",
 				Optional:            true,
 				Computed:            true,
 			},
@@ -246,12 +247,12 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 						},
 						"command": schema.StringAttribute{
 							MarkdownDescription: "The command used to start the sidecar.",
-							Required:            true,
+							Optional:            true,
 						},
 						"process_types": schema.SetAttribute{
 							MarkdownDescription: "List of processes to associate sidecar with.",
 							ElementType:         types.StringType,
-							Required:            true,
+							Optional:            true,
 							Validators: []validator.Set{
 								setvalidator.SizeAtLeast(1),
 								setvalidator.ValueStringsAre(stringvalidator.OneOf("web", "worker")),

@@ -32,7 +32,7 @@ resource "zipper_file" "fixture" {
 }
 
 resource "cloudfoundry_app" "gobis-server" {
-  name             = "cf-nodejs"
+  name             = "tf-test-do-not-delete-nodejs"
   space            = "tf-space-1"
   org              = "PerformanceTeamBLR"
   path             = zipper_file.fixture.output_path
@@ -42,22 +42,34 @@ resource "cloudfoundry_app" "gobis-server" {
     MY_ENV = "red",
   }
   strategy = "rolling"
-  services = [
-    "xsuaa-tf",
+  service_bindings = [
+    {
+      service_instance : "xsuaa-tf"
+      params = {
+        role = "Viewer"
+      }
+    }
   ]
   routes = [
     {
-      route = "cf-sample.cfapps.sap.hana.ondemand.com"
+      route = "tf-test-do-not-delete-nodejs.cfapps.sap.hana.ondemand.com"
     }
   ]
 }
 
 resource "cloudfoundry_app" "http-bin-server" {
-  name         = "http-bin"
+  name         = "tf-test-do-not-delete-http-bin"
   space        = "tf-space-1"
   org          = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   strategy     = "blue-green"
+  labels = {
+    "app" = "backend",
+    "env" = "production"
+  }
+  annotations = {
+    "created-by" = "me",
+  }
   processes = [
     {
       type                                 = "web",
@@ -74,13 +86,13 @@ resource "cloudfoundry_app" "http-bin-server" {
 }
 
 resource "cloudfoundry_app" "http-bin-sidecar" {
-  name         = "http-bin-sidecar"
+  name         = "tf-test-do-not-delete-http-bin-sidecar"
   space        = "tf-space-1"
   org          = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   sidecars = [
     {
-      name = "sidecar-2"
+      name = "sidecar-1"
       process_types = [
         "worker"
       ]
@@ -130,7 +142,7 @@ resource "cloudfoundry_app" "http-bin-sidecar" {
 - `service_bindings` (Attributes Set) Service instances to bind to the application. (see [below for nested schema](#nestedatt--service_bindings))
 - `sidecars` (Attributes Set) The attribute specifies additional processes to run in the same container as your app (see [below for nested schema](#nestedatt--sidecars))
 - `source_code_hash` (String) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the path specified.
-- `stack` (String) The name of the stack the application will be deployed to.
+- `stack` (String) The base operating system and file system that your application will execute in. Please refer to the [docs](https://v3-apidocs.cloudfoundry.org/version/3.155.0/index.html#stacks) for more information
 - `strategy` (String) The deployment strategy to use when deploying the application. Valid values are 'none', 'rolling', and 'blue-green', defaults to 'none'.
 - `timeout` (Number) Defines the number of seconds that Cloud Foundry allocates for starting your app.
 
@@ -206,11 +218,20 @@ Optional:
 
 Required:
 
-- `command` (String) The command used to start the sidecar.
 - `name` (String) Sidecar name. The identifier for the sidecars to be configured.
-- `process_types` (Set of String) List of processes to associate sidecar with.
 
 Optional:
 
+- `command` (String) The command used to start the sidecar.
 - `memory` (String) The memory limit for the sidecar.
+- `process_types` (Set of String) List of processes to associate sidecar with.
 
+## Import
+
+Import is supported using the following syntax:
+
+```terraform
+# terraform import cloudfoundry_app.<resource_name> <app_guid>
+
+terraform import 'cloudfoundry_app.gobis-server' f71f4a6e-253c-4025-8e45-d2be1a0d9b15
+```

@@ -52,7 +52,7 @@ type AppType struct {
 	Annotations                           types.Map          `tfsdk:"annotations"`
 }
 
-type AppTypeReduced struct {
+type DatasourceAppType struct {
 	Name                                  types.String       `tfsdk:"name"`
 	Space                                 types.String       `tfsdk:"space"`
 	Org                                   types.String       `tfsdk:"org"`
@@ -86,15 +86,15 @@ type AppTypeReduced struct {
 	Annotations                           types.Map          `tfsdk:"annotations"`
 }
 
-// Reduce function to reduce AppType to AppTypeReduced
+// Reduce function to reduce AppType to DatasourceAppType
 // This is used to reuse mapAppValuesToType in both resource and datasource
-func (a *AppType) Reduce() AppTypeReduced {
-	var reduced AppTypeReduced
+func (a *AppType) Reduce() DatasourceAppType {
+	var reduced DatasourceAppType
 	copyFields(&reduced, a)
 	return reduced
 }
 
-func (a *AppTypeReduced) Expand() AppType {
+func (a *DatasourceAppType) Expand() AppType {
 	var expanded AppType
 	copyFields(&expanded, a)
 	return expanded
@@ -289,13 +289,17 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	if len(appType.Sidecars) != 0 {
 		var sidecars cfv3operation.AppManifestSideCars
 		for _, sidecar := range appType.Sidecars {
-			var processTypes []string
-			tempDiags = sidecar.ProcessTypes.ElementsAs(ctx, &processTypes, false)
-			diags = append(diags, tempDiags...)
 			sidecarManifest := cfv3operation.AppManifestSideCar{
-				Name:         sidecar.Name.ValueString(),
-				Command:      sidecar.Command.ValueString(),
-				ProcessTypes: processTypes,
+				Name: sidecar.Name.ValueString(),
+			}
+			if !sidecar.Command.IsNull() {
+				sidecarManifest.Command = sidecar.Command.ValueString()
+			}
+			if !sidecar.ProcessTypes.IsNull() {
+				var processTypes []string
+				tempDiags = sidecar.ProcessTypes.ElementsAs(ctx, &processTypes, false)
+				diags = append(diags, tempDiags...)
+				sidecarManifest.ProcessTypes = processTypes
 			}
 			if !sidecar.Memory.IsNull() {
 				sidecarManifest.Memory = sidecar.Memory.ValueString()
@@ -373,7 +377,7 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 				sb.Params, tempDiags = types.MapValueFrom(ctx, types.StringType, service.Parameters)
 				diags = append(diags, tempDiags...)
 			} else {
-				if reqPlanType != nil {
+				if reqPlanType != nil && len(reqPlanType.ServiceBindings) > i {
 					sb.Params = reqPlanType.ServiceBindings[i].Params
 				} else {
 					sb.Params = types.MapNull(types.StringType)
@@ -506,13 +510,15 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 		for _, sidecar := range *appManifest.Sidecars {
 			var s Sidecar
 			s.Name = types.StringValue(sidecar.Name)
-			s.Command = types.StringValue(sidecar.Command)
-			var processTypes []types.String
-			for _, processType := range sidecar.ProcessTypes {
-				processTypes = append(processTypes, types.StringValue(processType))
+			if sidecar.Command != "" {
+				s.Command = types.StringValue(sidecar.Command)
 			}
-			s.ProcessTypes, tempDiags = types.SetValueFrom(ctx, types.StringType, processTypes)
-			diags = append(diags, tempDiags...)
+			if len(sidecar.ProcessTypes) != 0 {
+				s.ProcessTypes, tempDiags = types.SetValueFrom(ctx, types.StringType, sidecar.ProcessTypes)
+				diags = append(diags, tempDiags...)
+			} else {
+				s.ProcessTypes = types.SetNull(types.StringType)
+			}
 			if sidecar.Memory != "" {
 				s.Memory = types.StringValue(sidecar.Memory)
 			}

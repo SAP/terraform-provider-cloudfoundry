@@ -22,13 +22,17 @@ terraform {
 provider "cloudfoundry" {}
 
 data "cloudfoundry_app" "http-bin-server" {
-  name  = "cf-nodejs"
+  name  = "tf-test-do-not-delete-http-bin"
   space = "tf-space-1"
   org   = "PerformanceTeamBLR"
 }
 
 output "id" {
   value = data.cloudfoundry_app.http-bin-server.id
+}
+
+output "space" {
+  value = data.cloudfoundry_app.http-bin-server.space
 }
 
 output "name" {
@@ -65,19 +69,21 @@ output "buildpacks" {
 
 ### Read-Only
 
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `buildpacks` (Set of String) Multiple buildpacks used to stage the application.
 - `command` (String) A custom start command for the application. This overrides the start command provided by the buildpack.
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `disk_quota` (String) The disk space to be allocated for each application instance.
 - `docker_credentials` (Attributes) Defines login credentials for private docker repositories (see [below for nested schema](#nestedatt--docker_credentials))
 - `docker_image` (String) The URL to the docker image with tag
-- `environment` (Map of String) Key/value pairs of custom environment variables to set in your app. Does not include any system or service variables.
+- `environment` (Map of String) Key/value pairs of custom environment variables in your app. Does not include any system or service variables.
 - `health_check_http_endpoint` (String) The endpoint for the http health check type.
 - `health_check_interval` (Number) The interval in seconds between health checks.
 - `health_check_invocation_timeout` (Number) The timeout in seconds for the health check requests for http and port health checks.
 - `health_check_type` (String) The health check type which can be one of 'port', 'process', 'http'.
 - `id` (String) The GUID of the object.
 - `instances` (Number) The number of app instances that you want to start. Defaults to 1.
+- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `log_rate_limit_per_second` (String) The attribute specifies the log rate limit for all instances of an app.
 - `memory` (String) The memory limit for each application instance. If not provided, value is computed and retreived from Cloud Foundry.
 - `processes` (Attributes Set) List of configurations for individual process types. (see [below for nested schema](#nestedatt--processes))
@@ -125,12 +131,9 @@ Read-Only:
 <a id="nestedatt--routes"></a>
 ### Nested Schema for `routes`
 
-Optional:
-
-- `protocol` (String) The protocol to use for the route. Valid values are http2, http1, and tcp.
-
 Read-Only:
 
+- `protocol` (String) The protocol used for the route. Valid values are http2, http1, and tcp.
 - `route` (String) The fully route qualified domain name which will be bound to app
 
 

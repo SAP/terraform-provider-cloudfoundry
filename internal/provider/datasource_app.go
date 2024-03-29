@@ -243,15 +243,15 @@ func (d *appDataSource) Configure(ctx context.Context, req datasource.ConfigureR
 }
 
 func (d *appDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var atr AppTypeReduced
-	diags := req.Config.Get(ctx, &atr)
+	var datasourceAppType DatasourceAppType
+	diags := req.Config.Get(ctx, &datasourceAppType)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 	org, err := d.cfClient.Organizations.Single(ctx, &cfv3client.OrganizationListOptions{
 		Names: cfv3client.Filter{
-			Values: []string{atr.Org.ValueString()},
+			Values: []string{datasourceAppType.Org.ValueString()},
 		},
 	})
 	if err != nil {
@@ -260,7 +260,7 @@ func (d *appDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	}
 	space, err := d.cfClient.Spaces.Single(ctx, &cfv3client.SpaceListOptions{
 		Names: cfv3client.Filter{
-			Values: []string{atr.Space.ValueString()},
+			Values: []string{datasourceAppType.Space.ValueString()},
 		},
 		OrganizationGUIDs: cfv3client.Filter{
 			Values: []string{org.GUID},
@@ -272,7 +272,7 @@ func (d *appDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	}
 	app, err := d.cfClient.Applications.First(ctx, &cfv3client.AppListOptions{
 		Names: cfv3client.Filter{
-			Values: []string{atr.Name.ValueString()},
+			Values: []string{datasourceAppType.Name.ValueString()},
 		},
 		OrganizationGUIDs: cfv3client.Filter{
 			Values: []string{org.GUID},
@@ -301,11 +301,11 @@ func (d *appDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	atrResp := atResp.Reduce()
-	atrResp.Org = atr.Org
-	atrResp.Space = atr.Space
+	datasourceAppTypeResp := atResp.Reduce()
+	datasourceAppTypeResp.Org = datasourceAppType.Org
+	datasourceAppTypeResp.Space = datasourceAppType.Space
 
 	tflog.Trace(ctx, "read a data source")
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &atrResp)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &datasourceAppTypeResp)...)
 }
