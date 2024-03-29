@@ -42,7 +42,7 @@ func (r *RoleResource) Metadata(ctx context.Context, req resource.MetadataReques
 
 func (r *RoleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Provides a Cloud Foundry resource for assigning roles. Space roles cannot be assigned until the user has the relevant role in the organization. (Updating a role is not supported according to the docs)",
+		MarkdownDescription: "Provides a Cloud Foundry resource for assigning roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)",
 		Attributes: map[string]schema.Attribute{
 			"type": schema.StringAttribute{
 				MarkdownDescription: "Role type; see [Valid role types](https://v3-apidocs.cloudfoundry.org/version/3.154.0/index.html#valid-role-types)",
@@ -174,6 +174,41 @@ func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, r
 		orgRoleType := plan.getOrgRoleType()
 		role, err = r.cfClient.Roles.CreateOrganizationRole(ctx, plan.Organization.ValueString(), plan.User.ValueString(), orgRoleType)
 	} else {
+		var space *cfv3resource.Space
+		space, err = r.cfClient.Spaces.Get(ctx, plan.Space.ValueString())
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"API Error Fetching Space",
+				"Could not get space with ID "+plan.Space.ValueString()+" : "+err.Error(),
+			)
+			return
+		}
+
+		_, err = r.cfClient.Roles.Single(ctx, &cfv3client.RoleListOptions{
+			UserGUIDs: cfv3client.Filter{
+				Values: []string{
+					plan.User.ValueString(),
+				},
+			},
+			OrganizationGUIDs: cfv3client.Filter{
+				Values: []string{
+					space.Relationships.Organization.Data.GUID,
+				},
+			},
+			Types: cfv3client.Filter{
+				Values: []string{
+					"organization_user",
+				},
+			},
+		})
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Assigned User missing organization_user role",
+				"Assign organization_user role to user with ID "+plan.User.ValueString()+" before assigning any space role to it.",
+			)
+			return
+		}
+
 		spaceRoleType := plan.getSpaceRoleType()
 		role, err = r.cfClient.Roles.CreateSpaceRole(ctx, plan.Space.ValueString(), plan.User.ValueString(), spaceRoleType)
 	}

@@ -6,14 +6,14 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 152
+        content_length: 186
         transfer_encoding: []
         trailer: {}
         host: api.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"type":"organization_user","relationships":{"organization":{"data":{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38"}},"user":{"data":{"guid":"space"}}}}
+            {"type":"organization_manager","relationships":{"organization":{"data":{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56"}},"user":{"data":{"guid":"4467eb10-a5dd-4c46-904f-d5a1c86f05a2"}}}}
         form: {}
         headers:
             Authorization:
@@ -32,12 +32,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"errors":[{"detail":"User ''space'' already has ''organization_user'' role in organization ''tf-test-do-not-delete''.","title":"CF-UnprocessableEntity","code":10008}]}'
+        body: '{"errors":[{"detail":"User ''debaditya.ray@sap.com'' already has ''organization_manager'' role in organization ''PerformanceTeamBLR''.","title":"CF-UnprocessableEntity","code":10008}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Thu, 08 Feb 2024 10:33:18 GMT
+                - Thu, 28 Mar 2024 12:10:41 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -45,9 +45,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 49893f4384d4cd1d
+                - 515a32eca4b1bd8a
             X-B3-Traceid:
-                - 1e930dacc1f84b0349893f4384d4cd1d
+                - 809595c38b8f4399515a32eca4b1bd8a
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -56,12 +56,18 @@ interactions:
                 - SAMEORIGIN
             X-Permitted-Cross-Domain-Policies:
                 - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1711629189"
             X-Runtime:
-                - "0.049811"
+                - "0.055356"
             X-Vcap-Request-Id:
-                - 1e930dac-c1f8-4b03-4989-3f4384d4cd1d::d8c71cc8-0ec0-413e-bfdd-c295d1699871
+                - 809595c3-8b8f-4399-515a-32eca4b1bd8a::4d281128-0e00-4168-a1e0-7e7c18f8588d
             X-Xss-Protection:
                 - 1; mode=block
         status: 422 Unprocessable Entity
         code: 422
-        duration: 249.528828ms
+        duration: 320.611208ms
