@@ -26,6 +26,7 @@ website/node_modules
 *.iml
 *.test
 *.iml
+*.zip
 
 **/trace.txt
 website/vendor

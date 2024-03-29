@@ -275,6 +275,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 		NewSecurityGroupResource,
 		NewRouteResource,
 		NewDomainResource,
+		NewAppResource,
 	}
 }
 
@@ -292,6 +293,7 @@ func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasou
 		NewSecurityGroupDataSource,
 		NewRouteDataSource,
 		NewDomainDataSource,
+		NewAppDataSource,
 	}
 }
 

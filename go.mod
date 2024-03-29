@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.21.4
 
 require (
-	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240312211443-ff080b11a56e
+	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240326180005-d4d9ebf1fa8b
 	github.com/hashicorp/terraform-plugin-docs v0.17.0
 	github.com/hashicorp/terraform-plugin-framework v1.5.0
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.1
@@ -16,6 +16,7 @@ require (
 	github.com/samber/lo v1.39.0
 	github.com/stretchr/testify v1.8.4
 	gopkg.in/dnaeon/go-vcr.v3 v3.1.2
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require github.com/rivo/uniseg v0.2.0 // indirect
@@ -95,6 +96,5 @@ require (
 	google.golang.org/grpc v1.60.1 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
