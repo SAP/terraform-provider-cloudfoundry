@@ -1,5 +1,5 @@
 resource "cloudfoundry_role" "my_role" {
-  user = "space"
-  type = "organization_user"
-  org  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+  username = "debaditya.ray@sap.com"
+  type     = "organization_user"
+  org      = "784b4cd0-4771-4e4d-9052-a07e178bae56"
 }
