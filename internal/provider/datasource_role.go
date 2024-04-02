@@ -83,7 +83,7 @@ func (d *RoleDataSource) Schema(ctx context.Context, req datasource.SchemaReques
 }
 
 func (d *RoleDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data roleType
+	var data roleDatasourceType
 	diags := req.Config.Get(ctx, &data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -99,9 +99,10 @@ func (d *RoleDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 		return
 	}
 
-	data = mapRoleValuesToType(role)
+	roleTypeResponse := mapRoleValuesToType(role)
+	datasourceRoleTypeResp := roleTypeResponse.Reduce()
 
 	tflog.Trace(ctx, "read a role data source")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &datasourceRoleTypeResp)...)
 
 }

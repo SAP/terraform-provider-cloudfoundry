@@ -7,8 +7,19 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// Terraform struct for storing values for role data source and resource
 type roleType struct {
+	Type         types.String `tfsdk:"type"`
+	User         types.String `tfsdk:"user"`
+	UserName     types.String `tfsdk:"username"`
+	Origin       types.String `tfsdk:"origin"`
+	Space        types.String `tfsdk:"space"`
+	Id           types.String `tfsdk:"id"`
+	Organization types.String `tfsdk:"org"`
+	CreatedAt    types.String `tfsdk:"created_at"`
+	UpdatedAt    types.String `tfsdk:"updated_at"`
+}
+
+type roleDatasourceType struct {
 	Type         types.String `tfsdk:"type"`
 	User         types.String `tfsdk:"user"`
 	Space        types.String `tfsdk:"space"`
@@ -16,6 +27,14 @@ type roleType struct {
 	Organization types.String `tfsdk:"org"`
 	CreatedAt    types.String `tfsdk:"created_at"`
 	UpdatedAt    types.String `tfsdk:"updated_at"`
+}
+
+// Reduce function to reduce roleType to roleDatasourceType
+// This is used to reuse mapRoleValuesToType in both resource and datasource
+func (a *roleType) Reduce() roleDatasourceType {
+	var reduced roleDatasourceType
+	copyFields(&reduced, a)
+	return reduced
 }
 
 // Returns the OrganizationRoleType value needed for org role creation

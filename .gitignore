@@ -30,6 +30,7 @@ website/node_modules
 
 **/trace.txt
 website/vendor
+.terraform.lock.hcl
 
 # Test exclusions
 !command/test-fixtures/**/*.tfstate
