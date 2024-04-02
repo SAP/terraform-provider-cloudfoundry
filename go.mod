@@ -19,6 +19,8 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 )
 
+replace github.com/cloudfoundry-community/go-cfclient/v3 => github.com/Dray56/go-cfclient/v3 v3.0.0-20240401042020-3fd26f1e7e8b
+
 require github.com/rivo/uniseg v0.2.0 // indirect
 
 require (

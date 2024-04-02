@@ -39,8 +39,7 @@ var (
 	testUpdateLabel          = "{purpose: \"production\", status: \"fine\"}"
 	testUser                 = "debaditya.ray@sap.com"
 	testUserGUID             = "2334cf47-fead-4e5f-bd2a-6e7153e7f144"
-	testUser2ID              = "space"
-	testRoleGUID             = "e17839d9-cd4f-4e4b-baf0-18786f12fede"
+	testUser2GUID            = "4467eb10-a5dd-4c46-904f-d5a1c86f05a2"
 	testOrgQuotaGUID         = "e3cef997-9ba5-4cb4-b25b-c79faa81a33f"
 	createRules              = `[{
 									protocol = "tcp"

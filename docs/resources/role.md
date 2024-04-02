@@ -13,9 +13,9 @@ Provides a Cloud Foundry resource for assigning roles. For a user to be assigned
 
 ```terraform
 resource "cloudfoundry_role" "my_role" {
-  user = "space"
+  username = "debaditya.ray@sap.com"
   type = "organization_user"
-  org  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+  org  = "784b4cd0-4771-4e4d-9052-a07e178bae56"
 }
 ```
 
@@ -25,12 +25,14 @@ resource "cloudfoundry_role" "my_role" {
 ### Required
 
 - `type` (String) Role type; see [Valid role types](https://v3-apidocs.cloudfoundry.org/version/3.154.0/index.html#valid-role-types)
-- `user` (String) The guid of the cloudfoundry user to assign the role with
 
 ### Optional
 
 - `org` (String) The guid of the organization to assign the role to
+- `origin` (String) The identity provider for the UAA user
 - `space` (String) The guid of the space to assign the role to
+- `user` (String) The guid of the cloudfoundry user to assign the role with
+- `username` (String) The username of the cloudfoundry user to assign the role with
 
 ### Read-Only
 

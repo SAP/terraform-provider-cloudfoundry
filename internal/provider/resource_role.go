@@ -53,9 +53,39 @@ func (r *RoleResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			},
 			"user": schema.StringAttribute{
 				MarkdownDescription: "The guid of the cloudfoundry user to assign the role with",
-				Required:            true,
+				Optional:            true,
+				Computed:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
+				},
+				Validators: []validator.String{
+					validation.ValidUUID(),
+					stringvalidator.ExactlyOneOf(path.Expressions{
+						path.MatchRoot("user"),
+						path.MatchRoot("username"),
+					}...),
+				},
+			},
+			"username": schema.StringAttribute{
+				MarkdownDescription: "The username of the cloudfoundry user to assign the role with",
+				Optional:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"origin": schema.StringAttribute{
+				MarkdownDescription: "The identity provider for the UAA user",
+				Optional:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Validators: []validator.String{
+					stringvalidator.ConflictsWith(path.Expressions{
+						path.MatchRoot("user"),
+					}...),
+					stringvalidator.AlsoRequires(path.Expressions{
+						path.MatchRoot("username"),
+					}...),
 				},
 			},
 			"org": schema.StringAttribute{
@@ -172,45 +202,19 @@ func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, r
 	)
 	if !plan.Organization.IsNull() {
 		orgRoleType := plan.getOrgRoleType()
-		role, err = r.cfClient.Roles.CreateOrganizationRole(ctx, plan.Organization.ValueString(), plan.User.ValueString(), orgRoleType)
+		if !plan.User.IsUnknown() {
+			role, err = r.cfClient.Roles.CreateOrganizationRole(ctx, plan.Organization.ValueString(), plan.User.ValueString(), orgRoleType)
+		} else {
+			role, err = r.cfClient.Roles.CreateOrganizationRoleWithUsername(ctx, plan.Organization.ValueString(), plan.UserName.ValueString(), orgRoleType, plan.Origin.ValueString())
+		}
 	} else {
-		var space *cfv3resource.Space
-		space, err = r.cfClient.Spaces.Get(ctx, plan.Space.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Fetching Space",
-				"Could not get space with ID "+plan.Space.ValueString()+" : "+err.Error(),
-			)
-			return
-		}
-
-		_, err = r.cfClient.Roles.Single(ctx, &cfv3client.RoleListOptions{
-			UserGUIDs: cfv3client.Filter{
-				Values: []string{
-					plan.User.ValueString(),
-				},
-			},
-			OrganizationGUIDs: cfv3client.Filter{
-				Values: []string{
-					space.Relationships.Organization.Data.GUID,
-				},
-			},
-			Types: cfv3client.Filter{
-				Values: []string{
-					"organization_user",
-				},
-			},
-		})
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Assigned User missing organization_user role",
-				"Assign organization_user role to user with ID "+plan.User.ValueString()+" before assigning any space role to it.",
-			)
-			return
-		}
 
 		spaceRoleType := plan.getSpaceRoleType()
-		role, err = r.cfClient.Roles.CreateSpaceRole(ctx, plan.Space.ValueString(), plan.User.ValueString(), spaceRoleType)
+		if !plan.User.IsUnknown() {
+			role, err = r.cfClient.Roles.CreateSpaceRole(ctx, plan.Space.ValueString(), plan.User.ValueString(), spaceRoleType)
+		} else {
+			role, err = r.cfClient.Roles.CreateSpaceRoleWithUsername(ctx, plan.Space.ValueString(), plan.UserName.ValueString(), spaceRoleType, plan.Origin.ValueString())
+		}
 	}
 
 	if err != nil {
@@ -221,29 +225,32 @@ func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	plan = mapRoleValuesToType(role)
-	resp.Diagnostics.Append(diags...)
+	data := mapRoleValuesToType(role)
+	data.UserName = plan.UserName
+	data.Origin = plan.Origin
 
 	tflog.Trace(ctx, "created a role resource")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (rs *RoleResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data roleType
+	var state roleType
 
-	diags := req.State.Get(ctx, &data)
+	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	role, err := rs.cfClient.Roles.Get(ctx, data.Id.ValueString())
+	role, err := rs.cfClient.Roles.Get(ctx, state.Id.ValueString())
 	if err != nil {
-		handleReadErrors(ctx, resp, err, "role", data.Id.ValueString())
+		handleReadErrors(ctx, resp, err, "role", state.Id.ValueString())
 		return
 	}
 
-	data = mapRoleValuesToType(role)
+	data := mapRoleValuesToType(role)
+	data.UserName = state.UserName
+	data.Origin = state.Origin
 
 	tflog.Trace(ctx, "read a role resource")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
