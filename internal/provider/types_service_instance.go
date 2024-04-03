@@ -21,7 +21,7 @@ type serviceInstanceType struct {
 	ServicePlan      types.String         `tfsdk:"service_plan"`
 	Parameters       jsontypes.Normalized `tfsdk:"parameters"`
 	LastOperation    types.Object         `tfsdk:"last_operation"` //LastOperationType
-	Tags             types.Set            `tfsdk:"tags"`
+	Tags             types.List           `tfsdk:"tags"`
 	DashboardURL     types.String         `tfsdk:"dashboard_url"`
 	Credentials      jsontypes.Normalized `tfsdk:"credentials"`
 	SyslogDrainURL   types.String         `tfsdk:"syslog_drain_url"`
@@ -42,7 +42,7 @@ type datasourceServiceInstanceType struct {
 	Space            types.String `tfsdk:"space"`
 	ServicePlan      types.String `tfsdk:"service_plan"`
 	LastOperation    types.Object `tfsdk:"last_operation"` //LastOperationType
-	Tags             types.Set    `tfsdk:"tags"`
+	Tags             types.List   `tfsdk:"tags"`
 	DashboardURL     types.String `tfsdk:"dashboard_url"`
 	SyslogDrainURL   types.String `tfsdk:"syslog_drain_url"`
 	RouteServiceURL  types.String `tfsdk:"route_service_url"`
@@ -126,10 +126,10 @@ func mapDataSourceServiceInstanceValuesToType(ctx context.Context, value *resour
 		for _, t := range value.Tags {
 			tags = append(tags, types.StringValue(t))
 		}
-		dsServiceInstanceType.Tags, diags = types.SetValueFrom(ctx, types.StringType, tags)
+		dsServiceInstanceType.Tags, diags = types.ListValueFrom(ctx, types.StringType, tags)
 		diagnostics.Append(diags...)
 	} else {
-		dsServiceInstanceType.Tags = types.SetNull(types.StringType)
+		dsServiceInstanceType.Tags = types.ListNull(types.StringType)
 
 	}
 
@@ -188,10 +188,10 @@ func mapResourceServiceInstanceValuesToType(ctx context.Context, value *resource
 		for _, t := range value.Tags {
 			tags = append(tags, types.StringValue(t))
 		}
-		serviceInstanceType.Tags, diags = types.SetValueFrom(ctx, types.StringType, tags)
+		serviceInstanceType.Tags, diags = types.ListValueFrom(ctx, types.StringType, tags)
 		diagnostics.Append(diags...)
 	} else {
-		serviceInstanceType.Tags = types.SetNull(types.StringType)
+		serviceInstanceType.Tags = types.ListNull(types.StringType)
 
 	}
 
@@ -233,7 +233,7 @@ func isServiceInstanceUpgradable(ctx context.Context, guid string, c cfv3client.
 }
 
 // toTagsList converts aliases of type types.Set into a slice of strings.
-func toTagsList(ctx context.Context, tagsSet types.Set) ([]string, diag.Diagnostics) {
+func toTagsList(ctx context.Context, tagsSet types.List) ([]string, diag.Diagnostics) {
 
 	tags := make([]string, 0, len(tagsSet.Elements()))
 	diags := tagsSet.ElementsAs(ctx, &tags, false)

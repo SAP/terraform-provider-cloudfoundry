@@ -11,6 +11,7 @@ import (
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-timeouts/resource/timeouts"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -85,10 +86,13 @@ https://docs.cloudfoundry.org/devguide/services`,
 				Optional:            true,
 				CustomType:          jsontypes.NormalizedType{},
 			},
-			"tags": schema.SetAttribute{
+			"tags": schema.ListAttribute{
 				ElementType:         types.StringType,
 				Optional:            true,
-				MarkdownDescription: "Set of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.",
+				MarkdownDescription: "List of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.",
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 			},
 			"credentials": schema.StringAttribute{
 				MarkdownDescription: "A JSON object that is made available to apps bound to this service instance of type user-provided.",
@@ -288,7 +292,7 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 			}
 			createServiceInstance.Parameters = &params
 		}
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
+		if !plan.Tags.IsNull() {
 			tags, diags := toTagsList(ctx, plan.Tags)
 			resp.Diagnostics.Append(diags...)
 			if resp.Diagnostics.HasError() {
@@ -364,7 +368,7 @@ func (r *serviceInstanceResource) Create(ctx context.Context, req resource.Creat
 			}
 			createServiceInstance.Credentials = &credentials
 		}
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
+		if !plan.Tags.IsNull() {
 			tags, diags := toTagsList(ctx, plan.Tags)
 			resp.Diagnostics.Append(diags...)
 			if resp.Diagnostics.HasError() {
@@ -505,15 +509,13 @@ func (r *serviceInstanceResource) Update(ctx context.Context, req resource.Updat
 			}
 			updateServiceInstance.Parameters = &params
 		}
-		// check if tag is not null and update the tags
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
-			tags, diags := toTagsList(ctx, plan.Tags)
-			resp.Diagnostics.Append(diags...)
-			if resp.Diagnostics.HasError() {
-				return
-			}
-			updateServiceInstance.Tags = tags
+
+		tags, diags := toTagsList(ctx, plan.Tags)
+		resp.Diagnostics.Append(diags...)
+		if resp.Diagnostics.HasError() {
+			return
 		}
+		updateServiceInstance.Tags = tags
 
 		updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
 		resp.Diagnostics.Append(diags...)
@@ -562,20 +564,17 @@ func (r *serviceInstanceResource) Update(ctx context.Context, req resource.Updat
 			}
 			updateServiceInstance.Credentials = &credentials
 		}
-		if !plan.SyslogDrainURL.IsNull() {
-			updateServiceInstance.SyslogDrainURL = plan.SyslogDrainURL.ValueStringPointer()
+
+		updateServiceInstance.SyslogDrainURL = plan.SyslogDrainURL.ValueStringPointer()
+		updateServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
+
+		tags, diags := toTagsList(ctx, plan.Tags)
+		resp.Diagnostics.Append(diags...)
+		if resp.Diagnostics.HasError() {
+			return
 		}
-		if !plan.RouteServiceURL.IsNull() {
-			updateServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
-		}
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
-			tags, diags := toTagsList(ctx, plan.Tags)
-			resp.Diagnostics.Append(diags...)
-			if resp.Diagnostics.HasError() {
-				return
-			}
-			updateServiceInstance.Tags = tags
-		}
+		updateServiceInstance.Tags = tags
+
 		updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
 		resp.Diagnostics.Append(diags...)
 		_, err := r.cfClient.ServiceInstances.UpdateUserProvided(ctx, previousState.ID.ValueString(), &updateServiceInstance)

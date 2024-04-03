@@ -46,8 +46,8 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "The ID of the service plan from which to create the service instance",
 				Computed:            true,
 			},
-			"tags": schema.SetAttribute{
-				MarkdownDescription: "Set of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.",
+			"tags": schema.ListAttribute{
+				MarkdownDescription: "List of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.",
 				ElementType:         types.StringType,
 				Computed:            true,
 			},
