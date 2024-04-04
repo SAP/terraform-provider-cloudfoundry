@@ -22,13 +22,13 @@ func TestAppDataSource_Configure(t *testing.T) {
 					Config: hclProvider(nil) + `
 data "cloudfoundry_app" "app" {
 	name = "tf-test-do-not-delete-http-bin"
-	space = "tf-space-1"
-	org = "PerformanceTeamBLR"
+	space_name = "tf-space-1"
+	org_name = "PerformanceTeamBLR"
 }`,
 					Check: resource.ComposeTestCheckFunc(
 						resource.TestCheckResourceAttr(resourceName, "name", "tf-test-do-not-delete-http-bin"),
-						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
-						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "space_name", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org_name", "PerformanceTeamBLR"),
 						resource.TestCheckResourceAttr(resourceName, "processes.0.instances", "1"),
 						resource.TestCheckResourceAttr(resourceName, "processes.0.memory", "256M"),
 						resource.TestCheckResourceAttr(resourceName, "processes.0.disk_quota", "1024M"),
@@ -58,13 +58,13 @@ data "cloudfoundry_app" "app" {
 					Config: hclProvider(nil) + `
 data "cloudfoundry_app" "app" {
 	name = "tf-test-do-not-delete-nodejs"
-	space = "tf-space-1"
-	org = "PerformanceTeamBLR"
+	space_name = "tf-space-1"
+	org_name = "PerformanceTeamBLR"
 }`,
 					Check: resource.ComposeTestCheckFunc(
 						resource.TestCheckResourceAttr(resourceName, "name", "tf-test-do-not-delete-nodejs"),
-						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
-						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "space_name", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org_name", "PerformanceTeamBLR"),
 						resource.TestCheckResourceAttr(resourceName, "processes.0.instances", "1"),
 						resource.TestCheckResourceAttr(resourceName, "processes.0.type", "web"),
 						resource.TestCheckResourceAttr(resourceName, "service_bindings.#", "1"),
@@ -89,8 +89,8 @@ data "cloudfoundry_app" "app" {
 					Config: hclProvider(nil) + `
 data "cloudfoundry_app" "app" {
 	name = "testunavailableapp"
-	space = "tf-space-1"
-	org = "PerformanceTeamBLR"
+	space_name = "tf-space-1"
+	org_name = "PerformanceTeamBLR"
 }`,
 					ExpectError: regexp.MustCompile(`Error: Error finding given app`),
 				},

@@ -15,8 +15,8 @@ import (
 // Type AppType representing Schema Attribute from function Schema in go type from resource_appManifest.go file
 type AppType struct {
 	Name                                  types.String       `tfsdk:"name"`
-	Space                                 types.String       `tfsdk:"space"`
-	Org                                   types.String       `tfsdk:"org"`
+	Space                                 types.String       `tfsdk:"space_name"`
+	Org                                   types.String       `tfsdk:"org_name"`
 	Stack                                 types.String       `tfsdk:"stack"`
 	Buildpacks                            types.Set          `tfsdk:"buildpacks"`
 	Path                                  types.String       `tfsdk:"path"`
@@ -54,8 +54,8 @@ type AppType struct {
 
 type DatasourceAppType struct {
 	Name                                  types.String       `tfsdk:"name"`
-	Space                                 types.String       `tfsdk:"space"`
-	Org                                   types.String       `tfsdk:"org"`
+	Space                                 types.String       `tfsdk:"space_name"`
+	Org                                   types.String       `tfsdk:"org_name"`
 	Stack                                 types.String       `tfsdk:"stack"`
 	Buildpacks                            types.Set          `tfsdk:"buildpacks"`
 	DockerImage                           types.String       `tfsdk:"docker_image"`

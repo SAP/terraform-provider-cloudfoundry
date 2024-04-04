@@ -21,8 +21,8 @@ func TestAppResource_Configure(t *testing.T) {
 					Config: hclProvider(nil) + `
 resource "cloudfoundry_app" "app" {
 	name                                 = "cf-nodejs"
-  space                                = "tf-space-1" 
-  org                                  = "PerformanceTeamBLR"
+  space_name                           = "tf-space-1" 
+  org_name                             = "PerformanceTeamBLR"
   path                                 = "../../assets/cf-sample-app-nodejs.zip"
 	memory                               = "256M"
 	disk_quota                           = "1024M"
@@ -44,8 +44,8 @@ resource "cloudfoundry_app" "app" {
 					`,
 					Check: resource.ComposeTestCheckFunc(
 						resource.TestCheckResourceAttr(resourceName, "name", "cf-nodejs"),
-						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
-						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "space_name", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org_name", "PerformanceTeamBLR"),
 						resource.TestCheckResourceAttr(resourceName, "instances", "2"),
 						resource.TestCheckResourceAttr(resourceName, "memory", "256M"),
 						resource.TestCheckResourceAttr(resourceName, "disk_quota", "1024M"),
@@ -72,8 +72,8 @@ resource "cloudfoundry_app" "app" {
 					Config: hclProvider(nil) + `
 resource "cloudfoundry_app" "app" {
 	name                                 = "cf-nodejs-update"
-  space                                = "tf-space-1" 
-  org                                  = "PerformanceTeamBLR"
+  space_name                           = "tf-space-1" 
+  org_name                             = "PerformanceTeamBLR"
   path                                 = "../../assets/cf-sample-app-nodejs.zip"
 	source_code_hash                     = "1234567890"
 	memory                               = "256M"
@@ -90,8 +90,8 @@ resource "cloudfoundry_app" "app" {
 					`,
 					Check: resource.ComposeTestCheckFunc(
 						resource.TestCheckResourceAttr(resourceName, "name", "cf-nodejs-update"),
-						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
-						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "space_name", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org_name", "PerformanceTeamBLR"),
 						resource.TestCheckResourceAttr(resourceName, "instances", "1"),
 						resource.TestCheckResourceAttr(resourceName, "memory", "256M"),
 						resource.TestCheckResourceAttr(resourceName, "disk_quota", "1024M"),
@@ -104,8 +104,8 @@ resource "cloudfoundry_app" "app" {
 					Config: hclProvider(nil) + `
 resource "cloudfoundry_app" "app" {
 	name                                 = "cf-nodejs-update"
-  space                                = "tf-space-1" 
-  org                                  = "PerformanceTeamBLR"
+  space_name                           = "tf-space-1" 
+  org_name                             = "PerformanceTeamBLR"
   path                                 = "../../assets/cf-sample-app-nodejs.zip"
 	source_code_hash                     = "999999"
 	memory                               = "256M"
@@ -119,8 +119,8 @@ resource "cloudfoundry_app" "app" {
 					`,
 					Check: resource.ComposeTestCheckFunc(
 						resource.TestCheckResourceAttr(resourceName, "name", "cf-nodejs-update"),
-						resource.TestCheckResourceAttr(resourceName, "space", "tf-space-1"),
-						resource.TestCheckResourceAttr(resourceName, "org", "PerformanceTeamBLR"),
+						resource.TestCheckResourceAttr(resourceName, "space_name", "tf-space-1"),
+						resource.TestCheckResourceAttr(resourceName, "org_name", "PerformanceTeamBLR"),
 						resource.TestCheckResourceAttr(resourceName, "instances", "2"),
 						resource.TestCheckResourceAttr(resourceName, "memory", "256M"),
 						resource.TestCheckResourceAttr(resourceName, "disk_quota", "1024M"),
@@ -144,8 +144,8 @@ resource "cloudfoundry_app" "app" {
 					Config: hclProvider(nil) + `
 resource "cloudfoundry_app" "app" {
 	name         = "http-bin"
-	space        = "tf-space-1"
-	org          = "PerformanceTeamBLR"
+	space_name   = "tf-space-1"
+	org_name     = "PerformanceTeamBLR"
 	docker_image = "kennethreitz/httpbin"
 	strategy		 = "blue-green"
 	processes = [
@@ -192,8 +192,8 @@ resource "cloudfoundry_app" "app" {
 					Config: hclProvider(nil) + `
 resource "cloudfoundry_app" "http-bin-sidecar" {
 	name         = "http-bin-sidecar"
-	space        = "tf-space-1"
-	org          = "PerformanceTeamBLR"
+	space_name   = "tf-space-1"
+	org_name     = "PerformanceTeamBLR"
 	docker_image = "kennethreitz/httpbin"
 	sidecars = [
 		{

@@ -56,14 +56,14 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
-			"space": schema.StringAttribute{
+			"space_name": schema.StringAttribute{
 				MarkdownDescription: "The name of the associated Cloud Foundry space.",
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
-			"org": schema.StringAttribute{
+			"org_name": schema.StringAttribute{
 				MarkdownDescription: "The name of the associated Cloud Foundry organization.",
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
