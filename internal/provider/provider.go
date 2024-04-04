@@ -182,9 +182,8 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	user := os.Getenv("CF_USER")
 	password := os.Getenv("CF_PASSWORD")
 	origin := os.Getenv("CF_ORIGIN")
-	// Attribute name is cf_client_id (for backward compatability) and convention is to add `CF_` prefix to all environment variables, hence `CF_CF_CLIENT_ID`
-	cfclientid := os.Getenv("CF_CF_CLIENT_ID")
-	cfclientsecret := os.Getenv("CF_CF_CLIENT_SECRET")
+	cfclientid := os.Getenv("CF_CLIENT_ID")
+	cfclientsecret := os.Getenv("CF_CLIENT_SECRET")
 
 	var skipsslvalidation bool
 	var err error

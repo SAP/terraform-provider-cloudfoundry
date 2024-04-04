@@ -34,6 +34,10 @@ provider "cloudfoundry" {}
 - `skip_ssl_validation` (Boolean)
 - `user` (String, Sensitive) A unique identifier associated with an individual or entity for authentication & authorization purposes.
 
+**Note** 
+
+All parameter values for the provider can be injected by setting environment variables `CF_API_URL`, `CF_USER`, `CF_PASSWORD`, `CF_ORIGIN`, `CF_CLIENT_ID`, `CF_CLIENT_SECRET`.
+
 ## Get Started
 
 If you're not familiar with Terraform yet, see the [Fundamentals](https://developer.hashicorp.com/terraform/tutorials/cli) section with a lot of helpful tutorials. 

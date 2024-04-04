@@ -1,8 +1,6 @@
 module github.com/SAP/terraform-provider-cloudfoundry
 
-go 1.21
-
-toolchain go1.21.4
+go 1.22
 
 require (
 	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240326180005-d4d9ebf1fa8b
@@ -15,7 +13,7 @@ require (
 	github.com/hashicorp/terraform-plugin-testing v1.7.0
 	github.com/samber/lo v1.39.0
 	github.com/stretchr/testify v1.9.0
-	gopkg.in/dnaeon/go-vcr.v3 v3.1.2
+	gopkg.in/dnaeon/go-vcr.v3 v3.2.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
