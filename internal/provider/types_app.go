@@ -2,7 +2,10 @@ package provider
 
 import (
 	"context"
+	"fmt"
+	"math"
 	"os"
+	"strings"
 	"time"
 
 	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
@@ -15,8 +18,8 @@ import (
 // Type AppType representing Schema Attribute from function Schema in go type from resource_appManifest.go file
 type AppType struct {
 	Name                                  types.String       `tfsdk:"name"`
-	Space                                 types.String       `tfsdk:"space"`
-	Org                                   types.String       `tfsdk:"org"`
+	Space                                 types.String       `tfsdk:"space_name"`
+	Org                                   types.String       `tfsdk:"org_name"`
 	Stack                                 types.String       `tfsdk:"stack"`
 	Buildpacks                            types.Set          `tfsdk:"buildpacks"`
 	Path                                  types.String       `tfsdk:"path"`
@@ -54,8 +57,8 @@ type AppType struct {
 
 type DatasourceAppType struct {
 	Name                                  types.String       `tfsdk:"name"`
-	Space                                 types.String       `tfsdk:"space"`
-	Org                                   types.String       `tfsdk:"org"`
+	Space                                 types.String       `tfsdk:"space_name"`
+	Org                                   types.String       `tfsdk:"org_name"`
 	Stack                                 types.String       `tfsdk:"stack"`
 	Buildpacks                            types.Set          `tfsdk:"buildpacks"`
 	DockerImage                           types.String       `tfsdk:"docker_image"`
@@ -243,7 +246,7 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 			if !process.Command.IsNull() {
 				processManifest.Command = process.Command.ValueString()
 			}
-			if !process.DiskQuota.IsNull() {
+			if !process.DiskQuota.IsUnknown() {
 				processManifest.DiskQuota = process.DiskQuota.ValueString()
 			}
 			if !process.HealthCheckHttpEndpoint.IsNull() {
@@ -258,10 +261,10 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 			if !process.HealthCheckInterval.IsNull() {
 				processManifest.HealthCheckInterval = uint(process.HealthCheckInterval.ValueInt64())
 			}
-			if !process.Instances.IsNull() {
+			if !process.Instances.IsUnknown() {
 				processManifest.Instances = uint(process.Instances.ValueInt64())
 			}
-			if !process.Memory.IsNull() {
+			if !process.Memory.IsUnknown() {
 				processManifest.Memory = process.Memory.ValueString()
 			}
 			if !process.Timeout.IsNull() {
@@ -323,10 +326,10 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	if !appType.HealthCheckType.IsUnknown() {
 		appmanifest.HealthCheckType = cfv3operation.AppHealthCheckType(appType.HealthCheckType.ValueString())
 	}
-	if !appType.Instances.IsNull() {
+	if !appType.Instances.IsUnknown() {
 		appmanifest.Instances = uint(appType.Instances.ValueInt64())
 	}
-	if !appType.Memory.IsNull() {
+	if !appType.Memory.IsUnknown() {
 		appmanifest.Memory = appType.Memory.ValueString()
 	}
 	if !appType.Timeout.IsNull() {
@@ -409,7 +412,7 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 	}
 	if appManifest.Processes != nil {
 		var processes []Process
-		for _, process := range *appManifest.Processes {
+		for i, process := range *appManifest.Processes {
 			// reqPlanType will be set only for resources else nil
 			// we also check if processes were not set in request but we have in response then map to app spec level else map to process spec level
 			if reqPlanType != nil && len(reqPlanType.Processes) == 0 {
@@ -417,7 +420,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 					appType.Command = types.StringValue(process.Command)
 				}
 				if process.DiskQuota != "" {
-					appType.DiskQuota = types.StringValue(process.DiskQuota)
+					if !reqPlanType.DiskQuota.IsUnknown() {
+						result, err := getDesiredType(process.DiskQuota, reqPlanType.DiskQuota.ValueString())
+						if err != nil {
+							tempDiags.AddError("Error converting memory", err.Error())
+							diags = append(diags, tempDiags...)
+						}
+						appType.DiskQuota = types.StringValue(result)
+					} else {
+						appType.DiskQuota = types.StringValue(process.DiskQuota)
+					}
 				}
 				if process.HealthCheckType != "" {
 					appType.HealthCheckType = types.StringValue(string(process.HealthCheckType))
@@ -432,7 +444,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 					appType.Instances = types.Int64Value(int64(process.Instances))
 				}
 				if process.Memory != "" {
-					appType.Memory = types.StringValue(process.Memory)
+					if !reqPlanType.Memory.IsUnknown() {
+						result, err := getDesiredType(process.Memory, reqPlanType.Memory.ValueString())
+						if err != nil {
+							tempDiags.AddError("Error converting memory", err.Error())
+							diags = append(diags, tempDiags...)
+						}
+						appType.Memory = types.StringValue(result)
+					} else {
+						appType.Memory = types.StringValue(process.Memory)
+					}
 				}
 				if process.Timeout != 0 {
 					appType.Timeout = types.Int64Value(int64(process.Timeout))
@@ -453,7 +474,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 					appType.ReadinessHealthCheckInterval = types.Int64Value(int64(process.ReadinessHealthCheckInterval))
 				}
 				if process.LogRateLimitPerSecond != "" {
-					appType.LogRateLimitPerSecond = types.StringValue(process.LogRateLimitPerSecond)
+					if !reqPlanType.LogRateLimitPerSecond.IsUnknown() {
+						result, err := getDesiredType(process.LogRateLimitPerSecond, reqPlanType.LogRateLimitPerSecond.ValueString())
+						if err != nil {
+							tempDiags.AddError("Error converting memory", err.Error())
+							diags = append(diags, tempDiags...)
+						}
+						appType.LogRateLimitPerSecond = types.StringValue(result)
+					} else {
+						appType.LogRateLimitPerSecond = types.StringValue(process.LogRateLimitPerSecond)
+					}
 				}
 			} else {
 				var p Process
@@ -462,7 +492,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 					p.Command = types.StringValue(process.Command)
 				}
 				if process.DiskQuota != "" {
-					p.DiskQuota = types.StringValue(process.DiskQuota)
+					if reqPlanType != nil && !reqPlanType.Processes[i].DiskQuota.IsUnknown() {
+						result, err := getDesiredType(process.DiskQuota, reqPlanType.Processes[i].DiskQuota.ValueString())
+						if err != nil {
+							tempDiags.AddError("Error converting memory", err.Error())
+							diags = append(diags, tempDiags...)
+						}
+						p.DiskQuota = types.StringValue(result)
+					} else {
+						p.DiskQuota = types.StringValue(process.DiskQuota)
+					}
 				}
 				if process.HealthCheckHTTPEndpoint != "" {
 					p.HealthCheckHttpEndpoint = types.StringValue(process.HealthCheckHTTPEndpoint)
@@ -477,7 +516,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 					p.Instances = types.Int64Value(int64(process.Instances))
 				}
 				if process.Memory != "" {
-					p.Memory = types.StringValue(process.Memory)
+					if reqPlanType != nil && !reqPlanType.Processes[i].Memory.IsUnknown() {
+						result, err := getDesiredType(process.Memory, reqPlanType.Processes[i].Memory.ValueString())
+						if err != nil {
+							tempDiags.AddError("Error converting memory", err.Error())
+							diags = append(diags, tempDiags...)
+						}
+						p.Memory = types.StringValue(result)
+					} else {
+						p.Memory = types.StringValue(process.Memory)
+					}
 				}
 				if process.Timeout != 0 {
 					p.Timeout = types.Int64Value(int64(process.Timeout))
@@ -498,7 +546,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 					p.ReadinessHealthCheckInterval = types.Int64Value(int64(process.ReadinessHealthCheckInterval))
 				}
 				if process.LogRateLimitPerSecond != "" {
-					p.LogRateLimitPerSecond = types.StringValue(process.LogRateLimitPerSecond)
+					if reqPlanType != nil && !reqPlanType.Processes[i].LogRateLimitPerSecond.IsUnknown() {
+						result, err := getDesiredType(process.LogRateLimitPerSecond, reqPlanType.Processes[i].LogRateLimitPerSecond.ValueString())
+						if err != nil {
+							tempDiags.AddError("Error converting memory", err.Error())
+							diags = append(diags, tempDiags...)
+						}
+						p.LogRateLimitPerSecond = types.StringValue(result)
+					} else {
+						p.LogRateLimitPerSecond = types.StringValue(process.LogRateLimitPerSecond)
+					}
 				}
 				processes = append(processes, p)
 			}
@@ -507,7 +564,7 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 	}
 	if appManifest.Sidecars != nil {
 		var sidecars []Sidecar
-		for _, sidecar := range *appManifest.Sidecars {
+		for i, sidecar := range *appManifest.Sidecars {
 			var s Sidecar
 			s.Name = types.StringValue(sidecar.Name)
 			if sidecar.Command != "" {
@@ -520,7 +577,16 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 				s.ProcessTypes = types.SetNull(types.StringType)
 			}
 			if sidecar.Memory != "" {
-				s.Memory = types.StringValue(sidecar.Memory)
+				if !reqPlanType.Sidecars[i].Memory.IsUnknown() {
+					result, err := getDesiredType(sidecar.Memory, reqPlanType.Sidecars[i].Memory.ValueString())
+					if err != nil {
+						tempDiags.AddError("Error converting memory", err.Error())
+						diags = append(diags, tempDiags...)
+					}
+					s.Memory = types.StringValue(result)
+				} else {
+					s.Memory = types.StringValue(sidecar.Memory)
+				}
 			}
 			sidecars = append(sidecars, s)
 		}
@@ -545,4 +611,64 @@ func (target *AppType) CopyConfigAttributes(source *AppType) {
 	target.SourceCodeHash = source.SourceCodeHash
 	target.RandomRoute = source.RandomRoute
 	target.NoRoute = source.NoRoute
+}
+
+func getDesiredType(actual string, desired string) (string, error) {
+	// log-rate-limit-per-second accepts -1 & 0 as valid values
+	// For more info https://v3-apidocs.cloudfoundry.org/version/3.159.0/index.html#the-manifest-schema
+	if actual == "-1" || actual == "0" {
+		return actual, nil
+	}
+	actualValue, _, err := splitValueAndUnit(actual)
+	if err != nil {
+		return "", err
+	}
+	// Considering actual to be ideal & convert desired type(From Plan) to ideal type
+	calculatedValue, _, err := convertToDesiredType(desired, actual)
+	// We take floor value of it just like cf controller does
+	calculatedValue = math.Floor(calculatedValue)
+
+	if calculatedValue == actualValue {
+		return desired, err
+	} else {
+		return actual, err
+	}
+}
+
+func convertToDesiredType(actual string, desired string) (float64, string, error) {
+	// Find actual unit from string
+	actualValue, actualUnit, err := splitValueAndUnit(actual)
+	if err != nil {
+		return 0, "", err
+	}
+	_, desiredUnit, err := splitValueAndUnit(desired)
+	if err != nil {
+		return 0, "", err
+	}
+	m := map[string]float64{
+		"B":  0,
+		"K":  1,
+		"KB": 1,
+		"M":  2,
+		"MB": 2,
+		"G":  3,
+		"GB": 3,
+		"T":  4,
+		"TB": 4,
+	}
+	dist := m[actualUnit] - m[desiredUnit]
+	res := actualValue * math.Pow(1024, dist)
+	return res, desiredUnit, nil
+}
+
+// function to split the string into value and unit
+func splitValueAndUnit(value string) (float64, string, error) {
+	var unit string
+	var val float64
+	_, err := fmt.Sscanf(value, "%f%s", &val, &unit)
+	unit = strings.ToUpper(unit)
+	if err != nil {
+		return 0, "", err
+	}
+	return val, unit, nil
 }

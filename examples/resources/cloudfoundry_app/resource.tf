@@ -19,8 +19,8 @@ resource "zipper_file" "fixture" {
 
 resource "cloudfoundry_app" "gobis-server" {
   name             = "tf-test-do-not-delete-nodejs"
-  space            = "tf-space-1"
-  org              = "PerformanceTeamBLR"
+  space_name       = "tf-space-1"
+  org_name         = "PerformanceTeamBLR"
   path             = zipper_file.fixture.output_path
   source_code_hash = zipper_file.fixture.output_sha
   instances        = 1
@@ -45,8 +45,8 @@ resource "cloudfoundry_app" "gobis-server" {
 
 resource "cloudfoundry_app" "http-bin-server" {
   name         = "tf-test-do-not-delete-http-bin"
-  space        = "tf-space-1"
-  org          = "PerformanceTeamBLR"
+  space_name   = "tf-space-1"
+  org_name     = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   strategy     = "blue-green"
   labels = {
@@ -73,8 +73,8 @@ resource "cloudfoundry_app" "http-bin-server" {
 
 resource "cloudfoundry_app" "http-bin-sidecar" {
   name         = "tf-test-do-not-delete-http-bin-sidecar"
-  space        = "tf-space-1"
-  org          = "PerformanceTeamBLR"
+  space_name   = "tf-space-1"
+  org_name     = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   sidecars = [
     {

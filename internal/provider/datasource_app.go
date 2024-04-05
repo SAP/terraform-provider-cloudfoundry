@@ -38,11 +38,11 @@ func (d *appDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				MarkdownDescription: "The name of the application to look up",
 				Required:            true,
 			},
-			"space": schema.StringAttribute{
+			"space_name": schema.StringAttribute{
 				MarkdownDescription: "The name of the space to look up",
 				Required:            true,
 			},
-			"org": schema.StringAttribute{
+			"org_name": schema.StringAttribute{
 				MarkdownDescription: "The name of the associated Cloud Foundry organization to look up",
 				Required:            true,
 			},
