@@ -100,7 +100,7 @@ func (d *RoleDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	}
 
 	roleTypeResponse := mapRoleValuesToType(role)
-	datasourceRoleTypeResp := roleTypeResponse.Reduce()
+	datasourceRoleTypeResp := roleTypeResponse.ReduceToDataSource()
 
 	tflog.Trace(ctx, "read a role data source")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &datasourceRoleTypeResp)...)

@@ -64,8 +64,8 @@ output "buildpacks" {
 ### Required
 
 - `name` (String) The name of the application to look up
-- `org` (String) The name of the associated Cloud Foundry organization to look up
-- `space` (String) The name of the space to look up
+- `org_name` (String) The name of the associated Cloud Foundry organization to look up
+- `space_name` (String) The name of the space to look up
 
 ### Read-Only
 

@@ -1,21 +1,21 @@
 ---
-page_title: "cloudfoundry_role Resource - terraform-provider-cloudfoundry"
+page_title: "cloudfoundry_space_role Resource - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Provides a Cloud Foundry resource for assigning roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)
+  Provides a Cloud Foundry resource for assigning space roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)
 ---
 
-# cloudfoundry_role (Resource)
+# cloudfoundry_space_role (Resource)
 
-Provides a Cloud Foundry resource for assigning roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)
+Provides a Cloud Foundry resource for assigning space roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)
 
 ## Example Usage
 
 ```terraform
-resource "cloudfoundry_role" "my_role" {
+resource "cloudfoundry_space_role" "my_role" {
   username = "debaditya.ray@sap.com"
-  type     = "organization_user"
-  org      = "784b4cd0-4771-4e4d-9052-a07e178bae56"
+  type     = "space_manager"
+  space    = "dd457c79-f7c9-4828-862b-35843d3b646d"
 }
 ```
 
@@ -24,13 +24,12 @@ resource "cloudfoundry_role" "my_role" {
 
 ### Required
 
+- `space` (String) The guid of the space to assign the role to
 - `type` (String) Role type; see [Valid role types](https://v3-apidocs.cloudfoundry.org/version/3.154.0/index.html#valid-role-types)
 
 ### Optional
 
-- `org` (String) The guid of the organization to assign the role to
 - `origin` (String) The identity provider for the UAA user
-- `space` (String) The guid of the space to assign the role to
 - `user` (String) The guid of the cloudfoundry user to assign the role with
 - `username` (String) The username of the cloudfoundry user to assign the role with
 
@@ -47,5 +46,5 @@ Import is supported using the following syntax:
 ```terraform
 # terraform import cloudfoundry_role.<resource_name> <role_guid>
 
-terraform import cloudfoundry_role.my_role e17839d9-cd4f-4e4b-baf0-18786f12fede
+terraform import cloudfoundry_role.my_role 8f5b7b45-83f4-41c1-b99e-0f9582c31209
 ```

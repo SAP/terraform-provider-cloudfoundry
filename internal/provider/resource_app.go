@@ -85,7 +85,7 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 				Optional: true,
 			},
 			"path": schema.StringAttribute{
-				MarkdownDescription: "An uri or path to target a zip file. this can be in the form of unix path (/my/path.zip) or url path (http://zip.com/my.zip).",
+				MarkdownDescription: "An uri or path to target a zip file. this can be in the form of a unix path or url path.",
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.ExactlyOneOf(path.MatchRoot("docker_image"), path.MatchRoot("path")),

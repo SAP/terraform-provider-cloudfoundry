@@ -16,39 +16,40 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/samber/lo"
 )
 
 var (
-	_ resource.Resource                   = &RoleResource{}
-	_ resource.ResourceWithConfigure      = &RoleResource{}
-	_ resource.ResourceWithImportState    = &RoleResource{}
-	_ resource.ResourceWithValidateConfig = &RoleResource{}
+	_ resource.Resource                = &OrgRoleResource{}
+	_ resource.ResourceWithConfigure   = &OrgRoleResource{}
+	_ resource.ResourceWithImportState = &OrgRoleResource{}
 )
 
 // Instantiates a role resource
-func NewRoleResource() resource.Resource {
-	return &RoleResource{}
+func NewOrgeRoleResource() resource.Resource {
+	return &OrgRoleResource{}
 }
 
 // Contains reference to the v3 client to be used for making the API calls
-type RoleResource struct {
+type OrgRoleResource struct {
 	cfClient *cfv3client.Client
 }
 
-func (r *RoleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_role"
+func (r *OrgRoleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_org_role"
 }
 
-func (r *RoleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *OrgRoleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Provides a Cloud Foundry resource for assigning roles. For a user to be assigned a space role, the user must already have the organization_user role.(Updating a role is not supported according to the docs)",
+		MarkdownDescription: "Provides a Cloud Foundry resource for assigning org roles.(Updating a role is not supported according to the docs)",
 		Attributes: map[string]schema.Attribute{
 			"type": schema.StringAttribute{
 				MarkdownDescription: "Role type; see [Valid role types](https://v3-apidocs.cloudfoundry.org/version/3.154.0/index.html#valid-role-types)",
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
+				},
+				Validators: []validator.String{
+					stringvalidator.OneOf("organization_user", "organization_auditor", "organization_manager", "organization_billing_manager"),
 				},
 			},
 			"user": schema.StringAttribute{
@@ -90,21 +91,7 @@ func (r *RoleResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 			},
 			"org": schema.StringAttribute{
 				MarkdownDescription: "The guid of the organization to assign the role to",
-				Optional:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
-				Validators: []validator.String{
-					validation.ValidUUID(),
-					stringvalidator.ExactlyOneOf(path.Expressions{
-						path.MatchRoot("space"),
-						path.MatchRoot("org"),
-					}...),
-				},
-			},
-			"space": schema.StringAttribute{
-				MarkdownDescription: "The guid of the space to assign the role to",
-				Optional:            true,
+				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
@@ -119,7 +106,7 @@ func (r *RoleResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 	}
 }
 
-func (r *RoleResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *OrgRoleResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -134,62 +121,8 @@ func (r *RoleResource) Configure(ctx context.Context, req resource.ConfigureRequ
 	r.cfClient = session.CFClient
 }
 
-func (r *RoleResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var config roleType
-	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	spaceRoles := []string{"space_auditor", "space_developer", "space_manager", "space_supporter"}
-	orgRoles := []string{"organization_user", "organization_auditor", "organization_manager", "organization_billing_manager"}
-	var roles []string = append(spaceRoles, orgRoles...)
-
-	_, found := lo.Find(roles, func(role string) bool {
-		return role == config.Type.ValueString()
-	})
-	if !found {
-		resp.Diagnostics.AddAttributeError(
-			path.Root("type"),
-			"Invalid Attribute Value Match",
-			fmt.Sprintf("Attribute type value must be one of: %s, got: %s", roles, config.Type.ValueString()),
-		)
-		return
-	}
-
-	if !config.Organization.IsNull() {
-		_, found := lo.Find(orgRoles, func(role string) bool {
-			return role == config.Type.ValueString()
-		})
-		if !found {
-			resp.Diagnostics.AddAttributeError(
-				path.Root("type"),
-				"Invalid Role Type",
-				"Could not register Space Role "+config.Type.ValueString()+" for the given org. Please assign an organization role instead.",
-			)
-			return
-		}
-	}
-
-	if !config.Space.IsNull() {
-		_, found := lo.Find(spaceRoles, func(role string) bool {
-			return role == config.Type.ValueString()
-		})
-		if !found {
-			resp.Diagnostics.AddAttributeError(
-				path.Root("type"),
-				"Invalid Role Type",
-				"Could not register Organization Role "+config.Type.ValueString()+" for the given space. Please assign a space role instead.",
-			)
-			return
-		}
-	}
-
-}
-
-func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan roleType
+func (r *OrgRoleResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var plan orgRoleType
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -200,21 +133,12 @@ func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, r
 		role *cfv3resource.Role
 		err  error
 	)
-	if !plan.Organization.IsNull() {
-		orgRoleType := plan.getOrgRoleType()
-		if !plan.User.IsUnknown() {
-			role, err = r.cfClient.Roles.CreateOrganizationRole(ctx, plan.Organization.ValueString(), plan.User.ValueString(), orgRoleType)
-		} else {
-			role, err = r.cfClient.Roles.CreateOrganizationRoleWithUsername(ctx, plan.Organization.ValueString(), plan.UserName.ValueString(), orgRoleType, plan.Origin.ValueString())
-		}
-	} else {
 
-		spaceRoleType := plan.getSpaceRoleType()
-		if !plan.User.IsUnknown() {
-			role, err = r.cfClient.Roles.CreateSpaceRole(ctx, plan.Space.ValueString(), plan.User.ValueString(), spaceRoleType)
-		} else {
-			role, err = r.cfClient.Roles.CreateSpaceRoleWithUsername(ctx, plan.Space.ValueString(), plan.UserName.ValueString(), spaceRoleType, plan.Origin.ValueString())
-		}
+	orgRoleType := plan.getOrgRoleType()
+	if !plan.User.IsUnknown() {
+		role, err = r.cfClient.Roles.CreateOrganizationRole(ctx, plan.Organization.ValueString(), plan.User.ValueString(), orgRoleType)
+	} else {
+		role, err = r.cfClient.Roles.CreateOrganizationRoleWithUsername(ctx, plan.Organization.ValueString(), plan.UserName.ValueString(), orgRoleType, plan.Origin.ValueString())
 	}
 
 	if err != nil {
@@ -225,16 +149,18 @@ func (r *RoleResource) Create(ctx context.Context, req resource.CreateRequest, r
 		return
 	}
 
-	data := mapRoleValuesToType(role)
+	roleTypeResponse := mapRoleValuesToType(role)
+	data := roleTypeResponse.ReduceToOrgRole()
 	data.UserName = plan.UserName
 	data.Origin = plan.Origin
 
-	tflog.Trace(ctx, "created a role resource")
+	tflog.Trace(ctx, "created an org role resource")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+
 }
 
-func (rs *RoleResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var state roleType
+func (rs *OrgRoleResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var state orgRoleType
 
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
@@ -248,20 +174,21 @@ func (rs *RoleResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	data := mapRoleValuesToType(role)
+	roleTypeResponse := mapRoleValuesToType(role)
+	data := roleTypeResponse.ReduceToOrgRole()
 	data.UserName = state.UserName
 	data.Origin = state.Origin
 
-	tflog.Trace(ctx, "read a role resource")
+	tflog.Trace(ctx, "read an org role resource")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 // Update for role is not possible
-func (rs *RoleResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (rs *OrgRoleResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 }
 
-func (rs *RoleResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state roleType
+func (rs *OrgRoleResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state orgRoleType
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -285,9 +212,9 @@ func (rs *RoleResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 		return
 	}
 
-	tflog.Trace(ctx, "deleted a role resource")
+	tflog.Trace(ctx, "deleted an org role resource")
 }
 
-func (rs *RoleResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (rs *OrgRoleResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }

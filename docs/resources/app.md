@@ -33,8 +33,8 @@ resource "zipper_file" "fixture" {
 
 resource "cloudfoundry_app" "gobis-server" {
   name             = "tf-test-do-not-delete-nodejs"
-  space            = "tf-space-1"
-  org              = "PerformanceTeamBLR"
+  space_name       = "tf-space-1"
+  org_name         = "PerformanceTeamBLR"
   path             = zipper_file.fixture.output_path
   source_code_hash = zipper_file.fixture.output_sha
   instances        = 1
@@ -59,8 +59,8 @@ resource "cloudfoundry_app" "gobis-server" {
 
 resource "cloudfoundry_app" "http-bin-server" {
   name         = "tf-test-do-not-delete-http-bin"
-  space        = "tf-space-1"
-  org          = "PerformanceTeamBLR"
+  space_name   = "tf-space-1"
+  org_name     = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   strategy     = "blue-green"
   labels = {
@@ -87,8 +87,8 @@ resource "cloudfoundry_app" "http-bin-server" {
 
 resource "cloudfoundry_app" "http-bin-sidecar" {
   name         = "tf-test-do-not-delete-http-bin-sidecar"
-  space        = "tf-space-1"
-  org          = "PerformanceTeamBLR"
+  space_name   = "tf-space-1"
+  org_name     = "PerformanceTeamBLR"
   docker_image = "kennethreitz/httpbin"
   sidecars = [
     {
@@ -110,8 +110,8 @@ resource "cloudfoundry_app" "http-bin-sidecar" {
 ### Required
 
 - `name` (String) The name of the application.
-- `org` (String) The name of the associated Cloud Foundry organization.
-- `space` (String) The name of the associated Cloud Foundry space.
+- `org_name` (String) The name of the associated Cloud Foundry organization.
+- `space_name` (String) The name of the associated Cloud Foundry space.
 
 ### Optional
 
@@ -131,7 +131,7 @@ resource "cloudfoundry_app" "http-bin-sidecar" {
 - `log_rate_limit_per_second` (String) The attribute specifies the log rate limit for all instances of an app.
 - `memory` (String) The memory limit for each application instance. If not provided, value is computed and retreived from Cloud Foundry.
 - `no_route` (Boolean) The attribute with a value of true to prevent a route from being created for your app.
-- `path` (String) An uri or path to target a zip file. this can be in the form of unix path (/my/path.zip) or url path (http://zip.com/my.zip).
+- `path` (String) An uri or path to target a zip file. this can be in the form of a unix path or url path.
 - `processes` (Attributes Set) List of configurations for individual process types. (see [below for nested schema](#nestedatt--processes))
 - `random_route` (Boolean) The random-route attribute to generate a unique route and avoid name collisions.
 - `readiness_health_check_http_endpoint` (String) The endpoint for the http readiness health check type.

@@ -122,7 +122,7 @@ Then open the cloned repository in [Visual Studio Code](https://code.visualstudi
 
 This will trigger the start of the dev container. You can choose to open a dev container with two configurations:
 
-* "Terraform provider for Cloudfoundry - Development" - the configuration in [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json) contains the development override for the Terraform provider so that the local build is used. 
+* "Terraform provider for Cloudfoundry - Development" - the configuration in [.devcontainer/devcontainer.json](.devcontainer/default/devcontainer.json) contains the development override for the Terraform provider so that the local build is used. 
 
 
 > **Note**: In the first run, the download of the container might take a while, so maybe time to grab a cup of coffee ☕.

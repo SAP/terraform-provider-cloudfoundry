@@ -19,6 +19,28 @@ type roleType struct {
 	UpdatedAt    types.String `tfsdk:"updated_at"`
 }
 
+type spaceRoleType struct {
+	Type      types.String `tfsdk:"type"`
+	User      types.String `tfsdk:"user"`
+	UserName  types.String `tfsdk:"username"`
+	Origin    types.String `tfsdk:"origin"`
+	Space     types.String `tfsdk:"space"`
+	Id        types.String `tfsdk:"id"`
+	CreatedAt types.String `tfsdk:"created_at"`
+	UpdatedAt types.String `tfsdk:"updated_at"`
+}
+
+type orgRoleType struct {
+	Type         types.String `tfsdk:"type"`
+	User         types.String `tfsdk:"user"`
+	UserName     types.String `tfsdk:"username"`
+	Origin       types.String `tfsdk:"origin"`
+	Id           types.String `tfsdk:"id"`
+	Organization types.String `tfsdk:"org"`
+	CreatedAt    types.String `tfsdk:"created_at"`
+	UpdatedAt    types.String `tfsdk:"updated_at"`
+}
+
 type roleDatasourceType struct {
 	Type         types.String `tfsdk:"type"`
 	User         types.String `tfsdk:"user"`
@@ -31,14 +53,26 @@ type roleDatasourceType struct {
 
 // Reduce function to reduce roleType to roleDatasourceType
 // This is used to reuse mapRoleValuesToType in both resource and datasource
-func (a *roleType) Reduce() roleDatasourceType {
+func (a *roleType) ReduceToDataSource() roleDatasourceType {
 	var reduced roleDatasourceType
 	copyFields(&reduced, a)
 	return reduced
 }
 
+func (a *roleType) ReduceToSpaceRole() spaceRoleType {
+	var reduced spaceRoleType
+	copyFields(&reduced, a)
+	return reduced
+}
+
+func (a *roleType) ReduceToOrgRole() orgRoleType {
+	var reduced orgRoleType
+	copyFields(&reduced, a)
+	return reduced
+}
+
 // Returns the OrganizationRoleType value needed for org role creation
-func (data *roleType) getOrgRoleType() resource.OrganizationRoleType {
+func (data *orgRoleType) getOrgRoleType() resource.OrganizationRoleType {
 
 	switch data.Type.ValueString() {
 	case "organization_user":
@@ -56,7 +90,7 @@ func (data *roleType) getOrgRoleType() resource.OrganizationRoleType {
 }
 
 // Returns the OrganizationRoleType value needed for org role creation
-func (data *roleType) getSpaceRoleType() resource.SpaceRoleType {
+func (data *spaceRoleType) getSpaceRoleType() resource.SpaceRoleType {
 
 	switch data.Type.ValueString() {
 	case "space_auditor":
