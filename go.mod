@@ -3,7 +3,7 @@ module github.com/SAP/terraform-provider-cloudfoundry
 go 1.22
 
 require (
-	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240326180005-d4d9ebf1fa8b
+	github.com/cloudfoundry-community/go-cfclient/v3 v3.0.0-alpha.6.0.20240409184651-b04f5016321d
 	github.com/hashicorp/terraform-plugin-docs v0.18.0
 	github.com/hashicorp/terraform-plugin-framework v1.7.0
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.1
@@ -16,8 +16,6 @@ require (
 	gopkg.in/dnaeon/go-vcr.v3 v3.2.0
 	gopkg.in/yaml.v2 v2.4.0
 )
-
-replace github.com/cloudfoundry-community/go-cfclient/v3 => github.com/Dray56/go-cfclient/v3 v3.0.0-20240401042020-3fd26f1e7e8b
 
 require (
 	github.com/rivo/uniseg v0.2.0 // indirect
