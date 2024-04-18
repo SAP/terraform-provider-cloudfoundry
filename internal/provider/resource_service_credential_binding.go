@@ -2,16 +2,20 @@ package provider
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
-	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
-	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3client "github.com/cloudfoundry/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 type serviceCredentialBindingResource struct {
@@ -31,7 +35,7 @@ const (
 )
 
 func NewServiceCredentialBindingResource() resource.Resource {
-	return &serviceInstanceResource{}
+	return &serviceCredentialBindingResource{}
 }
 
 func (r *serviceCredentialBindingResource) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -40,24 +44,50 @@ func (r *serviceCredentialBindingResource) Metadata(_ context.Context, req resou
 
 func (r *serviceCredentialBindingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: `Creates a service instance in a cloudfoundry space.`,
+		MarkdownDescription: `Service credential bindings are used to make the details of the connection to a service instance available to an app or a developer.
+		Service credential bindings can be of type app or key.
+		A service credential binding is of type app when it is a binding between a service instance and an application Not all services support this binding, as some services deliver value to users directly without integration with an application. Field broker_catalog.features.bindable from service plan of the service instance can be used to determine if it is bindable.
+		A service credential binding is of type key when it only retrieves the details of the service instance and makes them available to the developer.`,
 
 		Attributes: map[string]schema.Attribute{
-			"name": schema.StringAttribute{
-				MarkdownDescription: "Name of the service credential binding. name is optional when the type is app",
-				Optional:            true,
-			},
-			"service_instance": schema.StringAttribute{
-				MarkdownDescription: "The GUID of the service instance that this binding is originated from",
-				Required:            true,
-			},
-			"app": schema.StringAttribute{
-				MarkdownDescription: "The GUID of the app using this binding; not applicable for key bindings",
-				Optional:            true,
-			},
 			"type": schema.StringAttribute{
 				MarkdownDescription: "Type of the service credential binding. Either app or key.",
 				Required:            true,
+				Validators: []validator.String{
+					stringvalidator.OneOf("app", "key"),
+				},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"service_instance": schema.StringAttribute{
+				MarkdownDescription: "The GUID of the service instance to be bound",
+				Required:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"name": schema.StringAttribute{
+				MarkdownDescription: "Name of the service credential binding. name is optional when the type is app",
+				Optional:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"app": schema.StringAttribute{
+				MarkdownDescription: "The GUID of the app to be bound. Required when type is app",
+				Optional:            true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+			},
+			"parameters": schema.StringAttribute{
+				MarkdownDescription: "A JSON object that is passed to the service broker for managed service instance.",
+				Optional:            true,
+				CustomType:          jsontypes.NormalizedType{},
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 			},
 			"last_operation": schema.SingleNestedAttribute{
 				MarkdownDescription: "The last operation performed on the service credential binding",
@@ -110,408 +140,185 @@ func (r *serviceCredentialBindingResource) Configure(ctx context.Context, req re
 }
 
 func (r *serviceCredentialBindingResource) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var config serviceInstanceType
+	var config serviceCredentialBindingType
 	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	if config.Type.ValueString() == userProvidedServiceInstance && !config.ServicePlan.IsNull() {
+	if config.Type.ValueString() == keyServiceCredentialBinding && config.Name.IsNull() {
 		resp.Diagnostics.AddAttributeError(
-			path.Root("service_plan"),
-			"Conflicting attribute service instance",
-			"Service plan is not allowed for user-provided service instance",
+			path.Root("name"),
+			"Missing attribute name",
+			"Name is required for a service key",
 		)
 		return
 	}
 
-	if config.Type.ValueString() == managedSerivceInstance && config.ServicePlan.IsNull() {
+	if config.Type.ValueString() == appServiceCredentialBinding && config.App.IsNull() {
 		resp.Diagnostics.AddAttributeError(
-			path.Root("service_plan"),
-			"Missing attribute service instance",
-			"Service plan is required for managed service instance",
+			path.Root("app"),
+			"Missing attribute app",
+			"App GUID is required for app binding",
 		)
 		return
 
 	}
 
-	// If Service Instance is of type managed only parameters is allowed to pass
-	if !config.Parameters.IsNull() && config.Type.ValueString() != "managed" {
+	if config.Type.ValueString() == keyServiceCredentialBinding && !config.App.IsNull() {
 		resp.Diagnostics.AddAttributeError(
-			path.Root("type"),
-			"Parameters can only passed to service instance of type managed",
-			"Parameters json object can only be passed to managed serivce instance",
+			path.Root("app"),
+			"Invalid attribute combination",
+			"App GUID should only be provided for credential bindings of type app",
 		)
 		return
-	}
 
-	// If Service instance of type user-provided then credentials , syslog_drain_url and route_service_url allowed
-	if !config.SyslogDrainURL.IsNull() || !config.RouteServiceURL.IsNull() || !config.Credentials.IsNull() {
-		if config.Type.ValueString() != "user-provided" {
-			resp.Diagnostics.AddAttributeError(
-				path.Root("type"),
-				"Mistmatch attribute passed to user provided service instance",
-				"Allowed attributes for serivce instance of type user provided: credentials, syslog_drain_url, route_service_url",
-			)
-		}
 	}
-
 }
 
 func (r *serviceCredentialBindingResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var plan serviceInstanceType
-	var serviceInstance *cfv3resource.ServiceInstance
-	var err error
+	var (
+		plan                     serviceCredentialBindingType
+		serviceCredentialBinding *cfv3resource.ServiceCredentialBinding
+		err                      error
+	)
 	diags := req.Plan.Get(ctx, &plan)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	switch plan.Type.ValueString() {
-	case managedSerivceInstance:
-		createServiceInstance := cfv3resource.ServiceInstanceManagedCreate{
-			Type: plan.Type.ValueString(),
-			Name: plan.Name.ValueString(),
-			Relationships: cfv3resource.ServiceInstanceRelationships{
-				ServicePlan: &cfv3resource.ToOneRelationship{
-					Data: &cfv3resource.Relationship{
-						GUID: plan.ServicePlan.ValueString(),
-					},
-				},
-				Space: &cfv3resource.ToOneRelationship{
-					Data: &cfv3resource.Relationship{
-						GUID: plan.Space.ValueString(),
-					},
-				},
-			},
-			Metadata: cfv3resource.NewMetadata(),
-		}
-		if !plan.Parameters.IsNull() {
-			var params json.RawMessage
-			err := json.Unmarshal([]byte(plan.Parameters.ValueString()), &params)
-			if err != nil {
-				resp.Diagnostics.AddError(
-					"Error in unmarshalling parameters",
-					"Unable to unmarshal json parameters of service instance"+plan.Name.ValueString()+": "+err.Error(),
-				)
-				return
-			}
-			createServiceInstance.Parameters = &params
-		}
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
-			tags, diags := toTagsList(ctx, plan.Tags)
-			resp.Diagnostics.Append(diags...)
-			if resp.Diagnostics.HasError() {
-				return
-			}
-			createServiceInstance.Tags = tags
-		}
-		labelsDiags := plan.Labels.ElementsAs(ctx, &createServiceInstance.Metadata.Labels, false)
-		resp.Diagnostics.Append(labelsDiags...)
-
-		annotationsDiags := plan.Annotations.ElementsAs(ctx, &createServiceInstance.Metadata.Annotations, false)
-		resp.Diagnostics.Append(annotationsDiags...)
-
-		jobID, err := r.cfClient.ServiceInstances.CreateManaged(ctx, &createServiceInstance)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error in creating managed service instance",
-				"Unable to create service instance "+plan.Name.ValueString()+": "+err.Error(),
-			)
-			return
-		}
-		err = pollJob(ctx, *r.cfClient, jobID)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Unable to verify service instance creation",
-				"Service Instance verification failed for+ "+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-		serviceInstance, err = r.cfClient.ServiceInstances.Single(ctx, &cfv3client.ServiceInstanceListOptions{
-			Names: cfv3client.Filter{
-				Values: []string{
-					plan.Name.ValueString(),
-				},
-			},
-			SpaceGUIDs: cfv3client.Filter{
-				Values: []string{
-					plan.Space.ValueString(),
-				},
-			},
-		})
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Error get service instance after creation",
-				"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
-		resp.Diagnostics.Append(diags...)
-
-	case userProvidedServiceInstance:
-
-		createServiceInstance := cfv3resource.ServiceInstanceUserProvidedCreate{
-			Type: plan.Type.ValueString(),
-			Name: plan.Name.ValueString(),
-			Relationships: cfv3resource.ServiceInstanceRelationships{
-				Space: &cfv3resource.ToOneRelationship{
-					Data: &cfv3resource.Relationship{
-						GUID: plan.Space.ValueString(),
-					},
-				},
-			},
-		}
-		if !plan.Credentials.IsNull() {
-			var credentials json.RawMessage
-			err := json.Unmarshal([]byte(plan.Credentials.ValueString()), &credentials)
-			if err != nil {
-				resp.Diagnostics.AddError(
-					"Error in unmarshalling credentials",
-					"Unable to unmarshal json credentials of service instance"+plan.Name.ValueString()+": "+err.Error(),
-				)
-				return
-			}
-			createServiceInstance.Credentials = &credentials
-		}
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
-			tags, diags := toTagsList(ctx, plan.Tags)
-			resp.Diagnostics.Append(diags...)
-			if resp.Diagnostics.HasError() {
-				return
-			}
-			createServiceInstance.Tags = tags
-		}
-
-		if !plan.SyslogDrainURL.IsNull() {
-			createServiceInstance.SyslogDrainURL = plan.SyslogDrainURL.ValueStringPointer()
-		}
-		if !plan.RouteServiceURL.IsNull() {
-			createServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
-		}
-
-		_, err = r.cfClient.ServiceInstances.CreateUserProvided(ctx, &createServiceInstance)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error in creating user-provided service instance",
-				"Unable to create service instance "+plan.Name.ValueString()+": "+err.Error(),
-			)
-			return
-		}
-		serviceInstance, err = r.cfClient.ServiceInstances.Single(ctx, &cfv3client.ServiceInstanceListOptions{
-			Names: cfv3client.Filter{
-				Values: []string{
-					plan.Name.ValueString(),
-				},
-			},
-			SpaceGUIDs: cfv3client.Filter{
-				Values: []string{
-					plan.Space.ValueString(),
-				},
-			},
-		})
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Error get service instance after creation",
-				"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
-		resp.Diagnostics.Append(diags...)
+	createServiceCredentialBinding, diags := plan.mapCreateServiceCredentialBindingTypeToValues(ctx)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+	jobID, serviceCredentialBinding, err := r.cfClient.ServiceCredentialBindings.Create(ctx, &createServiceCredentialBinding)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error in creating service Credential Binding",
+			"Unable to create Credential Binding "+plan.Name.ValueString()+": "+err.Error(),
+		)
+		return
 
+	} else if jobID != "" {
+		err = pollJob(ctx, *r.cfClient, jobID, defaultTimeout)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Unable to verify service credential binding creation",
+				"Service Credential Binding verification failed for "+plan.Name.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+
+		getOptions := cfv3client.ServiceCredentialBindingListOptions{
+			ServiceInstanceGUIDs: cfv3client.Filter{
+				Values: []string{
+					plan.ServiceInstance.ValueString(),
+				},
+			},
+		}
+
+		if plan.Type.ValueString() == "app" {
+			getOptions.AppGUIDs = cfv3client.Filter{
+				Values: []string{
+					plan.App.ValueString(),
+				},
+			}
+		} else {
+			getOptions.Names = cfv3client.Filter{
+				Values: []string{
+					plan.Name.ValueString(),
+				},
+			}
+		}
+		serviceCredentialBinding, err = r.cfClient.ServiceCredentialBindings.Single(ctx, &getOptions)
+		if err != nil {
+			resp.Diagnostics.AddError(
+				"Error get service instance after creation",
+				"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
+			)
+			return
+		}
+	}
+
+	data, diags := mapServiceCredentialBindingValuesToType(ctx, serviceCredentialBinding)
+	data.Parameters = plan.Parameters
+	resp.Diagnostics.Append(diags...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *serviceCredentialBindingResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data serviceInstanceType
+	var data serviceCredentialBindingType
 
 	diags := req.State.Get(ctx, &data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	svcInstance, err := r.cfClient.ServiceInstances.Get(ctx, data.ID.ValueString())
+	serviceCredentialBinding, err := r.cfClient.ServiceCredentialBindings.Get(ctx, data.ID.ValueString())
 	if err != nil {
-		handleReadErrors(ctx, resp, err, "service_instance", data.ID.ValueString())
+		handleReadErrors(ctx, resp, err, "service_credential_binding", data.ID.ValueString())
 		return
 	}
 
-	data, diags = mapResourceServiceInstanceValuesToType(ctx, svcInstance, data.Parameters)
+	state, diags := mapServiceCredentialBindingValuesToType(ctx, serviceCredentialBinding)
+	state.Parameters = data.Parameters
 	resp.Diagnostics.Append(diags...)
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 
 }
 
 func (r *serviceCredentialBindingResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-
-	var plan, previousState serviceInstanceType
+	var plan, previousState serviceCredentialBindingType
 	var diags diag.Diagnostics
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	resp.Diagnostics.Append(req.State.Get(ctx, &previousState)...)
 
-	switch plan.Type.ValueString() {
-	case managedSerivceInstance:
-
-		updateServiceInstance := cfv3resource.ServiceInstanceManagedUpdate{
-			Name: plan.Name.ValueStringPointer(),
-		}
-		// Check if the service plan is different from the previous state
-		if plan.ServicePlan.ValueString() != previousState.ServicePlan.ValueString() {
-			ok, err := isServiceInstanceUpgradable(ctx, previousState.ID.ValueString(), *r.cfClient)
-			if err != nil {
-				resp.Diagnostics.AddError(
-					"Error in checking service instance upgradability",
-					"Unable to check service instance upgradability"+plan.Name.ValueString()+": "+err.Error(),
-				)
-				return
-			}
-			if !ok {
-				resp.Diagnostics.AddError(
-					"Service instance not upgradable",
-					"Service instance "+plan.Name.ValueString()+" is not upgradable",
-				)
-				return
-			}
-			updateServiceInstance.Relationships = &cfv3resource.ServiceInstanceRelationships{
-				ServicePlan: &cfv3resource.ToOneRelationship{
-					Data: &cfv3resource.Relationship{
-						GUID: plan.ServicePlan.ValueString(),
-					},
-				},
-			}
-		}
-		if !plan.Parameters.IsNull() {
-			var params json.RawMessage
-			err := json.Unmarshal([]byte(plan.Parameters.ValueString()), &params)
-			if err != nil {
-				resp.Diagnostics.AddError(
-					"Error in unmarshalling parameters",
-					"Unable to unmarshal json parameters during update of service instance"+plan.Name.ValueString()+": "+err.Error(),
-				)
-				return
-			}
-			updateServiceInstance.Parameters = &params
-		}
-		// check if tag is not null and update the tags
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
-			tags, diags := toTagsList(ctx, plan.Tags)
-			resp.Diagnostics.Append(diags...)
-			if resp.Diagnostics.HasError() {
-				return
-			}
-			updateServiceInstance.Tags = tags
-		}
-
-		updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
-		resp.Diagnostics.Append(diags...)
-		if resp.Diagnostics.HasError() {
-			return
-		}
-
-		jobID, _, err := r.cfClient.ServiceInstances.UpdateManaged(ctx, previousState.ID.ValueString(), &updateServiceInstance)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error in updating managed service instance",
-				"Unable to update service instance "+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-		if jobID != "" {
-			if pollJob(ctx, *r.cfClient, jobID) != nil {
-				resp.Diagnostics.AddError(
-					"Unable to verify service instance update",
-					"Service Instance update verification failed for "+plan.Name.ValueString()+": "+err.Error(),
-				)
-			}
-		}
-		serviceInstance, err := r.cfClient.ServiceInstances.Get(ctx, plan.ID.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Error get service instance after update",
-				"Unable to fetch updated service instance"+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Parameters)
-		resp.Diagnostics.Append(diags...)
-		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
-	case userProvidedServiceInstance:
-
-		updateServiceInstance := cfv3resource.ServiceInstanceUserProvidedUpdate{
-			Name: plan.Name.ValueStringPointer(),
-		}
-		if !plan.Credentials.IsNull() {
-			var credentials json.RawMessage
-			err := json.Unmarshal([]byte(plan.Credentials.ValueString()), &credentials)
-			if err != nil {
-				resp.Diagnostics.AddError(
-					"Error in unmarshalling credentials",
-					"Unable to unmarshal json credentials during update of service instance"+plan.Name.ValueString()+": "+err.Error(),
-				)
-				return
-			}
-			updateServiceInstance.Credentials = &credentials
-		}
-		if !plan.SyslogDrainURL.IsNull() {
-			updateServiceInstance.SyslogDrainURL = plan.SyslogDrainURL.ValueStringPointer()
-		}
-		if !plan.RouteServiceURL.IsNull() {
-			updateServiceInstance.RouteServiceURL = plan.RouteServiceURL.ValueStringPointer()
-		}
-		if !plan.Tags.IsNull() && !plan.Tags.IsUnknown() {
-			tags, diags := toTagsList(ctx, plan.Tags)
-			resp.Diagnostics.Append(diags...)
-			if resp.Diagnostics.HasError() {
-				return
-			}
-			updateServiceInstance.Tags = tags
-		}
-		updateServiceInstance.Metadata, diags = setClientMetadataForUpdate(ctx, previousState.Labels, previousState.Annotations, plan.Labels, plan.Annotations)
-		resp.Diagnostics.Append(diags...)
-		_, err := r.cfClient.ServiceInstances.UpdateUserProvided(ctx, previousState.ID.ValueString(), &updateServiceInstance)
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error in updating user-provided service instance",
-				"Unable to update service instance "+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-		serviceInstance, err := r.cfClient.ServiceInstances.Get(ctx, plan.ID.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"Error get service instance after update",
-				"Unable to fetch updated service instance"+plan.Name.ValueString()+": "+err.Error(),
-			)
-		}
-		plan, diags = mapResourceServiceInstanceValuesToType(ctx, serviceInstance, plan.Credentials)
-		resp.Diagnostics.Append(diags...)
-		resp.Diagnostics.Append(resp.State.Set(ctx, &plan)...)
+	updateServiceCredentialBinding, diags := plan.mapUpdateServiceCredentialBindingTypeToValues(ctx, previousState)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
+	serviceCredentialBinding, err := r.cfClient.ServiceCredentialBindings.Update(ctx, plan.ID.ValueString(), &updateServiceCredentialBinding)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"API Error Updating Service Credential Binding",
+			"Could not update Service Credential Binding with ID "+plan.ID.ValueString()+" : "+err.Error(),
+		)
+		return
+	}
+
+	data, diags := mapServiceCredentialBindingValuesToType(ctx, serviceCredentialBinding)
+	data.Parameters = plan.Parameters
+	resp.Diagnostics.Append(diags...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *serviceCredentialBindingResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var state serviceInstanceType
+	var state serviceCredentialBindingType
 	diags := req.State.Get(ctx, &state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	jobID, err := r.cfClient.ServiceInstances.Delete(ctx, state.ID.ValueString())
+	jobID, err := r.cfClient.ServiceCredentialBindings.Delete(ctx, state.ID.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"API Error in deleting service instance",
-			"Unable to delete service instance "+state.Name.ValueString()+": "+err.Error(),
+			"API Error in deleting service credential binding",
+			"Unable to delete credential binding "+state.Name.ValueString()+": "+err.Error(),
 		)
 
 	}
 	if jobID != "" {
-		if pollJob(ctx, *r.cfClient, jobID) != nil {
+		if pollJob(ctx, *r.cfClient, jobID, defaultTimeout) != nil {
 			resp.Diagnostics.AddError(
-				"Unable to verify service instance deletion",
-				"Service Instance deletion verification failed for "+state.ID.ValueString()+": "+err.Error(),
+				"Unable to verify service credential binding deletion",
+				"service credential binding deletion verification failed for "+state.ID.ValueString()+": "+err.Error(),
 			)
 		}
 	}

@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
-	cfconfig "github.com/cloudfoundry-community/go-cfclient/v3/config"
+	cfconfig "github.com/cloudfoundry/go-cfclient/v3/config"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -276,6 +276,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 		NewRouteResource,
 		NewDomainResource,
 		NewAppResource,
+		NewServiceCredentialBindingResource,
 	}
 }
 
@@ -294,6 +295,7 @@ func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasou
 		NewRouteDataSource,
 		NewDomainDataSource,
 		NewAppDataSource,
+		NewServiceCredentialBindingDataSource,
 	}
 }
 

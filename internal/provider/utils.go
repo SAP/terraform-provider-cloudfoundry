@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"time"
 
-	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
-	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3client "github.com/cloudfoundry/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"

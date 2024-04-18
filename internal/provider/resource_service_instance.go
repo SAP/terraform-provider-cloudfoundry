@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
-	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
-	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3client "github.com/cloudfoundry/go-cfclient/v3/client"
+	cfv3resource "github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-timeouts/resource/timeouts"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
@@ -114,19 +114,16 @@ https://docs.cloudfoundry.org/devguide/services`,
 				Attributes: map[string]schema.Attribute{
 					"version": schema.StringAttribute{
 						MarkdownDescription: "The version of the service instance",
-						Optional:            true,
 						Computed:            true,
 					},
 					"description": schema.StringAttribute{
 						MarkdownDescription: "A description of the version of the service instance",
-						Optional:            true,
 						Computed:            true,
 					},
 				},
 			},
 			"upgrade_available": schema.BoolAttribute{
 				MarkdownDescription: "Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed",
-				Optional:            true,
 				Computed:            true,
 			},
 			"dashboard_url": schema.StringAttribute{
@@ -156,7 +153,6 @@ https://docs.cloudfoundry.org/devguide/services`,
 					"created_at": schema.StringAttribute{
 						MarkdownDescription: "The time at which the last operation was created",
 						Computed:            true,
-						Optional:            true,
 					},
 				},
 			},

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3resource "github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )

@@ -9,7 +9,7 @@ import (
 	"testing"
 	"text/template"
 
-	cfconfig "github.com/cloudfoundry-community/go-cfclient/v3/config"
+	cfconfig "github.com/cloudfoundry/go-cfclient/v3/config"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -220,6 +220,7 @@ func TestCloudFoundryProvider_HasResources(t *testing.T) {
 		"cloudfoundry_route",
 		"cloudfoundry_domain",
 		"cloudfoundry_app",
+		"cloudfoundry_service_credential_binding",
 	}
 
 	ctx := context.Background()
@@ -251,6 +252,7 @@ func TestProvider_HasDataSources(t *testing.T) {
 		"cloudfoundry_route",
 		"cloudfoundry_domain",
 		"cloudfoundry_app",
+		"cloudfoundry_service_credential_binding",
 	}
 
 	ctx := context.Background()

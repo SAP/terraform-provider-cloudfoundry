@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
-	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3operation "github.com/cloudfoundry/go-cfclient/v3/operation"
+	cfv3resource "github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
