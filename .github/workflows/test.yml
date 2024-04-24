@@ -1,0 +1,103 @@
+# Terraform Provider testing workflow.
+name: Terraform Provider Build Tests
+
+# This GitHub action runs your tests for each pull request and push.
+# Optionally, you can turn it on using a schedule for regular testing.
+on:
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
+  #     - ready_for_review
+  #   paths-ignore:
+  #     - '*.md'
+  # push:
+  #   branches:
+  #     - main
+  #   paths-ignore:
+  #     - '*.md'
+  workflow_dispatch:
+  workflow_call:
+
+# Testing only needs permissions to read the repository contents.
+permissions:
+  contents: read
+
+# Define the latest Terraform version to use for upload of coverage report  
+env: 
+  LATEST_VERSION: 1.8.*
+  
+jobs:
+  # Ensure project builds before running testing matrix
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4 # v4.0.0
+      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+      - run: go mod download
+      - run: go build -v .
+      - name: Run linters
+        uses: golangci/golangci-lint-action@3cfe3a4abbb849e10058ce4af15d205b6da42804 # v3.7.1
+        with:
+          version: latest
+
+  generate:
+    if: github.event.pull_request.draft == false
+    name: Docu Generation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # v4.0.0
+      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+      - run: go generate ./...
+      - name: git diff
+        run: |
+          git diff --compact-summary --exit-code || \
+            (echo; echo "Unexpected difference in directories after code generation. Run 'go generate ./...' command and commit."; exit 1)
+
+  # Run acceptance tests in a matrix with Terraform CLI versions
+  test_with_terraform_versions:
+    if: github.event.pull_request.draft == false
+    name: Terraform Provider Acceptance Tests
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        # list whatever Terraform versions here you would like to support
+        terraform:
+          - '1.5.*' #end of security support under MPL 31 Dec 2023
+          - '1.6.*' #end of security support under BSL 31 Dec 2025
+          - '1.7.*' #end of security support under BSL 31 Dec 2026
+          - '1.8.*' #end of security support under BSL 31 Dec 2026
+    steps:
+      - uses: actions/checkout@v4 # v4.0.0
+      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+      - uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36 # v3.0.0
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+      - run: go mod download
+      - env:
+          TF_ACC: "1"
+        run: go test -v -cover -coverprofile=cover.out -timeout=900s -parallel=4 ./...
+        timeout-minutes: 20
+      - run: echo "CURRENT_TF_VERSION=${{ matrix.terraform }}" >> $GITHUB_ENV
+      # Upload coverage report for latest Terraform version only to avoid nameing issues in upload (see also https://github.com/actions/upload-artifact/tree/v4/?tab=readme-ov-file#breaking-changes)
+      - uses: actions/upload-artifact@v4
+        if: ${{ env.CURRENT_TF_VERSION == env.LATEST_VERSION}}  
+        with:
+          name: coverage-report
+          path: cover.out
