@@ -46,8 +46,9 @@ jobs:
         uses: golangci/golangci-lint-action@3cfe3a4abbb849e10058ce4af15d205b6da42804 # v3.7.1
         with:
           version: latest
+      
 
-  generate:
+  docu_generate:
     if: github.event.pull_request.draft == false
     name: Docu Generation
     runs-on: ubuntu-latest
@@ -90,14 +91,20 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
       - run: go mod download
-      - env:
+      - if:  ${{ matrix.terraform != env.LATEST_VERSION}}
+        env:
           TF_ACC: "1"
-        run: go test -v -cover -coverprofile=cover.out -timeout=900s -parallel=4 ./...
+        run: go test -v -cover -timeout=900s -parallel=4 ./...
         timeout-minutes: 20
-      - run: echo "CURRENT_TF_VERSION=${{ matrix.terraform }}" >> $GITHUB_ENV
-      # Upload coverage report for latest Terraform version only to avoid nameing issues in upload (see also https://github.com/actions/upload-artifact/tree/v4/?tab=readme-ov-file#breaking-changes)
-      - uses: actions/upload-artifact@v4
-        if: ${{ env.CURRENT_TF_VERSION == env.LATEST_VERSION}}  
+      - if: ${{ matrix.terraform == env.LATEST_VERSION}}
+        uses: robherley/go-test-action@v0
+        with:
+          testArguments: -v -cover -coverprofile=cover.out -timeout=900s -parallel=4
+        env:
+          TF_ACC: "1"
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.terraform == env.LATEST_VERSION}}
         with:
           name: coverage-report
           path: cover.out
