@@ -3,8 +3,8 @@ page_title: "cloudfoundry_org Resource - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
   Creates a Cloud Foundry Organization
-      __Further documentation:__
-      https://docs.cloudfoundry.org/concepts/roles.html#orgs
+  	__Further documentation:__
+  	https://docs.cloudfoundry.org/concepts/roles.html#orgs
 ---
 
 # cloudfoundry_org (Resource)

@@ -105,7 +105,7 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 - `route_service_url` (String) URL to which requests for bound routes will be forwarded; only shown when type is user-provided.
 - `service_plan` (String) The ID of the service plan from which to create the service instance
 - `syslog_drain_url` (String) URL to which logs for bound applications will be streamed; only shown when type is user-provided.
-- `tags` (Set of String) Set of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.
+- `tags` (List of String) List of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.
 - `timeouts` (Attributes) (see [below for nested schema](#nestedatt--timeouts))
 - `upgrade_available` (Boolean) Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed
 
