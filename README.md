@@ -1,6 +1,6 @@
 # Terraform Provider for Cloudfoundry
 
-![Golang](https://img.shields.io/badge/Go-1.21-informational)
+![Golang](https://img.shields.io/badge/Go-1.22-informational)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/terraform-provider-cloudfoundry)](https://api.reuse.software/info/github.com/SAP/terraform-provider-cloudfoundry)
 
 
