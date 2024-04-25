@@ -15,7 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// Type AppType representing Schema Attribute from function Schema in go type from resource_appManifest.go file
+// Type AppType representing Schema Attribute from function Schema in go type from resource_appManifest.go file.
 type AppType struct {
 	Name                                  types.String       `tfsdk:"name"`
 	Space                                 types.String       `tfsdk:"space_name"`
@@ -90,7 +90,7 @@ type DatasourceAppType struct {
 }
 
 // Reduce function to reduce AppType to DatasourceAppType
-// This is used to reuse mapAppValuesToType in both resource and datasource
+// This is used to reuse mapAppValuesToType in both resource and datasource.
 func (a *AppType) Reduce() DatasourceAppType {
 	var reduced DatasourceAppType
 	copyFields(&reduced, a)
@@ -149,7 +149,7 @@ var routeObjType = types.ObjectType{
 	},
 }
 
-// mapAppTypeToValues function maps AppType to cfv3resource manifest type
+// mapAppTypeToValues function maps AppType to cfv3resource manifest type.
 func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.AppManifest, diag.Diagnostics) {
 	var diags, tempDiags diag.Diagnostics
 	appmanifest := cfv3operation.AppManifest{}
@@ -661,7 +661,7 @@ func convertToDesiredType(actual string, desired string) (float64, string, error
 	return res, desiredUnit, nil
 }
 
-// function to split the string into value and unit
+// function to split the string into value and unit.
 func splitValueAndUnit(value string) (float64, string, error) {
 	var unit string
 	var val float64

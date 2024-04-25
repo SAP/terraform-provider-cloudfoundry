@@ -40,7 +40,6 @@ var (
 	testUser                 = "debaditya.ray@sap.com"
 	testUserGUID             = "2334cf47-fead-4e5f-bd2a-6e7153e7f144"
 	testUser2GUID            = "4467eb10-a5dd-4c46-904f-d5a1c86f05a2"
-	testOrgQuotaGUID         = "e3cef997-9ba5-4cb4-b25b-c79faa81a33f"
 	createRules              = `[{
 									protocol = "tcp"
 									destination = "192.168.1.100"
@@ -237,11 +236,6 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 }
 
 func strtostrptr(s string) *string {
-	return &s
-}
-
-// Returns a pointer to a map
-func maptomapptr(s map[string]string) *map[string]string {
 	return &s
 }
 

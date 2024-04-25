@@ -24,12 +24,12 @@ var (
 	_ resource.ResourceWithImportState = &OrgRoleResource{}
 )
 
-// Instantiates a role resource
+// Instantiates a role resource.
 func NewOrgeRoleResource() resource.Resource {
 	return &OrgRoleResource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type OrgRoleResource struct {
 	cfClient *cfv3client.Client
 }
@@ -183,7 +183,7 @@ func (rs *OrgRoleResource) Read(ctx context.Context, req resource.ReadRequest, r
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-// Update for role is not possible
+// Update for role is not possible.
 func (rs *OrgRoleResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 }
 

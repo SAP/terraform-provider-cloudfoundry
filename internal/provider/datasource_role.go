@@ -19,12 +19,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &RoleDataSource{}
 )
 
-// Instantiates a role data source
+// Instantiates a role data source.
 func NewRoleDataSource() datasource.DataSource {
 	return &RoleDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type RoleDataSource struct {
 	cfClient *client.Client
 }

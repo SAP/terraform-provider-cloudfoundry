@@ -20,12 +20,12 @@ var (
 	_ resource.ResourceWithImportState = &UserResource{}
 )
 
-// Instantiates a user resource
+// Instantiates a user resource.
 func NewUserResource() resource.Resource {
 	return &UserResource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type UserResource struct {
 	cfClient *cfv3client.Client
 }

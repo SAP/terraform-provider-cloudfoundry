@@ -223,7 +223,7 @@ func mapMaintenanceInfo(value resource.ServiceInstanceMaintenanceInfo) maintenan
 }
 
 // isServiceInstanceUpgradable checks if the service instance is upgradable
-// some service instances may not be upgradable
+// some service instances may not be upgradable.
 func isServiceInstanceUpgradable(ctx context.Context, guid string, c cfv3client.Client) (bool, error) {
 	svc, err := c.ServiceInstances.Get(ctx, guid)
 	if err != nil {

@@ -20,12 +20,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &DomainDataSource{}
 )
 
-// Instantiates a security group data source
+// Instantiates a security group data source.
 func NewDomainDataSource() datasource.DataSource {
 	return &DomainDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type DomainDataSource struct {
 	cfClient *client.Client
 }

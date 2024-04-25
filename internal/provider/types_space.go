@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
-// Terraform struct for storing values for space data source and resource
+// Terraform struct for storing values for space data source and resource.
 type spaceType struct {
 	Name             types.String `tfsdk:"name"`
 	Id               types.String `tfsdk:"id"`
@@ -24,7 +24,7 @@ type spaceType struct {
 	UpdatedAt        types.String `tfsdk:"updated_at"`
 }
 
-// Sets the space resource values for creation with cf-client from the terraform struct values
+// Sets the space resource values for creation with cf-client from the terraform struct values.
 func (data *spaceType) mapCreateSpaceTypeToValues(ctx context.Context) (resource.SpaceCreate, diag.Diagnostics) {
 
 	createSpace := resource.NewSpaceCreate(data.Name.ValueString(), data.OrgId.ValueString())
@@ -40,7 +40,7 @@ func (data *spaceType) mapCreateSpaceTypeToValues(ctx context.Context) (resource
 	return *createSpace, diagnostics
 }
 
-// Sets the space resource values for updation with cf-client from the terraform struct values
+// Sets the space resource values for updation with cf-client from the terraform struct values.
 func (plan *spaceType) mapUpdateSpaceTypeToValues(ctx context.Context, state spaceType) (resource.SpaceUpdate, diag.Diagnostics) {
 
 	updateSpace := &resource.SpaceUpdate{
@@ -53,7 +53,7 @@ func (plan *spaceType) mapUpdateSpaceTypeToValues(ctx context.Context, state spa
 	return *updateSpace, diagnostics
 }
 
-// Sets the terraform struct values from the space resource returned by the cf-client
+// Sets the terraform struct values from the space resource returned by the cf-client.
 func mapSpaceValuesToType(ctx context.Context, space *resource.Space, sshEnabled bool, IsolationSegment string) (spaceType, diag.Diagnostics) {
 
 	spaceType := spaceType{

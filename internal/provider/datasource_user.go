@@ -17,12 +17,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &UserDataSource{}
 )
 
-// Instantiates a user data source
+// Instantiates a user data source.
 func NewUserDataSource() datasource.DataSource {
 	return &UserDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type UserDataSource struct {
 	cfClient *client.Client
 }

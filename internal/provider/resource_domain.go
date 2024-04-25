@@ -27,12 +27,12 @@ var (
 	_ resource.ResourceWithImportState = &DomainResource{}
 )
 
-// Instantiates a domain resource
+// Instantiates a domain resource.
 func NewDomainResource() resource.Resource {
 	return &DomainResource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type DomainResource struct {
 	cfClient *cfv3client.Client
 }

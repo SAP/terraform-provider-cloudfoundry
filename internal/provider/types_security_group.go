@@ -44,7 +44,7 @@ var ruleObjType = types.ObjectType{
 	},
 }
 
-// Sets the terraform struct values from the security group resource returned by the cf-client
+// Sets the terraform struct values from the security group resource returned by the cf-client.
 func mapSecurityGroupValuesToType(ctx context.Context, securityGroup *resource.SecurityGroup) (securityGroupType, diag.Diagnostics) {
 
 	securityGroupType := securityGroupType{
@@ -71,7 +71,7 @@ func mapSecurityGroupValuesToType(ctx context.Context, securityGroup *resource.S
 	return securityGroupType, diagnostics
 }
 
-// Sets the terraform struct values from the rule resource returned by the cf-client
+// Sets the terraform struct values from the rule resource returned by the cf-client.
 func mapRuleValuesToType(rule *resource.SecurityGroupRule) ruleType {
 
 	ruleType := ruleType{
@@ -98,7 +98,7 @@ func mapRuleValuesToType(rule *resource.SecurityGroupRule) ruleType {
 	return ruleType
 }
 
-// Prepares a terraform list from the rule resources returned by the cf-client
+// Prepares a terraform list from the rule resources returned by the cf-client.
 func mapRuleValuesToListType(ctx context.Context, rules *[]resource.SecurityGroupRule) (types.List, diag.Diagnostics) {
 
 	var diags, diagnostics diag.Diagnostics
@@ -114,7 +114,7 @@ func mapRuleValuesToListType(ctx context.Context, rules *[]resource.SecurityGrou
 	return rulesList, diagnostics
 }
 
-// Sets the security group resource values for creation with cf-client from the terraform struct values
+// Sets the security group resource values for creation with cf-client from the terraform struct values.
 func (data *securityGroupType) mapCreateSecurityGroupTypeToValues(ctx context.Context) (resource.SecurityGroupCreate, diag.Diagnostics) {
 
 	createSecurityGroup := &resource.SecurityGroupCreate{Name: data.Name.ValueString()}
@@ -156,7 +156,7 @@ func (data *securityGroupType) mapCreateSecurityGroupTypeToValues(ctx context.Co
 	return *createSecurityGroup, diagnostics
 }
 
-// Prepares a rule list resource for creation/updation from the terraform list of rule types
+// Prepares a rule list resource for creation/updation from the terraform list of rule types.
 func mapListTypeToRuleValues(rules []ruleType) []*resource.SecurityGroupRule {
 
 	ruleValues := []*resource.SecurityGroupRule{}
@@ -167,7 +167,7 @@ func mapListTypeToRuleValues(rules []ruleType) []*resource.SecurityGroupRule {
 	return ruleValues
 }
 
-// Prepares a rule resource from the terraform rule type
+// Prepares a rule resource from the terraform rule type.
 func mapTypetoRuleValues(rule ruleType) *resource.SecurityGroupRule {
 
 	securityGroupRule := resource.SecurityGroupRule{
@@ -194,7 +194,7 @@ func mapTypetoRuleValues(rule ruleType) *resource.SecurityGroupRule {
 	return &securityGroupRule
 }
 
-// Sets the security group resource values for updation with cf-client from the terraform struct values
+// Sets the security group resource values for updation with cf-client from the terraform struct values.
 func (plan *securityGroupType) mapUpdateSecurityGroupTypeToValues(ctx context.Context) (resource.SecurityGroupUpdate, diag.Diagnostics) {
 
 	updateSecurityGroup := &resource.SecurityGroupUpdate{

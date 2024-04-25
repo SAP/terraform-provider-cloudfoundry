@@ -26,12 +26,12 @@ var (
 	_ resource.ResourceWithImportState = &RouteResource{}
 )
 
-// Instantiates a security group resource
+// Instantiates a security group resource.
 func NewRouteResource() resource.Resource {
 	return &RouteResource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type RouteResource struct {
 	cfClient *cfv3client.Client
 }
