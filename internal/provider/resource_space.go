@@ -22,12 +22,12 @@ var (
 	_ resource.ResourceWithImportState = &SpaceResource{}
 )
 
-// Instantiates a space resource
+// Instantiates a space resource.
 func NewSpaceResource() resource.Resource {
 	return &SpaceResource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type SpaceResource struct {
 	cfClient *cfv3client.Client
 }

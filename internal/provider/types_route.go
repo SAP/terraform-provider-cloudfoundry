@@ -60,7 +60,7 @@ var destinationObjType = types.ObjectType{
 	},
 }
 
-// Sets the terraform struct values from the route resources returned by the cf-client
+// Sets the terraform struct values from the route resources returned by the cf-client.
 func mapRoutesValuesToType(ctx context.Context, data datasourceRouteType, routes []*resource.Route) (datasourceRouteType, diag.Diagnostics) {
 
 	var diagnostics diag.Diagnostics
@@ -82,7 +82,7 @@ func mapRoutesValuesToType(ctx context.Context, data datasourceRouteType, routes
 	return routesType, diagnostics
 }
 
-// Sets the terraform struct values from the route resource returned by the cf-client
+// Sets the terraform struct values from the route resource returned by the cf-client.
 func mapRouteValuesToType(ctx context.Context, route *resource.Route) (routeType, diag.Diagnostics) {
 
 	routeType := routeType{
@@ -124,7 +124,7 @@ func mapRouteValuesToType(ctx context.Context, route *resource.Route) (routeType
 	return routeType, diagnostics
 }
 
-// Sets the terraform struct values from the destination resource returned by the cf-client
+// Sets the terraform struct values from the destination resource returned by the cf-client.
 func mapDestinationValuesToType(destination resource.RouteDestination) destinationType {
 
 	destinationType := destinationType{
@@ -144,7 +144,7 @@ func mapDestinationValuesToType(destination resource.RouteDestination) destinati
 	return destinationType
 }
 
-// Prepares a terraform set from the destination resources returned by the cf-client
+// Prepares a terraform set from the destination resources returned by the cf-client.
 func mapDestinationValuesToSetType(ctx context.Context, destinations *[]resource.RouteDestination) (types.Set, diag.Diagnostics) {
 
 	var diags, diagnostics diag.Diagnostics
@@ -160,7 +160,7 @@ func mapDestinationValuesToSetType(ctx context.Context, destinations *[]resource
 	return destinationSet, diagnostics
 }
 
-// Sets the route list options for reading with cf-client from the terraform struct values
+// Sets the route list options for reading with cf-client from the terraform struct values.
 func (data *datasourceRouteType) mapReadRouteTypeToValues() client.RouteListOptions {
 
 	routeListOptions := client.RouteListOptions{
@@ -190,7 +190,7 @@ func (data *datasourceRouteType) mapReadRouteTypeToValues() client.RouteListOpti
 	return routeListOptions
 }
 
-// Sets the route resource values for creation with cf-client from the terraform struct values
+// Sets the route resource values for creation with cf-client from the terraform struct values.
 func (data *routeType) mapCreateRouteTypeToValues(ctx context.Context) (resource.RouteCreate, diag.Diagnostics) {
 
 	routeCreate := resource.NewRouteCreate(data.Domain.ValueString(), data.Space.ValueString())
@@ -216,7 +216,7 @@ func (data *routeType) mapCreateRouteTypeToValues(ctx context.Context) (resource
 	return *routeCreate, diags
 }
 
-// Sets the destinations resource values for creation with cf-client from the terraform struct values
+// Sets the destinations resource values for creation with cf-client from the terraform struct values.
 func (data *routeType) mapCreateDestinationsTypeToValues(ctx context.Context) ([]*resource.RouteDestinationInsertOrReplace, diag.Diagnostics) {
 	var (
 		destinations       []destinationType
@@ -233,7 +233,7 @@ func (data *routeType) mapCreateDestinationsTypeToValues(ctx context.Context) ([
 	return routeDestinations, diagnostics
 }
 
-// Prepares a destination list resource for creation/updation from the terraform list of destination types
+// Prepares a destination list resource for creation/updation from the terraform list of destination types.
 func mapDestinationArrayToDestinationValues(destinations []destinationType) []*resource.RouteDestinationInsertOrReplace {
 
 	destinationValues := []*resource.RouteDestinationInsertOrReplace{}
@@ -244,7 +244,7 @@ func mapDestinationArrayToDestinationValues(destinations []destinationType) []*r
 	return destinationValues
 }
 
-// Prepares a rule resource from the terraform rule type
+// Prepares a rule resource from the terraform rule type.
 func mapTypetoDestinationValues(destination destinationType) *resource.RouteDestinationInsertOrReplace {
 
 	routeDestination := resource.NewRouteDestinationInsertOrReplace(destination.AppId.ValueString())
@@ -265,7 +265,7 @@ func mapTypetoDestinationValues(destination destinationType) *resource.RouteDest
 	return routeDestination
 }
 
-// Sets the route resource values for updation with cf-client from the terraform struct values
+// Sets the route resource values for updation with cf-client from the terraform struct values.
 func (plan *routeType) mapUpdateRouteTypeToValues(ctx context.Context, state *routeType) (resource.RouteUpdate, diag.Diagnostics) {
 	routeUpdate := resource.RouteUpdate{}
 
@@ -327,13 +327,13 @@ func (m computeValueModifier) PlanModifyInt64(_ context.Context, req planmodifie
 }
 
 // ReComputeStringValue returns a plan modifier that forces recomputation
-// of an already set value
+// of an already set value.
 func ReComputeStringValue() planmodifier.String {
 	return computeValueModifier{}
 }
 
 // ReComputeIntValue returns a plan modifier that forces recomputation
-// of an already set value
+// of an already set value.
 func ReComputeIntValue() planmodifier.Int64 {
 	return computeValueModifier{}
 }

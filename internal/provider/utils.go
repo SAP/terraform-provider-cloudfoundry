@@ -10,7 +10,6 @@ import (
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
-	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -95,7 +94,7 @@ func guidSchema() *schema.StringAttribute {
 	}
 }
 
-// Take relationship from cfclient and return set type of terraform
+// Take relationship from cfclient and return set type of terraform.
 func setRelationshipToTFSet(r []cfv3resource.Relationship) (basetypes.SetValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var bt basetypes.SetValue
@@ -111,7 +110,7 @@ func setRelationshipToTFSet(r []cfv3resource.Relationship) (basetypes.SetValue, 
 	return bt, diags
 }
 
-// Returns removed and added element in the new plan which existed in state
+// Returns removed and added element in the new plan which existed in state.
 func findChangedRelationsFromTFState(ctx context.Context, planSet basetypes.SetValue, stateSet basetypes.SetValue) ([]string, []string, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var planSetStr, stateSetStr []string
@@ -120,20 +119,12 @@ func findChangedRelationsFromTFState(ctx context.Context, planSet basetypes.SetV
 	removed, added := lo.Difference(stateSetStr, planSetStr)
 	return removed, added, diags
 }
-func setMapToBaseMap(ctx context.Context, resp *datasource.ReadResponse, mt map[string]*string) *basetypes.MapValue {
-	labels, diag := types.MapValueFrom(ctx, types.StringType, mt)
-	resp.Diagnostics.Append(diag...)
-	if resp.Diagnostics.HasError() {
-		return nil
-	}
-	return &labels
-}
 
 func handleReadErrors(ctx context.Context, resp *resource.ReadResponse, err error, res string, resName string) {
 	if cfv3resource.IsResourceNotFoundError(err) {
 		resp.State.RemoveResource(ctx)
 	} else {
-		resp.Diagnostics.AddError(fmt.Sprintf("API Error Reading %s %s", res, resName), fmt.Sprintf("%s", err.Error()))
+		resp.Diagnostics.AddError(fmt.Sprintf("API Error Reading %s %s", res, resName), err.Error())
 	}
 
 }
@@ -160,7 +151,7 @@ func mapMetadataValueToType(ctx context.Context, generic map[string]*string) (ba
 	return out, diagnostics
 }
 
-// Prepares the labels and annotations for cfclient updation from existing and planned tfstate labels and annotations
+// Prepares the labels and annotations for cfclient updation from existing and planned tfstate labels and annotations.
 func setClientMetadataForUpdate(ctx context.Context, StateLabels basetypes.MapValue, StateAnnotations basetypes.MapValue, plannedStateLabels basetypes.MapValue, plannedStateAnnotations basetypes.MapValue) (*cfv3resource.Metadata, diag.Diagnostics) {
 
 	var (
@@ -198,12 +189,12 @@ func setClientMetadataForUpdate(ctx context.Context, StateLabels basetypes.MapVa
 	return metadata, diagnostics
 }
 
-// Returns a pointer to a bool
+// Returns a pointer to a bool.
 func booltoboolptr(s bool) *bool {
 	return &s
 }
 
-// Returns a pointer to an int
+// Returns a pointer to an int.
 func inttointptr(s int) *int {
 	return &s
 }

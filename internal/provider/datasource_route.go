@@ -19,12 +19,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &RouteDataSource{}
 )
 
-// Instantiates a route group data source
+// Instantiates a route group data source.
 func NewRouteDataSource() datasource.DataSource {
 	return &RouteDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type RouteDataSource struct {
 	cfClient *client.Client
 }

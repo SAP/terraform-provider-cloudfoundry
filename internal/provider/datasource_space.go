@@ -23,12 +23,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &SpaceDataSource{}
 )
 
-// Instantiates a space data source
+// Instantiates a space data source.
 func NewSpaceDataSource() datasource.DataSource {
 	return &SpaceDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type SpaceDataSource struct {
 	cfClient *client.Client
 }

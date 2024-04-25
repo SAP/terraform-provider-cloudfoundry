@@ -23,7 +23,7 @@ type domainType struct {
 	UpdatedAt          types.String `tfsdk:"updated_at"`
 }
 
-// Sets the terraform struct values from the domain resource returned by the cf-client
+// Sets the terraform struct values from the domain resource returned by the cf-client.
 func mapDomainValuesToType(ctx context.Context, domain *resource.Domain) (domainType, diag.Diagnostics) {
 
 	domainType := domainType{
@@ -54,7 +54,7 @@ func mapDomainValuesToType(ctx context.Context, domain *resource.Domain) (domain
 	return domainType, diagnostics
 }
 
-// Sets the domain resource values for creation with cf-client from the terraform struct values
+// Sets the domain resource values for creation with cf-client from the terraform struct values.
 func (data *domainType) mapCreateDomainTypeToValues(ctx context.Context) (resource.DomainCreate, diag.Diagnostics) {
 
 	createDomain := resource.NewDomainCreate(data.Name.ValueString())
@@ -90,7 +90,7 @@ func (data *domainType) mapCreateDomainTypeToValues(ctx context.Context) (resour
 	return *createDomain, diagnostics
 }
 
-// Sets the domain resource values for updation with cf-client from the terraform struct values
+// Sets the domain resource values for updation with cf-client from the terraform struct values.
 func (plan *domainType) mapUpdateDomainTypeToValues(ctx context.Context, state domainType) (resource.DomainUpdate, diag.Diagnostics) {
 
 	updateDomain := &resource.DomainUpdate{}

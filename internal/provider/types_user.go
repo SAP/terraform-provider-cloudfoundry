@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// Terraform struct for storing values for user data source and resource
+// Terraform struct for storing values for user data source and resource.
 type userType struct {
 	UserName         types.String `tfsdk:"username"`
 	PresentationName types.String `tfsdk:"presentation_name"`
@@ -32,7 +32,7 @@ type spaceOrgUsersType struct {
 	Organization types.String `tfsdk:"org"`
 }
 
-// Sets the user resource values for creation with cf-client from the terraform struct values
+// Sets the user resource values for creation with cf-client from the terraform struct values.
 func (data *userType) mapCreateUserTypeToValues(ctx context.Context) (resource.UserCreate, diag.Diagnostics) {
 
 	createUser := &resource.UserCreate{GUID: data.Id.ValueString()}
@@ -48,7 +48,7 @@ func (data *userType) mapCreateUserTypeToValues(ctx context.Context) (resource.U
 	return *createUser, diagnostics
 }
 
-// Sets the terraform struct values from the user resource returned by the cf-client
+// Sets the terraform struct values from the user resource returned by the cf-client.
 func mapUserValuesToType(ctx context.Context, user *resource.User) (userType, diag.Diagnostics) {
 
 	userType := userType{
@@ -69,7 +69,7 @@ func mapUserValuesToType(ctx context.Context, user *resource.User) (userType, di
 	return userType, diagnostics
 }
 
-// Sets the user resource values for updation with cf-client from the terraform struct values
+// Sets the user resource values for updation with cf-client from the terraform struct values.
 func (plan *userType) mapUpdateUserTypeToValues(ctx context.Context, state userType) (resource.UserUpdate, diag.Diagnostics) {
 
 	updateUser := &resource.UserUpdate{}
@@ -80,7 +80,7 @@ func (plan *userType) mapUpdateUserTypeToValues(ctx context.Context, state userT
 	return *updateUser, diagnostics
 }
 
-// Prepares a terraform list from the user resources returned by the cf-client
+// Prepares a terraform list from the user resources returned by the cf-client.
 func mapUsersValuesToListType(ctx context.Context, users []*resource.User) ([]userType, diag.Diagnostics) {
 
 	var diagnostics diag.Diagnostics
@@ -94,7 +94,7 @@ func mapUsersValuesToListType(ctx context.Context, users []*resource.User) ([]us
 	return userValues, diagnostics
 }
 
-// Sets the terraform struct values from the user resources returned by the cf-client
+// Sets the terraform struct values from the user resources returned by the cf-client.
 func mapUsersValuesToType(ctx context.Context, data datasourceUserType, users []*resource.User) (datasourceUserType, diag.Diagnostics) {
 
 	var diags, diagnostics diag.Diagnostics
@@ -108,7 +108,7 @@ func mapUsersValuesToType(ctx context.Context, data datasourceUserType, users []
 	return usersType, diagnostics
 }
 
-// Sets the terraform struct values from the user resources returned by the cf-client
+// Sets the terraform struct values from the user resources returned by the cf-client.
 func mapSpaceOrgUsersValuesToType(ctx context.Context, data spaceOrgUsersType, users []*resource.User) (spaceOrgUsersType, diag.Diagnostics) {
 
 	var diags, diagnostics diag.Diagnostics

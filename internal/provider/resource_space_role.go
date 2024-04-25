@@ -24,12 +24,12 @@ var (
 	_ resource.ResourceWithImportState = &SpaceRoleResource{}
 )
 
-// Instantiates a role resource
+// Instantiates a role resource.
 func NewSpaceRoleResource() resource.Resource {
 	return &SpaceRoleResource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type SpaceRoleResource struct {
 	cfClient *cfv3client.Client
 }
@@ -183,7 +183,7 @@ func (rs *SpaceRoleResource) Read(ctx context.Context, req resource.ReadRequest,
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-// Update for role is not possible
+// Update for role is not possible.
 func (rs *SpaceRoleResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 }
 

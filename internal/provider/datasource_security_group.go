@@ -20,12 +20,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &SecurityGroupDataSource{}
 )
 
-// Instantiates a security group data source
+// Instantiates a security group data source.
 func NewSecurityGroupDataSource() datasource.DataSource {
 	return &SecurityGroupDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type SecurityGroupDataSource struct {
 	cfClient *client.Client
 }

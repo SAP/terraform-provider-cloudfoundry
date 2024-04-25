@@ -39,7 +39,7 @@ func (r *orgResource) Metadata(_ context.Context, req resource.MetadataRequest, 
 	resp.TypeName = req.ProviderTypeName + "_org"
 }
 
-// Configure defines the configuration for the resource
+// Configure defines the configuration for the resource.
 func (r *orgResource) Configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 
 	if req.ProviderData == nil {

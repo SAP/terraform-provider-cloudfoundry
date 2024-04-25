@@ -52,7 +52,7 @@ type roleDatasourceType struct {
 }
 
 // Reduce function to reduce roleType to roleDatasourceType
-// This is used to reuse mapRoleValuesToType in both resource and datasource
+// This is used to reuse mapRoleValuesToType in both resource and datasource.
 func (a *roleType) ReduceToDataSource() roleDatasourceType {
 	var reduced roleDatasourceType
 	copyFields(&reduced, a)
@@ -71,7 +71,7 @@ func (a *roleType) ReduceToOrgRole() orgRoleType {
 	return reduced
 }
 
-// Returns the OrganizationRoleType value needed for org role creation
+// Returns the OrganizationRoleType value needed for org role creation.
 func (data *orgRoleType) getOrgRoleType() resource.OrganizationRoleType {
 
 	switch data.Type.ValueString() {
@@ -89,7 +89,7 @@ func (data *orgRoleType) getOrgRoleType() resource.OrganizationRoleType {
 	}
 }
 
-// Returns the OrganizationRoleType value needed for org role creation
+// Returns the OrganizationRoleType value needed for org role creation.
 func (data *spaceRoleType) getSpaceRoleType() resource.SpaceRoleType {
 
 	switch data.Type.ValueString() {
@@ -107,7 +107,7 @@ func (data *spaceRoleType) getSpaceRoleType() resource.SpaceRoleType {
 	}
 }
 
-// Sets the terraform struct values from the user resource returned by the cf-client
+// Sets the terraform struct values from the user resource returned by the cf-client.
 func mapRoleValuesToType(role *resource.Role) roleType {
 
 	roleType := roleType{

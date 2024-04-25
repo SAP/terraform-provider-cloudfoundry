@@ -22,12 +22,12 @@ var (
 	_ datasource.DataSourceWithConfigure = &UsersDataSource{}
 )
 
-// Instantiates a space/org users data source
+// Instantiates a space/org users data source.
 func NewUsersDataSource() datasource.DataSource {
 	return &UsersDataSource{}
 }
 
-// Contains reference to the v3 client to be used for making the API calls
+// Contains reference to the v3 client to be used for making the API calls.
 type UsersDataSource struct {
 	cfClient *client.Client
 }
