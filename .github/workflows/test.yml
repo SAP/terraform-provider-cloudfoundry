@@ -93,9 +93,33 @@ jobs:
       - if: ${{ matrix.terraform != env.LATEST_VERSION}}
         env:
           TF_ACC: "1"
-        run: go test -v -cover -coverprofile=cover.out -timeout=900s -parallel=4 ./...
+        run: go test -v -timeout=900s -parallel=4 ./...
         timeout-minutes: 20
       - if: ${{ matrix.terraform == env.LATEST_VERSION}}
         env:
           TF_ACC: "1"
         uses: robherley/go-test-action@v0
+        with: 
+          testArguments: -v -cover -coverprofile=cover.out -timeout=900s -parallel=4 ./...
+      - uses: actions/upload-artifact@v4
+        if: ${{ matrix.terraform == env.LATEST_VERSION}}}  
+        with:
+          name: coverage-report
+          path: cover.out
+  sonarcloud:
+    if: github.event.pull_request.draft == false
+    name: SonarCloud
+    needs: test_with_terraform_versions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
