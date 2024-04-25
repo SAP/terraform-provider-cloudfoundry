@@ -93,16 +93,23 @@ jobs:
       - if: ${{ matrix.terraform != env.LATEST_VERSION}}
         env:
           TF_ACC: "1"
-        run: go test -v -cover -coverprofile=cover.out -timeout=900s -parallel=4 ./...
+        run: go test -v -timeout=900s -parallel=4 ./...
         timeout-minutes: 20
       - if: ${{ matrix.terraform == env.LATEST_VERSION}}
         env:
           TF_ACC: "1"
         uses: robherley/go-test-action@v0
+        with: 
+          testArguments: -v -cover -coverprofile=cover.out -timeout=900s -parallel=4 ./...
+      - uses: actions/upload-artifact@v4
+        if: ${{ matrix.terraform == env.LATEST_VERSION}}}  
+        with:
+          name: coverage-report
+          path: cover.out
   sonarcloud:
     if: github.event.pull_request.draft == false
     name: SonarCloud
-    needs: test
+    needs: test_with_terraform_versions
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
