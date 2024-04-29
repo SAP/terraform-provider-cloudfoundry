@@ -11,7 +11,7 @@ This provider makes use of the [go-cfclient](https://github.com/cloudfoundry-com
 
 You can find usage examples in the [examples folder](examples/) of this repository.
 
-Check the [Authentication](/Authentication.md) documentation for supported approaches.
+Check the [Authentication](docs/guides/Authentication.md) documentation for supported approaches.
 
 ## Developing & Contributing to the Provider
 
