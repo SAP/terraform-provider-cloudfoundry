@@ -196,7 +196,8 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 	if !appType.Routes.IsUnknown() {
 		var routes cfv3operation.AppManifestRoutes
 		tfRoutes := []Route{}
-		diags = appType.Routes.ElementsAs(ctx, &tfRoutes, false)
+		tempDiags = appType.Routes.ElementsAs(ctx, &tfRoutes, false)
+		diags = append(diags, tempDiags...)
 		for _, route := range tfRoutes {
 			routeManifest := cfv3operation.AppManifestRoute{
 				Route: route.Route.ValueString(),
