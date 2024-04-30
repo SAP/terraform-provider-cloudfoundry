@@ -31,9 +31,27 @@ resource "cloudfoundry_app" "gobis-server" {
   service_bindings = [
     {
       service_instance : "xsuaa-tf"
-      params = {
-        role = "Viewer"
-      }
+      params = <<EOT
+{
+  "xsappname": "tf-test-app",
+  "tenant-mode": "dedicated",
+  "description": "tf test123",
+  "foreign-scope-references": ["user_attributes"],
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": ["uaa.user"]
+    }
+  ]
+}
+EOT
     }
   ]
   routes = [

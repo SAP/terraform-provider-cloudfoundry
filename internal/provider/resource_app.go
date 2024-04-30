@@ -9,6 +9,7 @@ import (
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/boolvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
@@ -146,10 +147,9 @@ func (r *appResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *
 							MarkdownDescription: "The service instance name.",
 							Required:            true,
 						},
-						"params": schema.MapAttribute{
-							ElementType:         types.StringType,
-							Validators:          []validator.Map{mapvalidator.SizeAtLeast(1)},
-							MarkdownDescription: "A map of arbitrary key/value pairs to send to the service broker during binding.",
+						"params": schema.StringAttribute{
+							CustomType:          jsontypes.NormalizedType{},
+							MarkdownDescription: "A json object to send to the service broker during service binding.",
 							Optional:            true,
 						},
 					},

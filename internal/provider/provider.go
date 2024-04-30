@@ -248,7 +248,7 @@ func (p *CloudFoundryProvider) Configure(ctx context.Context, req provider.Confi
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	session, err := cloudFoundryProviderConfig.NewSession(p.httpClient)
+	session, err := cloudFoundryProviderConfig.NewSession(p.httpClient, req)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create CF Client",

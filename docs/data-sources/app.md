@@ -12,15 +12,6 @@ Gets information on a Cloud Foundry application.
 ## Example Usage
 
 ```terraform
-terraform {
-  required_providers {
-    cloudfoundry = {
-      source = "sap/cloudfoundry"
-    }
-  }
-}
-provider "cloudfoundry" {}
-
 data "cloudfoundry_app" "http-bin-server" {
   name  = "tf-test-do-not-delete-http-bin"
   space = "tf-space-1"
@@ -32,7 +23,7 @@ output "id" {
 }
 
 output "space" {
-  value = data.cloudfoundry_app.http-bin-server.space
+  value = data.cloudfoundry_app.http-bin-server.space_name
 }
 
 output "name" {
@@ -55,6 +46,9 @@ output "routes" {
 }
 output "buildpacks" {
   value = data.cloudfoundry_app.http-bin-server.buildpacks
+}
+output "service_bindings" {
+  value = data.cloudfoundry_app.http-bin-server.service_bindings
 }
 ```
 
@@ -134,7 +128,7 @@ Read-Only:
 Read-Only:
 
 - `protocol` (String) The protocol used for the route. Valid values are http2, http1, and tcp.
-- `route` (String) The fully route qualified domain name which will be bound to app
+- `route` (String) The fully qualified domain name which will be bound to app
 
 
 <a id="nestedatt--service_bindings"></a>
@@ -142,7 +136,7 @@ Read-Only:
 
 Read-Only:
 
-- `params` (Map of String) A map of arbitrary key/value pairs to send to the service broker during binding.
+- `params` (String) A json object to represent the parameters for the service instance.
 - `service_instance` (String) The service instance name.
 
 

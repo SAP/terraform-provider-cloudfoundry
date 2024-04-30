@@ -7,6 +7,7 @@ import (
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
 	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -79,9 +80,9 @@ func (d *appDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 							MarkdownDescription: "The service instance name.",
 							Computed:            true,
 						},
-						"params": schema.MapAttribute{
-							ElementType:         types.StringType,
-							MarkdownDescription: "A map of arbitrary key/value pairs to send to the service broker during binding.",
+						"params": schema.StringAttribute{
+							CustomType:          jsontypes.NormalizedType{},
+							MarkdownDescription: "A json object to represent the parameters for the service instance.",
 							Computed:            true,
 						},
 					},
@@ -93,7 +94,7 @@ func (d *appDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"route": schema.StringAttribute{
-							MarkdownDescription: "The fully route qualified domain name which will be bound to app",
+							MarkdownDescription: "The fully qualified domain name which will be bound to app",
 							Computed:            true,
 						},
 						"protocol": schema.StringAttribute{

@@ -20,6 +20,14 @@ description: |-
 
 All parameter values for the provider can be injected by setting environment variables `CF_API_URL`, `CF_USER`, `CF_PASSWORD`, `CF_ORIGIN`, `CF_CLIENT_ID`, `CF_CLIENT_SECRET`.
 
+## Custom User-Agent Information
+
+By default, the underlying Cloud Foundry client used by the Terraform Cloud Foundry Provider creates requests with User-Agent headers that include information about Terraform and Cloud Foundry Terraform provider versions. To add more details to the User-Agent headers, the `CF_APPEND_USER_AGENT` environment variable can be set, and its value will be directly added to HTTP requests. E.g.,
+
+```bash
+% export CF_APPEND_USER_AGENT="Optional_Extra_Information"
+```
+
 ## Get Started
 
 If you're not familiar with Terraform yet, see the [Fundamentals](https://developer.hashicorp.com/terraform/tutorials/cli) section with a lot of helpful tutorials. 

@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    cloudfoundry = {
-      source = "sap/cloudfoundry"
-    }
-  }
-}
-provider "cloudfoundry" {}
-
 data "cloudfoundry_app" "http-bin-server" {
   name  = "tf-test-do-not-delete-http-bin"
   space = "tf-space-1"
@@ -18,7 +9,7 @@ output "id" {
 }
 
 output "space" {
-  value = data.cloudfoundry_app.http-bin-server.space
+  value = data.cloudfoundry_app.http-bin-server.space_name
 }
 
 output "name" {
@@ -41,4 +32,7 @@ output "routes" {
 }
 output "buildpacks" {
   value = data.cloudfoundry_app.http-bin-server.buildpacks
+}
+output "service_bindings" {
+  value = data.cloudfoundry_app.http-bin-server.service_bindings
 }
