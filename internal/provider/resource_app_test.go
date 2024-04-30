@@ -9,6 +9,7 @@ import (
 func TestAppResource_Configure(t *testing.T) {
 	t.Parallel()
 	resourceName := "cloudfoundry_app.app"
+	params := `{"xsappname":"tf-test-app","tenant-mode":"dedicated","description":"tf test123","foreign-scope-references":["user_attributes"],"scopes":[{"name":"uaa.user","description":"UAA"}],"role-templates":[{"name":"Token_Exchange","description":"UAA","scope-references":["uaa.user"]}]}`
 	t.Run("happy path - create app with bits", func(t *testing.T) {
 		cfg := getCFHomeConf()
 		rec := cfg.SetupVCR(t, "fixtures/resource_app_bits")
@@ -31,6 +32,14 @@ resource "cloudfoundry_app" "app" {
 	readiness_health_check_type          = "http"
 	readiness_health_check_http_endpoint = "/"
   instances                            = 2
+	service_bindings = [
+    {
+      service_instance : "xsuaa-tf"
+      params = <<EOT
+` + params + `
+EOT
+		}
+	]
   environment = {
     MY_ENV = "red",
   }
@@ -52,6 +61,8 @@ resource "cloudfoundry_app" "app" {
 						resource.TestCheckResourceAttr(resourceName, "health_check_type", "http"),
 						resource.TestCheckResourceAttr(resourceName, "health_check_http_endpoint", "/"),
 						resource.TestCheckResourceAttr(resourceName, "strategy", "rolling"),
+						resource.TestCheckResourceAttr(resourceName, "service_bindings.0.service_instance", "xsuaa-tf"),
+						resource.TestCheckResourceAttr(resourceName, "service_bindings.0.params", params+"\n"),
 						resource.TestCheckResourceAttr(resourceName, "environment.MY_ENV", "red"),
 						resource.TestCheckResourceAttr(resourceName, "routes.0.route", "cf-sample-test.cfapps.sap.hana.ondemand.com"),
 						resource.TestCheckResourceAttr(resourceName, "routes.0.protocol", "http1"),

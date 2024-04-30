@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"math"
 	"os"
@@ -10,6 +11,7 @@ import (
 
 	cfv3operation "github.com/cloudfoundry-community/go-cfclient/v3/operation"
 	cfv3resource "github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -133,8 +135,8 @@ type DockerCredentials struct {
 }
 
 type ServiceBinding struct {
-	ServiceInstance types.String `tfsdk:"service_instance"`
-	Params          types.Map    `tfsdk:"params"`
+	ServiceInstance types.String         `tfsdk:"service_instance"`
+	Params          jsontypes.Normalized `tfsdk:"params"`
 }
 
 type Route struct {
@@ -184,10 +186,19 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 				Name: service.ServiceInstance.ValueString(),
 			}
 			if !service.Params.IsNull() {
-				var params map[string]interface{}
-				tempDiags = service.Params.ElementsAs(ctx, &params, false)
-				diags = append(diags, tempDiags...)
-				serviceManifest.Parameters = params
+				var params json.RawMessage
+				err := json.Unmarshal([]byte(service.Params.ValueString()), &params)
+				if err != nil {
+					tempDiags.AddError("Error unmarshalling service params", err.Error())
+					diags = append(diags, tempDiags...)
+				}
+				var finalParams map[string]interface{}
+				err = json.Unmarshal(params, &finalParams)
+				if err != nil {
+					tempDiags.AddError("Error unmarshalling service params", err.Error())
+					diags = append(diags, tempDiags...)
+				}
+				serviceManifest.Parameters = finalParams
 			}
 			services = append(services, serviceManifest)
 		}
@@ -378,13 +389,18 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 			var sb ServiceBinding
 			sb.ServiceInstance = types.StringValue(service.Name)
 			if service.Parameters != nil {
-				sb.Params, tempDiags = types.MapValueFrom(ctx, types.StringType, service.Parameters)
+				param, err := json.Marshal(service.Parameters)
+				if err != nil {
+					tempDiags.AddError("Error marshalling service parameters", err.Error())
+					diags = append(diags, tempDiags...)
+				}
+				sb.Params = jsontypes.NewNormalizedValue(string(param))
 				diags = append(diags, tempDiags...)
 			} else {
 				if reqPlanType != nil && len(reqPlanType.ServiceBindings) > i {
 					sb.Params = reqPlanType.ServiceBindings[i].Params
 				} else {
-					sb.Params = types.MapNull(types.StringType)
+					sb.Params = jsontypes.NewNormalizedNull()
 				}
 			}
 			serviceBindings = append(serviceBindings, sb)
