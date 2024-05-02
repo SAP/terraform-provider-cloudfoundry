@@ -33,6 +33,7 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
+          version: 1.5.0
           args: release --clean
         env:
           # GitHub sets the GITHUB_TOKEN secret automatically.
