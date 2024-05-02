@@ -6,7 +6,7 @@ import (
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
-	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
+	cfv3client "github.com/cloudfoundry/go-cfclient/v3/client"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"

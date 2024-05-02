@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	cfv3client "github.com/cloudfoundry-community/go-cfclient/v3/client"
-	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	cfv3client "github.com/cloudfoundry/go-cfclient/v3/client"
+	"github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-timeouts/resource/timeouts"
 	"github.com/hashicorp/terraform-plugin-framework/attr"

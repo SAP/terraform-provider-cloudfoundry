@@ -3,7 +3,7 @@ package provider
 import (
 	"time"
 
-	"github.com/cloudfoundry-community/go-cfclient/v3/resource"
+	"github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 

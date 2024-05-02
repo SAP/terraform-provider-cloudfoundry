@@ -107,7 +107,6 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 - `syslog_drain_url` (String) URL to which logs for bound applications will be streamed; only shown when type is user-provided.
 - `tags` (List of String) List of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.
 - `timeouts` (Attributes) (see [below for nested schema](#nestedatt--timeouts))
-- `upgrade_available` (Boolean) Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed
 
 ### Read-Only
 
@@ -117,6 +116,7 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 - `last_operation` (Attributes) The last operation of this service instance. (see [below for nested schema](#nestedatt--last_operation))
 - `maintenance_info` (Attributes) Information about the version of this service instance; only shown when type is managed (see [below for nested schema](#nestedatt--maintenance_info))
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
+- `upgrade_available` (Boolean) Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed
 
 <a id="nestedatt--timeouts"></a>
 ### Nested Schema for `timeouts`
@@ -131,12 +131,9 @@ Optional:
 <a id="nestedatt--last_operation"></a>
 ### Nested Schema for `last_operation`
 
-Optional:
-
-- `created_at` (String) The time at which the last operation was created
-
 Read-Only:
 
+- `created_at` (String) The time at which the last operation was created
 - `description` (String) The description of the last operation
 - `state` (String) The state of the last operation
 - `type` (String) The type of the last operation
@@ -146,7 +143,7 @@ Read-Only:
 <a id="nestedatt--maintenance_info"></a>
 ### Nested Schema for `maintenance_info`
 
-Optional:
+Read-Only:
 
 - `description` (String) A description of the version of the service instance
 - `version` (String) The version of the service instance

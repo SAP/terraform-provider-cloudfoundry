@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/version"
-	"github.com/cloudfoundry-community/go-cfclient/v3/client"
-	config "github.com/cloudfoundry-community/go-cfclient/v3/config"
+	"github.com/cloudfoundry/go-cfclient/v3/client"
+	config "github.com/cloudfoundry/go-cfclient/v3/config"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 )
 

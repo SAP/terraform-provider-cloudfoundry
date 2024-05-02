@@ -7,7 +7,7 @@
 
 The Terraform provider for [Cloud Foundry](https://www.cloudfoundry.org/) allows the management of resources via [Terraform](https://terraform.io/).
 
-This provider makes use of the [go-cfclient](https://github.com/cloudfoundry-community/go-cfclient) to interact with the Cloud Foundry Cloud Controller [v3 APIs](https://v3-apidocs.cloudfoundry.org/version/3.159.0/index.html) and take advantages of the same. Additionally, the [v2 APIs are deprecated](https://apidocs.cloudfoundry.org/16.22.0/).
+This provider makes use of the [go-cfclient](https://github.com/cloudfoundry/go-cfclient) to interact with the Cloud Foundry Cloud Controller [v3 APIs](https://v3-apidocs.cloudfoundry.org/version/3.159.0/index.html) and take advantages of the same. Additionally, the [v2 APIs are deprecated](https://apidocs.cloudfoundry.org/16.22.0/).
 
 You can find usage examples in the [examples folder](examples/) of this repository.
 
