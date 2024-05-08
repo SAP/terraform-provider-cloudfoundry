@@ -9,6 +9,7 @@ import (
 	"log"
 
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider"
+	"github.com/SAP/terraform-provider-cloudfoundry/internal/version"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 )
 
@@ -21,15 +22,6 @@ import (
 // Run the docs generation tool, check its repository for more information on how it works and how docs
 // can be customized.
 
-var (
-	// these will be set by the goreleaser configuration
-	// to appropriate values for the compiled binary.
-	version string = "dev"
-
-	// goreleaser can pass other information to the main package, such as the specific commit
-	// https://goreleaser.com/cookbooks/using-main.version/
-)
-
 func main() {
 	var debug bool
 
@@ -41,7 +33,7 @@ func main() {
 		Debug:   debug,
 	}
 
-	err := providerserver.Serve(context.Background(), provider.New(version, nil), opts)
+	err := providerserver.Serve(context.Background(), provider.New(version.ProviderVersion, nil), opts)
 
 	if err != nil {
 		log.Fatal(err.Error())
