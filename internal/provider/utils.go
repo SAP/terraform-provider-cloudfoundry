@@ -199,6 +199,11 @@ func inttointptr(s int) *int {
 	return &s
 }
 
+// Returns a pointer to an uint.
+func uinttouintptr(s uint) *uint {
+	return &s
+}
+
 func copyFields(dst, src interface{}) {
 	dstValue := reflect.ValueOf(dst).Elem()
 	srcValue := reflect.ValueOf(src).Elem()

@@ -274,7 +274,7 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 				processManifest.HealthCheckInterval = uint(process.HealthCheckInterval.ValueInt64())
 			}
 			if !process.Instances.IsUnknown() {
-				processManifest.Instances = uint(process.Instances.ValueInt64())
+				processManifest.Instances = uinttouintptr(uint(process.Instances.ValueInt64()))
 			}
 			if !process.Memory.IsUnknown() {
 				processManifest.Memory = process.Memory.ValueString()
@@ -339,7 +339,7 @@ func (appType *AppType) mapAppTypeToValues(ctx context.Context) (*cfv3operation.
 		appmanifest.HealthCheckType = cfv3operation.AppHealthCheckType(appType.HealthCheckType.ValueString())
 	}
 	if !appType.Instances.IsUnknown() {
-		appmanifest.Instances = uint(appType.Instances.ValueInt64())
+		appmanifest.Instances = uinttouintptr(uint(appType.Instances.ValueInt64()))
 	}
 	if !appType.Memory.IsUnknown() {
 		appmanifest.Memory = appType.Memory.ValueString()
@@ -457,9 +457,7 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 				if process.HealthCheckInvocationTimeout != 0 {
 					appType.HealthCheckInvocationTimeout = types.Int64Value(int64(process.HealthCheckInvocationTimeout))
 				}
-				if process.Instances != 0 {
-					appType.Instances = types.Int64Value(int64(process.Instances))
-				}
+				appType.Instances = types.Int64Value(int64(*process.Instances))
 				if process.Memory != "" {
 					if !reqPlanType.Memory.IsUnknown() {
 						result, err := getDesiredType(process.Memory, reqPlanType.Memory.ValueString())
@@ -529,9 +527,7 @@ func mapAppValuesToType(ctx context.Context, appManifest *cfv3operation.AppManif
 				if process.HealthCheckType != "" {
 					p.HealthCheckType = types.StringValue(string(process.HealthCheckType))
 				}
-				if process.Instances != 0 {
-					p.Instances = types.Int64Value(int64(process.Instances))
-				}
+				p.Instances = types.Int64Value(int64(*process.Instances))
 				if process.Memory != "" {
 					if reqPlanType != nil && !reqPlanType.Processes[i].Memory.IsUnknown() {
 						result, err := getDesiredType(process.Memory, reqPlanType.Processes[i].Memory.ValueString())
