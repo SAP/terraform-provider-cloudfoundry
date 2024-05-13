@@ -301,6 +301,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 		NewDomainResource,
 		NewAppResource,
 		NewServiceCredentialBindingResource,
+		NewMtaResource,
 	}
 }
 
@@ -320,6 +321,7 @@ func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasou
 		NewDomainDataSource,
 		NewAppDataSource,
 		NewServiceCredentialBindingDataSource,
+		NewMtaDataSource,
 	}
 }
 

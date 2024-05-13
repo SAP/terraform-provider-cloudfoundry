@@ -12,7 +12,6 @@ import (
 type SpaceRoleResourceModelPtr struct {
 	HclType       string
 	HclObjectName string
-	ObjectName    string
 	UserName      *string
 	Origin        *string
 	Type          *string

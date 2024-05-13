@@ -1,0 +1,130 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/csrf-token
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Date:
+                - Thu, 23 May 2024 06:42:51 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=64B252A8B5DCC6394F3493E08A2277AB; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=711434e9-b7d3-406c-49e2-dce6; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - bd245dd7-2824-4280-81d4-e73b854318a3
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - b3ce3785-748b-4c9c-7d90-93616768993d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 246.4545ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 352
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: "--bd7ae594db2888a00a57d82b4417d4188c14f24d46037a493018aee1d186\r\nContent-Disposition: form-data; name=\"file\"; filename=\"provider-config-local.txt\"\r\nContent-Type: application/octet-stream\r\n\r\nprovider_installation {\n  dev_overrides {\n    \"SAP/cloudfoundry\" = \"/go/bin\"\n  }\n\n  direct {}\n}\r\n--bd7ae594db2888a00a57d82b4417d4188c14f24d46037a493018aee1d186--\r\n"
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Length:
+                - "284"
+            Content-Type:
+                - multipart/form-data; boundary=bd7ae594db2888a00a57d82b4417d4188c14f24d46037a493018aee1d186
+            Cookie:
+                - JSESSIONID=64B252A8B5DCC6394F3493E08A2277AB; __VCAP_ID__=711434e9-b7d3-406c-49e2-dce6
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Csrf-Token:
+                - bd245dd7-2824-4280-81d4-e73b854318a3
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/files?namespace=
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"b98053cf-56f1-40c4-9290-f821e93edd33","name":"provider-config-local.txt","size":95,"digest":"981F7BFFA1053E82E392424A24A70B70","digestAlgorithm":"MD5","space":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","namespace":""}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:52 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 94fd38f3-9026-4ab1-7b90-9f73af435da3
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 539.456666ms

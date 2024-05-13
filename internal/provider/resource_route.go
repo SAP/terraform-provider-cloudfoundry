@@ -186,7 +186,7 @@ func (r *RouteResource) Configure(ctx context.Context, req resource.ConfigureReq
 	session, ok := req.ProviderData.(*managers.Session)
 	if !ok {
 		resp.Diagnostics.AddError(
-			"Unexpected Data Source Configure Type",
+			"Unexpected Resource Configure Type",
 			fmt.Sprintf("Expected *managers.Session, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 		return

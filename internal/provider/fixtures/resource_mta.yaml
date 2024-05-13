@@ -1,0 +1,1622 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/csrf-token
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Date:
+                - Thu, 23 May 2024 06:42:25 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=CBA769265FF316A06FE72FB0DC65ACD5; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=a381a5b4-d568-45c9-778d-91bf; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 87df4265-34ca-49b3-8f25-0c50d7443236
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 81521636-d920-4413-4393-6359eedc4981
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 904.77175ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 2610
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: "--8d109d0f2533c74b884d36180b067826742fe48cde2262814638873e604c\r\nContent-Disposition: form-data; name=\"file\"; filename=\"a.cf.app.mtar\"\r\nContent-Type: application/octet-stream\r\n\r\nPK\x03\x04\x14\0\0\0\0\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0\t\0\t\0META-INF/UT\x05\0\x01z�)fPK\x03\x04\x14\0\b\0\b\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0\x14\0\t\0META-INF/MANIFEST.MFUT\x05\0\x01z�)f�M��LK-.�\rK-*��ϳR0�3���K�M�Rȭ��-I��M�KLOM�M,(���O)�I�O,(p�,)֫�,��\rq��\x05\v���\x053��5�Q���M?�$1E�217���\v\x10\0\0��PK\a\b1<�#j\0\0\0�\0\0\0PK\x03\x04\x14\0\b\0\b\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0\x12\0\t\0META-INF/mtad.yamlUT\x05\0\x01z�)flVQo\e�\x11~ׯ��\x1Ep@�];��bq\b�s��\0�\t\x0EMТ.�\x119����\f9��\x06���pw%Y�\x1F,���p���G���\x0E�U�\x16CX���i�fG1\x19�:�����^\x1C���u{�X\f^gK�[\0�KP\e�\x10@y��`�\x16�'Ym�6Gd��\x02�\x01�\x03u0\x1C���\x19���t�!4c�\x05\0\0\x1F\x02u\x12�\x1AU<��\x1D�L�rb?��g�A{x̉\x01\x13����\x1A��\x0E*\f�7é��\tՈG\x1F(���A=\x1Eu���G�y\x0F�\x10\x12(t���\"�%�\\���D�\x06r\f;�\x06ז\x12 C�ΰ\x19��\x01��\x7F�nޯ�\x1F?�n��y�y������n�\x0E�����}��\x7F.��v����������ǻ�\x7F�m\aշi\x13࡚rA\a��Dz����1y\a~�H�\x1F�7g�{��C��\x7F����\x12�\x16��\x19.;dI��d���雦\rf�M���C�������\x13�\x18q �(�.��F@ր��\a�\x1CZ@�gN5Yb�\rL'%�\eke���ܕ&&Ť�l�y\a)�2\eC����u6V\aTO\x1D$F6jc,���d%�tl4����\x03\f4�x����fD���|͞�\x1Cu��>3u�A��\fN��/`�\x12�S�]og��\v7�mX.m\x1C�7���G����Ι=`Jf�HCv�R:f\x02&�\b9���)�S�z��{{Zk?�qs\x05s�\x1Eu#\x1D�3w��/�P'R��4�����F����q\x18{�\0���\n>�U�^Q���\x185�t��q\aՕq��+��\"�@�}�q��M^������or\"'Sؤ�w�1\x13Ԁ��}\x02��Em �\x1E~\x1D\x0E��\x10ﾼ��k�\x19�\x06����\npo\x12�3\x0E�R7�͟¬T4��$�(27dˆ�&�S\f.�F��\r#�C��I�ƭ\x04s@i}\a)�\x1E�xx\x19 up\x19Y�a@�;x�\x1DB��\x11ڶ���(\f�\"\\�\x01\x1E�\x13\x0F *1^sr\x7F��z���W����%�\b�\x19p+TeWr�^$��O�}<�I ԅTƭ0�6'N`��@Y�u�\x12\x0FWL�ː�%��hø=��Dq\x1C�_��2c��V��H$�R{Tҝs�\x12�\x14)`J{\x1F�y�\x19{\a?]�����\x14�>���-�\t\n�a��k�t��9{����\x0E��r�z\x0F��X�\t\x05\x1A�*\x04���UF�(�i\x16���(4�l\x12\e�����2Z{\x10Z4�{r��v`�g\x06Q�Q�E���J0]�Y�2X䍏��L$kH�w�d�G?��k^��Z�m�����б��`�\e�C$EfG�Z���Q\x0E%�wk�Q\vg~#���q�\x13?�v\x17�Z����'8Q�\x19E��8�xi0\x7F~r­w�FZS �ɩät��>Mh%�21�D�-F�9��l\"����l��ԫH��\x1C���\fU](Gk��a|�1\x1E ��@��/s7�E\n��)\x02�۶�<&R\x19�ƻ�ܮQ=:\x19���q\x04�\x1D%���C�Ღ\x1Ew�G)þ'�)J�� �*��\x1A@;�e\0:\x17�;�81ߔ�kB�;�I��L\x03;��9�\x197�\U0010515D)�(���\x01\0\0��PK\a\b�=��\x01\x05\0\0�\n\0\0PK\x03\x04\x14\0\0\0\0\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0\x1A\0\t\0my-mta-managed-app-module/UT\x05\0\x01z�)fPK\x03\x04\x14\0\b\0\b\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0%\0\t\0my-mta-managed-app-module/appBits.zipUT\x05\0\x01z�)f\n�ff�bf```Hc��g@\x02\\\f\f\f�%�%��i�9�\bu�\\b��=�M1```\0aV\x06\x06�̼��\n�Ԝ�|�����\x14����\\�D��4�Ă\x02��ļ���\x14��̒�̼t��<\x05�\x10G�Fr����(��!�\\F&{f\\�R��\x14\x1A�42�x��A\x01,�� ����+\\)�*#�\x16�u*��ʈl6f@ ��\x01�\x03��\r<�}�\"�2�hb�Eur5J�`3\ef&�lV6�\x1Af\x06f\x06~F\x06��`\x1D�\0\0\0��PK\a\bO�\x04��\0\0\0�\x01\0\0PK\x01\x02\x14\x03\x14\0\0\0\0\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0\t\0\t\0\0\0\0\0\0\0\x10\0�A\0\0\0\0META-INF/UT\x05\0\x01z�)fPK\x01\x02\x14\x03\x14\0\b\0\b\0Y,�X1<�#j\0\0\0�\0\0\0\x14\0\t\0\0\0\0\0\0\0\0\0��0\0\0\0META-INF/MANIFEST.MFUT\x05\0\x01z�)fPK\x01\x02\x14\x03\x14\0\b\0\b\0Y,�X�=��\x01\x05\0\0�\n\0\0\x12\0\t\0\0\0\0\0\0\0\0\0���\0\0\0META-INF/mtad.yamlUT\x05\0\x01z�)fPK\x01\x02\x14\x03\x14\0\0\0\0\0Y,�X\0\0\0\0\0\0\0\0\0\0\0\0\x1A\0\t\0\0\0\0\0\0\0\x10\0�A/\x06\0\0my-mta-managed-app-module/UT\x05\0\x01z�)fPK\x01\x02\x14\x03\x14\0\b\0\b\0Y,�XO�\x04��\0\0\0�\x01\0\0%\0\t\0\0\0\0\0\0\0\0\0��p\x06\0\0my-mta-managed-app-module/appBits.zipUT\x05\0\x01z�)fPK\x05\x06\0\0\0\0\x05\0\x05\0�\x01\0\0�\a\0\0\0\0\r\n--8d109d0f2533c74b884d36180b067826742fe48cde2262814638873e604c--\r\n"
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Length:
+                - "2542"
+            Content-Type:
+                - multipart/form-data; boundary=8d109d0f2533c74b884d36180b067826742fe48cde2262814638873e604c
+            Cookie:
+                - JSESSIONID=CBA769265FF316A06FE72FB0DC65ACD5; __VCAP_ID__=a381a5b4-d568-45c9-778d-91bf
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Csrf-Token:
+                - 87df4265-34ca-49b3-8f25-0c50d7443236
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/files?namespace=test
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"12f44b67-088e-4f54-b1c0-e99e850f54c8","name":"a.cf.app.mtar","size":2365,"digest":"8FC95BAEF1A228E42C775F9E3D44241C","digestAlgorithm":"MD5","space":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","namespace":"test"}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:25 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - cc981254-a780-40f8-498b-78313eac1ce6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 533.626959ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations?mtaId=a.cf.app&state=RUNNING%2CERROR%2CACTION_REQUIRED
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"processId":"bf6ef939-1753-11ef-a158-eeee0a8bf7bf","processType":"DEPLOY","startedAt":"2024-05-21T09:23:13.353Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"o f","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"ERROR","messages":[],"parameters":{}}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:26 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=C2588677CA3426774357AA004594C826; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1525f5c2-a15c-4265-5e2b-0b60; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - d813bbd6-9ef5-4f1b-4e44-1509ae6ddc05
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 301.4855ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/csrf-token
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Date:
+                - Thu, 23 May 2024 06:42:26 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=1EAEEF94F6E1AE30E93E13AE4B4B47DB; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - b13ee454-12f7-45ab-850b-3d7863357006
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - d62edde4-bd28-4584-42c1-4f60a76da809
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 246.467333ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 132
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"processType":"DEPLOY","namespace":"test","parameters":{"appArchiveId":"12f44b67-088e-4f54-b1c0-e99e850f54c8","mtaId":"a.cf.app"}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json; charset=utf-8
+            Cookie:
+                - JSESSIONID=1EAEEF94F6E1AE30E93E13AE4B4B47DB; __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Csrf-Token:
+                - b13ee454-12f7-45ab-850b-3d7863357006
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Length:
+                - "0"
+            Date:
+                - Thu, 23 May 2024 06:42:26 GMT
+            Expires:
+                - "0"
+            Location:
+                - spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/9e8d939d-18cf-11ef-882c-eeee0a86920f?embed=messages
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - b13ee454-12f7-45ab-850b-3d7863357006
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - a990d254-9dab-40d9-65b8-091d70db46b1
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 558.548708ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/9e8d939d-18cf-11ef-882c-eeee0a86920f?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"9e8d939d-18cf-11ef-882c-eeee0a86920f","processType":"DEPLOY","startedAt":"2024-05-23T06:42:26.922Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"RUNNING","messages":[{"id":202713801,"text":"Operation ID: 9e8d939d-18cf-11ef-882c-eeee0a86920f","timestamp":"2024-05-23T06:42:26.917Z[UTC]","type":"INFO"},{"id":202713802,"text":"Deploying in org \"PerformanceTeamBLR\" and space \"tf-space-1\"","timestamp":"2024-05-23T06:42:26.971Z[UTC]","type":"INFO"},{"id":202713803,"text":"Detected MTA schema version: \"3\"","timestamp":"2024-05-23T06:42:27.186Z[UTC]","type":"INFO"},{"id":202713804,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:27.423Z[UTC]","type":"INFO"},{"id":202713805,"text":"Detected new MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:27.538Z[UTC]","type":"INFO"},{"id":202713806,"text":"Deployed MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:27.542Z[UTC]","type":"INFO"},{"id":202713807,"text":"Updating application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:27.963Z[UTC]","type":"INFO"},{"id":202713808,"text":"Application \"test-my-cf-app\" attributes are not modified and will not be updated","timestamp":"2024-05-23T06:42:28.088Z[UTC]","type":"INFO"},{"id":202713809,"text":"Uploading application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:28.184Z[UTC]","type":"INFO"},{"id":202713810,"text":"Content of application \"test-my-cf-app\" is not changed - upload will be skipped.","timestamp":"2024-05-23T06:42:28.517Z[UTC]","type":"INFO"},{"id":202713811,"text":"Skipping deletion of services, because the command line option \"--delete-services\" is not specified.","timestamp":"2024-05-23T06:42:29.102Z[UTC]","type":"WARNING"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:29 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=0072A05A8F15C26AAED17E617F67FFBB; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 235b747b-62fd-49ba-7abd-c76e1a2b7085
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 246.950208ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/9e8d939d-18cf-11ef-882c-eeee0a86920f?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"9e8d939d-18cf-11ef-882c-eeee0a86920f","processType":"DEPLOY","startedAt":"2024-05-23T06:42:26.922Z[UTC]","endedAt":"2024-05-23T06:42:29.311Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":false,"state":"FINISHED","messages":[{"id":202713801,"text":"Operation ID: 9e8d939d-18cf-11ef-882c-eeee0a86920f","timestamp":"2024-05-23T06:42:26.917Z[UTC]","type":"INFO"},{"id":202713802,"text":"Deploying in org \"PerformanceTeamBLR\" and space \"tf-space-1\"","timestamp":"2024-05-23T06:42:26.971Z[UTC]","type":"INFO"},{"id":202713803,"text":"Detected MTA schema version: \"3\"","timestamp":"2024-05-23T06:42:27.186Z[UTC]","type":"INFO"},{"id":202713804,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:27.423Z[UTC]","type":"INFO"},{"id":202713805,"text":"Detected new MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:27.538Z[UTC]","type":"INFO"},{"id":202713806,"text":"Deployed MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:27.542Z[UTC]","type":"INFO"},{"id":202713807,"text":"Updating application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:27.963Z[UTC]","type":"INFO"},{"id":202713808,"text":"Application \"test-my-cf-app\" attributes are not modified and will not be updated","timestamp":"2024-05-23T06:42:28.088Z[UTC]","type":"INFO"},{"id":202713809,"text":"Uploading application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:28.184Z[UTC]","type":"INFO"},{"id":202713810,"text":"Content of application \"test-my-cf-app\" is not changed - upload will be skipped.","timestamp":"2024-05-23T06:42:28.517Z[UTC]","type":"INFO"},{"id":202713811,"text":"Skipping deletion of services, because the command line option \"--delete-services\" is not specified.","timestamp":"2024-05-23T06:42:29.102Z[UTC]","type":"WARNING"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:31 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=1EB96123B6E38F7CDA4465AC33A59639; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=9bea6d2c-32e6-44a9-5a5f-43aa; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 450ca6b2-3060-4d87-43c9-305357e0a1cb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 326.659708ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app&namespace=test
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:32 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=105EC6EF151681CD1DD7972913F77E5C; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1525f5c2-a15c-4265-5e2b-0b60; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 99f49099-f76b-4d1c-651e-607e6fcc48a2
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 578.190292ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app&namespace=test
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:32 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=CD8B77B9610268F487DFB9392C58E8C0; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1525f5c2-a15c-4265-5e2b-0b60; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 32452f49-cb9b-4917-5311-b699c11c7137
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 460.839333ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app&namespace=test
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:33 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=4823B8B8D9F4568F2D1CA3EFF926EF2F; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - cbdad50c-19d4-4b6b-5560-92c4ebbd43a9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 520.739292ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/csrf-token
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Date:
+                - Thu, 23 May 2024 06:42:33 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=0906EFD1E9298CBEA6B735D7F0290882; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 808548a6-099e-4412-b91e-741b436ac236
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - a13e355f-3f4c-45ca-7d5a-191a81fecfd2
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 245.729208ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 120
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"file_url":"aHR0cHM6Ly9naXRodWIuY29tL0RyYXk1Ni9tdGFyLWFyY2hpdmUvcmVsZWFzZXMvZG93bmxvYWQvdjEuMC4wL2EuY2YuYXBwLm10YXI="}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json; charset=utf-8
+            Cookie:
+                - JSESSIONID=0906EFD1E9298CBEA6B735D7F0290882; __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Csrf-Token:
+                - 808548a6-099e-4412-b91e-741b436ac236
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/files/async?namespace=test
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Length:
+                - "0"
+            Date:
+                - Thu, 23 May 2024 06:42:33 GMT
+            Expires:
+                - "0"
+            Location:
+                - spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/files/jobs/9a8f26a6-9bb6-4702-968c-05f33d2691f2
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Cf-App-Instance:
+                - 1247566c-7bfd-48f3-a74e-d82711dc1180:4
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 808548a6-099e-4412-b91e-741b436ac236
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 457f1de3-ace3-4321-79ac-fbba94b89b62
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 286.461959ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Cf-App-Instance:
+                - 1247566c-7bfd-48f3-a74e-d82711dc1180:4
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/files/jobs/9a8f26a6-9bb6-4702-968c-05f33d2691f2?namespace=test
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"status":"FINISHED","file":{"id":"be3f016c-7da3-43b0-8e45-7f2c5eec290d","name":"a.cf.app.mtar","size":2365,"digest":"8FC95BAEF1A228E42C775F9E3D44241C","digestAlgorithm":"MD5","space":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","namespace":"test"},"mta_id":"a.cf.app"}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:36 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=9919343E2526F07B0D86F1488C7F99E8; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - d7ad1e71-03c0-4a2b-541c-dbf84e5b4d57
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 280.81ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations?mtaId=a.cf.app&state=RUNNING%2CERROR%2CACTION_REQUIRED
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"processId":"bf6ef939-1753-11ef-a158-eeee0a8bf7bf","processType":"DEPLOY","startedAt":"2024-05-21T09:23:13.353Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"o f","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"ERROR","messages":[],"parameters":{}}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:36 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=6429845DAAAAFBA788EB4CDBF4363E4B; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 05548c01-5c5e-4106-7723-ca8b78187bd7
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 298.932125ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/csrf-token
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Date:
+                - Thu, 23 May 2024 06:42:35 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=D2173F8B1F0017DEA8C23328B20FE31C; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=a381a5b4-d568-45c9-778d-91bf; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 4025f819-63a3-4e66-a242-bb2c9103aeec
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 6fbbb268-bb6a-4ddf-66dc-468e125e96af
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 303.906917ms
+    - id: 15
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 132
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"processType":"DEPLOY","namespace":"test","parameters":{"appArchiveId":"be3f016c-7da3-43b0-8e45-7f2c5eec290d","mtaId":"a.cf.app"}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json; charset=utf-8
+            Cookie:
+                - JSESSIONID=D2173F8B1F0017DEA8C23328B20FE31C; __VCAP_ID__=a381a5b4-d568-45c9-778d-91bf
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Csrf-Token:
+                - 4025f819-63a3-4e66-a242-bb2c9103aeec
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Length:
+                - "0"
+            Date:
+                - Thu, 23 May 2024 06:42:37 GMT
+            Expires:
+                - "0"
+            Location:
+                - spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85?embed=messages
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 4025f819-63a3-4e66-a242-bb2c9103aeec
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 4e6dcb84-6cf1-4aa7-7cbe-4c3801818284
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 472.610333ms
+    - id: 16
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85","processType":"DEPLOY","startedAt":"2024-05-23T06:42:37.205Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"RUNNING","messages":[{"id":202713815,"text":"Operation ID: a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85","timestamp":"2024-05-23T06:42:37.193Z[UTC]","type":"INFO"},{"id":202713816,"text":"Deploying in org \"PerformanceTeamBLR\" and space \"tf-space-1\"","timestamp":"2024-05-23T06:42:37.324Z[UTC]","type":"INFO"},{"id":202713817,"text":"Detected MTA schema version: \"3\"","timestamp":"2024-05-23T06:42:37.829Z[UTC]","type":"INFO"},{"id":202713818,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:38.334Z[UTC]","type":"INFO"},{"id":202713819,"text":"Detected new MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:38.548Z[UTC]","type":"INFO"},{"id":202713820,"text":"Deployed MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:38.564Z[UTC]","type":"INFO"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:39 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=BB60CE0A60A42D8F50B664E971486D25; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 402a3dc4-d549-4fca-668e-6cb523a5e968
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 289.50825ms
+    - id: 17
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85","processType":"DEPLOY","startedAt":"2024-05-23T06:42:37.205Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"RUNNING","messages":[{"id":202713815,"text":"Operation ID: a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85","timestamp":"2024-05-23T06:42:37.193Z[UTC]","type":"INFO"},{"id":202713816,"text":"Deploying in org \"PerformanceTeamBLR\" and space \"tf-space-1\"","timestamp":"2024-05-23T06:42:37.324Z[UTC]","type":"INFO"},{"id":202713817,"text":"Detected MTA schema version: \"3\"","timestamp":"2024-05-23T06:42:37.829Z[UTC]","type":"INFO"},{"id":202713818,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:38.334Z[UTC]","type":"INFO"},{"id":202713819,"text":"Detected new MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:38.548Z[UTC]","type":"INFO"},{"id":202713820,"text":"Deployed MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:38.564Z[UTC]","type":"INFO"},{"id":202713821,"text":"Updating application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:39.846Z[UTC]","type":"INFO"},{"id":202713822,"text":"Application \"test-my-cf-app\" attributes are not modified and will not be updated","timestamp":"2024-05-23T06:42:40.146Z[UTC]","type":"INFO"},{"id":202713823,"text":"Uploading application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:40.335Z[UTC]","type":"INFO"},{"id":202713824,"text":"Content of application \"test-my-cf-app\" is not changed - upload will be skipped.","timestamp":"2024-05-23T06:42:40.78Z[UTC]","type":"INFO"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:41 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=ECB212FE7ACB7495BA7D523DCBEF8E3A; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=a381a5b4-d568-45c9-778d-91bf; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 857c04ad-1408-430f-5415-8e7dfabf2d0f
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 287.072708ms
+    - id: 18
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85","processType":"DEPLOY","startedAt":"2024-05-23T06:42:37.205Z[UTC]","endedAt":"2024-05-23T06:42:42.72Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":false,"state":"FINISHED","messages":[{"id":202713815,"text":"Operation ID: a4ad6a9b-18cf-11ef-be02-eeee0a8ccb85","timestamp":"2024-05-23T06:42:37.193Z[UTC]","type":"INFO"},{"id":202713816,"text":"Deploying in org \"PerformanceTeamBLR\" and space \"tf-space-1\"","timestamp":"2024-05-23T06:42:37.324Z[UTC]","type":"INFO"},{"id":202713817,"text":"Detected MTA schema version: \"3\"","timestamp":"2024-05-23T06:42:37.829Z[UTC]","type":"INFO"},{"id":202713818,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:38.334Z[UTC]","type":"INFO"},{"id":202713819,"text":"Detected new MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:38.548Z[UTC]","type":"INFO"},{"id":202713820,"text":"Deployed MTA version: \"0.0.0\"","timestamp":"2024-05-23T06:42:38.564Z[UTC]","type":"INFO"},{"id":202713821,"text":"Updating application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:39.846Z[UTC]","type":"INFO"},{"id":202713822,"text":"Application \"test-my-cf-app\" attributes are not modified and will not be updated","timestamp":"2024-05-23T06:42:40.146Z[UTC]","type":"INFO"},{"id":202713823,"text":"Uploading application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:40.335Z[UTC]","type":"INFO"},{"id":202713824,"text":"Content of application \"test-my-cf-app\" is not changed - upload will be skipped.","timestamp":"2024-05-23T06:42:40.78Z[UTC]","type":"INFO"},{"id":202713827,"text":"Skipping deletion of services, because the command line option \"--delete-services\" is not specified.","timestamp":"2024-05-23T06:42:42.174Z[UTC]","type":"WARNING"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:43 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=CF68B25820A52D0AD5093A1572F3FB8D; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=9bea6d2c-32e6-44a9-5a5f-43aa; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 644ca03a-b05b-4227-5075-9b5f4f16b781
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 271.038291ms
+    - id: 19
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app&namespace=test
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:44 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=C2E7B84F579537B5904CAF90960BF222; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=a381a5b4-d568-45c9-778d-91bf; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 9c188462-3c73-4e71-66db-22e418f95711
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 620.874875ms
+    - id: 20
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app&namespace=test
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:44 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=8D18658094A48BBAAF9FA966B144926D; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1525f5c2-a15c-4265-5e2b-0b60; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 52444982-f9d9-4bf5-7154-cc2d8061ebc8
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 615.589459ms
+    - id: 21
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations?mtaId=a.cf.app&state=RUNNING%2CERROR%2CACTION_REQUIRED
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"processId":"bf6ef939-1753-11ef-a158-eeee0a8bf7bf","processType":"DEPLOY","startedAt":"2024-05-21T09:23:13.353Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"o f","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"ERROR","messages":[],"parameters":{}}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:45 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=1987832F255FDAEC533604C5A2F8B511; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1525f5c2-a15c-4265-5e2b-0b60; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 9b9d8564-e278-434d-6d63-a0315fea8f3f
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 259.22075ms
+    - id: 22
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/csrf-token
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Date:
+                - Thu, 23 May 2024 06:42:45 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=8F595272B15800B3D146C0AC2BA67158; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 3427ebb4-1f34-4b81-be8e-ab3e7e59e105
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - f22e6dfd-f4df-42e1-43cb-83e225c90c2f
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 237.581417ms
+    - id: 23
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 102
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"processType":"UNDEPLOY","namespace":"test","parameters":{"deleteServices":true,"mtaId":"a.cf.app"}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json; charset=utf-8
+            Cookie:
+                - JSESSIONID=8F595272B15800B3D146C0AC2BA67158; __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Csrf-Token:
+                - 3427ebb4-1f34-4b81-be8e-ab3e7e59e105
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Length:
+                - "0"
+            Date:
+                - Thu, 23 May 2024 06:42:45 GMT
+            Expires:
+                - "0"
+            Location:
+                - spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/aa33c14d-18cf-11ef-882c-eeee0a86920f?embed=messages
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Csrf-Header:
+                - X-CSRF-TOKEN
+            X-Csrf-Param:
+                - _csrf
+            X-Csrf-Token:
+                - 3427ebb4-1f34-4b81-be8e-ab3e7e59e105
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 5effb2f7-2a66-4510-5831-867643967917
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 351.724292ms
+    - id: 24
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/aa33c14d-18cf-11ef-882c-eeee0a86920f?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"aa33c14d-18cf-11ef-882c-eeee0a86920f","processType":"UNDEPLOY","startedAt":"2024-05-23T06:42:46.468Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":true,"state":"RUNNING","messages":[{"id":202713833,"text":"Operation ID: aa33c14d-18cf-11ef-882c-eeee0a86920f","timestamp":"2024-05-23T06:42:46.461Z[UTC]","type":"INFO"},{"id":202713834,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:46.604Z[UTC]","type":"INFO"},{"id":202713835,"text":"Deleting routes for application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:46.981Z[UTC]","type":"INFO"},{"id":202713836,"text":"Deleting route \"test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com\"...","timestamp":"2024-05-23T06:42:47.32Z[UTC]","type":"INFO"},{"id":202713837,"text":"Stopping application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:48.543Z[UTC]","type":"INFO"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:48 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=9B08317E81195C811277A618DBF8D918; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - a0d71c6f-6916-4ca3-6216-8d94dfcb3dd2
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 260.131125ms
+    - id: 25
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v1/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/operations/aa33c14d-18cf-11ef-882c-eeee0a86920f?embed=messages
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"processId":"aa33c14d-18cf-11ef-882c-eeee0a86920f","processType":"UNDEPLOY","startedAt":"2024-05-23T06:42:46.468Z[UTC]","endedAt":"2024-05-23T06:42:50.54Z[UTC]","spaceId":"02c0cc92-6ecc-44b1-b7b2-096ca19ee143","mtaId":"a.cf.app","namespace":"test","user":"debaditya.ray@sap.com","acquiredLock":false,"state":"FINISHED","messages":[{"id":202713833,"text":"Operation ID: aa33c14d-18cf-11ef-882c-eeee0a86920f","timestamp":"2024-05-23T06:42:46.461Z[UTC]","type":"INFO"},{"id":202713834,"text":"Detected deployed MTA with ID \"a.cf.app\", version \"0.0.0\" and namespace \"test\"","timestamp":"2024-05-23T06:42:46.604Z[UTC]","type":"INFO"},{"id":202713835,"text":"Deleting routes for application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:46.981Z[UTC]","type":"INFO"},{"id":202713836,"text":"Deleting route \"test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com\"...","timestamp":"2024-05-23T06:42:47.32Z[UTC]","type":"INFO"},{"id":202713837,"text":"Stopping application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:48.543Z[UTC]","type":"INFO"},{"id":202713838,"text":"Deleting application \"test-my-cf-app\"...","timestamp":"2024-05-23T06:42:49.089Z[UTC]","type":"INFO"}],"parameters":{}}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Thu, 23 May 2024 06:42:51 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=8A5863C73D83A1D0745D44DDCD7B5566; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=ef1be9fb-1f00-4027-42aa-1fdb; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 3a56e9ad-9db1-46c6-767b-e16fb55fa231
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 294.639833ms

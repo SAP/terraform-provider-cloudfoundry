@@ -12,7 +12,6 @@ import (
 type SpaceModelPtr struct {
 	HclType          string
 	HclObjectName    string
-	ObjectName       string
 	Name             *string
 	Id               *string
 	OrgId            *string

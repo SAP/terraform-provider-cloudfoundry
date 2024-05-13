@@ -12,7 +12,6 @@ import (
 type RouteDataSourceModelPtr struct {
 	HclType       string
 	HclObjectName string
-	ObjectName    string
 	Host          *string
 	Path          *string
 	Port          *int
@@ -25,7 +24,6 @@ type RouteDataSourceModelPtr struct {
 type RouteResourceModelPtr struct {
 	HclType       string
 	HclObjectName string
-	ObjectName    string
 	Protocol      *string
 	Id            *string
 	Host          *string

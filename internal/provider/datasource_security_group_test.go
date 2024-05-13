@@ -12,7 +12,6 @@ import (
 type SecurityGroupModelPtr struct {
 	HclType                string
 	HclObjectName          string
-	ObjectName             string
 	Name                   *string
 	Id                     *string
 	Rules                  *string
