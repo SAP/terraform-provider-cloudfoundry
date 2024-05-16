@@ -35,6 +35,8 @@ type CloudFoundryProviderModel struct {
 	CFClientSecret    types.String `tfsdk:"cf_client_secret"`
 	SkipSslValidation types.Bool   `tfsdk:"skip_ssl_validation"`
 	Origin            types.String `tfsdk:"origin"`
+	AccessToken       types.String `tfsdk:"access_token"`
+	RefreshToken      types.String `tfsdk:"refresh_token"`
 }
 
 func (p *CloudFoundryProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -62,7 +64,7 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 				},
 			},
 			"password": schema.StringAttribute{
-				MarkdownDescription: "A confidential alphanumeric code associated with a user account on the Cloud Foundry platform",
+				MarkdownDescription: "A confidential alphanumeric code associated with a user account on the Cloud Foundry platform, requires user to authenticate.",
 				Optional:            true,
 				Sensitive:           true,
 				Validators: []validator.String{
@@ -70,24 +72,41 @@ func (p *CloudFoundryProvider) Schema(ctx context.Context, req provider.SchemaRe
 				},
 			},
 			"cf_client_id": schema.StringAttribute{
-				Optional:  true,
-				Sensitive: true,
+				Optional:            true,
+				Sensitive:           true,
+				MarkdownDescription: "Unique identifier for a client application used in authentication and authorization processes",
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
 				},
 			},
 			"cf_client_secret": schema.StringAttribute{
-				Optional:  true,
-				Sensitive: true,
+				Optional:            true,
+				Sensitive:           true,
+				MarkdownDescription: "A confidential string used by a client application for secure authentication and authorization, requires cf_client_id to authenticate",
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
 				},
 			},
 			"skip_ssl_validation": schema.BoolAttribute{
-				Optional: true,
+				Optional:            true,
+				MarkdownDescription: "Allows the client to disregard SSL certificate validation when connecting to the Cloud Foundry API",
 			},
 			"origin": schema.StringAttribute{
 				MarkdownDescription: "Indicates the identity provider to be used for login",
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
+			},
+			"access_token": schema.StringAttribute{
+				MarkdownDescription: "OAuth token to authenticate with Cloud Foundry",
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
+			},
+			"refresh_token": schema.StringAttribute{
+				MarkdownDescription: "Token to refresh the access token, requires access_token",
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
@@ -115,61 +134,56 @@ func addTypeCastAttributeError(resp *provider.ConfigureResponse, expectedType st
 func checkConfigUnknown(config *CloudFoundryProviderModel, resp *provider.ConfigureResponse) {
 	_, cfconfigerr := cfconfig.NewFromCFHome()
 
-	anyParamExists := !config.User.IsUnknown() || !config.Password.IsUnknown() || !config.CFClientID.IsUnknown() || !config.CFClientSecret.IsUnknown()
+	anyParamExists := !config.User.IsUnknown() || !config.Password.IsUnknown() || !config.CFClientID.IsUnknown() || !config.CFClientSecret.IsUnknown() || !config.AccessToken.IsUnknown()
 
-	// If endpoint is unknown check if any of the auth param exists if yes throw error as api_url is manadatory if not
-	// check is cf home directory config exists
-	if config.Endpoint.IsUnknown() && (anyParamExists || cfconfigerr != nil) {
-		addGenericAttributeError(resp, "Unknown", "api_url", "API Endpoint", "CF_API_URL")
+	/*
+		There can be 3 cases of error:
+		1. If endpoint is unknown and any other parameter is set
+		2. If endpoint is set and all other parameter is unknown
+		3. If all parameters are unknown and CF config is not correctly set
+	*/
+	if (config.Endpoint.IsUnknown() && anyParamExists) || (!config.Endpoint.IsUnknown() && !anyParamExists) || (!anyParamExists && cfconfigerr != nil) {
+		resp.Diagnostics.AddError(
+			"Unable to create CF Client due to missing values",
+			"Either user/password or client_id/client_secret or access_token must be set with api_url or CF config must exist in path (default ~/.cf/config.json)",
+		)
 	}
-	switch {
-	case config.User.IsUnknown() && !config.Password.IsUnknown():
-		addGenericAttributeError(resp, "Unknown", "user", "Username", "CF_USER")
-	case !config.User.IsUnknown() && config.Password.IsUnknown():
-		addGenericAttributeError(resp, "Unknown", "password", "Password", "CF_PASSWORD")
-	case config.User.IsUnknown() && config.Password.IsUnknown():
+	if !config.Endpoint.IsUnknown() {
 		switch {
+		case config.User.IsUnknown() && !config.Password.IsUnknown():
+			addGenericAttributeError(resp, "Unknown", "user", "Username", "CF_USER")
+		case !config.User.IsUnknown() && config.Password.IsUnknown():
+			addGenericAttributeError(resp, "Unknown", "password", "Password", "CF_PASSWORD")
 		case config.CFClientID.IsUnknown() && !config.CFClientSecret.IsUnknown():
-			addGenericAttributeError(resp, "Unknown", "cf_client_id", "CF Client ID", "CF_CF_CLIENT_ID")
+			addGenericAttributeError(resp, "Unknown", "cf_client_id", "CF Client ID", "CF_CLIENT_ID")
 		case !config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown():
-			addGenericAttributeError(resp, "Unknown", "cf_client_secret", "CF Client Secret", "CF_CF_CLIENT_SECRET")
-		case config.CFClientID.IsUnknown() && config.CFClientSecret.IsUnknown():
-			if !config.Endpoint.IsUnknown() || cfconfigerr != nil {
-				resp.Diagnostics.AddError(
-					"Unable to create CF Client due to unknown values",
-					"Either user/password or client_id/client_secret must be set with api_url or CF config must exist in path (default ~/.cf/config.json)",
-				)
-			}
+			addGenericAttributeError(resp, "Unknown", "cf_client_secret", "CF Client Secret", "CF_CLIENT_SECRET")
 		}
 	}
 }
 
-func checkConfig(resp *provider.ConfigureResponse, endpoint string, user string, password string, cfclientid string, cfclientsecret string) {
+func checkConfig(resp *provider.ConfigureResponse, endpoint string, user string, password string, cfclientid string, cfclientsecret string, accesstoken string) {
 	_, cfconfigerr := cfconfig.NewFromCFHome()
 
-	anyParamExists := user != "" || password != "" || cfclientid != "" || cfclientsecret != ""
+	anyParamExists := user != "" || password != "" || cfclientid != "" || cfclientsecret != "" || accesstoken != ""
 
-	if endpoint == "" && (anyParamExists || cfconfigerr != nil) {
-		addGenericAttributeError(resp, "Missing", "api_url", "API Endpoint", "CF_API_URL")
+	if (endpoint == "" && anyParamExists) || (endpoint != "" && !anyParamExists) || (!anyParamExists && cfconfigerr != nil) {
+		resp.Diagnostics.AddError(
+			"Unable to create CF Client due to missing values",
+			"Either user/password or client_id/client_secret or access_token must be set with api_url or CF config must exist in path (default ~/.cf/config.json)",
+		)
 	}
-	switch {
-	case user == "" && password != "":
-		addGenericAttributeError(resp, "Missing", "user", "Username", "CF_USER")
-	case user != "" && password == "":
-		addGenericAttributeError(resp, "Missing", "password", "Password", "CF_PASSWORD")
-	case user == "" && password == "":
+
+	if endpoint != "" {
 		switch {
+		case user == "" && password != "":
+			addGenericAttributeError(resp, "Missing", "user", "Username", "CF_USER")
+		case user != "" && password == "":
+			addGenericAttributeError(resp, "Missing", "password", "Password", "CF_PASSWORD")
 		case cfclientid == "" && cfclientsecret != "":
-			addGenericAttributeError(resp, "Missing", "cf_client_id", "Client ID", "CF_CF_CLIENT_ID")
+			addGenericAttributeError(resp, "Missing", "cf_client_id", "Client ID", "CF_CLIENT_ID")
 		case cfclientid != "" && cfclientsecret == "":
-			addGenericAttributeError(resp, "Missing", "cf_client_secret", " Client Secret", "CF_CF_CLIENT_SECRET")
-		case cfclientid == "" && cfclientsecret == "":
-			if endpoint != "" || cfconfigerr != nil {
-				resp.Diagnostics.AddError(
-					"Unable to create CF Client due to missing values",
-					"Either user/password or client_id/client_secret must be set with api_url or CF config must exist in path (default ~/.cf/config.json)",
-				)
-			}
+			addGenericAttributeError(resp, "Missing", "cf_client_secret", " Client Secret", "CF_CLIENT_SECRET")
 		}
 	}
 }
@@ -184,6 +198,8 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	origin := os.Getenv("CF_ORIGIN")
 	cfclientid := os.Getenv("CF_CLIENT_ID")
 	cfclientsecret := os.Getenv("CF_CLIENT_SECRET")
+	cfaccesstoken := os.Getenv("CF_ACCESS_TOKEN")
+	cfrefreshtoken := os.Getenv("CF_REFRESH_TOKEN")
 
 	var skipsslvalidation bool
 	var err error
@@ -212,7 +228,13 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 	if !config.Origin.IsNull() {
 		origin = config.Origin.ValueString()
 	}
-	checkConfig(resp, endpoint, user, password, cfclientid, cfclientsecret)
+	if !config.AccessToken.IsNull() {
+		cfaccesstoken = config.AccessToken.ValueString()
+	}
+	if !config.RefreshToken.IsNull() {
+		cfrefreshtoken = config.RefreshToken.ValueString()
+	}
+	checkConfig(resp, endpoint, user, password, cfclientid, cfclientsecret, cfaccesstoken)
 	if resp.Diagnostics.HasError() {
 		return nil
 	}
@@ -228,6 +250,8 @@ func getAndSetProviderValues(config *CloudFoundryProviderModel, resp *provider.C
 		CFClientSecret:    cfclientsecret,
 		SkipSslValidation: skipsslvalidation,
 		Origin:            origin,
+		AccessToken:       cfaccesstoken,
+		RefreshToken:      cfrefreshtoken,
 	}
 	return &c
 }

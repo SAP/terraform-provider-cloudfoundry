@@ -6,21 +6,25 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 0
+        content_length: 73
         transfer_encoding: []
         trailer: {}
-        host: api.x.x.x.x.com
+        host: uaa.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
-        body: ""
-        form: {}
+        body: grant_type=refresh_token&refresh_token=32ee0de48a834177ac15f72f2e0cecf9-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 32ee0de48a834177ac15f72f2e0cecf9-r
         headers:
             Authorization:
-                - Bearer redacted
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete
-        method: GET
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
       response:
         proto: HTTP/2.0
         proto_major: 2
@@ -29,39 +33,31 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38","created_at":"2024-01-31T11:16:05Z","updated_at":"2024-01-31T12:29:38Z","name":"tf-test-do-not-delete","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"32ee0de48a834177ac15f72f2e0cecf9-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"4bfc3f33cb324e0d8cfbfc1a3854f54f"}'
         headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
             Content-Type:
-                - application/json; charset=utf-8
+                - application/json;charset=UTF-8
             Date:
-                - Fri, 02 Feb 2024 12:28:57 GMT
-            Referrer-Policy:
-                - strict-origin-when-cross-origin
-            Server:
-                - nginx
+                - Thu, 16 May 2024 20:24:54 GMT
+            Pragma:
+                - no-cache
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 4a65ca6f4c321c0b
-            X-B3-Traceid:
-                - a7248bf9bb1c45484a65ca6f4c321c0b
             X-Content-Type-Options:
                 - nosniff
-            X-Download-Options:
-                - noopen
             X-Frame-Options:
-                - SAMEORIGIN
-            X-Permitted-Cross-Domain-Policies:
-                - none
-            X-Runtime:
-                - "0.012475"
+                - DENY
             X-Vcap-Request-Id:
-                - a7248bf9-bb1c-4548-4a65-ca6f4c321c0b::a23c2488-66c8-4a22-874b-e91c9ccda561
+                - e0a015f1-0e1e-4f4d-48b3-585c8e48522d
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 202.358649ms
+        duration: 180.013584ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -79,8 +75,8 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete
+                - Terraform/1.7.0 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR
         method: GET
       response:
         proto: HTTP/2.0
@@ -88,14 +84,16 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 1140
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38","created_at":"2024-01-31T11:16:05Z","updated_at":"2024-01-31T12:29:38Z","name":"tf-test-do-not-delete","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56","created_at":"2017-07-04T10:43:11Z","updated_at":"2024-01-08T15:08:31Z","name":"PerformanceTeamBLR","suspended":false,"relationships":{"quota":{"data":{"guid":"c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}}]}'
         headers:
+            Content-Length:
+                - "1140"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 02 Feb 2024 12:28:58 GMT
+                - Thu, 16 May 2024 20:24:55 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -103,9 +101,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 60048d975e819799
+                - 50c1163b42693c18
             X-B3-Traceid:
-                - 24337e83b1d840fc60048d975e819799
+                - 06d3a4ad83f3431750c1163b42693c18
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -114,16 +112,79 @@ interactions:
                 - SAMEORIGIN
             X-Permitted-Cross-Domain-Policies:
                 - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1715891873"
             X-Runtime:
-                - "0.013351"
+                - "0.012691"
             X-Vcap-Request-Id:
-                - 24337e83-b1d8-40fc-6004-8d975e819799::ae6cb860-eb19-4813-8476-443290255c1e
+                - 06d3a4ad-83f3-4317-50c1-163b42693c18::2b788570-7d66-4754-bc66-2673b3323945
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 204.142383ms
+        duration: 175.059416ms
     - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=32ee0de48a834177ac15f72f2e0cecf9-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 32ee0de48a834177ac15f72f2e0cecf9-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"32ee0de48a834177ac15f72f2e0cecf9-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"0a8da1151ee1435e990eca07da71419c"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 16 May 2024 20:24:55 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 588b1b38-2e45-4976-4b74-5001ebc87ed1
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 174.43525ms
+    - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -140,8 +201,8 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete
+                - Terraform/1.7.0 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR
         method: GET
       response:
         proto: HTTP/2.0
@@ -149,14 +210,16 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 1140
         uncompressed: false
-        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=tf-test-do-not-delete\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"ca721b24-e24d-4171-83e1-1ef6bd836b38","created_at":"2024-01-31T11:16:05Z","updated_at":"2024-01-31T12:29:38Z","name":"tf-test-do-not-delete","suspended":false,"relationships":{"quota":{"data":{"guid":"772993fb-9aae-479b-8001-11e42b9e6a55"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/ca721b24-e24d-4171-83e1-1ef6bd836b38/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/772993fb-9aae-479b-8001-11e42b9e6a55"}}}]}'
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56","created_at":"2017-07-04T10:43:11Z","updated_at":"2024-01-08T15:08:31Z","name":"PerformanceTeamBLR","suspended":false,"relationships":{"quota":{"data":{"guid":"c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}}]}'
         headers:
+            Content-Length:
+                - "1140"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Fri, 02 Feb 2024 12:28:58 GMT
+                - Thu, 16 May 2024 20:24:55 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
             Server:
@@ -164,9 +227,9 @@ interactions:
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4399d2e27e4b897b
+                - 52dc3add06affff5
             X-B3-Traceid:
-                - 116acb961bd24f2c4399d2e27e4b897b
+                - dd8644d1766549b752dc3add06affff5
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -175,12 +238,144 @@ interactions:
                 - SAMEORIGIN
             X-Permitted-Cross-Domain-Policies:
                 - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1715891872"
             X-Runtime:
-                - "0.014194"
+                - "0.010418"
             X-Vcap-Request-Id:
-                - 116acb96-1bd2-4f2c-4399-d2e27e4b897b::ed1fdc3a-5180-44bf-8811-ee15f7b8a3be
+                - dd8644d1-7665-49b7-52dc-3add06affff5::b1fb657a-e24b-4d0b-a7c8-f8d07ca79575
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 228.563326ms
+        duration: 176.156542ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 73
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: grant_type=refresh_token&refresh_token=32ee0de48a834177ac15f72f2e0cecf9-r
+        form:
+            grant_type:
+                - refresh_token
+            refresh_token:
+                - 32ee0de48a834177ac15f72f2e0cecf9-r
+        headers:
+            Authorization:
+                - Basic Y2Y6
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://uaa.x.x.x.x.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"access_token":"redacted","token_type":"bearer","id_token":"redacted","refresh_token":"32ee0de48a834177ac15f72f2e0cecf9-r","expires_in":1199,"scope":"cloud_controller.read password.write cloud_controller.write openid uaa.user","jti":"6a3f7fcc69e3441fb27107936e5ed664"}'
+        headers:
+            Cache-Control:
+                - no-store
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json;charset=UTF-8
+            Date:
+                - Thu, 16 May 2024 20:24:55 GMT
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - fe383d01-03a0-4c72-7664-db880aaace1f
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 179.087708ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.7.0 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1140
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/organizations?names=PerformanceTeamBLR\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"784b4cd0-4771-4e4d-9052-a07e178bae56","created_at":"2017-07-04T10:43:11Z","updated_at":"2024-01-08T15:08:31Z","name":"PerformanceTeamBLR","suspended":false,"relationships":{"quota":{"data":{"guid":"c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}},"metadata":{"labels":{"env":"canary"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56"},"domains":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains"},"default_domain":{"href":"https://api.x.x.x.x.com/v3/organizations/784b4cd0-4771-4e4d-9052-a07e178bae56/domains/default"},"quota":{"href":"https://api.x.x.x.x.com/v3/organization_quotas/c17f045b-cebf-451a-b2d8-6c885fd9dbfc"}}}]}'
+        headers:
+            Content-Length:
+                - "1140"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 16 May 2024 20:24:56 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Server:
+                - nginx
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5afc1f8c941b1267
+            X-B3-Traceid:
+                - 9b5bfdd0723f4b145afc1f8c941b1267
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1715891873"
+            X-Runtime:
+                - "0.013093"
+            X-Vcap-Request-Id:
+                - 9b5bfdd0-723f-4b14-5afc-1f8c941b1267::1c969eea-abcc-4199-b2ce-6b2aee703a00
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 171.641208ms
