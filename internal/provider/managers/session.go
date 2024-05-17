@@ -20,6 +20,8 @@ type CloudFoundryProviderConfig struct {
 	CFClientSecret    string
 	SkipSslValidation bool
 	Origin            string
+	AccessToken       string
+	RefreshToken      string
 }
 
 type Session struct {
@@ -56,6 +58,9 @@ func (c *CloudFoundryProviderConfig) NewSession(httpClient *http.Client, req pro
 		cfg, err = config.New(c.Endpoint, opts...)
 	case c.CFClientID != "" && c.CFClientSecret != "":
 		opts = append(opts, config.ClientCredentials(c.CFClientID, c.CFClientSecret))
+		cfg, err = config.New(c.Endpoint, opts...)
+	case c.AccessToken != "":
+		opts = append(opts, config.Token(c.AccessToken, c.RefreshToken))
 		cfg, err = config.New(c.Endpoint, opts...)
 	default:
 		cfg, err = config.NewFromCFHome(opts...)
