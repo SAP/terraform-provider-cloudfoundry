@@ -105,7 +105,7 @@ func hclResourceMta(mrmp *MtaResourceModelPtr) string {
 	return mrmp.HclType + ` "cloudfoundry_mta "` + mrmp.HclObjectName + ` {}`
 }
 
-func TestMtarDataSource_Configure(t *testing.T) {
+func TestMtaDataSource_Configure(t *testing.T) {
 	var (
 		//canary->tf-space-1
 		mtaId     = "a.cf.app"

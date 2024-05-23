@@ -8,7 +8,6 @@ import (
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/mta"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
-	"github.com/antihax/optional"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -195,16 +194,13 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 
 	spaceGuid := mtarType.Space.ValueString()
 	namespace := mtarType.Namespace.ValueString()
-	uploadParams := &mta.DefaultApiUploadMtaFileOpts{
-		Namespace: optional.NewString(namespace),
-	}
 	if !mtarType.DeployUrl.IsNull() {
 		r.mtaClient.ChangeBasePath(mtarType.DeployUrl.ValueString())
 	}
 	if !mtarType.MtarPath.IsNull() {
 		fileLocation := mtarType.MtarPath.ValueString()
 
-		uploadedFile, _, err = r.mtaClient.DefaultApi.UploadMtaFile(ctx, spaceGuid, uploadParams, fileLocation)
+		uploadedFile, _, err = r.mtaClient.DefaultApi.UploadMtaFile(ctx, spaceGuid, namespace, fileLocation)
 		if err != nil {
 			respDiags.AddError(
 				"Unable to upload mtar file",
@@ -227,7 +223,7 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 
 	if !mtarType.MtarUrl.IsNull() {
 		fileLocation := mtarType.MtarUrl.ValueString()
-		uploadJobID, uploadResp, err := r.mtaClient.DefaultApi.AsyncUploadFileFromURL(ctx, spaceGuid, uploadParams, fileLocation)
+		uploadJobID, uploadResp, err := r.mtaClient.DefaultApi.AsyncUploadFileFromURL(ctx, spaceGuid, namespace, fileLocation)
 		if err != nil {
 			respDiags.AddError(
 				"Unable to upload remote mtar file",
@@ -236,7 +232,7 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 			return
 		}
 
-		jobResponse, err := mta.PollMtaJob(ctx, r.mtaClient, spaceGuid, uploadJobID, mta.FinishedState, uploadResp.Header.Get("x-cf-app-instance"), uploadParams)
+		jobResponse, err := mta.PollMtaJob(ctx, r.mtaClient, spaceGuid, uploadJobID, mta.FinishedState, uploadResp.Header.Get("x-cf-app-instance"), namespace)
 		if err != nil {
 			respDiags.AddError(
 				"Unable to poll MTAR upload job",
@@ -258,17 +254,13 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 		return
 	}
 
-	operationObject := mta.Operation{
+	operationParams := mta.Operation{
 		ProcessType: "DEPLOY",
 		Namespace:   namespace,
 		Parameters: map[string]interface{}{
 			"appArchiveId": uploadedFile.Id,
 			"mtaId":        mtaId,
 		},
-	}
-
-	operationParams := &mta.DefaultApiStartMtaOperationOpts{
-		Body: optional.NewInterface(operationObject),
 	}
 
 	//Starting deploy operation
@@ -368,7 +360,7 @@ func (r *mtaResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		return
 	}
 
-	operationObject := mta.Operation{
+	operationParams := mta.Operation{
 		ProcessType: "UNDEPLOY",
 		Namespace:   mtarType.Namespace.ValueString(),
 		Parameters: map[string]interface{}{
@@ -377,9 +369,6 @@ func (r *mtaResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 		},
 	}
 
-	operationParams := &mta.DefaultApiStartMtaOperationOpts{
-		Body: optional.NewInterface(operationObject),
-	}
 	operationId, _, _, err := r.mtaClient.DefaultApi.StartMtaOperation(ctx, spaceGuid, operationParams)
 	if err != nil {
 		resp.Diagnostics.AddError(
