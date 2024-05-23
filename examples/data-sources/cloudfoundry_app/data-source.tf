@@ -1,7 +1,7 @@
 data "cloudfoundry_app" "http-bin-server" {
-  name  = "tf-test-do-not-delete-http-bin"
-  space = "tf-space-1"
-  org   = "PerformanceTeamBLR"
+  name       = "tf-test-do-not-delete-http-bin"
+  space_name = "tf-space-1"
+  org_name   = "PerformanceTeamBLR"
 }
 
 output "id" {

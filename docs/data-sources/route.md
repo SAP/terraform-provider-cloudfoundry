@@ -41,13 +41,13 @@ data "cloudfoundry_route" "bruh" {
 
 Read-Only:
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `destinations` (Attributes Set) A destination represents the relationship between a route and a resource that can serve traffic. (see [below for nested schema](#nestedatt--routes--destinations))
 - `domain` (String) The domain guid associated to the route.
 - `host` (String) The hostname associated to the route to lookup.
 - `id` (String) The GUID of the object.
-- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `labels` (Map of String) The labels associated with Cloud Foundry resources.
 - `path` (String) The path associated to the route to lookup.
 - `port` (Number) The port associated to the route to lookup.
 - `protocol` (String) The protocol supported by the route, based on the route's domain configuration.

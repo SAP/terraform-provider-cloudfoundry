@@ -43,7 +43,7 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				Computed:            true,
 			},
 			"service_plan": schema.StringAttribute{
-				MarkdownDescription: "The ID of the service plan from which to create the service instance",
+				MarkdownDescription: "The ID of the service plan from which the service instance was created, only shown when type is managed",
 				Computed:            true,
 			},
 			"tags": schema.ListAttribute{

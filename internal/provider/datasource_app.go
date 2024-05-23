@@ -215,15 +215,15 @@ func (d *appDataSource) ProcessAppCommonSchema() map[string]schema.Attribute {
 			Computed:            true,
 		},
 		"instances": schema.Int64Attribute{
-			MarkdownDescription: "The number of app instances that you want to start. Defaults to 1.",
+			MarkdownDescription: "The number of app instances started.",
 			Computed:            true,
 		},
 		"memory": schema.StringAttribute{
-			MarkdownDescription: "The memory limit for each application instance. If not provided, value is computed and retreived from Cloud Foundry.",
+			MarkdownDescription: "The memory limit for each application instance.",
 			Computed:            true,
 		},
 		"timeout": schema.Int64Attribute{
-			MarkdownDescription: "Defines the number of seconds that Cloud Foundry allocates for starting your app.",
+			MarkdownDescription: "Time in seconds at which the health-check will report failure.",
 			Computed:            true,
 		},
 	}

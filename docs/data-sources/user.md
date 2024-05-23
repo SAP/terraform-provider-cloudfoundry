@@ -37,10 +37,10 @@ output "labels" {
 
 Read-Only:
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `id` (String) The GUID of the object.
-- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `labels` (Map of String) The labels associated with Cloud Foundry resources.
 - `origin` (String) The identity provider for the UAA user; will be null for UAA clients
 - `presentation_name` (String) The name displayed for the user; for UAA users, this is the same as the username. For UAA clients, this is the UAA client ID
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.

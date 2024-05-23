@@ -26,11 +26,11 @@ data "cloudfoundry_domain" "mydomain" {
 
 ### Read-Only
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `id` (String) The GUID of the object.
 - `internal` (Boolean) Whether the domain is used for internal (container-to-container) traffic, or external (user-to-container) traffic
-- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `labels` (Map of String) The labels associated with Cloud Foundry resources.
 - `org` (String) The organization the domain is scoped to
 - `router_group` (String) The guid of the desired router group to route tcp traffic through.
 - `shared_orgs` (Set of String) Organizations the domain is shared with

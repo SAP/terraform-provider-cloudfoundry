@@ -369,7 +369,7 @@ func (r *appResource) ProcessAppCommonSchema() map[string]schema.Attribute {
 			Computed:            true,
 		},
 		"timeout": schema.Int64Attribute{
-			MarkdownDescription: "Defines the number of seconds that Cloud Foundry allocates for starting your app.",
+			MarkdownDescription: "Time in seconds at which the health-check will report failure.",
 			Optional:            true,
 		},
 	}

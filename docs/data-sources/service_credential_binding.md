@@ -44,12 +44,12 @@ data "cloudfoundry_service_credential_binding" "scbdaf" {
 
 Read-Only:
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.
 - `app` (String) The GUID of the app which is bound
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `credential_binding` (String, Sensitive) The service credential binding details.
 - `id` (String) The GUID of the object.
-- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `labels` (Map of String) The labels associated with Cloud Foundry resources.
 - `last_operation` (Attributes) The last operation performed on the service credential binding (see [below for nested schema](#nestedatt--credential_bindings--last_operation))
 - `name` (String) Name of the service credential binding
 - `service_instance` (String) The GUID of the service instance

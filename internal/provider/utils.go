@@ -33,7 +33,7 @@ const defaultTimeout = 20 * time.Minute
 
 func datasourceLabelsSchema() *schema.MapAttribute {
 	return &schema.MapAttribute{
-		MarkdownDescription: "The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).",
+		MarkdownDescription: "The labels associated with Cloud Foundry resources.",
 		ElementType:         types.StringType,
 		Computed:            true,
 	}
@@ -41,7 +41,7 @@ func datasourceLabelsSchema() *schema.MapAttribute {
 
 func datasourceAnnotationsSchema() *schema.MapAttribute {
 	return &schema.MapAttribute{
-		MarkdownDescription: "The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).",
+		MarkdownDescription: "The annotations associated with Cloud Foundry resources.",
 		ElementType:         types.StringType,
 		Computed:            true,
 	}
