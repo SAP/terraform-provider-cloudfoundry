@@ -32,15 +32,15 @@ output "guid" {
 
 ### Read-Only
 
-- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `annotations` (Map of String) The annotations associated with Cloud Foundry resources.
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `dashboard_url` (String) The URL to the service instance dashboard (or null if there is none); only shown when type is managed.
 - `id` (String) The GUID of the object.
-- `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `labels` (Map of String) The labels associated with Cloud Foundry resources.
 - `last_operation` (Attributes) The last operation performed on the service instance (see [below for nested schema](#nestedatt--last_operation))
 - `maintenance_info` (Attributes) Information about the version of this service instance; only shown when type is managed (see [below for nested schema](#nestedatt--maintenance_info))
 - `route_service_url` (String) URL to which requests for bound routes will be forwarded; only shown when type is user-provided.
-- `service_plan` (String) The ID of the service plan from which to create the service instance
+- `service_plan` (String) The ID of the service plan from which the service instance was created, only shown when type is managed
 - `syslog_drain_url` (String) URL to which logs for bound applications will be streamed; only shown when type is user-provided.
 - `tags` (List of String) List of tags used by apps to identify service instances. They are shown in the app VCAP_SERVICES env.
 - `type` (String) Type of the service instnace. Either managed or user-provided.

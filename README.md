@@ -21,7 +21,7 @@ For more information about how to contribute, the project structure, and additio
 
 ## Prerequisites and Usage of the Provider
 
-For the best experience using the Terraform Provider for Cloud Foundry, we recommend applying the common best practices for Terraform adoption as described in the [Hashicorp documentation](https://developer.hashicorp.com/well-architected-framework/operational-excellence/operational-excellence-terraform-maturity).
+For the best experience using the Terraform Provider for Cloud Foundry, we recommend applying the common best practices for Terraform adoption as described in the [Hashicorp documentation](https://developer.hashicorp.com/well-architected-framework/operational-excellence/operational-excellence-terraform-maturity). For migrating usage from the existing [cloudfoundry-community](https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry) provider to this provider, refer to our [migration-guide](./migration-guide/Readme.md).
 
 ## Support and Feedback
 

@@ -55,3 +55,22 @@ resource "cloudfoundry_security_group" "my_security_group" {
 
 }
 ##RES.SAP
+
+---------------
+
+#DS.DESC
+##DS.DESC
+----------------
+
+#DS.COMM
+data "cloudfoundry_asg" "public" {
+    name = "public_networks"
+}
+##DS.COMM
+-----------------
+
+#DS.SAP
+data "cloudfoundry_security_group" "public" {
+  name = "public_networks"
+}
+##DS.SAP

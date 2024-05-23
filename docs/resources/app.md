@@ -162,7 +162,7 @@ resource "cloudfoundry_app" "http-bin-sidecar" {
 - `source_code_hash` (String) Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the path specified.
 - `stack` (String) The base operating system and file system that your application will execute in. Please refer to the [docs](https://v3-apidocs.cloudfoundry.org/version/3.155.0/index.html#stacks) for more information
 - `strategy` (String) The deployment strategy to use when deploying the application. Valid values are 'none', 'rolling', and 'blue-green', defaults to 'none'.
-- `timeout` (Number) Defines the number of seconds that Cloud Foundry allocates for starting your app.
+- `timeout` (Number) Time in seconds at which the health-check will report failure.
 
 ### Read-Only
 
@@ -204,7 +204,7 @@ Optional:
 - `readiness_health_check_interval` (Number) The interval in seconds between readiness health checks.
 - `readiness_health_check_invocation_timeout` (Number) The timeout in seconds for the readiness health check requests for http and port health checks.
 - `readiness_health_check_type` (String) The readiness health check type which can be one of 'port', 'process', 'http'.
-- `timeout` (Number) Defines the number of seconds that Cloud Foundry allocates for starting your app.
+- `timeout` (Number) Time in seconds at which the health-check will report failure.
 
 
 <a id="nestedatt--routes"></a>

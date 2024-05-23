@@ -8,10 +8,23 @@ Domain ID and Space ID are used instead of instead of domain and space in the ne
 
 ------------------
 #RES.COMM
-resource "cloudfoundry_route" "default" {
-    domain = data.cloudfoundry_domain.apps.domain.id
-    space = data.cloudfoundry_space.dev.id
+resource "cloudfoundry_route" "bruh" {
+    space = "795a961c-6360-479a-9666-fff9cb906aad"
+    domain = "440e24e5-ee11-41d9-a996-2ed0a1e2deea"
+    
+    #Optional 
+
     hostname = "myapp"
+    path   = "/cart"
+    target = [
+    {
+      app = "24a711f2-148b-4d48-b37a-90a66d6e842f"
+    },
+    {
+      app  = "15a74002-cf3a-4bf2-b76f-fe96867c46ee"
+      port = 36001
+    },
+  ]
 }
 ##RES.COMM
 
@@ -36,7 +49,6 @@ resource "cloudfoundry_route" "bruh" {
       app_process_type = "web"
       port             = 36001
     },
-
   ]
 }
 
@@ -52,7 +64,7 @@ The new provider also supports filtereing routes on the basis of `space` in addi
 #DS.COMM
 
 data "cloudfoundry_route" "my-route" {
-    domain   = "domain-id"
+    domain   = "a25ca0c1-353a-40f9-bcf4-d2a0adf4112b"
     hostname = "my-host"
 }
 ##DS.COMM
@@ -61,6 +73,7 @@ data "cloudfoundry_route" "my-route" {
 #DS.SAP
 data "cloudfoundry_route" "bruh" {
   domain = "a25ca0c1-353a-40f9-bcf4-d2a0adf4112b"
-  space - "b45da1f2-353a-40f9-bcf4-d2a0adf4112b"
+  host = "my-host"
+  space  = "b45da1f2-353a-40f9-bcf4-d2a0adf4112b"
 }
 ##DS.SAP

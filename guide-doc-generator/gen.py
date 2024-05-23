@@ -37,9 +37,9 @@ res_mig_template = '''
 
 {res_description}
 
-| Community Cloudfoundry Provider | SAP Cloudfoundry Provider |
+|  SAP Cloudfoundry Provider |Community Cloudfoundry Provider |
 | -- | -- |
-| {res_community} | {res_sap} |
+|  {res_sap} |{res_community} |
 
 <br/>
 '''
@@ -50,9 +50,9 @@ ds_mig_template = '''
 
 {ds_description}
 
-| Community Cloudfoundry Provider | SAP Cloudfoundry Provider |
+|  SAP Cloudfoundry Provider | Community Cloudfoundry Provider  |
 | -- | -- |
-| {ds_community} | {ds_sap} |
+| {ds_sap}|{ds_community} |  
 '''
 
 import_folder = 'import_template/'

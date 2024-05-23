@@ -3,7 +3,7 @@
 
 -----------------
 #RES.DESC
-Org Roles have been replaced with Org role to match the change in the v3 api definitoins. Roles of `type` are assigned to the individual user.
+V3 api has clear well-defined separate API's for roles and users and the innumerous endpoints for different roles at both space and org level have been removed. One just needs to specify the necessary `type` now for a particular user as a query while specifying the role. For specifying multiple role types for multiple users, one can create multiple resources now.
 ##RES.DESC
 
 ------------------
