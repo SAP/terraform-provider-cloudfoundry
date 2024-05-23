@@ -12,7 +12,6 @@ import (
 type UsersDataSourceModelPtr struct {
 	HclType       string
 	HclObjectName string
-	ObjectName    string
 	Space         *string
 	Organization  *string
 	Users         *string

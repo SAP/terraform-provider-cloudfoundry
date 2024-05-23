@@ -12,7 +12,6 @@ import (
 type UserResourceModelPtr struct {
 	HclType          string
 	HclObjectName    string
-	ObjectName       string
 	UserName         *string
 	PresentationName *string
 	Origin           *string

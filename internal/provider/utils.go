@@ -204,6 +204,10 @@ func uinttouintptr(s uint) *uint {
 	return &s
 }
 
+func strtostrptr(s string) *string {
+	return &s
+}
+
 func copyFields(dst, src interface{}) {
 	dstValue := reflect.ValueOf(dst).Elem()
 	srcValue := reflect.ValueOf(src).Elem()

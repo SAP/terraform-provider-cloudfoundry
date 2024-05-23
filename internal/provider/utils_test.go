@@ -235,10 +235,6 @@ func (cfg *CloudFoundryProviderConfigPtr) SetupVCR(t *testing.T, cassetteName st
 	return rec
 }
 
-func strtostrptr(s string) *string {
-	return &s
-}
-
 func getIdForImport(resourceName string) resource.ImportStateIdFunc {
 	return func(state *terraform.State) (string, error) {
 		rs, ok := state.RootModule().Resources[resourceName]

@@ -13,7 +13,7 @@ Gets information on Cloud Foundry users with a given username.
 
 ```terraform
 data "cloudfoundry_user" "my_user" {
-  name = "debaditya.ray@sap.com"
+  name = "test123@example.com"
 }
 
 output "labels" {

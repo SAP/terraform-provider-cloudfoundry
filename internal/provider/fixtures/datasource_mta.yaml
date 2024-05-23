@@ -1,0 +1,183 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"o"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"o-my-cf-app","providedDendencyNames":[],"services":[],"uris":["o-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]},{"metadata":{"id":"a.cf.app","version":"1.0.0"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"my-cf-app","providedDendencyNames":[],"services":[],"uris":["performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]},{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"hi"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"hi-my-cf-app","providedDendencyNames":[],"services":[],"uris":["hi-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 22 May 2024 05:57:31 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=FCE300340E1A7834D64A873DA8965CBA; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1fc8ac61-8593-496b-559c-2a4e; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - dc557d3a-71f8-4461-6b38-f162f71ad2b9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 1.652181s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"o"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"o-my-cf-app","providedDendencyNames":[],"services":[],"uris":["o-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]},{"metadata":{"id":"a.cf.app","version":"1.0.0"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"my-cf-app","providedDendencyNames":[],"services":[],"uris":["performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]},{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"hi"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"hi-my-cf-app","providedDendencyNames":[],"services":[],"uris":["hi-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 22 May 2024 05:57:33 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=AFF6AE8234CA81BD442A24712AB9549E; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=2034bff3-5c1c-4e01-43df-f2b1; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - ad3a42b8-00a6-44c8-4ace-7f1e024cf4ac
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 1.550469625s
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: deploy-service.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://deploy-service.x.x.x.x.com/api/v2/spaces/02c0cc92-6ecc-44b1-b7b2-096ca19ee143/mtas?name=a.cf.app
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"o"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"o-my-cf-app","providedDendencyNames":[],"services":[],"uris":["o-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]},{"metadata":{"id":"a.cf.app","version":"1.0.0"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"my-cf-app","providedDendencyNames":[],"services":[],"uris":["performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]},{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"hi"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"hi-my-cf-app","providedDendencyNames":[],"services":[],"uris":["hi-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 22 May 2024 05:57:33 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Server:
+                - ""
+            Set-Cookie:
+                - JSESSIONID=DC921FCABC43B54E4CB099B50D328A6F; Path=/; Secure; HttpOnly
+                - __VCAP_ID__=1fc8ac61-8593-496b-559c-2a4e; Path=/; HttpOnly; Secure
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            Vary:
+                - accept-encoding
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 1b027a41-746a-4888-43ee-1096f4b0f7d5
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 571.22675ms

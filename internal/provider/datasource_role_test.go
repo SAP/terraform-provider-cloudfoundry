@@ -12,7 +12,6 @@ import (
 type RoleModelPtr struct {
 	HclType       string
 	HclObjectName string
-	ObjectName    string
 	Type          *string
 	User          *string
 	Space         *string

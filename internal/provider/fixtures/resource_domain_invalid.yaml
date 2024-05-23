@@ -66,4 +66,4 @@ interactions:
                 - 1; mode=block
         status: 422 Unprocessable Entity
         code: 422
-        duration: 198.783927ms
+        duration: 1ms

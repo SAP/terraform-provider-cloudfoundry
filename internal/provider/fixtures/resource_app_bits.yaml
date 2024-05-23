@@ -69,7 +69,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 865.409833ms
+        duration: 1ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -138,7 +138,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 286.144125ms
+        duration: 1ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -207,7 +207,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 277.262334ms
+        duration: 1ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -312,7 +312,7 @@ interactions:
                 - 1; mode=block
         status: 202 Accepted
         code: 202
-        duration: 307.639ms
+        duration: 1ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -381,7 +381,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 242.156792ms
+        duration: 1ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -450,7 +450,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 280.040042ms
+        duration: 1ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -522,7 +522,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 261.141042ms
+        duration: 1ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -593,7 +593,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 5.747014333s
+        duration: 1ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -662,7 +662,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 311.087708ms
+        duration: 1ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -734,7 +734,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 787.916459ms
+        duration: 1ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -803,7 +803,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 251.506833ms
+        duration: 1ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -872,7 +872,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 250.748167ms
+        duration: 1ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -941,7 +941,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.27825ms
+        duration: 1ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -1010,7 +1010,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 244.684084ms
+        duration: 1ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -1079,7 +1079,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.640667ms
+        duration: 1ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -1148,7 +1148,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 251.173167ms
+        duration: 1ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -1217,7 +1217,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 252.190542ms
+        duration: 1ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -1286,7 +1286,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 249.912417ms
+        duration: 1ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -1355,7 +1355,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 251.600208ms
+        duration: 1ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -1424,7 +1424,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 266.151542ms
+        duration: 1ms
     - id: 20
       request:
         proto: HTTP/1.1
@@ -1493,7 +1493,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 247.069541ms
+        duration: 1ms
     - id: 21
       request:
         proto: HTTP/1.1
@@ -1562,7 +1562,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 251.147125ms
+        duration: 1ms
     - id: 22
       request:
         proto: HTTP/1.1
@@ -1631,7 +1631,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 338.749417ms
+        duration: 1ms
     - id: 23
       request:
         proto: HTTP/1.1
@@ -1700,7 +1700,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 244.547791ms
+        duration: 1ms
     - id: 24
       request:
         proto: HTTP/1.1
@@ -1769,7 +1769,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 1.000848584s
+        duration: 1ms
     - id: 25
       request:
         proto: HTTP/1.1
@@ -1838,7 +1838,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 303.175167ms
+        duration: 1ms
     - id: 26
       request:
         proto: HTTP/1.1
@@ -1907,7 +1907,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 277.178833ms
+        duration: 1ms
     - id: 27
       request:
         proto: HTTP/1.1
@@ -1976,7 +1976,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 259.376166ms
+        duration: 1ms
     - id: 28
       request:
         proto: HTTP/1.1
@@ -2045,7 +2045,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 249.300708ms
+        duration: 1ms
     - id: 29
       request:
         proto: HTTP/1.1
@@ -2114,7 +2114,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.462917ms
+        duration: 1ms
     - id: 30
       request:
         proto: HTTP/1.1
@@ -2183,7 +2183,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 271.040333ms
+        duration: 1ms
     - id: 31
       request:
         proto: HTTP/1.1
@@ -2252,7 +2252,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 242.876125ms
+        duration: 1ms
     - id: 32
       request:
         proto: HTTP/1.1
@@ -2321,7 +2321,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 253.98425ms
+        duration: 1ms
     - id: 33
       request:
         proto: HTTP/1.1
@@ -2390,7 +2390,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.348166ms
+        duration: 1ms
     - id: 34
       request:
         proto: HTTP/1.1
@@ -2459,7 +2459,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 255.946458ms
+        duration: 1ms
     - id: 35
       request:
         proto: HTTP/1.1
@@ -2528,7 +2528,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.2ms
+        duration: 1ms
     - id: 36
       request:
         proto: HTTP/1.1
@@ -2597,7 +2597,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 263.175083ms
+        duration: 1ms
     - id: 37
       request:
         proto: HTTP/1.1
@@ -2666,7 +2666,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.241083ms
+        duration: 1ms
     - id: 38
       request:
         proto: HTTP/1.1
@@ -2735,7 +2735,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 255.979333ms
+        duration: 1ms
     - id: 39
       request:
         proto: HTTP/1.1
@@ -2804,7 +2804,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 250.925541ms
+        duration: 1ms
     - id: 40
       request:
         proto: HTTP/1.1
@@ -2873,7 +2873,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 257.871333ms
+        duration: 1ms
     - id: 41
       request:
         proto: HTTP/1.1
@@ -2942,7 +2942,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 251.470583ms
+        duration: 1ms
     - id: 42
       request:
         proto: HTTP/1.1
@@ -3011,7 +3011,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 255.22275ms
+        duration: 1ms
     - id: 43
       request:
         proto: HTTP/1.1
@@ -3080,7 +3080,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 249.066ms
+        duration: 1ms
     - id: 44
       request:
         proto: HTTP/1.1
@@ -3149,7 +3149,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 246.991ms
+        duration: 1ms
     - id: 45
       request:
         proto: HTTP/1.1
@@ -3218,7 +3218,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 275.976625ms
+        duration: 1ms
     - id: 46
       request:
         proto: HTTP/1.1
@@ -3287,7 +3287,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 246.551458ms
+        duration: 1ms
     - id: 47
       request:
         proto: HTTP/1.1
@@ -3356,7 +3356,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 254.228625ms
+        duration: 1ms
     - id: 48
       request:
         proto: HTTP/1.1
@@ -3425,7 +3425,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 246.734083ms
+        duration: 1ms
     - id: 49
       request:
         proto: HTTP/1.1
@@ -3494,7 +3494,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 242.857917ms
+        duration: 1ms
     - id: 50
       request:
         proto: HTTP/1.1
@@ -3563,7 +3563,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 253.5335ms
+        duration: 1ms
     - id: 51
       request:
         proto: HTTP/1.1
@@ -3632,7 +3632,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.979375ms
+        duration: 1ms
     - id: 52
       request:
         proto: HTTP/1.1
@@ -3701,7 +3701,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 249.134041ms
+        duration: 1ms
     - id: 53
       request:
         proto: HTTP/1.1
@@ -3770,7 +3770,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 253.288042ms
+        duration: 1ms
     - id: 54
       request:
         proto: HTTP/1.1
@@ -3839,7 +3839,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 250.94275ms
+        duration: 1ms
     - id: 55
       request:
         proto: HTTP/1.1
@@ -3908,7 +3908,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 250.286666ms
+        duration: 1ms
     - id: 56
       request:
         proto: HTTP/1.1
@@ -3977,7 +3977,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 268.2985ms
+        duration: 1ms
     - id: 57
       request:
         proto: HTTP/1.1
@@ -4046,7 +4046,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 341.126583ms
+        duration: 1ms
     - id: 58
       request:
         proto: HTTP/1.1
@@ -4115,7 +4115,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 261.75525ms
+        duration: 1ms
     - id: 59
       request:
         proto: HTTP/1.1
@@ -4184,7 +4184,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 306.174375ms
+        duration: 1ms
     - id: 60
       request:
         proto: HTTP/1.1
@@ -4253,7 +4253,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 263.507833ms
+        duration: 1ms
     - id: 61
       request:
         proto: HTTP/1.1
@@ -4322,7 +4322,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 256.762792ms
+        duration: 1ms
     - id: 62
       request:
         proto: HTTP/1.1
@@ -4391,7 +4391,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 258.610792ms
+        duration: 1ms
     - id: 63
       request:
         proto: HTTP/1.1
@@ -4460,7 +4460,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 268.657125ms
+        duration: 1ms
     - id: 64
       request:
         proto: HTTP/1.1
@@ -4529,7 +4529,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 324.945916ms
+        duration: 1ms
     - id: 65
       request:
         proto: HTTP/1.1
@@ -4598,7 +4598,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 246.094375ms
+        duration: 1ms
     - id: 66
       request:
         proto: HTTP/1.1
@@ -4667,7 +4667,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 255.3595ms
+        duration: 1ms
     - id: 67
       request:
         proto: HTTP/1.1
@@ -4736,7 +4736,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 324.980625ms
+        duration: 1ms
     - id: 68
       request:
         proto: HTTP/1.1
@@ -4808,7 +4808,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 296.587459ms
+        duration: 1ms
     - id: 69
       request:
         proto: HTTP/1.1
@@ -4877,7 +4877,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 511.77075ms
+        duration: 1ms
     - id: 70
       request:
         proto: HTTP/1.1
@@ -4967,7 +4967,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 265.863708ms
+        duration: 1ms
     - id: 71
       request:
         proto: HTTP/1.1
@@ -5036,7 +5036,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 246.679583ms
+        duration: 1ms
     - id: 72
       request:
         proto: HTTP/1.1
@@ -5126,7 +5126,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 273.458333ms
+        duration: 1ms
     - id: 73
       request:
         proto: HTTP/1.1
@@ -5197,7 +5197,7 @@ interactions:
                 - 1; mode=block
         status: 202 Accepted
         code: 202
-        duration: 255.176084ms
+        duration: 1ms
     - id: 74
       request:
         proto: HTTP/1.1
@@ -5266,4 +5266,4 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 248.41875ms
+        duration: 1ms

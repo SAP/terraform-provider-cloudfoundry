@@ -8,6 +8,6 @@ terraform {
 }
 provider "cloudfoundry" {
   api_url  = "https://api.cf.example.com"
-  username = "admin"
+  user     = "admin"
   password = "admin"
 }
