@@ -9,8 +9,6 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
-
-	"github.com/antihax/optional"
 )
 
 const (
@@ -21,22 +19,10 @@ const (
 
 type DefaultApiService service
 
-type DefaultApiGetMtaOperationOpts struct {
-	Embed optional.String
-}
-
-type DefaultApiStartMtaOperationOpts struct {
-	Body optional.Interface
-}
-
-type DefaultApiUploadMtaFileOpts struct {
-	Namespace optional.String
-}
-
 type DefaultApiGetMtaOperationsOpts struct {
-	MtaId optional.String
-	Last  optional.Int32
-	State optional.Interface
+	MtaId *string
+	Last  *int
+	State []string
 }
 
 type Request struct {
@@ -107,14 +93,14 @@ func (a *DefaultApiService) GetMta(ctx context.Context, spaceGuid string, mtaId 
 /*
 Retrieves Multi-Target Application operation.
 */
-func (a *DefaultApiService) GetMtaOperation(ctx context.Context, spaceGuid string, operationId string, localVarOptionals *DefaultApiGetMtaOperationOpts) (Operation, *http.Response, error) {
+func (a *DefaultApiService) GetMtaOperation(ctx context.Context, spaceGuid string, operationId string, embedProperty string) (Operation, *http.Response, error) {
 	var (
 		operation Operation
 		request   Request = newRequestInfo()
 	)
 	request.path = a.client.cfg.BasePath + "/api/v1/spaces/" + spaceGuid + "/operations/" + operationId
-	if localVarOptionals != nil && localVarOptionals.Embed.IsSet() {
-		request.queryParams.Add("embed", parameterToString(localVarOptionals.Embed.Value(), ""))
+	if embedProperty != "" {
+		request.queryParams.Add("embed", embedProperty)
 	}
 	httpResponse, err := a.client.get(ctx, request, &operation)
 	return operation, httpResponse, err
@@ -130,14 +116,14 @@ func (a *DefaultApiService) GetMtaOperations(ctx context.Context, spaceGuid stri
 	)
 	request.path = a.client.cfg.BasePath + "/api/v1/spaces/" + spaceGuid + "/operations"
 	if localVarOptionals != nil {
-		if localVarOptionals.MtaId.IsSet() {
-			request.queryParams.Add("mtaId", parameterToString(localVarOptionals.MtaId.Value(), ""))
+		if localVarOptionals.MtaId != nil {
+			request.queryParams.Add("mtaId", *localVarOptionals.MtaId)
 		}
-		if localVarOptionals.Last.IsSet() {
-			request.queryParams.Add("last", parameterToString(localVarOptionals.Last.Value(), ""))
+		if localVarOptionals.Last != nil {
+			request.queryParams.Add("last", parameterToString(localVarOptionals.Last, ""))
 		}
-		if localVarOptionals.State.IsSet() {
-			request.queryParams.Add("state", parameterToString(localVarOptionals.State.Value(), "csv"))
+		if localVarOptionals.State != nil {
+			request.queryParams.Add("state", parameterToString(localVarOptionals.State, "csv"))
 		}
 	}
 	httpResponse, err := a.client.get(ctx, request, &operations)
@@ -147,7 +133,7 @@ func (a *DefaultApiService) GetMtaOperations(ctx context.Context, spaceGuid stri
 /*
 Retrieves all Multi-Target Applications in a space.
 */
-func (a *DefaultApiService) GetMtas(ctx context.Context, spaceGuid string, namespace *string, name string) ([]Mta, *http.Response, error) {
+func (a *DefaultApiService) GetMtas(ctx context.Context, spaceGuid string, namespace *string, mtaId string) ([]Mta, *http.Response, error) {
 	var (
 		mtas    []Mta
 		request Request = newRequestInfo()
@@ -156,8 +142,8 @@ func (a *DefaultApiService) GetMtas(ctx context.Context, spaceGuid string, names
 	if namespace != nil {
 		request.queryParams.Add("namespace", *namespace)
 	}
-	if name != "" {
-		request.queryParams.Add("name", name)
+	if mtaId != "" {
+		request.queryParams.Add("name", mtaId)
 	}
 	httpResponse, err := a.client.get(ctx, request, &mtas)
 	return mtas, httpResponse, err
@@ -166,19 +152,13 @@ func (a *DefaultApiService) GetMtas(ctx context.Context, spaceGuid string, names
 /*
 Starts execution of a Multi-Target Application operation.
 */
-func (a *DefaultApiService) StartMtaOperation(ctx context.Context, spaceGuid string, localVarOptionals *DefaultApiStartMtaOperationOpts) (string, Operation, *http.Response, error) {
+func (a *DefaultApiService) StartMtaOperation(ctx context.Context, spaceGuid string, operationRequest Operation) (string, Operation, *http.Response, error) {
 	var (
 		operation Operation
 		request   Request = newRequestInfo()
 	)
 	request.path = a.client.cfg.BasePath + "/api/v1/spaces/" + spaceGuid + "/operations"
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(Operation)
-		if !localVarOptionalBodyok {
-			return "", operation, nil, fmt.Errorf("body should be an Operation Request")
-		}
-		request.postBody = &localVarOptionalBody
-	}
+	request.postBody = &operationRequest
 	operationId, httpResponse, err := a.client.post(ctx, request, &operation)
 	return operationId, operation, httpResponse, err
 }
@@ -186,7 +166,7 @@ func (a *DefaultApiService) StartMtaOperation(ctx context.Context, spaceGuid str
 /*
 Uploads an Multi Target Application archive or an Extension Descriptor.
 */
-func (a *DefaultApiService) UploadMtaFile(ctx context.Context, spaceGuid string, localVarOptionals *DefaultApiUploadMtaFileOpts, filePath string) (FileMetadata, *http.Response, error) {
+func (a *DefaultApiService) UploadMtaFile(ctx context.Context, spaceGuid string, namespace string, filePath string) (FileMetadata, *http.Response, error) {
 	var (
 		file    FileMetadata
 		err     error
@@ -202,8 +182,8 @@ func (a *DefaultApiService) UploadMtaFile(ctx context.Context, spaceGuid string,
 		return file, nil, errors.New("filePath required for uploading")
 	}
 	request.path = a.client.cfg.BasePath + "/api/v1/spaces/" + spaceGuid + "/files"
-	if localVarOptionals != nil && localVarOptionals.Namespace.IsSet() {
-		request.queryParams.Add("namespace", parameterToString(localVarOptionals.Namespace.Value(), ""))
+	if namespace != "" {
+		request.queryParams.Add("namespace", namespace)
 	}
 	request.headers["Content-Type"] = "multipart/form-data"
 	_, httpResponse, err := a.client.post(ctx, request, &file)
@@ -213,14 +193,14 @@ func (a *DefaultApiService) UploadMtaFile(ctx context.Context, spaceGuid string,
 /*
 Uploads an Multi Target Application archive from a remote URL.
 */
-func (a *DefaultApiService) AsyncUploadFileFromURL(ctx context.Context, spaceGuid string, localVarOptionals *DefaultApiUploadMtaFileOpts, fileURL string) (string, *http.Response, error) {
+func (a *DefaultApiService) AsyncUploadFileFromURL(ctx context.Context, spaceGuid string, namespace string, fileURL string) (string, *http.Response, error) {
 	var (
 		s       string
 		request Request = newRequestInfo()
 	)
 	request.path = a.client.cfg.BasePath + "/api/v1/spaces/" + spaceGuid + "/files/async"
-	if localVarOptionals != nil && localVarOptionals.Namespace.IsSet() {
-		request.queryParams.Add("namespace", parameterToString(localVarOptionals.Namespace.Value(), ""))
+	if namespace != "" {
+		request.queryParams.Add("namespace", namespace)
 	}
 	if fileURL != "" {
 		request.postBody = &FileUrl{
@@ -236,14 +216,14 @@ func (a *DefaultApiService) AsyncUploadFileFromURL(ctx context.Context, spaceGui
 /*
 Gets the status of the upload job from the remote URL.
 */
-func (a *DefaultApiService) GetAsyncUploadJob(ctx context.Context, spaceGuid string, jobId string, xInstance string, localVarOptionals *DefaultApiUploadMtaFileOpts) (UploadStatus, *http.Response, error) {
+func (a *DefaultApiService) GetAsyncUploadJob(ctx context.Context, spaceGuid string, jobId string, xInstance string, namespace string) (UploadStatus, *http.Response, error) {
 	var (
 		uploadJob UploadStatus
 		request   Request = newRequestInfo()
 	)
 	request.path = a.client.cfg.BasePath + "/api/v1/spaces/" + spaceGuid + "/files/jobs/" + jobId
-	if localVarOptionals != nil && localVarOptionals.Namespace.IsSet() {
-		request.queryParams.Add("namespace", parameterToString(localVarOptionals.Namespace.Value(), ""))
+	if namespace != "" {
+		request.queryParams.Add("namespace", namespace)
 	}
 	request.headers["x-cf-app-instance"] = xInstance
 	httpResponse, err := a.client.get(ctx, request, &uploadJob)

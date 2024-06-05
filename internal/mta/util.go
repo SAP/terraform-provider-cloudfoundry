@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/antihax/optional"
 	"gopkg.in/yaml.v3"
 )
 
@@ -103,8 +102,8 @@ func CheckOngoingOperation(ctx context.Context, client *APIClient, mtaId string,
 func findOngoingOperation(ctx context.Context, mtaID string, namespace string, client *APIClient, spaceGuid string) (*Operation, error) {
 	activeStatesList := []string{"RUNNING", "ERROR", "ACTION_REQUIRED"}
 	getOptions := &DefaultApiGetMtaOperationsOpts{
-		MtaId: optional.NewString(mtaID),
-		State: optional.NewInterface(activeStatesList),
+		MtaId: &mtaID,
+		State: activeStatesList,
 	}
 	ongoingOperations, _, err := client.DefaultApi.GetMtaOperations(ctx, spaceGuid, getOptions)
 	if err != nil {
@@ -131,10 +130,7 @@ func PollMtaOperation(ctx context.Context, client *APIClient, spaceGuid string, 
 
 	for operationState := "RUNNING"; operationState != targetState; {
 		time.Sleep(2 * time.Second)
-		getParams := &DefaultApiGetMtaOperationOpts{
-			Embed: optional.NewString("messages"),
-		}
-		operationResponse, _, err := client.DefaultApi.GetMtaOperation(ctx, spaceGuid, operationId, getParams)
+		operationResponse, _, err := client.DefaultApi.GetMtaOperation(ctx, spaceGuid, operationId, "messages")
 		if err != nil {
 			return err
 		}
@@ -178,10 +174,10 @@ func decodeOperationJobID(resp *http.Response) (string, error) {
 }
 
 // Keeps polling the MTA job by its ID for completion.
-func PollMtaJob(ctx context.Context, client *APIClient, spaceGuid string, jobId string, targetState string, xInstance string, getParams *DefaultApiUploadMtaFileOpts) (jobResponse UploadStatus, err error) {
+func PollMtaJob(ctx context.Context, client *APIClient, spaceGuid string, jobId string, targetState string, xInstance string, namespace string) (jobResponse UploadStatus, err error) {
 	for jobState := "RUNNING"; jobState != targetState; {
 		time.Sleep(2 * time.Second)
-		jobResponse, _, err = client.DefaultApi.GetAsyncUploadJob(ctx, spaceGuid, jobId, xInstance, getParams)
+		jobResponse, _, err = client.DefaultApi.GetAsyncUploadJob(ctx, spaceGuid, jobId, xInstance, namespace)
 		if err != nil {
 			return jobResponse, err
 		}
