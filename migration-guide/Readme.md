@@ -147,35 +147,55 @@ terraform import cloudfoundry_app.my-app d0348ed0-6e89-4836-80db-16479526a748
 
 After the successful import run `terraform plan` to verify. It might prompt to reapply the configuration to populate some attribute values. After that the new configuration is ready for use.
 
-## Overview of Changes
+## Overview of Provider Differences
 
-The following sections and the documents referenced within provide a detailed overview of the changes in the resources and data sources between the two providers.
+The following sections and the documents referenced within provide a detailed overview of the changes/similarities in the resources and data sources between the two providers.
 
 > [!IMPORTANT]
 > For every resource and datasource, the computed attributes `created_at` and `updated_at` have been added in the new provider in line with V3.
 
-### Resource Definition Changes
+### Similar Resources
 
+The below mentioned resources replicate the schema and functionality of those present in the existing community provider.
 
-While most resources have  maintained  the same structure, some resources needed changes to follow the V3 API structure. Following is a list of resources that have changed
+- [Isolation Segment](../docs/resources/isolation_segment.md)
+- [Isolation Segment Entitlement](../docs/resources/isolation_segment_entitlement.md)
+
+### Changed Resources
+
+The below mentioned resources have been newly added in the current provider.
+
+- [Multi Target Application Deployment](../docs/resources/mta.md)
+
+While most resources have maintained the same structure, some resources needed minor changes in schema to follow the V3 API structure. Following is a list of resources whose schema have changed.
 
 - [Application](./resources/app.md)
 - [Domain](./resources/domain.md)
 - [Org Quota](./resources/org_quota.md)
-- [Org Role](./resources/org_role.md)
 - [Organisation](./resources/org.md)
 - [Route](./resources/route.md)
 - [Security Group](./resources/security_group.md)
 - [Service credential Binding](./resources/service_credential_binding.md)
 - [Service Instance](./resources/service_instance.md)
 - [Space Quota](./resources/space_quota.md)
-- [Space Role](./resources/space_role.md)
 - [Space](./resources/space.md)
+
+Few resources required a major change in functionality or the way the resources were created which are mentioned below.
+
+- [Org Role](./resources/org_role.md)
+- [Space Role](./resources/space_role.md)
 - [User](./resources/user.md)
 
-### DataSource Definition Changes
+### Changed DataSources
 
-While most dataSources have  maintaied the same structure, some dataSources needed changes to follow the V3 API structure. Following is a list of datasources that have changed
+The below mentioned dataSources have been newly added in the current provider.
+
+- [Multi Target Application Deployment](../docs/data-sources/mta.md)
+- [Isolation Segment Entitlement](../docs/data-sources/isolation_segment_entitlement.md)
+- [Role](../docs/data-sources/role.md)
+- [Users](../docs/data-sources/users.md)
+
+While most dataSources have  maintained the same structure, some dataSources needed minor changes in schema to follow the V3 API structure. Following is a list of datasources whose schema have changed
 
 - [Application](./data-sources/app.md)
 - [Domain](./data-sources/domain.md)

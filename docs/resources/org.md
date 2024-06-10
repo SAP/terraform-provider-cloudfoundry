@@ -18,7 +18,7 @@ Creates a Cloud Foundry Organization
 
 ```terraform
 resource "cloudfoundry_org" "org" {
-  name      = "tf-test"
+  name      = "tf-test-iso"
   suspended = false
   labels = {
     env = "test"
