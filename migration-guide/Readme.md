@@ -71,7 +71,7 @@ terraform state show cloudfoundry_app.my-app | grep -m 1 id
 
 This will return the technical id of the resource which is required for the import.
 
-#### Step 2 - Fetch the details of the resource from the state
+#### Step 2 - Remove the resource from the state
 
 > [!IMPORTANT]
 > Make sure that the state is backed up before manipulating it.
