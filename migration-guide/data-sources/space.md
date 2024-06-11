@@ -2,19 +2,18 @@
 
 Gets information on a Cloud Foundry space.
 
-|  SAP Cloudfoundry Provider | Community Cloudfoundry Provider  |
+|  SAP Cloud Foundry Provider | Community Cloud Foundry Provider  |
 | -- | -- |
 | <pre>data "cloudfoundry_space" "space" {</br>  name = "myspace"</br>  org  = "ca721b24-e24d-4171-83e1-1ef6bd836b38"</br>}</br></pre>|<pre>data "cloudfoundry_space" "space" {</br>    name = "myspace"</br>    org_name = "org"</br>}</br></pre> | 
 
 ## Differences
+
 > [!NOTE]  
 > 🔵 Required  🟢 Optional 🟠 Computed  🔴 Not present
 
-| Attribute name|  SAP Cloudfoundry Provider(new)| Community Provider(old) |Description
-|---| ---| ---| ---| 
-|org_name | 🔴 |🟢| 
-|org | 🔵 |🟢| Space can now be queried only by `org` GUID and not by `org_name`. If one knows org_name and not org GUID, one can obtain the id value from [`cloudfoundry_org`](https://github.com/SAP/terraform-provider-cloudfoundry/blob/migration_docs/docs/data-sources/org.md) resource by specifying `name`.
-|allow_ssh|  🟠|🔴 | 
-|isolation_segment|  🟠|🔴 |
-
-
+| Attribute name | SAP Cloud Foundry Provider (new)|  Community Cloud Foundry Provider (old) | Description |
+| --- | --- | --- | --- |
+| org_name | 🔴 | 🟢 | - |
+| org | 🔵 | 🟢 | Space can now be queried only by `org` GUID and not by `org_name`. If one knows org_name and not org GUID, one can obtain the id value from [`cloudfoundry_org`](https://github.com/SAP/terraform-provider-cloudfoundry/blob/migration_docs/docs/data-sources/org.md) resource by specifying `name`. |
+| allow_ssh | 🟠 | 🔴 | - |
+| isolation_segment | 🟠 | 🔴 | - |
