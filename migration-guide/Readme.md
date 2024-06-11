@@ -1,31 +1,33 @@
-# Migration 
+# Migration Guide
 
- Although the definitions look similar the [cloudfoundry-community](https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry) and [SAP cloudfoundry](https://github.com/SAP/terraform-provider-cloudfoundry) providers are not the same. There would be differences in the definition as well as the state structure among the existing cloudfoundry providers. 
- 
-Therefore, providers cannot be simply interchanged and one will need to write new configuration to use the resource and datasource definitions available with this provider. Additionally one will need to import the existing resources into the state for the new provider.
+ Although the definitions look similar the Terraform providers of the [cloudfoundry-community](https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry) and [SAP](https://github.com/SAP/terraform-provider-cloudfoundry) are not the same. They differ in the definition as well as the state structure especially due to the usage if the V3 API in the newer provider.
 
- **Keep a backup of the existing configuration and state. Also, before one starts the migration process, please understand the differences in the structure of the resources and datasources as we support the latest V3 API's from CloudFoundry API. Refer our documentation for more details.**
+Therefore, the providers cannot be simply interchanged. If you want to switch you must rewrite your configuration. Additionally you must import the resources to create a state consistent with the new provider.
 
-The newer v3 APIs have brought in changes to certain parameters of the existing resources and datasources to enhance the functionality and optimise the way the APIs behave. There could be chances that some of the parameters might have been removed and newer parameters would have been added. Please refer to the [V3 API Specifications](https://v3-apidocs.cloudfoundry.org/version/3.166.0/index.html).
+> [!WARNING]
+> Keep a backup of the existing configuration and state. Also, before one starts the migration process, please understand the differences in the structure of the resources and data sources as we support the latest V3 API's from CloudFoundry API. Refer our documentation for more details.
 
-This migration guide helps one in transitioning from the existing [community CF provider](https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry) to the [current CF provider](https://github.com/SAP/terraform-provider-cloudfoundry) and states the difference between the two.
+The newer V3 APIs have brought in changes to certain parameters of the existing resources and data sources to enhance the functionality and optimize the way the APIs behave. This impacts the parameters available in the resources i.e., some of the parameters might have been removed and newer parameters might have been added. Please refer to the [V3 API Specifications](https://v3-apidocs.cloudfoundry.org/version/3.166.0/index.html) for details.
+
+This migration guide helps one in transitioning from the existing [community CF provider](https://github.com/cloudfoundry-community/terraform-provider-cloudfoundry) to the [current CF provider](https://github.com/SAP/terraform-provider-cloudfoundry) and states the difference between them.
 
 ## Maintaining both providers
 
-A one shot rewrite of the entire configuration may not be practical especially when one has a large configuration and some of the resources/datasources are not available in the newer provider. In this case it makes sense to keep both the providers and step by step rewrite the configuration moving from the old to the new provider.
+A one shot rewrite of your entire configuration may not be practical especially when you have a large configuration and some of the resources/data sources are not (yet) available in the newer provider. In this case it makes sense to keep both the providers and iteratively rewrite the configuration moving from the old to the new provider.
 
-Steps involved here would be:
+We recommend the following iterative procedure for the migration:
 
-- Obtain details (required fields) of resource/datasource from state
-- Remove the reource/datasource from the state
-- Update  resource/datasource in the configuration to the new providers structure.
-- Import the resource into the state file
+1. Obtain details (required fields) of resource/data source from state
+1. Remove the resource/data source from the state
+1. Update  resource/data source in the configuration to the new providers structure.
+1. Import the resource into the state file
+1. Validate the new configuration
 
 ### Example
 
-Consider the following terraform configuration:
+Consider the following Terraform configuration:
 
-```
+```terraform
 terraform {
   required_providers {
     cloudfoundry = {
@@ -57,27 +59,34 @@ resource "cloudfoundry_app" "my-app" {
 }
 ```
 
-Let's assume that the resource `cloudfoundry_app` - `my-app` is being migrated to the new provider.
+Let's assume that we want to migrate the resource `cloudfoundry_app` - `my-app` to the new provider. To do so we execute the steps in the following sections
 
-Steps:
+#### Step 1 - Fetch the details of the resource from the state
 
-1) Get details of `my-app` from the state.
+Get details of `my-app` from the state via `terraform state show`.
 
+```bash
+terraform state show cloudfoundry_app.my-app | grep -m 1 id
 ```
 
-➜ tf state show cloudfoundry_app.my-app | grep -m 1 id
-    id                              = "d0348ed0-6e89-4836-80db-16479526a748"
+This will return the technical id of the resource which is required for the import.
+
+#### Step 2 - Remove the resource from the state
+
+> [!IMPORTANT]
+> Make sure that the state is backed up before manipulating it.
+
+Remove the resource `my-app` from the Terraform state via:
+
+```bash
+terraform state rm cloudfoundry_app.my-app
 ```
 
-2) Remove `my-app` from the state.
+#### Step 3 - Update the configuration
 
-```
-➜ terraform state rm cloudfoundry_app.my-app
-```
+Replace the configuration of the `cloudfoundry_app` resource with the new provider and initialize your setup via `terraform init -upgrade` to fetch the new Cloud Foundry provider.
 
-3) Replace the configuration of the `cloudfoundry_app` resource with the new provider and initialise if required with ` terraform init -upgrade`.
-
-```
+```terraform
 terraform {
   required_providers {
     cloudfoundry = {
@@ -126,18 +135,27 @@ resource "cloudfoundry_app" "my-app" {
 }
 ```
 
-4) Import the state using the updated resource definition:
+#### Step 4 - Import the reconfigured resource
 
-```
+Import the state using the updated resource definition via:
+
+```terraform
 terraform import cloudfoundry_app.my-app d0348ed0-6e89-4836-80db-16479526a748
 ```
 
-5) The state should be imported. After successfull import run `terraform plan` to verify. It might prompt to reapply the configuration to populate some attribute values after which it is ready for use.
+#### Step 5 - Validate the new configuration
 
-## Resource Definition Changes
+After the successful import run `terraform plan` to verify. It might prompt to reapply the configuration to populate some attribute values. After that the new configuration is ready for use.
 
-> [!NOTE]  
+## Overview of Changes
+
+The following sections and the documents referenced within provide a detailed overview of the changes in the resources and data sources between the two providers.
+
+> [!IMPORTANT]
 > For every resource and datasource, the computed attributes `created_at` and `updated_at` have been added in the new provider in line with V3.
+
+### Resource Definition Changes
+
 
 While most resources have  maintained  the same structure, some resources needed changes to follow the V3 API structure. Following is a list of resources that have changed
 
@@ -155,8 +173,7 @@ While most resources have  maintained  the same structure, some resources needed
 - [Space](./resources/space.md)
 - [User](./resources/user.md)
 
-
-## DataSource Definition Changes
+### DataSource Definition Changes
 
 While most dataSources have  maintaied the same structure, some dataSources needed changes to follow the V3 API structure. Following is a list of datasources that have changed
 
@@ -172,6 +189,3 @@ While most dataSources have  maintaied the same structure, some dataSources need
 - [Space Quota](./data-sources/space_quota.md)
 - [Space](./data-sources/space.md)
 - [User](./data-sources/user.md)
-
-
-
