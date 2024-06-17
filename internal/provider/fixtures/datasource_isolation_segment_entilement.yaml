@@ -1,0 +1,186 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/relationships/organizations
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 367
+        uncompressed: false
+        body: '{"data":[{"guid":"c8e454cc-7a24-4d71-b146-51d69538acfb"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/relationships/organizations"},"related":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/organizations"}}}'
+        headers:
+            Content-Length:
+                - "367"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 14 Jun 2024 06:44:32 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5ce4406d0aeb6ce5
+            X-B3-Traceid:
+                - a7ad31604cb140dd5ce4406d0aeb6ce5
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.004034"
+            X-Vcap-Request-Id:
+                - a7ad3160-4cb1-40dd-5ce4-406d0aeb6ce5::dd433730-aa6b-4559-923e-53570b3ed183
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 527.758041ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/relationships/organizations
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 367
+        uncompressed: false
+        body: '{"data":[{"guid":"c8e454cc-7a24-4d71-b146-51d69538acfb"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/relationships/organizations"},"related":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/organizations"}}}'
+        headers:
+            Content-Length:
+                - "367"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 14 Jun 2024 06:44:32 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 79af498d9442d8c5
+            X-B3-Traceid:
+                - b9e95b46712f483879af498d9442d8c5
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.002568"
+            X-Vcap-Request-Id:
+                - b9e95b46-712f-4838-79af-498d9442d8c5::623fb832-328c-40b6-acca-6bbd1fddd256
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 172.289458ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/relationships/organizations
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 367
+        uncompressed: false
+        body: '{"data":[{"guid":"c8e454cc-7a24-4d71-b146-51d69538acfb"}],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/relationships/organizations"},"related":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/organizations"}}}'
+        headers:
+            Content-Length:
+                - "367"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 14 Jun 2024 06:44:32 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 598048e7be0b0d32
+            X-B3-Traceid:
+                - c4027359e1594af7598048e7be0b0d32
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.002795"
+            X-Vcap-Request-Id:
+                - c4027359-e159-4af7-5980-48e7be0b0d32::2845d81e-a9e9-4d89-91f1-b34a57c51b13
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 168.782ms

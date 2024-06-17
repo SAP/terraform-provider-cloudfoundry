@@ -1,0 +1,186 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/isolation_segments?names=hifi
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 835
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/isolation_segments?names=hifi\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/isolation_segments?names=hifi\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"63ae51b9-9073-4409-81b0-3704b8de85dd","created_at":"2024-06-11T04:33:43Z","updated_at":"2024-06-12T10:15:04Z","name":"hifi","metadata":{"labels":{"purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd"},"organizations":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/organizations"}}}]}'
+        headers:
+            Content-Length:
+                - "835"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 13 Jun 2024 06:46:58 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5221a1bc2fe99532
+            X-B3-Traceid:
+                - 270e57982c824f185221a1bc2fe99532
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.004206"
+            X-Vcap-Request-Id:
+                - 270e5798-2c82-4f18-5221-a1bc2fe99532::3c65beac-af46-484a-bb16-30a961a95046
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 523.961541ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/isolation_segments?names=hifi
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 835
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/isolation_segments?names=hifi\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/isolation_segments?names=hifi\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"63ae51b9-9073-4409-81b0-3704b8de85dd","created_at":"2024-06-11T04:33:43Z","updated_at":"2024-06-12T10:15:04Z","name":"hifi","metadata":{"labels":{"purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd"},"organizations":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/organizations"}}}]}'
+        headers:
+            Content-Length:
+                - "835"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 13 Jun 2024 06:46:58 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 69e0f5acd65af5e0
+            X-B3-Traceid:
+                - cded50c8287842bc69e0f5acd65af5e0
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.008324"
+            X-Vcap-Request-Id:
+                - cded50c8-2878-42bc-69e0-f5acd65af5e0::cceb3944-8efa-4862-8984-59924995da80
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 183.918458ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/isolation_segments?names=hifi
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 835
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/isolation_segments?names=hifi\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/isolation_segments?names=hifi\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"63ae51b9-9073-4409-81b0-3704b8de85dd","created_at":"2024-06-11T04:33:43Z","updated_at":"2024-06-12T10:15:04Z","name":"hifi","metadata":{"labels":{"purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd"},"organizations":{"href":"https://api.x.x.x.x.com/v3/isolation_segments/63ae51b9-9073-4409-81b0-3704b8de85dd/organizations"}}}]}'
+        headers:
+            Content-Length:
+                - "835"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 13 Jun 2024 06:46:58 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 45868f555b4ac0f9
+            X-B3-Traceid:
+                - 1cecc465fabe429845868f555b4ac0f9
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.004300"
+            X-Vcap-Request-Id:
+                - 1cecc465-fabe-4298-4586-8f555b4ac0f9::a9903b9c-d455-41a4-8813-09977cf49188
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 174.293958ms

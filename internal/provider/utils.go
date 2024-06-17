@@ -120,6 +120,16 @@ func findChangedRelationsFromTFState(ctx context.Context, planSet basetypes.SetV
 	return removed, added, diags
 }
 
+// Returns same element in the new plan which existed in state.
+func findSameRelationsFromTFState(ctx context.Context, planSet basetypes.SetValue, stateSet basetypes.SetValue) ([]string, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var planSetStr, stateSetStr []string
+	diags = append(diags, planSet.ElementsAs(ctx, &planSetStr, false)...)
+	diags = append(diags, stateSet.ElementsAs(ctx, &stateSetStr, false)...)
+	same := lo.Intersect(stateSetStr, planSetStr)
+	return same, diags
+}
+
 func handleReadErrors(ctx context.Context, resp *resource.ReadResponse, err error, res string, resName string) {
 	if cfv3resource.IsResourceNotFoundError(err) {
 		resp.State.RemoveResource(ctx)

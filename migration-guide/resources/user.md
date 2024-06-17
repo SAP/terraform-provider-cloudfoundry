@@ -6,9 +6,3 @@ Provides a Cloud Foundry resource for registering users. Intended to mimic funct
 | -- | -- |
 |  <pre>resource "cloudfoundry_user" "my_user" {</br>  id          = "test-user567"</br>  annotations = { purpose : "testing" }</br>}</br></pre> |<pre>resource "cloudfoundry_user" "admin-service-user" {</br></br>    name = "cf-admin"</br>    password = "Passw0rd"</br></br>    given_name = "John"</br>    family_name = "Doe"</br></br>    groups = [ "cloud_controller.admin", "scim.read", "scim.write" ]</br>}</br></pre> |
 
-## Differences
-
-> [!NOTE]  
-> 🔵 Required  🟢 Optional 🟠 Computed  🔴 Not present
-
-TODO: Add differences between the providers for the resource.

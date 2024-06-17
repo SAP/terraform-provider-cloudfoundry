@@ -14,7 +14,7 @@ Provides a Cloud Foundry resource for managing Cloud Foundry spaces within organ
 ```terraform
 resource "cloudfoundry_space" "space" {
   name      = "space"
-  org       = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
+  org       = "c8e454cc-7a24-4d71-b146-51d69538acfb"
   allow_ssh = "true"
   labels    = { test : "pass", purpose : "prod" }
 }
