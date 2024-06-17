@@ -94,6 +94,35 @@ func guidSchema() *schema.StringAttribute {
 	}
 }
 
+func lastOperationSchema() *schema.SingleNestedAttribute {
+	return &schema.SingleNestedAttribute{
+		MarkdownDescription: "The details of the last operation performed on the resource",
+		Computed:            true,
+		Attributes: map[string]schema.Attribute{
+			"type": schema.StringAttribute{
+				MarkdownDescription: "The type of the last operation",
+				Computed:            true,
+			},
+			"state": schema.StringAttribute{
+				MarkdownDescription: "The state of the last operation",
+				Computed:            true,
+			},
+			"description": schema.StringAttribute{
+				MarkdownDescription: "A description of the last operation",
+				Computed:            true,
+			},
+			"updated_at": schema.StringAttribute{
+				MarkdownDescription: "The time at which the last operation was updated",
+				Computed:            true,
+			},
+			"created_at": schema.StringAttribute{
+				MarkdownDescription: "The time at which the last operation was created",
+				Computed:            true,
+			},
+		},
+	}
+}
+
 // Take relationship from cfclient and return set type of terraform.
 func setRelationshipToTFSet(r []cfv3resource.Relationship) (basetypes.SetValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
