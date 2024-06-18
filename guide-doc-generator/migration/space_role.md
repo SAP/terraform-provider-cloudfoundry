@@ -3,8 +3,6 @@
 
 ## Resource
 
-Intended to mimic functionality of  A role is a single resource in Cloudfoundry and the resource has been developed to replicate the behaviour of V3 API. For assigning multiple roles, one can create multiple resources to achieve function similar to the community provider with greater control by using for_each for a var with users.
-
 V3 api has clear well-defined separate API's for roles and users and the innumerous endpoints for different roles at both space and org level have been removed. One just needs to specify the necessary `type` now for a particular user as a query while specifying the role. For specifying multiple role types for multiple users, one can create multiple resources now.
 
 
