@@ -1,0 +1,1312 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 112
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"hi","enabled":false,"locked":false,"stack":"cflinuxfs3","metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 134
+        uncompressed: false
+        body: '{"errors":[{"detail":"Buildpack with name ''hi'' and stack ''cflinuxfs3'' already exists","title":"CF-UnprocessableEntity","code":10008}]}'
+        headers:
+            Content-Length:
+                - "134"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:21 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6499f2f4280550d7
+            X-B3-Traceid:
+                - bb610a67118c4f796499f2f4280550d7
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.014238"
+            X-Vcap-Request-Id:
+                - bb610a67-118c-4f79-6499-f2f4280550d7::f5463130-25ff-4ccf-80ef-16c8fbc56cfb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 184.146042ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 107
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"hibro","enabled":false,"locked":false,"stack":null,"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 548
+        uncompressed: false
+        body: '{"guid":"5685f157-2a6b-4f12-a511-338655a8a5e0","created_at":"2024-06-20T11:30:21Z","updated_at":"2024-06-20T11:30:21Z","name":"hibro","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "548"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:21 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5a17a28cd72f3c15
+            X-B3-Traceid:
+                - 7d8094bb8acc44615a17a28cd72f3c15
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.040851"
+            X-Vcap-Request-Id:
+                - 7d8094bb-8acc-4461-5a17-a28cd72f3c15::37078f7f-20a6-4b8d-9ba7-e7fe65c126f8
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 225.513708ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 548
+        uncompressed: false
+        body: '{"guid":"5685f157-2a6b-4f12-a511-338655a8a5e0","created_at":"2024-06-20T11:30:21Z","updated_at":"2024-06-20T11:30:21Z","name":"hibro","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "548"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:22 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 62860072777662a5
+            X-B3-Traceid:
+                - 98481987a5ab473162860072777662a5
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003892"
+            X-Vcap-Request-Id:
+                - 98481987-a5ab-4731-6286-0072777662a5::918e5004-5aa6-44c3-914c-548cbf94acbd
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 179.817416ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 548
+        uncompressed: false
+        body: '{"guid":"5685f157-2a6b-4f12-a511-338655a8a5e0","created_at":"2024-06-20T11:30:21Z","updated_at":"2024-06-20T11:30:21Z","name":"hibro","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "548"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:22 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 692335afc8808ce8
+            X-B3-Traceid:
+                - f3d333f302f3472d692335afc8808ce8
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.007205"
+            X-Vcap-Request-Id:
+                - f3d333f3-02f3-472d-6923-35afc8808ce8::7a26b104-37c5-49b9-8023-5bc77fe678ce
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 177.501375ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/5685f157-2a6b-4f12-a511-338655a8a5e0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Thu, 20 Jun 2024 11:30:22 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/27daf20b-7978-4f4d-9454-d8ae105c5cba
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6fec0b92cae552ba
+            X-B3-Traceid:
+                - 8ea7885f978441626fec0b92cae552ba
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.018497"
+            X-Vcap-Request-Id:
+                - 8ea7885f-9784-4162-6fec-0b92cae552ba::a3f4e20f-da6b-4d59-a80a-2331de4507a1
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 183.26225ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/27daf20b-7978-4f4d-9454-d8ae105c5cba
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 318
+        uncompressed: false
+        body: '{"guid":"27daf20b-7978-4f4d-9454-d8ae105c5cba","created_at":"2024-06-20T11:30:22Z","updated_at":"2024-06-20T11:30:24Z","operation":"buildpack.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/27daf20b-7978-4f4d-9454-d8ae105c5cba"}}}'
+        headers:
+            Content-Length:
+                - "318"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:24 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 669ff306ea1dd88d
+            X-B3-Traceid:
+                - 0c88200453db4a5a669ff306ea1dd88d
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.007065"
+            X-Vcap-Request-Id:
+                - 0c882004-53db-4a5a-669f-f306ea1dd88d::b7a1f40d-fb78-4242-a67a-eb05c2d0ad7d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 176.421708ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 104
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"hi","enabled":false,"locked":false,"stack":null,"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 545
+        uncompressed: false
+        body: '{"guid":"47b4477a-0c2c-4491-b2be-b1842bd23283","created_at":"2024-06-20T11:30:24Z","updated_at":"2024-06-20T11:30:24Z","name":"hi","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "545"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:24 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 79d1c787af965358
+            X-B3-Traceid:
+                - 3b345a9b1b7a4ce479d1c787af965358
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.035809"
+            X-Vcap-Request-Id:
+                - 3b345a9b-1b7a-4ce4-79d1-c787af965358::382cff25-9e5d-436d-bcb4-08d233c92f2a
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 201.440084ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 7912
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: "--930e29d1127e6147b343cf73d9094cd620e003fb615638c8fc5d9d6747d2\r\nContent-Disposition: form-data; name=\"bits\"; filename=\"resource_buildpack_test.go\"\r\nContent-Type: application/octet-stream\r\n\r\npackage provider\n\nimport (\n\t\"bytes\"\n\t\"regexp\"\n\t\"strconv\"\n\t\"testing\"\n\t\"text/template\"\n\n\t\"github.com/hashicorp/terraform-plugin-testing/helper/resource\"\n)\n\ntype BuildpackModelPtr struct {\n\tHclType       string\n\tHclObjectName string\n\tName          *string\n\tPath          *string\n\tState         *string\n\tId            *string\n\tStack         *string\n\tFilename      *string\n\tPosition      *int\n\tEnabled       *bool\n\tLocked        *bool\n\tLabels        *string\n\tAnnotations   *string\n\tCreatedAt     *string\n\tUpdatedAt     *string\n}\n\nfunc hclBuildpack(bmp *BuildpackModelPtr) string {\n\tif bmp != nil {\n\t\ts := `\n\t\t{{.HclType}} \"cloudfoundry_buildpack\" {{.HclObjectName}} {\n\t\t\t{{- if .Name}}\n\t\t\t\tname = \"{{.Name}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Id}}\n\t\t\t\tid = \"{{.Id}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Path}}\n\t\t\t\tpath = \"{{.Path}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .State}}\n\t\t\t\tstate = \"{{.State}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Stack}}\n\t\t\t\tstack = \"{{.Stack}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Filename}}\n\t\t\t\tfilename = {{.Filename}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Position}}\n\t\t\t\tposition = \"{{.Position}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Enabled}}\n\t\t\t\tenabled = {{.Enabled}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Locked}}\n\t\t\t\tlocked = {{.Locked}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Labels}}\n\t\t\t\tlabels = {{.Labels}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Annotations}}\n\t\t\t\tannotations = {{.Annotations}}\n\t\t\t{{- end -}}\n\t\t\t{{if .CreatedAt}}\n\t\t\t\tcreated_at = \"{{.CreatedAt}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .UpdatedAt}}\n\t\t\t\tupdated_at = \"{{.UpdatedAt}}\"\n\t\t\t{{- end }}\n\t\t\t}`\n\t\ttmpl, err := template.New(\"resource_buildpack\").Parse(s)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tbuf := new(bytes.Buffer)\n\t\terr = tmpl.Execute(buf, bmp)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\treturn buf.String()\n\t}\n\treturn bmp.HclType + ` \"cloudfoundry_buildpack \"` + bmp.HclObjectName + ` {}`\n}\n\nfunc TestBuildpackResource_Configure(t *testing.T) {\n\tvar (\n\t\t// in staging\n\t\tzipFilePath     = \"../../assets/cf-sample-app-nodejs.zip\"\n\t\tresourceName    = \"cloudfoundry_buildpack.rs\"\n\t\tbuildpackName   = \"hifi\"\n\t\tbuildpackName2  = \"bruh\"\n\t\tposition        = 1\n\t\tupdatedPosition = 2\n\t\tstack           = \"cflinuxfs3\"\n\t\tenabled         = false\n\t\tlocked          = false\n\t\tupdatedLocked   = true\n\t)\n\tt.Parallel()\n\tt.Run(\"happy path - create/import/delete buildpack\", func(t *testing.T) {\n\n\t\tcfg := getCFHomeConf()\n\t\trec := cfg.SetupVCR(t, \"fixtures/resource_buildpack\")\n\t\tdefer stopQuietly(rec)\n\n\t\tresource.Test(t, resource.TestCase{\n\t\t\tIsUnitTest:               true,\n\t\t\tProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),\n\t\t\tSteps: []resource.TestStep{\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName,\n\t\t\t\t\t\tPosition:      &position,\n\t\t\t\t\t\tStack:         &stack,\n\t\t\t\t\t\tEnabled:       &enabled,\n\t\t\t\t\t\tLocked:        &locked,\n\t\t\t\t\t\tPath:          &zipFilePath,\n\t\t\t\t\t\tLabels:        &testCreateLabel,\n\t\t\t\t\t}),\n\t\t\t\t\tCheck: resource.ComposeAggregateTestCheckFunc(\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"id\", regexpValidUUID),\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"created_at\", regexpValidRFC3999Format),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"enabled\", strconv.FormatBool(enabled)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"position\", strconv.Itoa(position)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"stack\", stack),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"locked\", strconv.FormatBool(locked)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"name\", buildpackName),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"path\", zipFilePath),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"labels.purpose\", \"testing\"),\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName,\n\t\t\t\t\t\tPosition:      &updatedPosition,\n\t\t\t\t\t\tStack:         &stack,\n\t\t\t\t\t\tEnabled:       &enabled,\n\t\t\t\t\t\tLocked:        &updatedLocked,\n\t\t\t\t\t\tPath:          &zipFilePath,\n\t\t\t\t\t\tLabels:        &testUpdateLabel,\n\t\t\t\t\t}),\n\t\t\t\t\tCheck: resource.ComposeAggregateTestCheckFunc(\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"id\", regexpValidUUID),\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"created_at\", regexpValidRFC3999Format),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"enabled\", strconv.FormatBool(enabled)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"position\", strconv.Itoa(updatedPosition)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"stack\", stack),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"locked\", strconv.FormatBool(updatedLocked)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"name\", buildpackName),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"path\", zipFilePath),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"labels.purpose\", \"production\"),\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tResourceName:            resourceName,\n\t\t\t\t\tImportStateIdFunc:       getIdForImport(resourceName),\n\t\t\t\t\tImportStateVerifyIgnore: []string{\"path\", \"source_code_hash\"},\n\t\t\t\t\tImportState:             true,\n\t\t\t\t\tImportStateVerify:       true,\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t})\n\tt.Run(\"error path - create/update buildpacks with existing name/invalid path/invalid zip file\", func(t *testing.T) {\n\t\tcfg := getCFHomeConf()\n\t\trec := cfg.SetupVCR(t, \"fixtures/resource_buildpack_invalid\")\n\t\tdefer stopQuietly(rec)\n\n\t\tresource.Test(t, resource.TestCase{\n\t\t\tIsUnitTest:               true,\n\t\t\tProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),\n\t\t\tSteps: []resource.TestStep{\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          strtostrptr(\"hi\"),\n\t\t\t\t\t\tStack:         &stack,\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`API Error Creating Buildpack`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          strtostrptr(\"hibro\"),\n\t\t\t\t\t\tPath:          strtostrptr(\"ok\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`Invalid file or Path given`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          strtostrptr(\"hi\"),\n\t\t\t\t\t\tPath:          strtostrptr(\"resource_buildpack_test.go\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`API Error Uploading Buildpack`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName2,\n\t\t\t\t\t}),\n\t\t\t\t\tCheck: resource.ComposeAggregateTestCheckFunc(\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"id\", regexpValidUUID),\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"created_at\", regexpValidRFC3999Format),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"name\", buildpackName2),\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName2,\n\t\t\t\t\t\tPath:          strtostrptr(\"ok\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`Invalid file or Path given`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName2,\n\t\t\t\t\t\tPath:          strtostrptr(\"resource_buildpack_test.go\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`API Error Uploading Buildpack`),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t})\n}\n\r\n--930e29d1127e6147b343cf73d9094cd620e003fb615638c8fc5d9d6747d2--\r\n"
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - multipart/form-data; boundary=930e29d1127e6147b343cf73d9094cd620e003fb615638c8fc5d9d6747d2
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283/upload
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 147
+        uncompressed: false
+        body: '{"errors":[{"detail":"Uploaded buildpack file is invalid: resource_buildpack_test.go is not a zip","title":"CF-UnprocessableEntity","code":10008}]}'
+        headers:
+            Content-Length:
+                - "147"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:25 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 45282586b3c48833
+            X-B3-Traceid:
+                - b48b429f807b47f045282586b3c48833
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003672"
+            X-Vcap-Request-Id:
+                - b48b429f-807b-47f0-4528-2586b3c48833::36461207-79e5-4b3a-a374-04c2e1bff661
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 201.902ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 545
+        uncompressed: false
+        body: '{"guid":"47b4477a-0c2c-4491-b2be-b1842bd23283","created_at":"2024-06-20T11:30:24Z","updated_at":"2024-06-20T11:30:24Z","name":"hi","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "545"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:25 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 75d02a254fc134c9
+            X-B3-Traceid:
+                - cc212575bfae4b7975d02a254fc134c9
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003519"
+            X-Vcap-Request-Id:
+                - cc212575-bfae-4b79-75d0-2a254fc134c9::b9cf860a-475d-4801-9eee-43ac8a787deb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 169.128708ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 545
+        uncompressed: false
+        body: '{"guid":"47b4477a-0c2c-4491-b2be-b1842bd23283","created_at":"2024-06-20T11:30:24Z","updated_at":"2024-06-20T11:30:24Z","name":"hi","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "545"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:25 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 66e8d2db5c4fe018
+            X-B3-Traceid:
+                - e2f275a06bd44aef66e8d2db5c4fe018
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.004278"
+            X-Vcap-Request-Id:
+                - e2f275a0-6bd4-4aef-66e8-d2db5c4fe018::9ef0e6fc-b338-459b-a1aa-6dcb514c2785
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 183.357125ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/47b4477a-0c2c-4491-b2be-b1842bd23283
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Thu, 20 Jun 2024 11:30:26 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/64ae1ccb-90c6-4a6f-bc1e-94461e8a87a7
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 72c1ccb40ad43f61
+            X-B3-Traceid:
+                - 365f5222f72b4e0572c1ccb40ad43f61
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.028323"
+            X-Vcap-Request-Id:
+                - 365f5222-f72b-4e05-72c1-ccb40ad43f61::8c5871b0-9f39-4aa5-9754-6b34bda7ed9c
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 609.887416ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/64ae1ccb-90c6-4a6f-bc1e-94461e8a87a7
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 318
+        uncompressed: false
+        body: '{"guid":"64ae1ccb-90c6-4a6f-bc1e-94461e8a87a7","created_at":"2024-06-20T11:30:26Z","updated_at":"2024-06-20T11:30:26Z","operation":"buildpack.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/64ae1ccb-90c6-4a6f-bc1e-94461e8a87a7"}}}'
+        headers:
+            Content-Length:
+                - "318"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:28 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 783c03344680f9fb
+            X-B3-Traceid:
+                - f6a9624bc9e84aee783c03344680f9fb
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.007361"
+            X-Vcap-Request-Id:
+                - f6a9624b-c9e8-4aee-783c-03344680f9fb::75dcf67e-4336-4729-afe0-a276e8ab04b9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 175.810542ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 106
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"bruh","enabled":false,"locked":false,"stack":null,"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 547
+        uncompressed: false
+        body: '{"guid":"c34fe33f-f856-47cc-b900-50221067485a","created_at":"2024-06-20T11:30:28Z","updated_at":"2024-06-20T11:30:28Z","name":"bruh","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "547"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:28 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 74acbc2e3590b364
+            X-B3-Traceid:
+                - 2c98a98c356d400174acbc2e3590b364
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.045106"
+            X-Vcap-Request-Id:
+                - 2c98a98c-356d-4001-74ac-bc2e3590b364::14cb86fb-914d-41e7-869c-eb13edbb1f6c
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 213.453208ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 547
+        uncompressed: false
+        body: '{"guid":"c34fe33f-f856-47cc-b900-50221067485a","created_at":"2024-06-20T11:30:28Z","updated_at":"2024-06-20T11:30:28Z","name":"bruh","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "547"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:28 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5d5bf1533939e89b
+            X-B3-Traceid:
+                - a846c3ace0a94ec15d5bf1533939e89b
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003822"
+            X-Vcap-Request-Id:
+                - a846c3ac-e0a9-4ec1-5d5b-f1533939e89b::472451ab-2692-4f68-9236-11964a6d817d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 169.905209ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 547
+        uncompressed: false
+        body: '{"guid":"c34fe33f-f856-47cc-b900-50221067485a","created_at":"2024-06-20T11:30:28Z","updated_at":"2024-06-20T11:30:28Z","name":"bruh","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "547"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:29 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5f1811fe99286abe
+            X-B3-Traceid:
+                - 055210cd620846585f1811fe99286abe
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003415"
+            X-Vcap-Request-Id:
+                - 055210cd-6208-4658-5f18-11fe99286abe::1143102a-05fa-4254-9eeb-bdc95869dd2c
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 168.879417ms
+    - id: 15
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 106
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"bruh","enabled":false,"locked":false,"stack":null,"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 547
+        uncompressed: false
+        body: '{"guid":"c34fe33f-f856-47cc-b900-50221067485a","created_at":"2024-06-20T11:30:28Z","updated_at":"2024-06-20T11:30:29Z","name":"bruh","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "547"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:29 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 55666e0e06f821fc
+            X-B3-Traceid:
+                - 3bf0f93d9a014c0d55666e0e06f821fc
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.018745"
+            X-Vcap-Request-Id:
+                - 3bf0f93d-9a01-4c0d-5566-6e0e06f821fc::a4e1acff-1501-4d24-8d43-059e727bd00e
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 182.993875ms
+    - id: 16
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 547
+        uncompressed: false
+        body: '{"guid":"c34fe33f-f856-47cc-b900-50221067485a","created_at":"2024-06-20T11:30:28Z","updated_at":"2024-06-20T11:30:29Z","name":"bruh","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "547"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:29 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 57a08778c817d4e3
+            X-B3-Traceid:
+                - 96aefb3078bb4dbd57a08778c817d4e3
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.006923"
+            X-Vcap-Request-Id:
+                - 96aefb30-78bb-4dbd-57a0-8778c817d4e3::7d8593df-5e9b-40ea-9eb1-636cf10f48af
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 172.958083ms
+    - id: 17
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 106
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"bruh","enabled":false,"locked":false,"stack":null,"metadata":{"labels":null,"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 547
+        uncompressed: false
+        body: '{"guid":"c34fe33f-f856-47cc-b900-50221067485a","created_at":"2024-06-20T11:30:28Z","updated_at":"2024-06-20T11:30:29Z","name":"bruh","stack":null,"state":"AWAITING_UPLOAD","filename":null,"position":1,"enabled":false,"locked":false,"metadata":{"labels":{},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a"},"upload":{"href":"https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload","method":"POST"}}}'
+        headers:
+            Content-Length:
+                - "547"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:29 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 53f032d3c9a95e87
+            X-B3-Traceid:
+                - 08cae8a7fb8d4e9c53f032d3c9a95e87
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.015762"
+            X-Vcap-Request-Id:
+                - 08cae8a7-fb8d-4e9c-53f0-32d3c9a95e87::fc51c414-6299-4b86-8847-e6be03307683
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 181.381125ms
+    - id: 18
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 7912
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: "--b63e01aaceb399b895f730b13d721aebb363994af0a27ad9bd641c2b4119\r\nContent-Disposition: form-data; name=\"bits\"; filename=\"resource_buildpack_test.go\"\r\nContent-Type: application/octet-stream\r\n\r\npackage provider\n\nimport (\n\t\"bytes\"\n\t\"regexp\"\n\t\"strconv\"\n\t\"testing\"\n\t\"text/template\"\n\n\t\"github.com/hashicorp/terraform-plugin-testing/helper/resource\"\n)\n\ntype BuildpackModelPtr struct {\n\tHclType       string\n\tHclObjectName string\n\tName          *string\n\tPath          *string\n\tState         *string\n\tId            *string\n\tStack         *string\n\tFilename      *string\n\tPosition      *int\n\tEnabled       *bool\n\tLocked        *bool\n\tLabels        *string\n\tAnnotations   *string\n\tCreatedAt     *string\n\tUpdatedAt     *string\n}\n\nfunc hclBuildpack(bmp *BuildpackModelPtr) string {\n\tif bmp != nil {\n\t\ts := `\n\t\t{{.HclType}} \"cloudfoundry_buildpack\" {{.HclObjectName}} {\n\t\t\t{{- if .Name}}\n\t\t\t\tname = \"{{.Name}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Id}}\n\t\t\t\tid = \"{{.Id}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Path}}\n\t\t\t\tpath = \"{{.Path}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .State}}\n\t\t\t\tstate = \"{{.State}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Stack}}\n\t\t\t\tstack = \"{{.Stack}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Filename}}\n\t\t\t\tfilename = {{.Filename}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Position}}\n\t\t\t\tposition = \"{{.Position}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .Enabled}}\n\t\t\t\tenabled = {{.Enabled}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Locked}}\n\t\t\t\tlocked = {{.Locked}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Labels}}\n\t\t\t\tlabels = {{.Labels}}\n\t\t\t{{- end -}}\n\t\t\t{{if .Annotations}}\n\t\t\t\tannotations = {{.Annotations}}\n\t\t\t{{- end -}}\n\t\t\t{{if .CreatedAt}}\n\t\t\t\tcreated_at = \"{{.CreatedAt}}\"\n\t\t\t{{- end -}}\n\t\t\t{{if .UpdatedAt}}\n\t\t\t\tupdated_at = \"{{.UpdatedAt}}\"\n\t\t\t{{- end }}\n\t\t\t}`\n\t\ttmpl, err := template.New(\"resource_buildpack\").Parse(s)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\tbuf := new(bytes.Buffer)\n\t\terr = tmpl.Execute(buf, bmp)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\treturn buf.String()\n\t}\n\treturn bmp.HclType + ` \"cloudfoundry_buildpack \"` + bmp.HclObjectName + ` {}`\n}\n\nfunc TestBuildpackResource_Configure(t *testing.T) {\n\tvar (\n\t\t// in staging\n\t\tzipFilePath     = \"../../assets/cf-sample-app-nodejs.zip\"\n\t\tresourceName    = \"cloudfoundry_buildpack.rs\"\n\t\tbuildpackName   = \"hifi\"\n\t\tbuildpackName2  = \"bruh\"\n\t\tposition        = 1\n\t\tupdatedPosition = 2\n\t\tstack           = \"cflinuxfs3\"\n\t\tenabled         = false\n\t\tlocked          = false\n\t\tupdatedLocked   = true\n\t)\n\tt.Parallel()\n\tt.Run(\"happy path - create/import/delete buildpack\", func(t *testing.T) {\n\n\t\tcfg := getCFHomeConf()\n\t\trec := cfg.SetupVCR(t, \"fixtures/resource_buildpack\")\n\t\tdefer stopQuietly(rec)\n\n\t\tresource.Test(t, resource.TestCase{\n\t\t\tIsUnitTest:               true,\n\t\t\tProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),\n\t\t\tSteps: []resource.TestStep{\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName,\n\t\t\t\t\t\tPosition:      &position,\n\t\t\t\t\t\tStack:         &stack,\n\t\t\t\t\t\tEnabled:       &enabled,\n\t\t\t\t\t\tLocked:        &locked,\n\t\t\t\t\t\tPath:          &zipFilePath,\n\t\t\t\t\t\tLabels:        &testCreateLabel,\n\t\t\t\t\t}),\n\t\t\t\t\tCheck: resource.ComposeAggregateTestCheckFunc(\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"id\", regexpValidUUID),\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"created_at\", regexpValidRFC3999Format),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"enabled\", strconv.FormatBool(enabled)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"position\", strconv.Itoa(position)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"stack\", stack),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"locked\", strconv.FormatBool(locked)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"name\", buildpackName),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"path\", zipFilePath),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"labels.purpose\", \"testing\"),\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName,\n\t\t\t\t\t\tPosition:      &updatedPosition,\n\t\t\t\t\t\tStack:         &stack,\n\t\t\t\t\t\tEnabled:       &enabled,\n\t\t\t\t\t\tLocked:        &updatedLocked,\n\t\t\t\t\t\tPath:          &zipFilePath,\n\t\t\t\t\t\tLabels:        &testUpdateLabel,\n\t\t\t\t\t}),\n\t\t\t\t\tCheck: resource.ComposeAggregateTestCheckFunc(\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"id\", regexpValidUUID),\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"created_at\", regexpValidRFC3999Format),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"enabled\", strconv.FormatBool(enabled)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"position\", strconv.Itoa(updatedPosition)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"stack\", stack),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"locked\", strconv.FormatBool(updatedLocked)),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"name\", buildpackName),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"path\", zipFilePath),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"labels.purpose\", \"production\"),\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tResourceName:            resourceName,\n\t\t\t\t\tImportStateIdFunc:       getIdForImport(resourceName),\n\t\t\t\t\tImportStateVerifyIgnore: []string{\"path\", \"source_code_hash\"},\n\t\t\t\t\tImportState:             true,\n\t\t\t\t\tImportStateVerify:       true,\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t})\n\tt.Run(\"error path - create/update buildpacks with existing name/invalid path/invalid zip file\", func(t *testing.T) {\n\t\tcfg := getCFHomeConf()\n\t\trec := cfg.SetupVCR(t, \"fixtures/resource_buildpack_invalid\")\n\t\tdefer stopQuietly(rec)\n\n\t\tresource.Test(t, resource.TestCase{\n\t\t\tIsUnitTest:               true,\n\t\t\tProtoV6ProviderFactories: getProviders(rec.GetDefaultClient()),\n\t\t\tSteps: []resource.TestStep{\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          strtostrptr(\"hi\"),\n\t\t\t\t\t\tStack:         &stack,\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`API Error Creating Buildpack`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          strtostrptr(\"hibro\"),\n\t\t\t\t\t\tPath:          strtostrptr(\"ok\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`Invalid file or Path given`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          strtostrptr(\"hi\"),\n\t\t\t\t\t\tPath:          strtostrptr(\"resource_buildpack_test.go\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`API Error Uploading Buildpack`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName2,\n\t\t\t\t\t}),\n\t\t\t\t\tCheck: resource.ComposeAggregateTestCheckFunc(\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"id\", regexpValidUUID),\n\t\t\t\t\t\tresource.TestMatchResourceAttr(resourceName, \"created_at\", regexpValidRFC3999Format),\n\t\t\t\t\t\tresource.TestCheckResourceAttr(resourceName, \"name\", buildpackName2),\n\t\t\t\t\t),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName2,\n\t\t\t\t\t\tPath:          strtostrptr(\"ok\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`Invalid file or Path given`),\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\tConfig: hclProvider(nil) + hclBuildpack(&BuildpackModelPtr{\n\t\t\t\t\t\tHclType:       hclObjectResource,\n\t\t\t\t\t\tHclObjectName: \"rs\",\n\t\t\t\t\t\tName:          &buildpackName2,\n\t\t\t\t\t\tPath:          strtostrptr(\"resource_buildpack_test.go\"),\n\t\t\t\t\t}),\n\t\t\t\t\tExpectError: regexp.MustCompile(`API Error Uploading Buildpack`),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t})\n}\n\r\n--b63e01aaceb399b895f730b13d721aebb363994af0a27ad9bd641c2b4119--\r\n"
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - multipart/form-data; boundary=b63e01aaceb399b895f730b13d721aebb363994af0a27ad9bd641c2b4119
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a/upload
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 147
+        uncompressed: false
+        body: '{"errors":[{"detail":"Uploaded buildpack file is invalid: resource_buildpack_test.go is not a zip","title":"CF-UnprocessableEntity","code":10008}]}'
+        headers:
+            Content-Length:
+                - "147"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:30 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 628b76fea0897c0a
+            X-B3-Traceid:
+                - 1e4ac7f824f84e6f628b76fea0897c0a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003148"
+            X-Vcap-Request-Id:
+                - 1e4ac7f8-24f8-4e6f-628b-76fea0897c0a::d208f804-795f-4f2a-9023-5cce2e2e5453
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 200.530375ms
+    - id: 19
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/buildpacks/c34fe33f-f856-47cc-b900-50221067485a
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Thu, 20 Jun 2024 11:30:30 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/14b081f0-43bb-4e6f-8034-f89d7c0c1daa
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 46160e4020ebc9b5
+            X-B3-Traceid:
+                - c85c3e606a3140c846160e4020ebc9b5
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.031919"
+            X-Vcap-Request-Id:
+                - c85c3e60-6a31-40c8-4616-0e4020ebc9b5::d034fd28-71e1-4c41-85df-f59426e05150
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 201.443083ms
+    - id: 20
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/14b081f0-43bb-4e6f-8034-f89d7c0c1daa
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 318
+        uncompressed: false
+        body: '{"guid":"14b081f0-43bb-4e6f-8034-f89d7c0c1daa","created_at":"2024-06-20T11:30:30Z","updated_at":"2024-06-20T11:30:30Z","operation":"buildpack.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/14b081f0-43bb-4e6f-8034-f89d7c0c1daa"}}}'
+        headers:
+            Content-Length:
+                - "318"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 20 Jun 2024 11:30:32 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 792fe036bf515000
+            X-B3-Traceid:
+                - c10921230ad14a52792fe036bf515000
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.004385"
+            X-Vcap-Request-Id:
+                - c1092123-0ad1-4a52-792f-e036bf515000::47b7cf87-4823-4e63-bb95-892ef28a42d6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 170.076458ms

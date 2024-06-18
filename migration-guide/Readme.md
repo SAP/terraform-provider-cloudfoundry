@@ -170,6 +170,7 @@ The below mentioned resources have been newly added in the current provider.
 While most resources have maintained the same structure, some resources needed minor changes in schema to follow the V3 API structure. Following is a list of resources whose schema have changed.
 
 - [Application](./resources/app.md)
+- [Buildpack](./resources/buildpack.md)
 - [Domain](./resources/domain.md)
 - [Org Quota](./resources/org_quota.md)
 - [Organisation](./resources/org.md)

@@ -16,6 +16,8 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 )
 
+replace github.com/cloudfoundry/go-cfclient/v3 => github.com/Dray56/go-cfclient/v3 v3.0.0-20240620094112-f69bb091b5b0
+
 require (
 	github.com/kr/text v0.2.0 // indirect
 	golang.org/x/tools v0.17.0 // indirect
