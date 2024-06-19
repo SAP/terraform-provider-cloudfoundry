@@ -130,32 +130,6 @@ https://docs.cloudfoundry.org/devguide/services`,
 				MarkdownDescription: "The URL to the service instance dashboard (or null if there is none); only shown when type is managed.",
 				Computed:            true,
 			},
-			"last_operation": schema.SingleNestedAttribute{
-				MarkdownDescription: "The last operation of this service instance.",
-				Computed:            true,
-				Attributes: map[string]schema.Attribute{
-					"type": schema.StringAttribute{
-						MarkdownDescription: "The type of the last operation",
-						Computed:            true,
-					},
-					"state": schema.StringAttribute{
-						MarkdownDescription: "The state of the last operation",
-						Computed:            true,
-					},
-					"description": schema.StringAttribute{
-						MarkdownDescription: "The description of the last operation",
-						Computed:            true,
-					},
-					"updated_at": schema.StringAttribute{
-						MarkdownDescription: "The time of the last operation",
-						Computed:            true,
-					},
-					"created_at": schema.StringAttribute{
-						MarkdownDescription: "The time at which the last operation was created",
-						Computed:            true,
-					},
-				},
-			},
 			"timeouts": timeouts.Attributes(ctx, timeouts.Opts{
 				Create:            true,
 				CreateDescription: "Timeout for creating the service instance. Default is 40 minutes",
@@ -164,11 +138,12 @@ https://docs.cloudfoundry.org/devguide/services`,
 				Delete:            true,
 				DeleteDescription: "Timeout for deleting the service instance. Default is 40 minutes",
 			}),
-			idKey:          guidSchema(),
-			labelsKey:      resourceLabelsSchema(),
-			annotationsKey: resourceAnnotationsSchema(),
-			createdAtKey:   createdAtSchema(),
-			updatedAtKey:   updatedAtSchema(),
+			idKey:            guidSchema(),
+			"last_operation": lastOperationSchema(),
+			labelsKey:        resourceLabelsSchema(),
+			annotationsKey:   resourceAnnotationsSchema(),
+			createdAtKey:     createdAtSchema(),
+			updatedAtKey:     updatedAtSchema(),
 		},
 	}
 }

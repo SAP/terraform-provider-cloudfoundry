@@ -94,6 +94,35 @@ func guidSchema() *schema.StringAttribute {
 	}
 }
 
+func lastOperationSchema() *schema.SingleNestedAttribute {
+	return &schema.SingleNestedAttribute{
+		MarkdownDescription: "The details of the last operation performed on the resource",
+		Computed:            true,
+		Attributes: map[string]schema.Attribute{
+			"type": schema.StringAttribute{
+				MarkdownDescription: "The type of the last operation",
+				Computed:            true,
+			},
+			"state": schema.StringAttribute{
+				MarkdownDescription: "The state of the last operation",
+				Computed:            true,
+			},
+			"description": schema.StringAttribute{
+				MarkdownDescription: "A description of the last operation",
+				Computed:            true,
+			},
+			"updated_at": schema.StringAttribute{
+				MarkdownDescription: "The time at which the last operation was updated",
+				Computed:            true,
+			},
+			"created_at": schema.StringAttribute{
+				MarkdownDescription: "The time at which the last operation was created",
+				Computed:            true,
+			},
+		},
+	}
+}
+
 // Take relationship from cfclient and return set type of terraform.
 func setRelationshipToTFSet(r []cfv3resource.Relationship) (basetypes.SetValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
@@ -118,6 +147,16 @@ func findChangedRelationsFromTFState(ctx context.Context, planSet basetypes.SetV
 	diags = append(diags, stateSet.ElementsAs(ctx, &stateSetStr, false)...)
 	removed, added := lo.Difference(stateSetStr, planSetStr)
 	return removed, added, diags
+}
+
+// Returns same element in the new plan which existed in state.
+func findSameRelationsFromTFState(ctx context.Context, planSet basetypes.SetValue, stateSet basetypes.SetValue) ([]string, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var planSetStr, stateSetStr []string
+	diags = append(diags, planSet.ElementsAs(ctx, &planSetStr, false)...)
+	diags = append(diags, stateSet.ElementsAs(ctx, &stateSetStr, false)...)
+	same := lo.Intersect(stateSetStr, planSetStr)
+	return same, diags
 }
 
 func handleReadErrors(ctx context.Context, resp *resource.ReadResponse, err error, res string, resName string) {

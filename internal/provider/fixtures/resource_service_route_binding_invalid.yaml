@@ -1,0 +1,73 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 243
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"relationships":{"service_instance":{"data":{"guid":"40b73419-5e01-4be0-baea-932d46cea45b"}},"route":{"data":{"guid":"3966c2fb-d84d-462d-82a5-a81cf7cdab20"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_route_bindings
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 149
+        uncompressed: false
+        body: '{"errors":[{"detail":"The service instance could not be found: 40b73419-5e01-4be0-baea-932d46cea45b","title":"CF-UnprocessableEntity","code":10008}]}'
+        headers:
+            Content-Length:
+                - "149"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 18 Jun 2024 05:15:21 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5f4b02facfcf3624
+            X-B3-Traceid:
+                - b75f7eb0d7f4474c5f4b02facfcf3624
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Ratelimit-Limit:
+                - "20000"
+            X-Ratelimit-Remaining:
+                - "18000"
+            X-Ratelimit-Reset:
+                - "1718688789"
+            X-Runtime:
+                - "0.003606"
+            X-Vcap-Request-Id:
+                - b75f7eb0-d7f4-474c-5f4b-02facfcf3624::c0d95b85-1d9d-4c40-ac84-d7079d8d5279
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 422 Unprocessable Entity
+        code: 422
+        duration: 275.318042ms

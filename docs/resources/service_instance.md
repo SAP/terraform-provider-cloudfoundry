@@ -113,7 +113,7 @@ resource "cloudfoundry_service_instance" "dev-usp" {
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `dashboard_url` (String) The URL to the service instance dashboard (or null if there is none); only shown when type is managed.
 - `id` (String) The GUID of the object.
-- `last_operation` (Attributes) The last operation of this service instance. (see [below for nested schema](#nestedatt--last_operation))
+- `last_operation` (Attributes) The details of the last operation performed on the resource (see [below for nested schema](#nestedatt--last_operation))
 - `maintenance_info` (Attributes) Information about the version of this service instance; only shown when type is managed (see [below for nested schema](#nestedatt--maintenance_info))
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 - `upgrade_available` (Boolean) Whether or not an upgrade of this service instance is available on the current Service Plan; details are available in the maintenance_info object; Only shown when type is managed
@@ -134,10 +134,10 @@ Optional:
 Read-Only:
 
 - `created_at` (String) The time at which the last operation was created
-- `description` (String) The description of the last operation
+- `description` (String) A description of the last operation
 - `state` (String) The state of the last operation
 - `type` (String) The type of the last operation
-- `updated_at` (String) The time of the last operation
+- `updated_at` (String) The time at which the last operation was updated
 
 
 <a id="nestedatt--maintenance_info"></a>

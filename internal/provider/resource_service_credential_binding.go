@@ -23,7 +23,6 @@ type serviceCredentialBindingResource struct {
 }
 
 var (
-	_ resource.Resource                   = &serviceCredentialBindingResource{}
 	_ resource.ResourceWithConfigure      = &serviceCredentialBindingResource{}
 	_ resource.ResourceWithImportState    = &serviceCredentialBindingResource{}
 	_ resource.ResourceWithValidateConfig = &serviceCredentialBindingResource{}
@@ -89,37 +88,12 @@ func (r *serviceCredentialBindingResource) Schema(ctx context.Context, req resou
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
-			"last_operation": schema.SingleNestedAttribute{
-				MarkdownDescription: "The last operation performed on the service credential binding",
-				Computed:            true,
-				Attributes: map[string]schema.Attribute{
-					"type": schema.StringAttribute{
-						MarkdownDescription: "The type of the last operation",
-						Computed:            true,
-					},
-					"state": schema.StringAttribute{
-						MarkdownDescription: "The state of the last operation",
-						Computed:            true,
-					},
-					"description": schema.StringAttribute{
-						MarkdownDescription: "A description of the last operation",
-						Computed:            true,
-					},
-					"updated_at": schema.StringAttribute{
-						MarkdownDescription: "The time at which the last operation was updated",
-						Computed:            true,
-					},
-					"created_at": schema.StringAttribute{
-						MarkdownDescription: "The time at which the last operation was created",
-						Computed:            true,
-					},
-				},
-			},
-			idKey:          guidSchema(),
-			labelsKey:      resourceLabelsSchema(),
-			annotationsKey: resourceAnnotationsSchema(),
-			createdAtKey:   createdAtSchema(),
-			updatedAtKey:   updatedAtSchema(),
+			"last_operation": lastOperationSchema(),
+			idKey:            guidSchema(),
+			labelsKey:        resourceLabelsSchema(),
+			annotationsKey:   resourceAnnotationsSchema(),
+			createdAtKey:     createdAtSchema(),
+			updatedAtKey:     updatedAtSchema(),
 		},
 	}
 }
@@ -237,8 +211,8 @@ func (r *serviceCredentialBindingResource) Create(ctx context.Context, req resou
 		serviceCredentialBinding, err = r.cfClient.ServiceCredentialBindings.Single(ctx, &getOptions)
 		if err != nil {
 			resp.Diagnostics.AddError(
-				"Error get service instance after creation",
-				"Unable to fetch created service instance"+plan.Name.ValueString()+": "+err.Error(),
+				"Error fetching service credential binding after creation",
+				"Unable to fetch created service credential binding "+plan.Name.ValueString()+": "+err.Error(),
 			)
 			return
 		}
@@ -315,7 +289,7 @@ func (r *serviceCredentialBindingResource) Delete(ctx context.Context, req resou
 
 	}
 	if jobID != "" {
-		if pollJob(ctx, *r.cfClient, jobID, defaultTimeout) != nil {
+		if err := pollJob(ctx, *r.cfClient, jobID, defaultTimeout); err != nil {
 			resp.Diagnostics.AddError(
 				"Unable to verify service credential binding deletion",
 				"service credential binding deletion verification failed for "+state.ID.ValueString()+": "+err.Error(),

@@ -268,6 +268,9 @@ func TestCloudFoundryProvider_HasResources(t *testing.T) {
 		"cloudfoundry_app",
 		"cloudfoundry_service_credential_binding",
 		"cloudfoundry_mta",
+		"cloudfoundry_isolation_segment",
+		"cloudfoundry_isolation_segment_entitlement",
+		"cloudfoundry_service_route_binding",
 	}
 
 	ctx := context.Background()
@@ -301,6 +304,8 @@ func TestProvider_HasDataSources(t *testing.T) {
 		"cloudfoundry_app",
 		"cloudfoundry_service_credential_binding",
 		"cloudfoundry_mta",
+		"cloudfoundry_isolation_segment",
+		"cloudfoundry_isolation_segment_entitlement",
 	}
 
 	ctx := context.Background()

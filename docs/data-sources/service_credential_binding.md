@@ -50,7 +50,7 @@ Read-Only:
 - `credential_binding` (String, Sensitive) The service credential binding details.
 - `id` (String) The GUID of the object.
 - `labels` (Map of String) The labels associated with Cloud Foundry resources.
-- `last_operation` (Attributes) The last operation performed on the service credential binding (see [below for nested schema](#nestedatt--credential_bindings--last_operation))
+- `last_operation` (Attributes) The details of the last operation performed on the resource (see [below for nested schema](#nestedatt--credential_bindings--last_operation))
 - `name` (String) Name of the service credential binding
 - `service_instance` (String) The GUID of the service instance
 - `type` (String) Type of the service credential binding
