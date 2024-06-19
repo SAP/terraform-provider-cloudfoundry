@@ -81,37 +81,12 @@ func (d *ServiceInstanceDataSource) Schema(ctx context.Context, req datasource.S
 				MarkdownDescription: "The URL to the service instance dashboard (or null if there is none); only shown when type is managed.",
 				Computed:            true,
 			},
-			"last_operation": schema.SingleNestedAttribute{
-				MarkdownDescription: "The last operation performed on the service instance",
-				Computed:            true,
-				Attributes: map[string]schema.Attribute{
-					"type": schema.StringAttribute{
-						MarkdownDescription: "The type of the last operation",
-						Computed:            true,
-					},
-					"state": schema.StringAttribute{
-						MarkdownDescription: "The state of the last operation",
-						Computed:            true,
-					},
-					"description": schema.StringAttribute{
-						MarkdownDescription: "A description of the last operation",
-						Computed:            true,
-					},
-					"updated_at": schema.StringAttribute{
-						MarkdownDescription: "The time at which the last operation was updated",
-						Computed:            true,
-					},
-					"created_at": schema.StringAttribute{
-						MarkdownDescription: "The time at which the last operation was created",
-						Computed:            true,
-					},
-				},
-			},
-			idKey:          guidSchema(),
-			labelsKey:      datasourceLabelsSchema(),
-			annotationsKey: datasourceAnnotationsSchema(),
-			createdAtKey:   createdAtSchema(),
-			updatedAtKey:   updatedAtSchema(),
+			"last_operation": lastOperationSchema(),
+			idKey:            guidSchema(),
+			labelsKey:        datasourceLabelsSchema(),
+			annotationsKey:   datasourceAnnotationsSchema(),
+			createdAtKey:     createdAtSchema(),
+			updatedAtKey:     updatedAtSchema(),
 		},
 	}
 }

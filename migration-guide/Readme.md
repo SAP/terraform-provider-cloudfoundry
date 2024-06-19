@@ -176,6 +176,7 @@ While most resources have maintained the same structure, some resources needed m
 - [Route](./resources/route.md)
 - [Security Group](./resources/security_group.md)
 - [Service credential Binding](./resources/service_credential_binding.md)
+- [Service Route Binding](./resources/service_route_binding.md)
 - [Service Instance](./resources/service_instance.md)
 - [Space Quota](./resources/space_quota.md)
 - [Space](./resources/space.md)
