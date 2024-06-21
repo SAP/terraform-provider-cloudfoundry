@@ -1,0 +1,747 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 351
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"space-broker","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","authentication":{"type":"basic","credentials":{"username":"admin","password":"hi"}},"relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Tue, 25 Jun 2024 10:21:30 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/75f26302-512d-4fe3-b916-3319d387c160
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 56063a8f1a7a97ca
+            X-B3-Traceid:
+                - 9dfb3d4961fc45ae56063a8f1a7a97ca
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.055879"
+            X-Vcap-Request-Id:
+                - 9dfb3d49-61fc-45ae-5606-3a8f1a7a97ca::c6817468-46cb-449a-aba7-cac47b2eb730
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 222.7695ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/75f26302-512d-4fe3-b916-3319d387c160
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 471
+        uncompressed: false
+        body: '{"guid":"75f26302-512d-4fe3-b916-3319d387c160","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:30Z","operation":"service_broker.catalog.synchronize","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/75f26302-512d-4fe3-b916-3319d387c160"},"service_brokers":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"}}}'
+        headers:
+            Content-Length:
+                - "471"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:32 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 6e03ad2ef95e40c1
+            X-B3-Traceid:
+                - ceccad7f957c4dd46e03ad2ef95e40c1
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.008010"
+            X-Vcap-Request-Id:
+                - ceccad7f-957c-4dd4-6e03-ad2ef95e40c1::cee34a08-7893-4dd7-b891-4bed667de81b
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 180.116916ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers?names=space-broker
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 1155
+        uncompressed: false
+        body: '{"pagination":{"total_results":1,"total_pages":1,"first":{"href":"https://api.x.x.x.x.com/v3/service_brokers?names=space-broker\u0026page=1\u0026per_page=50"},"last":{"href":"https://api.x.x.x.x.com/v3/service_brokers?names=space-broker\u0026page=1\u0026per_page=50"},"next":null,"previous":null},"resources":[{"guid":"e12c32e0-25e4-43d5-9301-477fa2d74548","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:30Z","name":"space-broker","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"},"service_offerings":{"href":"https://api.x.x.x.x.com/v3/service_offerings?service_broker_guids=e12c32e0-25e4-43d5-9301-477fa2d74548"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/0925b3c7-7544-4700-b71b-191b3c348e5c"}}}]}'
+        headers:
+            Content-Length:
+                - "1155"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:33 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 4a36e73a2cc24cab
+            X-B3-Traceid:
+                - 8645a82945d748694a36e73a2cc24cab
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.011452"
+            X-Vcap-Request-Id:
+                - 8645a829-45d7-4869-4a36-e73a2cc24cab::ab51bd8f-40e7-42b4-80f5-31ac389a5065
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 179.55325ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 791
+        uncompressed: false
+        body: '{"guid":"e12c32e0-25e4-43d5-9301-477fa2d74548","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:30Z","name":"space-broker","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"},"service_offerings":{"href":"https://api.x.x.x.x.com/v3/service_offerings?service_broker_guids=e12c32e0-25e4-43d5-9301-477fa2d74548"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/0925b3c7-7544-4700-b71b-191b3c348e5c"}}}'
+        headers:
+            Content-Length:
+                - "791"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:33 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 43eafced65b90378
+            X-B3-Traceid:
+                - fd9b58a92e1249b643eafced65b90378
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.009913"
+            X-Vcap-Request-Id:
+                - fd9b58a9-2e12-49b6-43ea-fced65b90378::491ac698-48da-43b2-b20f-d1aedd762c5c
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 174.210208ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 791
+        uncompressed: false
+        body: '{"guid":"e12c32e0-25e4-43d5-9301-477fa2d74548","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:30Z","name":"space-broker","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"},"service_offerings":{"href":"https://api.x.x.x.x.com/v3/service_offerings?service_broker_guids=e12c32e0-25e4-43d5-9301-477fa2d74548"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/0925b3c7-7544-4700-b71b-191b3c348e5c"}}}'
+        headers:
+            Content-Length:
+                - "791"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:33 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 59231572b5019bbe
+            X-B3-Traceid:
+                - 9bc63d67fb0f4be159231572b5019bbe
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.010139"
+            X-Vcap-Request-Id:
+                - 9bc63d67-fb0f-4be1-5923-1572b5019bbe::1a505f83-35fd-4aac-8168-ff03211e6e02
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 175.724042ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 287
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"space-broker-2","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","authentication":{"type":"basic","credentials":{"username":"admin","password":"hi"}},"metadata":{"labels":{"landscape":null,"purpose":"production","status":"fine"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Tue, 25 Jun 2024 10:21:33 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/5e005d08-f46a-4b63-8500-c7e299a3fba7
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7833ec4a57380320
+            X-B3-Traceid:
+                - 061c4408dde3497b7833ec4a57380320
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.060689"
+            X-Vcap-Request-Id:
+                - 061c4408-dde3-497b-7833-ec4a57380320::6fc0923f-a717-4945-9f9e-f8ca24a7988d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 227.182291ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/5e005d08-f46a-4b63-8500-c7e299a3fba7
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 458
+        uncompressed: false
+        body: '{"guid":"5e005d08-f46a-4b63-8500-c7e299a3fba7","created_at":"2024-06-25T10:21:33Z","updated_at":"2024-06-25T10:21:34Z","operation":"service_broker.update","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/5e005d08-f46a-4b63-8500-c7e299a3fba7"},"service_brokers":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"}}}'
+        headers:
+            Content-Length:
+                - "458"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:36 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 770208e69d76727e
+            X-B3-Traceid:
+                - 219115a67d8c49c0770208e69d76727e
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.006863"
+            X-Vcap-Request-Id:
+                - 219115a6-7d8c-49c0-7702-08e69d76727e::30eb69a4-e5c5-4408-a551-4caa6ce12591
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 176.812792ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 793
+        uncompressed: false
+        body: '{"guid":"e12c32e0-25e4-43d5-9301-477fa2d74548","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:34Z","name":"space-broker-2","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"},"service_offerings":{"href":"https://api.x.x.x.x.com/v3/service_offerings?service_broker_guids=e12c32e0-25e4-43d5-9301-477fa2d74548"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/0925b3c7-7544-4700-b71b-191b3c348e5c"}}}'
+        headers:
+            Content-Length:
+                - "793"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:36 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7d6d6279d4b4cddc
+            X-B3-Traceid:
+                - a711ac106dc44f4e7d6d6279d4b4cddc
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.008782"
+            X-Vcap-Request-Id:
+                - a711ac10-6dc4-4f4e-7d6d-6279d4b4cddc::d3ab4d44-7bf3-41db-8990-ca37d07bbddb
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 174.886209ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 793
+        uncompressed: false
+        body: '{"guid":"e12c32e0-25e4-43d5-9301-477fa2d74548","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:34Z","name":"space-broker-2","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"},"service_offerings":{"href":"https://api.x.x.x.x.com/v3/service_offerings?service_broker_guids=e12c32e0-25e4-43d5-9301-477fa2d74548"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/0925b3c7-7544-4700-b71b-191b3c348e5c"}}}'
+        headers:
+            Content-Length:
+                - "793"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:36 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 56059e410273511d
+            X-B3-Traceid:
+                - 475d04e0f8b84ca156059e410273511d
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.009504"
+            X-Vcap-Request-Id:
+                - 475d04e0-f8b8-4ca1-5605-9e410273511d::ece41c77-9ae6-404c-9f1b-cb04cfb23fb6
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 174.395791ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 793
+        uncompressed: false
+        body: '{"guid":"e12c32e0-25e4-43d5-9301-477fa2d74548","created_at":"2024-06-25T10:21:30Z","updated_at":"2024-06-25T10:21:34Z","name":"space-broker-2","url":"https://sample-broker.cert.cfapps.stagingazure.hanavlab.ondemand.com","relationships":{"space":{"data":{"guid":"0925b3c7-7544-4700-b71b-191b3c348e5c"}}},"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548"},"service_offerings":{"href":"https://api.x.x.x.x.com/v3/service_offerings?service_broker_guids=e12c32e0-25e4-43d5-9301-477fa2d74548"},"space":{"href":"https://api.x.x.x.x.com/v3/spaces/0925b3c7-7544-4700-b71b-191b3c348e5c"}}}'
+        headers:
+            Content-Length:
+                - "793"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:36 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 7d8cf591728c1fec
+            X-B3-Traceid:
+                - e74e959094e545287d8cf591728c1fec
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.008794"
+            X-Vcap-Request-Id:
+                - e74e9590-94e5-4528-7d8c-f591728c1fec::b4febb42-38d8-4497-ba5d-69c048ba2b82
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 174.804833ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/service_brokers/e12c32e0-25e4-43d5-9301-477fa2d74548
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html
+            Date:
+                - Tue, 25 Jun 2024 10:21:37 GMT
+            Location:
+                - https://api.x.x.x.x.com/v3/jobs/5acd3ab6-000a-4c12-84b1-994123a7280e
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5ca33c7c94e38ec8
+            X-B3-Traceid:
+                - b98e73112eb8445d5ca33c7c94e38ec8
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.033846"
+            X-Vcap-Request-Id:
+                - b98e7311-2eb8-445d-5ca3-3c7c94e38ec8::c5993296-7146-41d1-a688-d9680ada59c0
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 202 Accepted
+        code: 202
+        duration: 198.646666ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/5acd3ab6-000a-4c12-84b1-994123a7280e
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 323
+        uncompressed: false
+        body: '{"guid":"5acd3ab6-000a-4c12-84b1-994123a7280e","created_at":"2024-06-25T10:21:37Z","updated_at":"2024-06-25T10:21:37Z","operation":"service_broker.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/5acd3ab6-000a-4c12-84b1-994123a7280e"}}}'
+        headers:
+            Content-Length:
+                - "323"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 25 Jun 2024 10:21:39 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5de6f486cf073970
+            X-B3-Traceid:
+                - 1a3afd090bb44b8b5de6f486cf073970
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.003723"
+            X-Vcap-Request-Id:
+                - 1a3afd09-0bb4-4b8b-5de6-f486cf073970::2aae9931-4369-4b1a-8119-5ec7ff72af29
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 168.324958ms
