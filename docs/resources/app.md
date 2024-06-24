@@ -149,7 +149,7 @@ resource "cloudfoundry_app" "http-bin-sidecar" {
 - `log_rate_limit_per_second` (String) The attribute specifies the log rate limit for all instances of an app.
 - `memory` (String) The memory limit for each application instance. If not provided, value is computed and retreived from Cloud Foundry.
 - `no_route` (Boolean) The attribute with a value of true to prevent a route from being created for your app.
-- `path` (String) An uri or path to target a zip file. this can be in the form of a unix path or url path.
+- `path` (String) The path to the zip file for the application.
 - `processes` (Attributes Set) List of configurations for individual process types. (see [below for nested schema](#nestedatt--processes))
 - `random_route` (Boolean) The random-route attribute to generate a unique route and avoid name collisions.
 - `readiness_health_check_http_endpoint` (String) The endpoint for the http readiness health check type.

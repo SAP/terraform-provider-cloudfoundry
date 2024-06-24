@@ -305,6 +305,7 @@ func (p *CloudFoundryProvider) Resources(ctx context.Context) []func() resource.
 		NewIsolationSegmentResource,
 		NewIsolationSegmentEntitlementResource,
 		NewServiceRouteBindingResource,
+		NewBuildpackResource,
 	}
 }
 
