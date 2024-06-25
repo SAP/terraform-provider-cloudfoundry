@@ -3,7 +3,7 @@ module github.com/SAP/terraform-provider-cloudfoundry
 go 1.22
 
 require (
-	github.com/cloudfoundry/go-cfclient/v3 v3.0.0-alpha.7.0.20240507152802-a3e4aba6e5b1
+	github.com/cloudfoundry/go-cfclient/v3 v3.0.0-alpha.7.0.20240624181623-f4562b03870c
 	github.com/hashicorp/terraform-plugin-framework v1.9.0
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.1
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0
@@ -15,8 +15,6 @@ require (
 	gopkg.in/dnaeon/go-vcr.v3 v3.2.0
 	gopkg.in/yaml.v2 v2.4.0
 )
-
-replace github.com/cloudfoundry/go-cfclient/v3 => github.com/Dray56/go-cfclient/v3 v3.0.0-20240620094112-f69bb091b5b0
 
 require (
 	github.com/kr/text v0.2.0 // indirect
@@ -73,7 +71,7 @@ require (
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a // indirect
 	golang.org/x/mod v0.16.0 // indirect
 	golang.org/x/net v0.23.0 // indirect
-	golang.org/x/oauth2 v0.20.0 // indirect
+	golang.org/x/oauth2 v0.21.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
