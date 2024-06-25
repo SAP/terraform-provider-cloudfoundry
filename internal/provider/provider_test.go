@@ -272,6 +272,7 @@ func TestCloudFoundryProvider_HasResources(t *testing.T) {
 		"cloudfoundry_isolation_segment_entitlement",
 		"cloudfoundry_service_route_binding",
 		"cloudfoundry_buildpack",
+		"cloudfoundry_service_broker",
 	}
 
 	ctx := context.Background()
