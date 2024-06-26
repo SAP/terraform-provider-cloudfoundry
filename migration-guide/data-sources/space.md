@@ -14,6 +14,6 @@ Gets information on a Cloud Foundry space.
 | Attribute name | SAP Cloud Foundry Provider (new)|  Community Cloud Foundry Provider (old) | Description |
 | --- | --- | --- | --- |
 | org_name | 🔴 | 🟢 | - |
-| org | 🔵 | 🟢 | Space can now be queried only by `org` GUID and not by `org_name`. If one knows org_name and not org GUID, one can obtain the id value from [`cloudfoundry_org`](./org.md) resource by specifying `name`. |
+| org | 🔵 | 🟢 | Space can now be queried only by `org` GUID and not by `org_name`. If one knows org_name and not org GUID, one can obtain the id value from [`cloudfoundry_org`](/docs/data-sources/org.md) data source by specifying `name`. |
 | allow_ssh | 🟠 | 🔴 | - |
 | isolation_segment | 🟠 | 🔴 | - |
