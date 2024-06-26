@@ -211,4 +211,5 @@ While most dataSources have  maintained the same structure, some dataSources nee
 - [Service](./data-sources/service.md)
 - [Space Quota](./data-sources/space_quota.md)
 - [Space](./data-sources/space.md)
+- [Stack](./data-sources/stack.md)
 - [User](./data-sources/user.md)
