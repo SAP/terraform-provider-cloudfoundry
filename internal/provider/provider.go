@@ -329,6 +329,7 @@ func (p *CloudFoundryProvider) DataSources(ctx context.Context) []func() datasou
 		NewMtaDataSource,
 		NewIsolationSegmentDataSource,
 		NewIsolationSegmentEntitlementDataSource,
+		NewStackDataSource,
 	}
 }
 
