@@ -83,6 +83,7 @@ func (r *serviceCredentialBindingResource) Schema(ctx context.Context, req resou
 			"parameters": schema.StringAttribute{
 				MarkdownDescription: "A JSON object that is passed to the service broker for managed service instance.",
 				Optional:            true,
+				Sensitive:           true,
 				CustomType:          jsontypes.NormalizedType{},
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
