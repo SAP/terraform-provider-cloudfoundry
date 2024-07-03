@@ -46,7 +46,7 @@ resource "cloudfoundry_service_credential_binding" "scb1" {
 - `app` (String) The GUID of the app to be bound. Required when type is app
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
 - `name` (String) Name of the service credential binding. name is optional when the type is app
-- `parameters` (String) A JSON object that is passed to the service broker for managed service instance.
+- `parameters` (String, Sensitive) A JSON object that is passed to the service broker for managed service instance.
 
 ### Read-Only
 

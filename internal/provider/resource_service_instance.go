@@ -84,6 +84,7 @@ https://docs.cloudfoundry.org/devguide/services`,
 			"parameters": schema.StringAttribute{
 				MarkdownDescription: "A JSON object that is passed to the service broker for managed service instance.",
 				Optional:            true,
+				Sensitive:           true,
 				CustomType:          jsontypes.NormalizedType{},
 			},
 			"tags": schema.ListAttribute{
