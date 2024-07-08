@@ -4,16 +4,33 @@ import (
 	"context"
 	"time"
 
+	"github.com/cloudfoundry-community/go-uaa"
 	"github.com/cloudfoundry/go-cfclient/v3/resource"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// Terraform struct for storing values for user data source and resource.
+// Terraform struct for storing values for user data source.
 type userType struct {
 	UserName         types.String `tfsdk:"username"`
 	PresentationName types.String `tfsdk:"presentation_name"`
 	Origin           types.String `tfsdk:"origin"`
+	Id               types.String `tfsdk:"id"`
+	Labels           types.Map    `tfsdk:"labels"`
+	Annotations      types.Map    `tfsdk:"annotations"`
+	CreatedAt        types.String `tfsdk:"created_at"`
+	UpdatedAt        types.String `tfsdk:"updated_at"`
+}
+
+type userResourceType struct {
+	Password         types.String `tfsdk:"password"`
+	GivenName        types.String `tfsdk:"given_name"`
+	FamilyName       types.String `tfsdk:"family_name"`
+	UserName         types.String `tfsdk:"username"`
+	PresentationName types.String `tfsdk:"presentation_name"`
+	Origin           types.String `tfsdk:"origin"`
+	Email            types.String `tfsdk:"email"`
+	Groups           types.Set    `tfsdk:"groups"`
 	Id               types.String `tfsdk:"id"`
 	Labels           types.Map    `tfsdk:"labels"`
 	Annotations      types.Map    `tfsdk:"annotations"`
@@ -32,10 +49,38 @@ type spaceOrgUsersType struct {
 	Organization types.String `tfsdk:"org"`
 }
 
-// Sets the user resource values for creation with cf-client from the terraform struct values.
-func (data *userType) mapCreateUserTypeToValues(ctx context.Context) (resource.UserCreate, diag.Diagnostics) {
+// Sets the user resource values for creation with uaa-client from the terraform struct values.
+func (plan *userResourceType) mapCreateUAAUserTypeToValues() uaa.User {
 
-	createUser := &resource.UserCreate{GUID: data.Id.ValueString()}
+	email := plan.Email.ValueString()
+	if email == "" {
+		email = plan.UserName.ValueString()
+	}
+	emails := []uaa.Email{{
+		Value:   email,
+		Primary: booltoboolptr(true),
+	},
+	}
+	name := uaa.UserName{
+		GivenName:  plan.GivenName.ValueString(),
+		FamilyName: plan.FamilyName.ValueString(),
+	}
+
+	createUAAUser := uaa.User{
+		Username: plan.UserName.ValueString(),
+		Password: plan.Password.ValueString(),
+		Origin:   plan.Origin.ValueString(),
+		Name:     &name,
+		Emails:   emails,
+	}
+
+	return createUAAUser
+}
+
+// Sets the user resource values for creation with cf-client from the terraform struct values.
+func (data *userResourceType) mapCreateCFUserTypeToValues(ctx context.Context, userId string) (resource.UserCreate, diag.Diagnostics) {
+
+	createUser := &resource.UserCreate{GUID: userId}
 	var diagnostics diag.Diagnostics
 	createUser.Metadata = resource.NewMetadata()
 
@@ -46,6 +91,42 @@ func (data *userType) mapCreateUserTypeToValues(ctx context.Context) (resource.U
 	diagnostics.Append(annotationsDiags...)
 
 	return *createUser, diagnostics
+}
+
+// Sets the terraform struct values from the user resource returned by the cf-client.
+func mapUserResourcesValuesToType(ctx context.Context, uaaUser *uaa.User, cfUser *resource.User, password types.String) (userResourceType, diag.Diagnostics) {
+
+	userResourceType := userResourceType{
+		Id:               types.StringValue(cfUser.GUID),
+		CreatedAt:        types.StringValue(cfUser.CreatedAt.Format(time.RFC3339)),
+		UpdatedAt:        types.StringValue(cfUser.UpdatedAt.Format(time.RFC3339)),
+		PresentationName: types.StringValue(cfUser.PresentationName),
+		UserName:         types.StringValue(cfUser.Username),
+		Origin:           types.StringValue(cfUser.Origin),
+		Email:            types.StringValue(uaaUser.Emails[0].Value),
+	}
+
+	var diags, diagnostics diag.Diagnostics
+	userResourceType.Labels, diags = mapMetadataValueToType(ctx, cfUser.Metadata.Labels)
+	diagnostics.Append(diags...)
+	userResourceType.Annotations, diags = mapMetadataValueToType(ctx, cfUser.Metadata.Annotations)
+	diagnostics.Append(diags...)
+
+	if uaaUser.Name.FamilyName != "" {
+		userResourceType.FamilyName = types.StringValue(uaaUser.Name.FamilyName)
+	}
+	if uaaUser.Name.GivenName != "" {
+		userResourceType.GivenName = types.StringValue(uaaUser.Name.GivenName)
+	}
+	userResourceType.Password = password
+	var groups []string
+	for _, group := range uaaUser.Groups {
+		groups = append(groups, group.Display)
+	}
+	userResourceType.Groups, diags = types.SetValueFrom(ctx, types.StringType, groups)
+	diagnostics.Append(diags...)
+
+	return userResourceType, diagnostics
 }
 
 // Sets the terraform struct values from the user resource returned by the cf-client.
@@ -67,6 +148,29 @@ func mapUserValuesToType(ctx context.Context, user *resource.User) (userType, di
 	diagnostics.Append(diags...)
 
 	return userType, diagnostics
+}
+
+// Sets the user resource values for creation with uaa-client from the terraform struct values.
+func (plan *userResourceType) mapUpdateUAAUserTypeToValues() uaa.User {
+
+	emails := []uaa.Email{{
+		Value:   plan.Email.ValueString(),
+		Primary: booltoboolptr(true),
+	},
+	}
+	name := uaa.UserName{
+		GivenName:  plan.GivenName.ValueString(),
+		FamilyName: plan.FamilyName.ValueString(),
+	}
+
+	updateUAAUser := uaa.User{
+		Username: plan.UserName.ValueString(),
+		Origin:   plan.Origin.ValueString(),
+		Name:     &name,
+		Emails:   emails,
+	}
+
+	return updateUAAUser
 }
 
 // Sets the user resource values for updation with cf-client from the terraform struct values.
