@@ -17,7 +17,9 @@ require (
 )
 
 require (
+	github.com/cloudfoundry-community/go-uaa v0.3.2 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 )
