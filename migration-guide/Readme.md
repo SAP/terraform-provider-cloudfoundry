@@ -182,12 +182,12 @@ While most resources have maintained the same structure, some resources needed m
 - [Service Instance](./resources/service_instance.md)
 - [Space Quota](./resources/space_quota.md)
 - [Space](./resources/space.md)
+- [User](./resources/user.md)
 
 Few resources required a major change in functionality or the way the resources were created which are mentioned below.
 
 - [Org Role](./resources/org_role.md)
 - [Space Role](./resources/space_role.md)
-- [User](./resources/user.md)
 
 ### Changed DataSources
 

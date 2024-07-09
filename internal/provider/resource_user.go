@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/setplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -41,7 +42,7 @@ func (r *UserResource) Metadata(ctx context.Context, req resource.MetadataReques
 
 func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Provides a resource for creating users in the origin store and registering them in Cloud Foundry.",
+		MarkdownDescription: "Provides a resource for creating users in the origin store and registering them in Cloud Foundry. If the origin store user or the CF user already exists with the given username, it will fetch that user and store it in the state for resource management.",
 		Attributes: map[string]schema.Attribute{
 			"username": schema.StringAttribute{
 				MarkdownDescription: "User name of the user, typically an email address.",
@@ -78,12 +79,8 @@ func (r *UserResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				MarkdownDescription: "Any UAA groups / roles to associate the user with.",
 				ElementType:         types.StringType,
 				Computed:            true,
-			},
-			"presentation_name": schema.StringAttribute{
-				MarkdownDescription: "The name displayed for the user; for UAA users, this is the same as the username. For UAA clients, this is the UAA client ID",
-				Computed:            true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
+				PlanModifiers: []planmodifier.Set{
+					setplanmodifier.UseStateForUnknown(),
 				},
 			},
 
@@ -176,36 +173,6 @@ func (r *UserResource) Create(ctx context.Context, req resource.CreateRequest, r
 		}
 	}
 
-	var groups []string
-	if !plan.Groups.IsUnknown() {
-		diags = plan.Groups.ElementsAs(ctx, &groups, false)
-		resp.Diagnostics.Append(diags...)
-	}
-	for _, groupToAdd := range groups {
-		group, err := r.uaaClient.GetGroupByName(groupToAdd, "")
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Fetching UAA Group",
-				"Could not Fetch Group with Name "+groupToAdd+" : "+err.Error(),
-			)
-		}
-		err = r.uaaClient.AddGroupMember(group.ID, uaaUser.ID, "USER", plan.Origin.ValueString())
-		if err != nil {
-			resp.Diagnostics.AddError(
-				"API Error Adding User to Group",
-				"Could not add user with ID "+uaaUser.ID+" to Group "+groupToAdd+" : "+err.Error(),
-			)
-		}
-	}
-
-	uaaUser, err = r.uaaClient.GetUser(uaaUser.ID)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"API Error Fetching User From Origin",
-			"Could not Fetch User with Name "+plan.UserName.ValueString()+" : "+err.Error(),
-		)
-	}
-
 	plan, diags = mapUserResourcesValuesToType(ctx, uaaUser, cfUser, plan.Password)
 	resp.Diagnostics.Append(diags...)
 
@@ -263,60 +230,42 @@ func (rs *UserResource) Update(ctx context.Context, req resource.UpdateRequest, 
 		return
 	}
 
-	//Change user password
-	reqPath := "Users/" + uaaUser.ID
-	reqMethod := "PUT"
-	reqData := `{"oldPassword" : ` + previousState.Password.ValueString() + `, "password" : ` + plan.Password.ValueString() + ` }`
-	reqHeaders := []string{"Content-Type: application/json", "Accept: application/json"}
-	_, _, _, err = rs.uaaClient.Curl(reqPath, reqMethod, reqData, reqHeaders)
+	if previousState.Password != plan.Password {
+		//Change user password
+		reqPath := "Users/" + uaaUser.ID + "/password"
+		reqMethod := "PUT"
+		reqData := `{ "oldPassword" : "` + previousState.Password.ValueString() + `" , "password" : "` + plan.Password.ValueString() + `"}`
+		reqHeaders := []string{"Content-Type: application/json", "Accept: application/json"}
+		_, respBody, respCode, err := rs.uaaClient.Curl(reqPath, reqMethod, reqData, reqHeaders)
 
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"API Error Updating Password",
-			"Could not update Password for user with Id "+plan.Id.ValueString()+" : "+err.Error(),
-		)
-		return
-	}
-
-	cfUser, err := r.cfClient.Users.Get(ctx, uaaUser.ID)
-	if err != nil {
-		if cfv3resource.IsResourceNotFoundError(err) {
-			createCFUser, diags := plan.mapCreateCFUserTypeToValues(ctx, uaaUser.ID)
-			resp.Diagnostics.Append(diags...)
-			cfUser, err = r.cfClient.Users.Create(ctx, &createCFUser)
+		var errMsg string
+		if respCode != 200 || err != nil {
 			if err != nil {
-				resp.Diagnostics.AddError(
-					"API Error Creating CF User",
-					"Could not Create User with ID "+uaaUser.ID+" : "+err.Error(),
-				)
-				return
+				errMsg = err.Error()
+			} else {
+				errMsg = respBody
 			}
-
-		} else {
 			resp.Diagnostics.AddError(
-				"API Error Fetching CF User",
-				"Could not Fetch User with ID "+uaaUser.ID+" : "+err.Error(),
+				"API Error Updating Password of User",
+				"Could not update Password for user with Id "+plan.Id.ValueString()+" : "+errMsg,
 			)
 			return
 		}
 	}
 
-	updateUser, diags := plan.mapUpdateUserTypeToValues(ctx, previousState)
+	updateCFUser, diags := plan.mapUpdateUserTypeToValues(ctx, previousState)
 	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
 
-	user, err := rs.cfClient.Users.Update(ctx, plan.Id.ValueString(), &updateUser)
+	cfUser, err := rs.cfClient.Users.Update(ctx, plan.Id.ValueString(), &updateCFUser)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"API Error Updating User",
+			"API Error Updating CF User",
 			"Could not update User with ID "+plan.Id.ValueString()+" : "+err.Error(),
 		)
 		return
 	}
 
-	data, diags := mapUserValuesToType(ctx, user)
+	data, diags := mapUserResourcesValuesToType(ctx, uaaUser, cfUser, plan.Password)
 	resp.Diagnostics.Append(diags...)
 
 	tflog.Trace(ctx, "updated a user resource")
@@ -336,7 +285,7 @@ func (rs *UserResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting CF User",
-			"Could not delete the user with ID "+state.Id.ValueString()+" and name "+state.PresentationName.ValueString()+" : "+err.Error(),
+			"Could not delete the user with ID "+state.Id.ValueString()+" : "+err.Error(),
 		)
 		return
 	}
@@ -344,7 +293,7 @@ func (rs *UserResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 	if err = pollJob(ctx, *rs.cfClient, jobID, defaultTimeout); err != nil {
 		resp.Diagnostics.AddError(
 			"API Error Deleting CF User",
-			"Failed in deleting the user with ID "+state.Id.ValueString()+" and name "+state.PresentationName.ValueString()+" : "+err.Error(),
+			"Failed in deleting the user with ID "+state.Id.ValueString()+" : "+err.Error(),
 		)
 		return
 	}

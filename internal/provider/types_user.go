@@ -13,29 +13,28 @@ import (
 // Terraform struct for storing values for user data source.
 type userType struct {
 	UserName         types.String `tfsdk:"username"`
-	PresentationName types.String `tfsdk:"presentation_name"`
 	Origin           types.String `tfsdk:"origin"`
 	Id               types.String `tfsdk:"id"`
 	Labels           types.Map    `tfsdk:"labels"`
+	PresentationName types.String `tfsdk:"presentation_name"`
 	Annotations      types.Map    `tfsdk:"annotations"`
 	CreatedAt        types.String `tfsdk:"created_at"`
 	UpdatedAt        types.String `tfsdk:"updated_at"`
 }
 
 type userResourceType struct {
-	Password         types.String `tfsdk:"password"`
-	GivenName        types.String `tfsdk:"given_name"`
-	FamilyName       types.String `tfsdk:"family_name"`
-	UserName         types.String `tfsdk:"username"`
-	PresentationName types.String `tfsdk:"presentation_name"`
-	Origin           types.String `tfsdk:"origin"`
-	Email            types.String `tfsdk:"email"`
-	Groups           types.Set    `tfsdk:"groups"`
-	Id               types.String `tfsdk:"id"`
-	Labels           types.Map    `tfsdk:"labels"`
-	Annotations      types.Map    `tfsdk:"annotations"`
-	CreatedAt        types.String `tfsdk:"created_at"`
-	UpdatedAt        types.String `tfsdk:"updated_at"`
+	Password    types.String `tfsdk:"password"`
+	GivenName   types.String `tfsdk:"given_name"`
+	FamilyName  types.String `tfsdk:"family_name"`
+	UserName    types.String `tfsdk:"username"`
+	Origin      types.String `tfsdk:"origin"`
+	Email       types.String `tfsdk:"email"`
+	Groups      types.Set    `tfsdk:"groups"`
+	Id          types.String `tfsdk:"id"`
+	Labels      types.Map    `tfsdk:"labels"`
+	Annotations types.Map    `tfsdk:"annotations"`
+	CreatedAt   types.String `tfsdk:"created_at"`
+	UpdatedAt   types.String `tfsdk:"updated_at"`
 }
 
 type datasourceUserType struct {
@@ -97,13 +96,12 @@ func (data *userResourceType) mapCreateCFUserTypeToValues(ctx context.Context, u
 func mapUserResourcesValuesToType(ctx context.Context, uaaUser *uaa.User, cfUser *resource.User, password types.String) (userResourceType, diag.Diagnostics) {
 
 	userResourceType := userResourceType{
-		Id:               types.StringValue(cfUser.GUID),
-		CreatedAt:        types.StringValue(cfUser.CreatedAt.Format(time.RFC3339)),
-		UpdatedAt:        types.StringValue(cfUser.UpdatedAt.Format(time.RFC3339)),
-		PresentationName: types.StringValue(cfUser.PresentationName),
-		UserName:         types.StringValue(cfUser.Username),
-		Origin:           types.StringValue(cfUser.Origin),
-		Email:            types.StringValue(uaaUser.Emails[0].Value),
+		Id:        types.StringValue(cfUser.GUID),
+		CreatedAt: types.StringValue(cfUser.CreatedAt.Format(time.RFC3339)),
+		UpdatedAt: types.StringValue(cfUser.UpdatedAt.Format(time.RFC3339)),
+		UserName:  types.StringValue(cfUser.Username),
+		Origin:    types.StringValue(cfUser.Origin),
+		Email:     types.StringValue(uaaUser.Emails[0].Value),
 	}
 
 	var diags, diagnostics diag.Diagnostics
@@ -153,8 +151,12 @@ func mapUserValuesToType(ctx context.Context, user *resource.User) (userType, di
 // Sets the user resource values for creation with uaa-client from the terraform struct values.
 func (plan *userResourceType) mapUpdateUAAUserTypeToValues() uaa.User {
 
+	email := plan.Email.ValueString()
+	if email == "" {
+		email = plan.UserName.ValueString()
+	}
 	emails := []uaa.Email{{
-		Value:   plan.Email.ValueString(),
+		Value:   email,
 		Primary: booltoboolptr(true),
 	},
 	}
@@ -164,6 +166,7 @@ func (plan *userResourceType) mapUpdateUAAUserTypeToValues() uaa.User {
 	}
 
 	updateUAAUser := uaa.User{
+		ID:       plan.Id.ValueString(),
 		Username: plan.UserName.ValueString(),
 		Origin:   plan.Origin.ValueString(),
 		Name:     &name,
@@ -174,7 +177,7 @@ func (plan *userResourceType) mapUpdateUAAUserTypeToValues() uaa.User {
 }
 
 // Sets the user resource values for updation with cf-client from the terraform struct values.
-func (plan *userType) mapUpdateUserTypeToValues(ctx context.Context, state userType) (resource.UserUpdate, diag.Diagnostics) {
+func (plan *userResourceType) mapUpdateUserTypeToValues(ctx context.Context, state userResourceType) (resource.UserUpdate, diag.Diagnostics) {
 
 	updateUser := &resource.UserUpdate{}
 
