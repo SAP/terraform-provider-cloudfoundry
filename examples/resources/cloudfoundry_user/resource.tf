@@ -1,17 +1,8 @@
-terraform {
-  required_providers {
-    cloudfoundry = {
-      source  = "SAP/cloudfoundry"
-    }
-  }
-}
-provider "cloudfoundry" {
-}
-
 resource "cloudfoundry_user" "my_user" {
-  username = "hi"
-  email = "hi@gmail.com"
-  given_name = "Das"
-  family_name = "Hi"
-  annotations = { purpose : "testing" }
+  username    = "test"
+  email       = "test@gmail.com"
+  password    = "test123"
+  given_name  = "test"
+  family_name = "test"
+  annotations = { "purpose" : "testing", hi : "hello" }
 }

@@ -2,19 +2,23 @@
 page_title: "cloudfoundry_user Resource - terraform-provider-cloudfoundry"
 subcategory: ""
 description: |-
-  Provides a Cloud Foundry resource for registering users.
+  Provides a resource for creating users in the origin store and registering them in Cloud Foundry. If the origin store user or the CF user already exists with the given username, it will fetch that user and store it in the state for resource management.
 ---
 
 # cloudfoundry_user (Resource)
 
-Provides a Cloud Foundry resource for registering users.
+Provides a resource for creating users in the origin store and registering them in Cloud Foundry. If the origin store user or the CF user already exists with the given username, it will fetch that user and store it in the state for resource management.
 
 ## Example Usage
 
 ```terraform
 resource "cloudfoundry_user" "my_user" {
-  id          = "test-user567"
-  annotations = { purpose : "testing" }
+  username    = "test"
+  email       = "test@gmail.com"
+  password    = "test123"
+  given_name  = "test"
+  family_name = "test"
+  annotations = { "purpose" : "testing", hi : "hello" }
 }
 ```
 
@@ -23,20 +27,24 @@ resource "cloudfoundry_user" "my_user" {
 
 ### Required
 
-- `id` (String) Unique identifier for the user. For UAA users this will match the user ID of an existing UAA user's GUID; in the case of UAA clients, this will match the UAA client ID
+- `username` (String) User name of the user, typically an email address.
 
 ### Optional
 
 - `annotations` (Map of String) The annotations associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `email` (String) The email address of the user. When not provided, name is used as email.
+- `family_name` (String) The user's last name.
+- `given_name` (String) The user's first name.
 - `labels` (Map of String) The labels associated with Cloud Foundry resources. Add as described [here](https://docs.cloudfoundry.org/adminguide/metadata.html#-view-metadata-for-an-object).
+- `origin` (String) The alias of the Identity Provider that authenticated this user.
+- `password` (String, Sensitive) User's password, required if origin is set to uaa.
 
 ### Read-Only
 
 - `created_at` (String) The date and time when the resource was created in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
-- `origin` (String) The identity provider for the UAA user; will be null for UAA clients
-- `presentation_name` (String) The name displayed for the user; for UAA users, this is the same as the username. For UAA clients, this is the UAA client ID
+- `groups` (Set of String) Any UAA groups / roles to associate the user with.
+- `id` (String) The GUID of the object.
 - `updated_at` (String) The date and time when the resource was updated in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format.
-- `username` (String) The name registered in UAA; will be null for UAA clients and non-UAA users
 
 ## Import
 

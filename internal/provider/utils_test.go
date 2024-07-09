@@ -38,7 +38,6 @@ var (
 	testCreateLabel          = "{purpose: \"testing\", landscape: \"test\"}"
 	testUpdateLabel          = "{purpose: \"production\", status: \"fine\"}"
 	testUser                 = "debaditya.ray@sap.com"
-	testUserGUID             = "2334cf47-fead-4e5f-bd2a-6e7153e7f144"
 	testUser2GUID            = "4467eb10-a5dd-4c46-904f-d5a1c86f05a2"
 	createRules              = `[{
 									protocol = "tcp"
