@@ -8,23 +8,24 @@
 
 ------------------
 #RES.COMM
-resource "cloudfoundry_user" "admin-service-user" {
-
-    name = "cf-admin"
-    password = "Passw0rd"
-
-    given_name = "John"
-    family_name = "Doe"
-
-    groups = [ "cloud_controller.admin", "scim.read", "scim.write" ]
+resource "cloudfoundry_user" "my_user" {
+  name    = "test"
+  email       = "test@gmail.com"
+  password    = "test123"
+  given_name  = "test"
+  family_name = "test"
 }
 ##RES.COMM
 
 --------------------
 #RES.SAP
 resource "cloudfoundry_user" "my_user" {
-  id          = "test-user567"
-  annotations = { purpose : "testing" }
+  username    = "test"
+  email       = "test@gmail.com"
+  password    = "test123"
+  given_name  = "test"
+  family_name = "test"
+  annotations = { "purpose" : "testing", hi : "hello" }
 }
 ##RES.SAP
 
