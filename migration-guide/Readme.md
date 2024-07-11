@@ -166,6 +166,7 @@ The below mentioned resources replicate the schema and functionality of those pr
 The below mentioned resources have been newly added in the current provider.
 
 - [Multi Target Application Deployment](../docs/resources/mta.md)
+- [User Groups Binding](../docs/resources/user_groups.md)
 
 While most resources have maintained the same structure, some resources needed minor changes in schema to follow the V3 API structure. Following is a list of resources whose schema have changed.
 

@@ -87,6 +87,8 @@ func TestUserResource_Configure(t *testing.T) {
 		createUsername   = "tf-test"
 		createEmail      = "tf-test@example.com"
 		createPassword   = "tf-test"
+		familyName       = "tf-family"
+		givenName        = "tf-given"
 		updateUsername   = "tf-test2"
 		updateEmail      = "tf-test-updated@example.com"
 		resourceName     = "cloudfoundry_user.us"
@@ -111,6 +113,8 @@ func TestUserResource_Configure(t *testing.T) {
 						HclObjectName: "us",
 						UserName:      &createUsername,
 						Password:      &createPassword,
+						GivenName:     &givenName,
+						FamilyName:    &familyName,
 						Email:         &createEmail,
 						Labels:        &testCreateLabel,
 					}),
@@ -119,6 +123,8 @@ func TestUserResource_Configure(t *testing.T) {
 						resource.TestMatchResourceAttr(resourceName, "id", regexpValidUUID),
 						resource.TestMatchResourceAttr(resourceName, "created_at", regexpValidRFC3999Format),
 						resource.TestCheckResourceAttr(resourceName, "username", createUsername),
+						resource.TestCheckResourceAttr(resourceName, "given_name", givenName),
+						resource.TestCheckResourceAttr(resourceName, "family_name", familyName),
 						resource.TestCheckResourceAttr(resourceName, "email", createEmail),
 						resource.TestCheckResourceAttr(resourceName, "labels.purpose", "testing"),
 					),
@@ -165,9 +171,26 @@ func TestUserResource_Configure(t *testing.T) {
 					Config: hclProvider(nil) + hclResourceUser(&UserResourceModelPtr{
 						HclType:       hclObjectResource,
 						HclObjectName: "us",
+					}),
+					ExpectError: regexp.MustCompile(`Missing required argument`),
+				},
+				{
+					Config: hclProvider(nil) + hclResourceUser(&UserResourceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "us",
 						UserName:      &createUsername2,
 					}),
 					ExpectError: regexp.MustCompile(`API Error Creating User in Origin`),
+				},
+				{
+					Config: hclProvider(nil) + hclResourceUser(&UserResourceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "us",
+						UserName:      &createUsername2,
+						Password:      &createPassword2,
+						Labels:        &testInvalidLabel,
+					}),
+					ExpectError: regexp.MustCompile(`API Error Creating CF User`),
 				},
 				{
 					Config: hclProvider(nil) + hclResourceUser(&UserResourceModelPtr{
@@ -182,6 +205,13 @@ func TestUserResource_Configure(t *testing.T) {
 						resource.TestCheckResourceAttr(resourceName, "username", createUsername2),
 						resource.TestCheckResourceAttr(resourceName, "password", createPassword2),
 					),
+				},
+				{
+					Config: hclProvider(nil) + hclResourceUser(&UserResourceModelPtr{
+						HclType:       hclObjectResource,
+						HclObjectName: "us",
+					}),
+					ExpectError: regexp.MustCompile(`Missing required argument`),
 				},
 				{
 					Config: hclProvider(nil) + hclResourceUser(&UserResourceModelPtr{

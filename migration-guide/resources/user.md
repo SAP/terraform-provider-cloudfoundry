@@ -14,6 +14,6 @@ Provides a resource for creating users in the origin store and registering them 
 |---| ---| ---| ---| 
 |name | 🔴|  🔵  | `name` has been changed to `username`  to maintain conformity with UAA API. |
 |username  |   🔵 |🔴| - |
-|groups  |   🟠 |🟢| - | 
+|groups  |   🟠 |🟢| Assigning groups to the user functionality can be achieved from the [`cloudfoundry_user_groups`](../../docs/resources/user_groups.md) resource | 
 |labels  |  🟢 | 🔴| - | 
 |annotations  |   🟢 | 🔴| - | 
