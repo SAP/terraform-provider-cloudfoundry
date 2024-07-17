@@ -6,84 +6,24 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 101
-        transfer_encoding: []
-        trailer: {}
-        host: api.x.x.x.x.com
-        remote_addr: ""
-        request_uri: ""
-        body: |
-            {"guid":"tf-test","metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
-        form: {}
-        headers:
-            Authorization:
-                - Bearer redacted
-            Content-Type:
-                - application/json
-            User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users
-        method: POST
-      response:
-        proto: HTTP/2.0
-        proto_major: 2
-        proto_minor: 0
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: false
-        body: '{"guid":"tf-test","created_at":"2024-02-07T08:36:13Z","updated_at":"2024-02-07T08:36:13Z","username":null,"presentation_name":"tf-test","origin":null,"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/tf-test"}}}'
-        headers:
-            Content-Type:
-                - application/json; charset=utf-8
-            Date:
-                - Wed, 07 Feb 2024 08:36:13 GMT
-            Referrer-Policy:
-                - strict-origin-when-cross-origin
-            Server:
-                - nginx
-            Strict-Transport-Security:
-                - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 72443a869d73ca46
-            X-B3-Traceid:
-                - d0684ca797c4400f72443a869d73ca46
-            X-Content-Type-Options:
-                - nosniff
-            X-Download-Options:
-                - noopen
-            X-Frame-Options:
-                - SAMEORIGIN
-            X-Permitted-Cross-Domain-Policies:
-                - none
-            X-Runtime:
-                - "0.093083"
-            X-Vcap-Request-Id:
-                - d0684ca7-97c4-400f-7244-3a869d73ca46::ed1a2864-b1b4-41ca-8e60-5f300204e774
-            X-Xss-Protection:
-                - 1; mode=block
-        status: 201 Created
-        code: 201
-        duration: 656.601666ms
-    - id: 1
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: api.x.x.x.x.com
+        host: uaa.x.x.x.x.com
         remote_addr: ""
         request_uri: ""
         body: ""
         form: {}
         headers:
+            Accept:
+                - application/json
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users/tf-test
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users?count=100&filter=userName+eq+%22tf-test%22&startIndex=1
         method: GET
       response:
         proto: HTTP/2.0
@@ -93,39 +33,96 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"tf-test","created_at":"2024-02-07T08:36:13Z","updated_at":"2024-02-07T08:36:13Z","username":null,"presentation_name":"tf-test","origin":null,"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/tf-test"}}}'
+        body: '{"resources":[],"startIndex":1,"itemsPerPage":100,"totalResults":0,"schemas":["urn:scim:schemas:core:1.0"]}'
         headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
             Content-Type:
-                - application/json; charset=utf-8
+                - application/json
             Date:
-                - Wed, 07 Feb 2024 08:36:13 GMT
-            Referrer-Policy:
-                - strict-origin-when-cross-origin
-            Server:
-                - nginx
+                - Fri, 12 Jul 2024 03:28:03 GMT
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 749467bbcaecd3a4
-            X-B3-Traceid:
-                - 7a5235962a9f409e749467bbcaecd3a4
             X-Content-Type-Options:
                 - nosniff
-            X-Download-Options:
-                - noopen
             X-Frame-Options:
-                - SAMEORIGIN
-            X-Permitted-Cross-Domain-Policies:
-                - none
-            X-Runtime:
-                - "0.043577"
+                - DENY
             X-Vcap-Request-Id:
-                - 7a523596-2a9f-409e-7494-67bbcaecd3a4::73b3cd4f-e2f5-4389-b8a0-c6478e992060
+                - 0755f9a5-ba62-412c-5d17-1e0d4678ce61
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 230.237484ms
+        duration: 531.712292ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 158
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"password":"tf-test","userName":"tf-test","name":{"familyName":"tf-family","givenName":"tf-given"},"emails":[{"value":"tf-test@example.com","primary":true}]}'
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":0,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:03.699Z"},"userName":"tf-test","name":{"familyName":"tf-family","givenName":"tf-given"},"emails":[{"value":"tf-test@example.com","primary":false}],"groups":[{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json
+            Date:
+                - Fri, 12 Jul 2024 03:28:03 GMT
+            Etag:
+                - '"0"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 49c2870d-c6f2-46f4-4197-4c2a4be8aa4d
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 273.153083ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -143,8 +140,8 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users/tf-test
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
         method: GET
       response:
         proto: HTTP/2.0
@@ -152,24 +149,24 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 83
         uncompressed: false
-        body: '{"guid":"tf-test","created_at":"2024-02-07T08:36:13Z","updated_at":"2024-02-07T08:36:13Z","username":null,"presentation_name":"tf-test","origin":null,"metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/tf-test"}}}'
+        body: '{"errors":[{"detail":"User not found","title":"CF-ResourceNotFound","code":10010}]}'
         headers:
+            Content-Length:
+                - "83"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 07 Feb 2024 08:36:14 GMT
+                - Fri, 12 Jul 2024 03:28:04 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
-            Server:
-                - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 5d7adfa73068f2e1
+                - 45edab7cdb3e725d
             X-B3-Traceid:
-                - d6a3715d2ba14b145d7adfa73068f2e1
+                - 4e40fb4a4f62471945edab7cdb3e725d
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -179,15 +176,392 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.049842"
+                - "0.002163"
             X-Vcap-Request-Id:
-                - d6a3715d-2ba1-4b14-5d7a-dfa73068f2e1::23f68123-fd7f-4c1b-8be3-300ff279098c
+                - 4e40fb4a-4f62-4719-45ed-ab7cdb3e725d::b98e4aa3-b1ca-4959-888e-364eb9957b50
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 404 Not Found
+        code: 404
+        duration: 518.556333ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 130
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":null}}
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 389
+        uncompressed: false
+        body: '{"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","created_at":"2024-07-12T03:28:04Z","updated_at":"2024-07-12T03:28:04Z","username":"tf-test","presentation_name":"tf-test","origin":"uaa","metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
+        headers:
+            Content-Length:
+                - "389"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 12 Jul 2024 03:28:04 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 61bcab93a75e1993
+            X-B3-Traceid:
+                - b19e6044b1c04c1e61bcab93a75e1993
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.066767"
+            X-Vcap-Request-Id:
+                - b19e6044-b1c0-4c1e-61bc-ab93a75e1993::9cdf7241-816b-45ec-a785-d7954f906b85
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 253.841917ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 389
+        uncompressed: false
+        body: '{"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","created_at":"2024-07-12T03:28:04Z","updated_at":"2024-07-12T03:28:04Z","username":"tf-test","presentation_name":"tf-test","origin":"uaa","metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
+        headers:
+            Content-Length:
+                - "389"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 12 Jul 2024 03:28:04 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 483a4bfcebf8f991
+            X-B3-Traceid:
+                - 410876a565a04f9a483a4bfcebf8f991
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.025270"
+            X-Vcap-Request-Id:
+                - 410876a5-65a0-4f9a-483a-4bfcebf8f991::ab2ec23f-8c93-47af-9d58-31f04c560624
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 254.760147ms
-    - id: 3
+        duration: 201.546458ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            If-Match:
+                - '*'
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":0,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:03.699Z"},"userName":"tf-test","name":{"familyName":"tf-family","givenName":"tf-given"},"emails":[{"value":"tf-test@example.com","primary":false}],"groups":[{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json
+            Date:
+                - Fri, 12 Jul 2024 03:28:04 GMT
+            Etag:
+                - '"0"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 380f63eb-db33-43d7-6125-0e6bc26c30ef
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 196.514541ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 389
+        uncompressed: false
+        body: '{"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","created_at":"2024-07-12T03:28:04Z","updated_at":"2024-07-12T03:28:04Z","username":"tf-test","presentation_name":"tf-test","origin":"uaa","metadata":{"labels":{"landscape":"test","purpose":"testing"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
+        headers:
+            Content-Length:
+                - "389"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 12 Jul 2024 03:28:05 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 693ee19c6d9ddf5a
+            X-B3-Traceid:
+                - 1878a83f22454437693ee19c6d9ddf5a
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.021749"
+            X-Vcap-Request-Id:
+                - 1878a83f-2245-4437-693e-e19c6d9ddf5a::7fc8060c-fdba-4d7b-876e-5193d47587b9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 197.667417ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            If-Match:
+                - '*'
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":0,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:03.699Z"},"userName":"tf-test","name":{"familyName":"tf-family","givenName":"tf-given"},"emails":[{"value":"tf-test@example.com","primary":false}],"groups":[{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json
+            Date:
+                - Fri, 12 Jul 2024 03:28:05 GMT
+            Etag:
+                - '"0"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 3916b8c0-bba0-4ce0-650c-e65b78b30fa9
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 178.014291ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 158
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","userName":"tf-test2","name":{},"emails":[{"value":"tf-test-updated@example.com","primary":true}],"origin":"uaa"}'
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            Content-Type:
+                - application/json
+            If-Match:
+                - '*'
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":1,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:05.750Z"},"userName":"tf-test2","name":{},"emails":[{"value":"tf-test-updated@example.com","primary":false}],"groups":[{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json
+            Date:
+                - Fri, 12 Jul 2024 03:28:05 GMT
+            Etag:
+                - '"1"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 6fc4d963-f794-45da-5559-9558d43ca198
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 210.986875ms
+    - id: 9
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -207,8 +581,8 @@ interactions:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users/tf-test
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -216,24 +590,24 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 391
         uncompressed: false
-        body: '{"guid":"tf-test","created_at":"2024-02-07T08:36:13Z","updated_at":"2024-02-07T08:36:13Z","username":null,"presentation_name":"tf-test","origin":null,"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/tf-test"}}}'
+        body: '{"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","created_at":"2024-07-12T03:28:04Z","updated_at":"2024-07-12T03:28:04Z","username":"tf-test2","presentation_name":"tf-test2","origin":"uaa","metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
         headers:
+            Content-Length:
+                - "391"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 07 Feb 2024 08:36:14 GMT
+                - Fri, 12 Jul 2024 03:28:06 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
-            Server:
-                - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 4becd963954a992a
+                - 71d97471f679d7d8
             X-B3-Traceid:
-                - 5dad8cafd2f94d964becd963954a992a
+                - 102fa04715c54f7d71d97471f679d7d8
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -243,15 +617,15 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.069577"
+                - "0.061204"
             X-Vcap-Request-Id:
-                - 5dad8caf-d2f9-4d96-4bec-d963954a992a::0a2e2203-e8ed-40fd-a6e7-cde017c56fc3
+                - 102fa047-15c5-4f7d-71d9-7471f679d7d8::4407d001-2422-4191-9221-597458f8a3e4
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 258.991286ms
-    - id: 4
+        duration: 236.740917ms
+    - id: 10
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -268,8 +642,75 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users/tf-test
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 391
+        uncompressed: false
+        body: '{"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","created_at":"2024-07-12T03:28:04Z","updated_at":"2024-07-12T03:28:04Z","username":"tf-test2","presentation_name":"tf-test2","origin":"uaa","metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
+        headers:
+            Content-Length:
+                - "391"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 12 Jul 2024 03:28:06 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 5a32a896e62f81b8
+            X-B3-Traceid:
+                - f777ce5e0bf54bc55a32a896e62f81b8
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.033749"
+            X-Vcap-Request-Id:
+                - f777ce5e-0bf5-4bc5-5a32-a896e62f81b8::d00e6005-1157-4039-8288-506f7b971f03
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 306.70825ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            If-Match:
+                - '*'
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
         method: GET
       response:
         proto: HTTP/2.0
@@ -279,40 +720,36 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"tf-test","created_at":"2024-02-07T08:36:13Z","updated_at":"2024-02-07T08:36:13Z","username":null,"presentation_name":"tf-test","origin":null,"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/tf-test"}}}'
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":1,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:05.750Z"},"userName":"tf-test2","name":{},"emails":[{"value":"tf-test-updated@example.com","primary":false}],"groups":[{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
         headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
             Content-Type:
-                - application/json; charset=utf-8
+                - application/json
             Date:
-                - Wed, 07 Feb 2024 08:36:15 GMT
-            Referrer-Policy:
-                - strict-origin-when-cross-origin
-            Server:
-                - nginx
+                - Fri, 12 Jul 2024 03:28:06 GMT
+            Etag:
+                - '"1"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 7e1aa1bcf9f752bd
-            X-B3-Traceid:
-                - f293c972c26f4b607e1aa1bcf9f752bd
             X-Content-Type-Options:
                 - nosniff
-            X-Download-Options:
-                - noopen
             X-Frame-Options:
-                - SAMEORIGIN
-            X-Permitted-Cross-Domain-Policies:
-                - none
-            X-Runtime:
-                - "0.042414"
+                - DENY
             X-Vcap-Request-Id:
-                - f293c972-c26f-4b60-7e1a-a1bcf9f752bd::7f55dbe0-aeb6-4e8a-8e47-74af0a450a11
+                - 07d38a07-a66d-4493-41e9-27ca3afae290
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 285.863405ms
-    - id: 5
+        duration: 183.17575ms
+    - id: 12
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -329,8 +766,75 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users/tf-test
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 391
+        uncompressed: false
+        body: '{"guid":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","created_at":"2024-07-12T03:28:04Z","updated_at":"2024-07-12T03:28:04Z","username":"tf-test2","presentation_name":"tf-test2","origin":"uaa","metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
+        headers:
+            Content-Length:
+                - "391"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 12 Jul 2024 03:28:07 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 56c3011092f231be
+            X-B3-Traceid:
+                - 145e8d4bcd02411256c3011092f231be
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.024643"
+            X-Vcap-Request-Id:
+                - 145e8d4b-cd02-4112-56c3-011092f231be::fe96dce9-0c3d-4d2d-bd1a-1cccd514771e
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 217.29625ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            If-Match:
+                - '*'
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
         method: GET
       response:
         proto: HTTP/2.0
@@ -340,40 +844,36 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"guid":"tf-test","created_at":"2024-02-07T08:36:13Z","updated_at":"2024-02-07T08:36:13Z","username":null,"presentation_name":"tf-test","origin":null,"metadata":{"labels":{"purpose":"production","status":"fine"},"annotations":{}},"links":{"self":{"href":"https://api.x.x.x.x.com/v3/users/tf-test"}}}'
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":1,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:05.750Z"},"userName":"tf-test2","name":{},"emails":[{"value":"tf-test-updated@example.com","primary":false}],"groups":[{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
         headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
             Content-Type:
-                - application/json; charset=utf-8
+                - application/json
             Date:
-                - Wed, 07 Feb 2024 08:36:16 GMT
-            Referrer-Policy:
-                - strict-origin-when-cross-origin
-            Server:
-                - nginx
+                - Fri, 12 Jul 2024 03:28:06 GMT
+            Etag:
+                - '"1"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
-            X-B3-Spanid:
-                - 71dd6955e308376b
-            X-B3-Traceid:
-                - aac5506004a24a0871dd6955e308376b
             X-Content-Type-Options:
                 - nosniff
-            X-Download-Options:
-                - noopen
             X-Frame-Options:
-                - SAMEORIGIN
-            X-Permitted-Cross-Domain-Policies:
-                - none
-            X-Runtime:
-                - "0.043027"
+                - DENY
             X-Vcap-Request-Id:
-                - aac55060-04a2-4a08-71dd-6955e308376b::1a62e794-2dd6-40d0-9cb2-ffb2db9028dc
+                - 1c4aacd3-ea09-42eb-4ccb-a4292d0567a2
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 234.417599ms
-    - id: 6
+        duration: 178.82675ms
+    - id: 14
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -390,8 +890,8 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/users/tf-test
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -403,22 +903,22 @@ interactions:
         uncompressed: false
         body: ""
         headers:
+            Content-Length:
+                - "0"
             Content-Type:
                 - text/html
             Date:
-                - Wed, 07 Feb 2024 08:36:16 GMT
+                - Fri, 12 Jul 2024 03:28:07 GMT
             Location:
-                - https://api.x.x.x.x.com/v3/jobs/832e49e1-f017-48b4-a77c-d9d0e52fc489
+                - https://api.x.x.x.x.com/v3/jobs/f423974b-2f23-499d-b6b2-2ca00faf2346
             Referrer-Policy:
                 - strict-origin-when-cross-origin
-            Server:
-                - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 53b10d36f12b626d
+                - 54bd1d1bc0d11f75
             X-B3-Traceid:
-                - 6d7bd3e968cb45f753b10d36f12b626d
+                - f4c79e689471452154bd1d1bc0d11f75
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -428,15 +928,15 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.020624"
+                - "0.017968"
             X-Vcap-Request-Id:
-                - 6d7bd3e9-68cb-45f7-53b1-0d36f12b626d::4a2de44b-7fd3-44ca-a994-4afb0b690222
+                - f4c79e68-9471-4521-54bd-1d1bc0d11f75::0f9236b3-69be-4d5c-8a5b-d30c95da17a2
             X-Xss-Protection:
                 - 1; mode=block
         status: 202 Accepted
         code: 202
-        duration: 211.328011ms
-    - id: 7
+        duration: 192.419875ms
+    - id: 15
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -453,8 +953,8 @@ interactions:
             Authorization:
                 - Bearer redacted
             User-Agent:
-                - Go-CF-Client/3.0
-        url: https://api.x.x.x.x.com/v3/jobs/832e49e1-f017-48b4-a77c-d9d0e52fc489
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/f423974b-2f23-499d-b6b2-2ca00faf2346
         method: GET
       response:
         proto: HTTP/2.0
@@ -462,24 +962,24 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
+        content_length: 429
         uncompressed: false
-        body: '{"guid":"832e49e1-f017-48b4-a77c-d9d0e52fc489","created_at":"2024-02-07T08:36:16Z","updated_at":"2024-02-07T08:36:17Z","operation":"user.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/832e49e1-f017-48b4-a77c-d9d0e52fc489"}}}'
+        body: '{"guid":"f423974b-2f23-499d-b6b2-2ca00faf2346","created_at":"2024-07-12T03:28:07Z","updated_at":"2024-07-12T03:28:07Z","operation":"user.delete","state":"PROCESSING","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/f423974b-2f23-499d-b6b2-2ca00faf2346"},"user":{"href":"https://api.x.x.x.x.com/v3/users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0"}}}'
         headers:
+            Content-Length:
+                - "429"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 07 Feb 2024 08:36:21 GMT
+                - Fri, 12 Jul 2024 03:28:09 GMT
             Referrer-Policy:
                 - strict-origin-when-cross-origin
-            Server:
-                - nginx
             Strict-Transport-Security:
                 - max-age=31536000; includeSubDomains; preload;
             X-B3-Spanid:
-                - 72d272658e0d8234
+                - 65b773f8de5435c4
             X-B3-Traceid:
-                - 98784b82aa90455872d272658e0d8234
+                - ccff09324b14428165b773f8de5435c4
             X-Content-Type-Options:
                 - nosniff
             X-Download-Options:
@@ -489,11 +989,135 @@ interactions:
             X-Permitted-Cross-Domain-Policies:
                 - none
             X-Runtime:
-                - "0.007160"
+                - "0.006846"
             X-Vcap-Request-Id:
-                - 98784b82-aa90-4558-72d2-72658e0d8234::77d5a55d-5343-47fa-9467-5bf9ca85244b
+                - ccff0932-4b14-4281-65b7-73f8de5435c4::41ba1d6f-4bc9-4c14-816d-f06a7540e0f9
             X-Xss-Protection:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 205.014489ms
+        duration: 186.405625ms
+    - id: 16
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - Bearer redacted
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+        url: https://api.x.x.x.x.com/v3/jobs/f423974b-2f23-499d-b6b2-2ca00faf2346
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 313
+        uncompressed: false
+        body: '{"guid":"f423974b-2f23-499d-b6b2-2ca00faf2346","created_at":"2024-07-12T03:28:07Z","updated_at":"2024-07-12T03:28:09Z","operation":"user.delete","state":"COMPLETE","errors":[],"warnings":[],"links":{"self":{"href":"https://api.x.x.x.x.com/v3/jobs/f423974b-2f23-499d-b6b2-2ca00faf2346"}}}'
+        headers:
+            Content-Length:
+                - "313"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Fri, 12 Jul 2024 03:28:11 GMT
+            Referrer-Policy:
+                - strict-origin-when-cross-origin
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-B3-Spanid:
+                - 765ad751436ec12b
+            X-B3-Traceid:
+                - 12cddf75a4c74963765ad751436ec12b
+            X-Content-Type-Options:
+                - nosniff
+            X-Download-Options:
+                - noopen
+            X-Frame-Options:
+                - SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+                - none
+            X-Runtime:
+                - "0.006318"
+            X-Vcap-Request-Id:
+                - 12cddf75-a4c7-4963-765a-d751436ec12b::b14d369d-6602-4141-9763-f37979672a26
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 186.075042ms
+    - id: 17
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: uaa.x.x.x.x.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Authorization:
+                - Bearer redacted
+            If-Match:
+                - '*'
+            User-Agent:
+                - Terraform/1.5.7 terraform-provider-cloudfoundry/dev
+            X-Identity-Zone-Id:
+                - ""
+        url: https://uaa.x.x.x.x.com/Users/48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"id":"48815cb1-4b2a-4ae3-9bb8-b08d7e328ac0","meta":{"version":1,"created":"2024-07-12T03:28:03.699Z","lastModified":"2024-07-12T03:28:05.750Z"},"userName":"tf-test2","name":{},"emails":[{"value":"tf-test-updated@example.com","primary":false}],"groups":[{"value":"b334f5da-0b49-4f6a-bd97-8b36bc16c34a","display":"openid","type":"DIRECT"},{"value":"7a4c7f23-2a37-4f16-b0b8-a54ec518cf2c","display":"cloud_controller_service_permissions.read","type":"DIRECT"},{"value":"b06d934a-dbee-4a47-b3c7-d39980496fdb","display":"cloud_controller.read","type":"DIRECT"},{"value":"f5c480ca-8fe5-4092-86b2-63ff5867bb50","display":"notification_preferences.read","type":"DIRECT"},{"value":"857ba7b3-e379-479f-8282-4b90502144f7","display":"notification_preferences.write","type":"DIRECT"},{"value":"0c3dbc99-6b06-4099-99eb-ec2bc857aaa6","display":"oauth.approvals","type":"DIRECT"},{"value":"f7a63315-0007-4af7-bc2c-0c38e44387df","display":"cloud_controller.write","type":"DIRECT"},{"value":"22dc1ff3-de75-41fb-81a0-ea893a5552d4","display":"scim.me","type":"DIRECT"},{"value":"fbf50ac0-3219-4def-ad4d-74fbd199dea2","display":"roles","type":"DIRECT"},{"value":"f1da5b73-b4c4-4c19-b14b-773e5e99dcd3","display":"uaa.user","type":"DIRECT"},{"value":"260420bc-bbe6-4569-ab39-0fa0b7dcf36d","display":"profile","type":"DIRECT"},{"value":"55ed167c-6562-4cbe-a0fc-6bc79c3c4c51","display":"user_attributes","type":"DIRECT"},{"value":"0f2e31e6-7053-41b4-b7f5-2e2d69f82bcb","display":"password.write","type":"DIRECT"},{"value":"c8a551ac-291e-4504-a056-a058a367b106","display":"approvals.me","type":"DIRECT"},{"value":"da8826f4-9d2e-4af5-93a4-8c649be9b723","display":"uaa.offline_token","type":"DIRECT"}],"approvals":[],"active":true,"verified":true,"origin":"uaa","zoneId":"uaa","passwordLastModified":"2024-07-12T03:28:03.000Z","schemas":["urn:scim:schemas:core:1.0"]}'
+        headers:
+            Cache-Control:
+                - no-cache, no-store, max-age=0, must-revalidate
+            Content-Security-Policy:
+                - script-src 'self'
+            Content-Type:
+                - application/json
+            Date:
+                - Fri, 12 Jul 2024 03:28:11 GMT
+            Etag:
+                - '"1"'
+            Expires:
+                - "0"
+            Pragma:
+                - no-cache
+            Strict-Transport-Security:
+                - max-age=31536000; includeSubDomains; preload;
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Vcap-Request-Id:
+                - 5e3db110-c522-496a-4a95-504b7d42f2dd
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 191.627334ms

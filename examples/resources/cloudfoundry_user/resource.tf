@@ -1,4 +1,8 @@
 resource "cloudfoundry_user" "my_user" {
-  id          = "test-user567"
-  annotations = { purpose : "testing" }
+  username    = "test"
+  email       = "test@gmail.com"
+  password    = "test123"
+  given_name  = "test"
+  family_name = "test"
+  annotations = { "purpose" : "testing", hi : "hello" }
 }

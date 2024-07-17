@@ -166,6 +166,7 @@ The below mentioned resources replicate the schema and functionality of those pr
 The below mentioned resources have been newly added in the current provider.
 
 - [Multi Target Application Deployment](../docs/resources/mta.md)
+- [User Groups Binding](../docs/resources/user_groups.md)
 
 While most resources have maintained the same structure, some resources needed minor changes in schema to follow the V3 API structure. Following is a list of resources whose schema have changed.
 
@@ -182,12 +183,12 @@ While most resources have maintained the same structure, some resources needed m
 - [Service Instance](./resources/service_instance.md)
 - [Space Quota](./resources/space_quota.md)
 - [Space](./resources/space.md)
+- [User](./resources/user.md)
 
 Few resources required a major change in functionality or the way the resources were created which are mentioned below.
 
 - [Org Role](./resources/org_role.md)
 - [Space Role](./resources/space_role.md)
-- [User](./resources/user.md)
 
 ### Changed DataSources
 
