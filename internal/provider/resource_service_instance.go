@@ -192,7 +192,7 @@ func (r *serviceInstanceResource) ValidateConfig(ctx context.Context, req resour
 	}
 
 	// If Service Instance is of type managed only parameters is allowed to pass
-	if !config.Parameters.IsNull() && config.Type.ValueString() != "managed" {
+	if !config.Parameters.IsNull() && config.Type.ValueString() == userProvidedServiceInstance {
 		resp.Diagnostics.AddAttributeError(
 			path.Root("type"),
 			"Parameters can only passed to service instance of type managed",
@@ -203,7 +203,7 @@ func (r *serviceInstanceResource) ValidateConfig(ctx context.Context, req resour
 
 	// If Service instance of type user-provided then credentials , syslog_drain_url and route_service_url allowed
 	if !config.SyslogDrainURL.IsNull() || !config.RouteServiceURL.IsNull() || !config.Credentials.IsNull() {
-		if config.Type.ValueString() != "user-provided" {
+		if config.Type.ValueString() == managedSerivceInstance {
 			resp.Diagnostics.AddAttributeError(
 				path.Root("type"),
 				"Mistmatch attribute passed to user provided service instance",
@@ -211,7 +211,6 @@ func (r *serviceInstanceResource) ValidateConfig(ctx context.Context, req resour
 			)
 		}
 	}
-
 }
 
 func (r *serviceInstanceResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
