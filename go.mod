@@ -3,7 +3,7 @@ module github.com/SAP/terraform-provider-cloudfoundry
 go 1.22
 
 require (
-	github.com/cloudfoundry-community/go-uaa v0.3.2
+	github.com/cloudfoundry-community/go-uaa v0.3.4-0.20240727153833-d675ee37e6c9
 	github.com/cloudfoundry/go-cfclient/v3 v3.0.0-alpha.7.0.20240626181435-0ff4362f697b
 	github.com/hashicorp/terraform-plugin-framework v1.10.0
 	github.com/hashicorp/terraform-plugin-framework-timeouts v0.4.1
@@ -23,8 +23,6 @@ require (
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 )
-
-replace github.com/cloudfoundry-community/go-uaa => github.com/Dray56/go-uaa v0.0.0-20240708101140-0f0b3de306ef
 
 require (
 	github.com/ProtonMail/go-crypto v1.1.0-alpha.2 // indirect
