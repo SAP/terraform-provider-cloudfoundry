@@ -8,6 +8,7 @@ import (
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/mta"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/provider/managers"
 	"github.com/SAP/terraform-provider-cloudfoundry/internal/validation"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -59,6 +60,14 @@ __Further documentation:__
 			"mtar_url": schema.StringAttribute{
 				MarkdownDescription: "The remote URL where the MTA archive is present",
 				Optional:            true,
+			},
+			"extension_descriptors": schema.SetAttribute{
+				MarkdownDescription: "The paths for the MTA deployment extension files.",
+				Optional:            true,
+				ElementType:         types.StringType,
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
+				},
 			},
 			"space": schema.StringAttribute{
 				MarkdownDescription: "The GUID of the space where the MTA will be deployed",
@@ -181,10 +190,11 @@ func (r *mtaResource) Update(ctx context.Context, req resource.UpdateRequest, re
 
 func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState *tfsdk.State, respDiags *diag.Diagnostics) {
 	var (
-		mtarType     MtarType
-		uploadedFile mta.FileMetadata
-		err          error
-		mtaId        string
+		mtarType             MtarType
+		uploadedFile         mta.FileMetadata
+		err                  error
+		mtaId                string
+		extensionDescriptors string
 	)
 	diags := reqPlan.Get(ctx, &mtarType)
 	respDiags.Append(diags...)
@@ -194,9 +204,11 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 
 	spaceGuid := mtarType.Space.ValueString()
 	namespace := mtarType.Namespace.ValueString()
+
 	if !mtarType.DeployUrl.IsNull() {
 		r.mtaClient.ChangeBasePath(mtarType.DeployUrl.ValueString())
 	}
+
 	if !mtarType.MtarPath.IsNull() {
 		fileLocation := mtarType.MtarPath.ValueString()
 
@@ -244,6 +256,27 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 		uploadedFile = jobResponse.File
 	}
 
+	if !mtarType.ExtensionDescriptors.IsNull() {
+		var (
+			extensionDescriptorsList []string
+			extensionFileID          []string
+		)
+		diags = mtarType.ExtensionDescriptors.ElementsAs(ctx, &extensionDescriptorsList, false)
+		respDiags.Append(diags...)
+
+		for _, descriptorLocation := range extensionDescriptorsList {
+			uploadedExtensionDescriptor, _, err := r.mtaClient.DefaultApi.UploadMtaFile(ctx, spaceGuid, namespace, descriptorLocation)
+			if err != nil {
+				respDiags.AddError(
+					"Unable to upload mta extension descriptor",
+					fmt.Sprintf("Request failed with %s ", err.Error()),
+				)
+			}
+			extensionFileID = append(extensionFileID, uploadedExtensionDescriptor.Id)
+		}
+		extensionDescriptors = strings.Join(extensionFileID, ",")
+	}
+
 	// Check for an ongoing operation for this MTA ID and abort it
 	_, err = mta.CheckOngoingOperation(ctx, r.mtaClient, mtaId, uploadedFile.Namespace, spaceGuid)
 	if err != nil {
@@ -261,6 +294,10 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 			"appArchiveId": uploadedFile.Id,
 			"mtaId":        mtaId,
 		},
+	}
+
+	if extensionDescriptors != "" {
+		operationParams.Parameters["mtaExtDescriptorId"] = extensionDescriptors
 	}
 
 	//Starting deploy operation
