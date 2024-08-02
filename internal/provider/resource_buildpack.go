@@ -76,7 +76,7 @@ func (r *BuildpackResource) Schema(ctx context.Context, req resource.SchemaReque
 				Optional:            true,
 			},
 			"source_code_hash": schema.StringAttribute{
-				MarkdownDescription: "source_code_hash",
+				MarkdownDescription: "SHA256 hash of the file specified. Terraform relies on this to detect the file changes.",
 				Optional:            true,
 				Validators: []validator.String{
 					stringvalidator.AlsoRequires(path.Expressions{

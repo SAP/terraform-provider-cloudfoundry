@@ -30,6 +30,7 @@ type MtaResourceModelPtr struct {
 	Mta                  *string
 	Namespace            *string
 	Id                   *string
+	SourceCodeHash       *string
 }
 
 func hclDataSourceMta(mdsmp *MtaDataSourceModelPtr) string {
@@ -90,6 +91,9 @@ func hclResourceMta(mrmp *MtaResourceModelPtr) string {
 			{{- end -}}
 			{{if .ExtensionDescriptors}}
 				extension_descriptors = {{.ExtensionDescriptors}}
+			{{- end -}}
+			{{if .SourceCodeHash}}
+				source_code_hash = "{{.SourceCodeHash}}"
 			{{- end -}}
 			{{if .DeployUrl}}
 				deploy_url = "{{.DeployUrl}}"

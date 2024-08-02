@@ -38,7 +38,7 @@ resource "cloudfoundry_buildpack" "mybuildpack" {
 - `locked` (Boolean) Whether or not the buildpack is locked to prevent updating the bits
 - `path` (String) Path of the zip file for the buildpack
 - `position` (Number) The order in which the buildpacks are checked during buildpack auto-detection
-- `source_code_hash` (String) source_code_hash
+- `source_code_hash` (String) SHA256 hash of the file specified. Terraform relies on this to detect the file changes.
 - `stack` (String) The name of the stack that the buildpack will use
 
 ### Read-Only
