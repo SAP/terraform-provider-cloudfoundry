@@ -18,9 +18,10 @@ __Further documentation:__
 
 ```terraform
 resource "cloudfoundry_mta" "mtar" {
-  space     = "02c0cc92-6ecc-44b1-b7b2-096ca19ee143"
-  mtar_url  = "https://github.com/Dray56/mtar-archive/releases/download/v1.0.0/a.cf.app.mtar"
-  namespace = "test"
+  space                 = "02c0cc92-6ecc-44b1-b7b2-096ca19ee143"
+  mtar_path             = "./my-mta_1.0.0.mtar"
+  extension_descriptors = ["./prod.mtaext", "prod-scale-vertically.mtaext"]
+  namespace             = "test"
 }
 ```
 
@@ -34,6 +35,7 @@ resource "cloudfoundry_mta" "mtar" {
 ### Optional
 
 - `deploy_url` (String) The URL of the deploy service, if a custom one has been used(should be present in the same landscape). By default 'deploy-service.<system-domain>'
+- `extension_descriptors` (Set of String) The paths for the MTA deployment extension files.
 - `mtar_path` (String) The local path where the MTA archive is present. Either this attribute or mtar_url need to be set.
 - `mtar_url` (String) The remote URL where the MTA archive is present
 - `namespace` (String) The namespace of the MTA. Should be of valid host format

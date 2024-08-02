@@ -20,15 +20,16 @@ type MtaDataSourceModelPtr struct {
 }
 
 type MtaResourceModelPtr struct {
-	HclType       string
-	HclObjectName string
-	MtarPath      *string
-	MtarUrl       *string
-	DeployUrl     *string
-	Space         *string
-	Mta           *string
-	Namespace     *string
-	Id            *string
+	HclType              string
+	HclObjectName        string
+	MtarPath             *string
+	MtarUrl              *string
+	ExtensionDescriptors *string
+	DeployUrl            *string
+	Space                *string
+	Mta                  *string
+	Namespace            *string
+	Id                   *string
 }
 
 func hclDataSourceMta(mdsmp *MtaDataSourceModelPtr) string {
@@ -86,6 +87,9 @@ func hclResourceMta(mrmp *MtaResourceModelPtr) string {
 			{{- end -}}
 			{{if .MtarUrl}}
 				mtar_url = "{{.MtarUrl}}"
+			{{- end -}}
+			{{if .ExtensionDescriptors}}
+				extension_descriptors = {{.ExtensionDescriptors}}
 			{{- end -}}
 			{{if .DeployUrl}}
 				deploy_url = "{{.DeployUrl}}"

@@ -10,13 +10,14 @@ import (
 )
 
 type MtarType struct {
-	MtarPath  types.String `tfsdk:"mtar_path"`
-	MtarUrl   types.String `tfsdk:"mtar_url"`
-	DeployUrl types.String `tfsdk:"deploy_url"`
-	Space     types.String `tfsdk:"space"`
-	Mta       types.Object `tfsdk:"mta"`
-	Namespace types.String `tfsdk:"namespace"`
-	Id        types.String `tfsdk:"id"`
+	MtarPath             types.String `tfsdk:"mtar_path"`
+	MtarUrl              types.String `tfsdk:"mtar_url"`
+	ExtensionDescriptors types.Set    `tfsdk:"extension_descriptors"`
+	DeployUrl            types.String `tfsdk:"deploy_url"`
+	Space                types.String `tfsdk:"space"`
+	Mta                  types.Object `tfsdk:"mta"`
+	Namespace            types.String `tfsdk:"namespace"`
+	Id                   types.String `tfsdk:"id"`
 }
 
 type MtarDataSourceType struct {
