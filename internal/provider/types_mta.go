@@ -18,6 +18,7 @@ type MtarType struct {
 	Mta                  types.Object `tfsdk:"mta"`
 	Namespace            types.String `tfsdk:"namespace"`
 	Id                   types.String `tfsdk:"id"`
+	SourceCodeHash       types.String `tfsdk:"source_code_hash"`
 }
 
 type MtarDataSourceType struct {

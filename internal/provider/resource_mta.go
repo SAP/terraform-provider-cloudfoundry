@@ -90,6 +90,11 @@ __Further documentation:__
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 			},
+			//i walk along an empty street on the boulevard of broken dreams
+			"source_code_hash": schema.StringAttribute{
+				MarkdownDescription: "SHA256 hash of the file specified. Terraform relies on this to detect the file changes.",
+				Optional:            true,
+			},
 			"id": schema.StringAttribute{
 				MarkdownDescription: "The MTA ID of the deployment",
 				Computed:            true,
@@ -181,16 +186,17 @@ func (r *mtaResource) Configure(ctx context.Context, req resource.ConfigureReque
 }
 
 func (r *mtaResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	r.upsert(ctx, &req.Plan, &resp.State, &resp.Diagnostics)
+	r.upsert(ctx, &req.Plan, nil, &resp.State, &resp.Diagnostics)
 }
 
 func (r *mtaResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	r.upsert(ctx, &req.Plan, &resp.State, &resp.Diagnostics)
+	r.upsert(ctx, &req.Plan, &req.State, &resp.State, &resp.Diagnostics)
 }
 
-func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState *tfsdk.State, respDiags *diag.Diagnostics) {
+func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, reqState *tfsdk.State, respState *tfsdk.State, respDiags *diag.Diagnostics) {
 	var (
 		mtarType             MtarType
+		existingState        MtarType
 		uploadedFile         mta.FileMetadata
 		err                  error
 		mtaId                string
@@ -256,6 +262,18 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 		uploadedFile = jobResponse.File
 	}
 
+	if reqState != nil {
+		diags := reqState.Get(ctx, &existingState)
+		respDiags.Append(diags...)
+
+		if existingState.Id.ValueString() != mtaId {
+			respDiags.AddError(
+				"New MTA ID "+mtaId+" not matching with the existing ID "+existingState.Id.ValueString(),
+				"For deploying new MTA, rather taint the resource and try again.",
+			)
+		}
+	}
+
 	if !mtarType.ExtensionDescriptors.IsNull() {
 		var (
 			extensionDescriptorsList []string
@@ -271,6 +289,7 @@ func (r *mtaResource) upsert(ctx context.Context, reqPlan *tfsdk.Plan, respState
 					"Unable to upload mta extension descriptor",
 					fmt.Sprintf("Request failed with %s ", err.Error()),
 				)
+				return
 			}
 			extensionFileID = append(extensionFileID, uploadedExtensionDescriptor.Id)
 		}
@@ -361,7 +380,6 @@ func (r *mtaResource) Read(ctx context.Context, req resource.ReadRequest, resp *
 			)
 			return
 		}
-
 	}
 
 	mtaTfType, diags := mapMtaValuesToType(ctx, mtaObject)

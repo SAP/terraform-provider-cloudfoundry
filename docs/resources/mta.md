@@ -39,6 +39,7 @@ resource "cloudfoundry_mta" "mtar" {
 - `mtar_path` (String) The local path where the MTA archive is present. Either this attribute or mtar_url need to be set.
 - `mtar_url` (String) The remote URL where the MTA archive is present
 - `namespace` (String) The namespace of the MTA. Should be of valid host format
+- `source_code_hash` (String) SHA256 hash of the file specified. Terraform relies on this to detect the file changes.
 
 ### Read-Only
 
