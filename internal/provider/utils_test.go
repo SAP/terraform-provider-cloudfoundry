@@ -22,6 +22,7 @@ var (
 	hclObjectResource        = "resource"
 	hclObjectDataSource      = "data"
 	regexpValidUUID          = validation.UuidRegexp
+	regexpValidSHA           = validation.ShaRegexp
 	regexpValidRFC3999Format = regexp.MustCompile(`\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z`)
 	testOrg                  = "tf-test-do-not-delete"
 	testOrgGUID              = "ca721b24-e24d-4171-83e1-1ef6bd836b38"
