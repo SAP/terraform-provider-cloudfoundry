@@ -87,7 +87,7 @@ func (a *DefaultApiService) GetMta(ctx context.Context, spaceGuid string, mtaId 
 	if len(mtas) == 1 {
 		return mtas[0], httpResponse, err
 	}
-	return Mta{}, httpResponse, fmt.Errorf(MTA_NOT_FOUND)
+	return Mta{}, httpResponse, fmt.Errorf("%s", MTA_NOT_FOUND)
 }
 
 /*
