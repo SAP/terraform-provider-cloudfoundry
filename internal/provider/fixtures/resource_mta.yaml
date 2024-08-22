@@ -1008,7 +1008,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDependencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate
@@ -1068,7 +1068,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDependencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate
@@ -1128,7 +1128,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDependencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate
@@ -1696,7 +1696,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDependencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate
@@ -1756,7 +1756,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDependencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate
@@ -1816,7 +1816,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDendencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
+        body: '[{"metadata":{"id":"a.cf.app","version":"0.0.0","namespace":"test"},"modules":[{"moduleName":"my-mta-managed-app-module","appName":"test-my-cf-app","providedDependencyNames":[],"services":[],"uris":["test-performanceteamblr-tf-space-1-my-mta-managed-app-module.cfapps.sap.hana.ondemand.com"]}],"services":[]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate
@@ -5509,7 +5509,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"metadata":{"id":"my-mta","version":"1.0.0","namespace":"test"},"modules":[{"moduleName":"my-app","appName":"test-my-app","providedDendencyNames":[],"services":["test-my-service"],"uris":["test-performanceteamblr-tf-space-1-my-app.cfapps.sap.hana.ondemand.com"]}],"services":["test-my-service"]}]'
+        body: '[{"metadata":{"id":"my-mta","version":"1.0.0","namespace":"test"},"modules":[{"moduleName":"my-app","appName":"test-my-app","providedDependencyNames":[],"services":["test-my-service"],"uris":["test-performanceteamblr-tf-space-1-my-app.cfapps.sap.hana.ondemand.com"]}],"services":["test-my-service"]}]'
         headers:
             Cache-Control:
                 - no-cache, no-store, max-age=0, must-revalidate

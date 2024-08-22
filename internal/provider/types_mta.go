@@ -42,13 +42,13 @@ type MtaMetadataType struct {
 }
 
 type MtaModuleType struct {
-	ModuleName            types.String `tfsdk:"module_name"`
-	AppName               types.String `tfsdk:"app_name"`
-	CreatedOn             types.String `tfsdk:"created_on"`
-	UpdatedOn             types.String `tfsdk:"updated_on"`
-	ProvidedDendencyNames types.List   `tfsdk:"provided_dendency_names"`
-	Services              types.List   `tfsdk:"services"`
-	Uris                  types.List   `tfsdk:"uris"`
+	ModuleName              types.String `tfsdk:"module_name"`
+	AppName                 types.String `tfsdk:"app_name"`
+	CreatedOn               types.String `tfsdk:"created_on"`
+	UpdatedOn               types.String `tfsdk:"updated_on"`
+	ProvidedDependencyNames types.List   `tfsdk:"provided_dependency_names"`
+	Services                types.List   `tfsdk:"services"`
+	Uris                    types.List   `tfsdk:"uris"`
 }
 
 var mtaObjType = types.ObjectType{

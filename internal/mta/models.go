@@ -46,13 +46,13 @@ type Mta struct {
 }
 
 type Module struct {
-	ModuleName            string    `json:"moduleName,omitempty"`
-	AppName               string    `json:"appName,omitempty"`
-	CreatedOn             time.Time `json:"createdOn,omitempty"`
-	UpdatedOn             time.Time `json:"updatedOn,omitempty"`
-	ProvidedDendencyNames []string  `json:"providedDendencyNames,omitempty"`
-	Services              []string  `json:"services,omitempty"`
-	Uris                  []string  `json:"uris,omitempty"`
+	ModuleName              string    `json:"moduleName,omitempty"`
+	AppName                 string    `json:"appName,omitempty"`
+	CreatedOn               time.Time `json:"createdOn,omitempty"`
+	UpdatedOn               time.Time `json:"updatedOn,omitempty"`
+	ProvidedDependencyNames []string  `json:"providedDependencyNames,omitempty"`
+	Services                []string  `json:"services,omitempty"`
+	Uris                    []string  `json:"uris,omitempty"`
 }
 
 type Metadata struct {
