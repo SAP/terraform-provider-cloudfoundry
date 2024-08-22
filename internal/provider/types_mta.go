@@ -161,7 +161,7 @@ func mapMtaModuleValuesToType(ctx context.Context, module mta.Module) (MtaModule
 	} else {
 		mtaModuleType.UpdatedOn = types.StringValue(module.UpdatedOn.String())
 	}
-	mtaModuleType.ProvidedDendencyNames, diags = types.ListValueFrom(ctx, types.StringType, module.ProvidedDendencyNames)
+	mtaModuleType.ProvidedDependencyNames, diags = types.ListValueFrom(ctx, types.StringType, module.ProvidedDependencyNames)
 	diagnostics.Append(diags...)
 	mtaModuleType.Services, diags = types.ListValueFrom(ctx, types.StringType, module.Services)
 	diagnostics.Append(diags...)
