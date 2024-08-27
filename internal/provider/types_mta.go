@@ -79,7 +79,7 @@ var mtaModuleObjType = types.ObjectType{
 		"app_name":    types.StringType,
 		"created_on":  types.StringType,
 		"updated_on":  types.StringType,
-		"provided_dendency_names": types.ListType{
+		"provided_dependency_names": types.ListType{
 			ElemType: types.StringType,
 		},
 		"services": types.ListType{

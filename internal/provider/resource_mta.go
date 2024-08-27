@@ -135,7 +135,7 @@ __Further documentation:__
 								"updated_on": schema.StringAttribute{
 									Computed: true,
 								},
-								"provided_dendency_names": schema.ListAttribute{
+								"provided_dependency_names": schema.ListAttribute{
 									ElementType: types.StringType,
 									Computed:    true,
 								},
