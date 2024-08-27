@@ -66,7 +66,7 @@ Read-Only:
 - `app_name` (String)
 - `created_on` (String)
 - `module_name` (String)
-- `provided_dendency_names` (List of String)
+- `provided_dependency_names` (List of String)
 - `services` (List of String)
 - `updated_on` (String)
 - `uris` (List of String)
