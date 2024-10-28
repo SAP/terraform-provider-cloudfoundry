@@ -3,6 +3,14 @@
 ![Golang](https://img.shields.io/badge/Go-1.22-informational)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/terraform-provider-cloudfoundry)](https://api.reuse.software/info/github.com/SAP/terraform-provider-cloudfoundry)
 
+## This provider is deprecated and no longer maintained!
+
+We have moved the Terraform Provider for Cloud Foundry to the [Cloud Foundry Foundation](https://github.com/cloudfoundry/terraform-provider-cloudfoundry).
+</br></br>Going forward, we recommend users to switch to the Terraform Provider for Cloud Foundry which is now officially released from the Cloud Foundry Foundation [registry](https://registry.terraform.io/providers/cloudfoundry/cloudfoundry/latest). It is a drop in replacement for this provider and has been released as GA there.
+</br></br>All active development will be continued in the Cloud Foundry Foundation Repo henceforth.
+</br>Please use the new repository to create issues and participate in discussions and the new registry for documentation.
+
+
 ## About This Project
 
 The Terraform provider for [Cloud Foundry](https://www.cloudfoundry.org/) allows the management of resources via [Terraform](https://terraform.io/).
